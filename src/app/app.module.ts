@@ -8,13 +8,17 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from './main/main.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       LoginComponent,
       HeaderComponent,
-      DashboardComponent
+      DashboardComponent,
+      MainComponent,
+      NotificationComponent
    ],
    imports: [
       BrowserModule,
@@ -27,7 +31,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         },
         {
           path: 'home',
-          component: DashboardComponent
+          component: NotificationComponent
         },
       ]),
    ],
