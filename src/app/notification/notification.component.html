@@ -80,7 +80,7 @@
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <tbody>
-                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 10, currentPage: cpage }">
                     <td>
                       <div class="icheck-primary">
                         <input type="checkbox" value="" id="check5">
@@ -111,7 +111,7 @@
               <div class="mailbox-controls">
                 
                 <div class="float-right">
-                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                   <div class="btn-group">
                     
                   </div>

@@ -17,6 +17,7 @@ export class NotificationComponent implements OnInit {
   inbox: Inbox[];
   subject: string[] = [];
   public loading = false;
+  cpage: {};
   constructor(private toastr: ToastrService, public service: InboxService, public lservice: LoginService) { 
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
