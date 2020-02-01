@@ -9,4 +9,6 @@ export class Inbox {
     isdelete: string;
     createddate: Date;
     istask: string;
+    ptype: string;
+    pcode: string;
 }

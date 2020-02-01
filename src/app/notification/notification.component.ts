@@ -14,12 +14,18 @@ export class NotificationComponent implements OnInit {
   currentUser: User;
   User: string;
   Id: number;
+  inbox: Inbox[];
+  subject: string[] = [];
+  public loading = false;
   constructor(private toastr: ToastrService, public service: InboxService, public lservice: LoginService) { 
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
     console.log(this.currentUser.id);
+    this.loading = true;
+    this.service.getmessagebyid(this.currentUser.id);
+    this.loading = false;
   }
 
 }

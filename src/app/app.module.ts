@@ -6,6 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxLoadingModule } from 'ngx-loading';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { MainComponent } from './main/main.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/AuthGuard';
+import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
 
 @NgModule({
    declarations: [
@@ -24,10 +26,12 @@ import { AuthGuard } from './auth/AuthGuard';
       HeaderComponent,
       DashboardComponent,
       MainComponent,
-      NotificationComponent
+      NotificationComponent,
+      NotificationDetailComponent
    ],
    imports: [
       BrowserModule,
+      NgxPaginationModule,
       AppRoutingModule,
       AngularFontAwesomeModule,
       HttpClientModule,
@@ -49,7 +53,13 @@ import { AuthGuard } from './auth/AuthGuard';
           canActivate: [AuthGuard]
           
         },
-        { path: '**', redirectTo: '' },
+        {
+         path: 'notification-detail',
+         component: NotificationDetailComponent,
+         canActivate: [AuthGuard]
+         
+        },
+       { path: '**', redirectTo: '' },
       ]),
       ToastrModule.forRoot(),
       NgxLoadingModule.forRoot({})

@@ -8,18 +8,19 @@ import { environment } from '../../../environments/environment';
 })
 export class InboxService {
 public inboxData: Inbox;
+public inboxlist: Inbox[] = [];
 readonly rootUrl = environment.apiUrl;
 constructor(public http: HttpClient) { }
 
 public getmessagebyid(id): any {
-  return this.http.get(this.rootUrl + '/inboxes/user/' + id)
-   .toPromise()
-   .then(res => {
-     this.inboxData = res as Inbox;
-     // this.doctorName = this.doctorData.doctorname;
-     // console.log(this.doctorName);
-   });
+  return this.http.get(this.rootUrl + '/inboxes/byuser/' + id)
+  .toPromise()
+  .then(res => {
+    this.inboxlist = res as Inbox[];
+    }
+    );
 
- }
+
+}
 
 }

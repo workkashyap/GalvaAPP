@@ -32,9 +32,7 @@
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
               "src/assets/js/adminlte.min.js",
-              "src/assets/plugins/chart.js/Chart.min.js",
-              "src/assets/plugins/demo.js",
-              "src/assets/plugins/pages/dashboard3.js",
+              
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
              

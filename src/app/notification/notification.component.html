@@ -1,15 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Galva</title>
-    
- 
-  </head>
-  <body  class="hold-transition sidebar-mini">
     <div class="wrapper">
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -85,56 +74,34 @@
                   <i ><fa name="sync-alt" ></fa></i>
                   
                 </button>
-                <div class="float-right">
-                  1-50/200
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i ><fa name="chevron-left" ></fa></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i ><fa name="chevron-right" ></fa></i>
-                    </button>
-                  </div>
-                  <!-- /.btn-group -->
-                </div>
+               
                 <!-- /.float-right -->
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <tbody>
-                  <tr>
+                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 10, currentPage: p }">
                     <td>
                       <div class="icheck-primary">
                         <input type="checkbox" value="" id="check5">
-                        <label for="check5"></label>
                       </div>
                     </td>
-                    <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">Rejection Alert</a></td>
-                    <td class="mailbox-subject"><b>Daily:</b> CHROME
-                      <b>PLANT CODE:</b> 1010 <b>Reject %:</b> 39.50 <b>Raject Value:</b> 70792.53
+                    <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
+                    <td class="mailbox-name" >
+                      <a [routerLink]="'./notification-detail'" >
+                        <p [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}">
+                        Rejection Alert</p></a>
                     </td>
-                    <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
-                    <td class="mailbox-date">20/01/2020</td>
+                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-subject" >
+                      Daily: {{ message.ptype }}
+                      PLANT CODE: {{ message.pcode }} 
+                    </td>
+                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-date">{{ message.createddate | date:'mediumDate'  }}</td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="icheck-primary">
-                        <input type="checkbox" value="" id="check5">
-                        <label for="check5"></label>
-                      </div>
-                    </td>
-                    <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">Rejection Alert</a></td>
-                    <td class="mailbox-subject"><b>Daily:</b> CHROME
-                      <b>PLANT CODE:</b> 1010 <b>Reject %:</b> 20.50<b>Raject Value:</b> 33955.06
-                    </td>
-                    <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
-                    <td class="mailbox-date">13/01/2020</td>
-                  </tr>
-             
+                 
                 </tbody>
                 </table>
+               
                 <!-- /.table -->
               </div>
               <!-- /.mail-box-messages -->
@@ -142,38 +109,14 @@
             <!-- /.card-body -->
             <div class="card-footer p-0">
               <div class="mailbox-controls">
-                <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                  <i ><fa name="check-square"></fa></i>
-                  
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i ><fa name="trash"></fa></i>
-                  </button>
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i ><fa name="reply"></fa></i>
-                  </button>
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i ><fa name="share"></fa></i>
-                  </button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                
                 <div class="float-right">
-                  1-50/200
+                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i ><fa name="chevron-left"></fa></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i ><fa name="chevron-right"></fa></i>
-                    </button>
+                    
                   </div>
-                  <!-- /.btn-group -->
                 </div>
-                <!-- /.float-right -->
-              </div>
+                </div>
             </div>
           </div>
           <!-- /.card -->
@@ -188,9 +131,6 @@
     </div>
     <!-- /.content-wrapper -->
 
-   
-    
-    
     <script>
        $(function () {
     //Enable check and uncheck all functionality
@@ -211,5 +151,4 @@
       //get the current year for the copyright
       $("#year").text(new Date().getFullYear());
     </script>
-  </body>
-</html>
+
