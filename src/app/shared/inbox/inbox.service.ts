@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Inbox } from './inbox.model';
 import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { ActionPlan } from './actionplan.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InboxService {
 public inboxData: Inbox;
+public actionplanData: ActionPlan;
 public inboxlist: Inbox[] = [];
 readonly rootUrl = environment.apiUrl;
 public messageid: number;
@@ -32,5 +34,8 @@ public messagebyid(id): any {
        });
 
  }
+ public insertActionPlans(): any {
+  return this.http.post(this.rootUrl + '/ActionPlans', this.actionplanData);
+}
 
 }

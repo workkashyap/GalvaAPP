@@ -7,7 +7,6 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxLoadingModule } from 'ngx-loading';
 import {NgxPaginationModule} from 'ngx-pagination';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -18,6 +17,11 @@ import { NotificationComponent } from './notification/notification.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/AuthGuard';
 import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
+import { TaskComponent } from './task/task.component';
+
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
    declarations: [
@@ -27,15 +31,18 @@ import { NotificationDetailComponent } from './notification/notification-detail/
       DashboardComponent,
       MainComponent,
       NotificationComponent,
-      NotificationDetailComponent
+      NotificationDetailComponent,
+      TaskComponent
    ],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       NgxPaginationModule,
       AppRoutingModule,
       AngularFontAwesomeModule,
       HttpClientModule,
       FormsModule,
+      CalendarModule,
       RouterModule.forRoot([
          {
             path: '',
@@ -62,6 +69,7 @@ import { NotificationDetailComponent } from './notification/notification-detail/
        { path: '**', redirectTo: '' },
       ]),
       ToastrModule.forRoot(),
+    
       NgxLoadingModule.forRoot({})
    ],
    providers: [],
