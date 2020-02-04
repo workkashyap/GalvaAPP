@@ -4,6 +4,7 @@ import { Inbox } from '../shared/inbox/inbox.model';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../shared/login/user.model';
 import { LoginService } from '../shared/login/login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification',
@@ -18,7 +19,7 @@ export class NotificationComponent implements OnInit {
   subject: string[] = [];
   public loading = false;
   cpage: {};
-  constructor(private toastr: ToastrService, public service: InboxService, public lservice: LoginService) { 
+  constructor(private toastr: ToastrService, public service: InboxService, public lservice: LoginService, private route: Router) { 
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -27,6 +28,11 @@ export class NotificationComponent implements OnInit {
     this.loading = true;
     this.service.getmessagebyid(this.currentUser.id);
     this.loading = false;
+  }
+
+  opendetail(id) {
+    this.service.messageid = id;
+    this.route.navigate(['/notification-detail']);
   }
 
 }

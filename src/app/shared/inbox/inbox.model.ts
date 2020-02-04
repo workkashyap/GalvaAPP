@@ -11,4 +11,8 @@ export class Inbox {
     istask: string;
     ptype: string;
     pcode: string;
+    avgrejper: number;
+    avgrejvalue: number;
+    rejectiondate: Date;
+
 }

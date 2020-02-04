@@ -80,23 +80,32 @@
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <tbody>
-                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 10, currentPage: cpage }">
+                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 5, currentPage: cpage }">
                     <td>
                       <div class="icheck-primary">
                         <input type="checkbox" value="" id="check5">
                       </div>
                     </td>
-                    <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
+                    <td class="mailbox-star"  >
+                      <!-- <fa [ngStyle]="{'name': message.avgrejper>10 ? 'Star': 'None'}></fa> -->
+                      <button class="btn-primary" (click)="opendetail(message.messageid)">View</button> 
+                    </td>
                     <td class="mailbox-name" >
-                      <a [routerLink]="'./notification-detail'" >
-                        <p [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}">
-                        Rejection Alert</p></a>
+                        <p [ngStyle]="{'font-weight': message.isread==0 ? 'Bold': 'Normal'}">
+                        Rejection Alert</p>
                     </td>
                     <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-subject" >
-                      Daily: {{ message.ptype }}
-                      PLANT CODE: {{ message.pcode }} 
+                      Daily: {{ message.ptype }} |
+                      PLANT CODE: {{ message.pcode }} | 
+                      Reject: {{message.avgrejper}}%
                     </td>
-                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-date">{{ message.createddate | date:'mediumDate'  }}</td>
+                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-date">{{ message.createddate | date:'mediumDate'  }}
+                     
+                    </td>
+                    <td>
+                      <fa *ngIf="message.avgrejper >=15" class="text-danger"  name="star"> </fa>
+                    
+                    </td>
                   </tr>
                  
                 </tbody>
