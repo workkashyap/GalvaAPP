@@ -1,0 +1,132 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Task Detail</h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">My Task</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- /.card -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Task Detail</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Created Date:</label>
+                          <span class="mailbox-read-time float-right">
+                            {{ service.taskdata.createddate }}
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1"
+                            >Action Date:</label
+                          >
+                          <span class="mailbox-read-time float-right">
+                            {{
+                              service.taskdata.actiondate | date: "mediumDate"
+                            }}
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1"
+                            >Description:</label
+                          >
+                          <span class="mailbox-read-time float-right">
+                            {{ service.taskdata.description }}
+                          </span>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                          Update
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card -->
+
+                  <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+
+                <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+          </section>
+          <!-- /.col -->
+          <div class="mx-2">
+            <div></div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+  $(function() {
+    //Enable check and uncheck all functionality
+    $(".checkbox-toggle").click(function() {
+      var clicks = $(this).data("clicks");
+      if (clicks) {
+        //Uncheck all checkboxes
+        $(".mailbox-messages input[type='checkbox']").prop("checked", false);
+        $(".checkbox-toggle .far.fa-check-square")
+          .removeClass("fa-check-square")
+          .addClass("fa-square");
+      } else {
+        //Check all checkboxes
+        $(".mailbox-messages input[type='checkbox']").prop("checked", true);
+        $(".checkbox-toggle .far.fa-square")
+          .removeClass("fa-square")
+          .addClass("fa-check-square");
+      }
+      $(this).data("clicks", !clicks);
+    });
+  });
+  //get the current year for the copyright
+  $("#year").text(new Date().getFullYear());
+</script>

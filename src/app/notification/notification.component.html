@@ -1,163 +1,200 @@
-
-    <div class="wrapper">
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2 ml-1">
-              <div class="col-sm-6">
-                <h1 class="m-0 text-dark">My Notification</h1>
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-                  <li class="breadcrumb-item active">My Notification</li>
-                </ol>
-              </div>
-              <!-- /.col -->
-            </div>
-            <!-- /.row -->
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">My Notification</h1>
           </div>
-          <!-- /.container-fluid -->
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">My Notification</li>
+            </ol>
+          </div>
+          <!-- /.col -->
         </div>
-        <!-- /.content-header -->
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-      <!-- Main content -->
+    <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
           <!-- <div class="col-md-3" >
           <a href="#" class="btn btn-primary btn-block mb-3">New Task</a>
           </div> -->
-         <!-- /.card -->
-       
-        <!-- /.col -->
-        <div  class="mx-2">
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title">Inbox</h3>
+          <!-- /.card -->
 
-              <div class="card-tools">
-                <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" placeholder="Search Mail">
-                  <div class="input-group-append">
-                    <div class="btn btn-primary">
-                      <i ><fa name="search"></fa></i>
+          <!-- /.col -->
+          <div class="mx-2">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <h3 class="card-title">Inbox</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Search Mail"
+                    />
+                    <div class="input-group-append">
+                      <div class="btn btn-primary">
+                        <i><fa name="search"></fa></i>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!-- /.card-tools -->
               </div>
-              <!-- /.card-tools -->
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <div class="mailbox-controls">
-                <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                  <i ><fa name="square" ></fa></i>
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i ><fa name="trash" ></fa></i>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="mailbox-controls">
+                  <!-- Check all button -->
+                  <button
+                    type="button"
+                    class="btn btn-default btn-sm checkbox-toggle"
+                  >
+                    <i><fa name="square"></fa></i>
                   </button>
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i ><fa name="reply" ></fa></i>
-                  </button>
-                  <button type="button" class="btn btn-default btn-sm">
-                     <i ><fa name="share" ></fa></i>
-                  </button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm">
-                  <i ><fa name="sync-alt" ></fa></i>
-                  
-                </button>
-               
-                <!-- /.float-right -->
-              </div>
-              <div class="table-responsive mailbox-messages">
-                <table class="table table-hover table-striped">
-                  <tbody>
-                  <tr *ngFor="let message of service.inboxlist | paginate: { itemsPerPage: 5, currentPage: cpage }">
-                    <td>
-                      <div class="icheck-primary">
-                        <input type="checkbox" value="" id="check5">
-                      </div>
-                    </td>
-                    <td class="mailbox-star"  >
-                      <!-- <fa [ngStyle]="{'name': message.avgrejper>10 ? 'Star': 'None'}></fa> -->
-                      <button class="btn-primary" (click)="opendetail(message.messageid)">View</button> 
-                    </td>
-                    <td class="mailbox-name" >
-                        <p [ngStyle]="{'font-weight': message.isread==0 ? 'Bold': 'Normal'}">
-                        Rejection Alert</p>
-                    </td>
-                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-subject" >
-                      Daily: {{ message.ptype }} |
-                      PLANT CODE: {{ message.pcode }} | 
-                      Reject: {{message.avgrejper}}%
-                    </td>
-                    <td [ngStyle]="{'font-weight': message.isread==0 ? 'Bolder': 'Normal'}" class="mailbox-date">{{ message.createddate | date:'mediumDate'  }}
-                     
-                    </td>
-                    <td>
-                      <fa *ngIf="message.avgrejper >=15" class="text-danger"  name="star"> </fa>
-                    
-                    </td>
-                  </tr>
-                 
-                </tbody>
-                </table>
-               
-                <!-- /.table -->
-              </div>
-              <!-- /.mail-box-messages -->
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer p-0">
-              <div class="mailbox-controls">
-                
-                <div class="float-right">
-                  <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                   <div class="btn-group">
-                    
+                    <button type="button" class="btn btn-default btn-sm">
+                      <i><fa name="trash"></fa></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm">
+                      <i><fa name="reply"></fa></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm">
+                      <i><fa name="share"></fa></i>
+                    </button>
+                  </div>
+                  <!-- /.btn-group -->
+                  <button type="button" class="btn btn-default btn-sm">
+                    <i><fa name="sync-alt"></fa></i>
+                  </button>
+
+                  <!-- /.float-right -->
+                </div>
+                <div class="table-responsive mailbox-messages">
+                  <table class="table table-hover table-striped">
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let message of service.inboxlist
+                            | paginate: { itemsPerPage: 5, currentPage: cpage }
+                        "
+                      >
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="" id="check5" />
+                          </div>
+                        </td>
+                        <td class="mailbox-star">
+                          <!-- <fa [ngStyle]="{'name': message.avgrejper>10 ? 'Star': 'None'}></fa> -->
+                          <button
+                            class="btn-primary"
+                            (click)="opendetail(message.messageid)"
+                          >
+                            View
+                          </button>
+                        </td>
+                        <td class="mailbox-name">
+                          <p
+                            [ngStyle]="{
+                              'font-weight':
+                                message.isread == 0 ? 'Bold' : 'Normal'
+                            }"
+                          >
+                            Rejection Alert
+                          </p>
+                        </td>
+                        <td
+                          [ngStyle]="{
+                            'font-weight':
+                              message.isread == 0 ? 'Bolder' : 'Normal'
+                          }"
+                          class="mailbox-subject"
+                        >
+                          Daily: {{ message.ptype }} | PLANT CODE:
+                          {{ message.pcode }} | Reject: {{ message.avgrejper }}%
+                        </td>
+                        <td
+                          [ngStyle]="{
+                            'font-weight':
+                              message.isread == 0 ? 'Bolder' : 'Normal'
+                          }"
+                          class="mailbox-date"
+                        >
+                          {{ message.createddate | date: "mediumDate" }}
+                        </td>
+                        <td>
+                          <fa
+                            *ngIf="message.avgrejper >= 15"
+                            class="text-danger"
+                            name="star"
+                          >
+                          </fa>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <div class="mailbox-controls">
+                  <div class="float-right">
+                    <pagination-controls
+                      (pageChange)="cpage = $event"
+                    ></pagination-controls>
+                    <div class="btn-group"></div>
                   </div>
                 </div>
-                </div>
+              </div>
             </div>
+            <!-- /.card -->
           </div>
-          <!-- /.card -->
+          <!-- /.col -->
         </div>
-        <!-- /.col -->
-      </div>
       </div>
       <!-- /.row -->
     </section>
-      </div>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
-    <script>
-       $(function () {
+<script>
+  $(function() {
     //Enable check and uncheck all functionality
-    $('.checkbox-toggle').click(function () {
-      var clicks = $(this).data('clicks')
+    $(".checkbox-toggle").click(function() {
+      var clicks = $(this).data("clicks");
       if (clicks) {
         //Uncheck all checkboxes
-        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+        $(".mailbox-messages input[type='checkbox']").prop("checked", false);
+        $(".checkbox-toggle .far.fa-check-square")
+          .removeClass("fa-check-square")
+          .addClass("fa-square");
       } else {
         //Check all checkboxes
-        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+        $(".mailbox-messages input[type='checkbox']").prop("checked", true);
+        $(".checkbox-toggle .far.fa-square")
+          .removeClass("fa-square")
+          .addClass("fa-check-square");
       }
-      $(this).data('clicks', !clicks)
-    })
-  })
-      //get the current year for the copyright
-      $("#year").text(new Date().getFullYear());
-    </script>
-
+      $(this).data("clicks", !clicks);
+    });
+  });
+  //get the current year for the copyright
+  $("#year").text(new Date().getFullYear());
+</script>

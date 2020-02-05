@@ -1,3 +1,110 @@
-<p>
-  task works!
-</p>
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">My Task</h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">My Task</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- /.card -->
+
+          <!-- /.col -->
+          <div class="mx-2">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  To Do List
+                </h3>
+
+                <div class="card-tools"></div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <ul class="todo-list" data-widget="todo-list">
+                  <li
+                    *ngFor="
+                      let task of service.tasklist
+                        | paginate: { itemsPerPage: 5, currentPage: cpage }
+                    "
+                  >
+                    <!-- todo text -->
+                    <button class="btn-primary" (click)="opendetail(task.id)">
+                      View
+                    </button>
+                    <span class="text">{{ task.description }}</span>
+                    <small class="badge badge-danger float-right"
+                      ><i class="far fa-clock"></i
+                      >{{ task.actiondate | date: "mediumDate" }}
+                    </small>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <div class="mailbox-controls">
+                  <div class="float-right">
+                    <pagination-controls
+                      (pageChange)="cpage = $event"
+                    ></pagination-controls>
+                    <div class="btn-group"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+  $(function() {
+    //Enable check and uncheck all functionality
+    $(".checkbox-toggle").click(function() {
+      var clicks = $(this).data("clicks");
+      if (clicks) {
+        //Uncheck all checkboxes
+        $(".mailbox-messages input[type='checkbox']").prop("checked", false);
+        $(".checkbox-toggle .far.fa-check-square")
+          .removeClass("fa-check-square")
+          .addClass("fa-square");
+      } else {
+        //Check all checkboxes
+        $(".mailbox-messages input[type='checkbox']").prop("checked", true);
+        $(".checkbox-toggle .far.fa-square")
+          .removeClass("fa-square")
+          .addClass("fa-check-square");
+      }
+      $(this).data("clicks", !clicks);
+    });
+  });
+  //get the current year for the copyright
+  $("#year").text(new Date().getFullYear());
+</script>
