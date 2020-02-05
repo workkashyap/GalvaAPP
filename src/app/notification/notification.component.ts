@@ -24,7 +24,6 @@ export class NotificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.currentUser.id);
     this.loading = true;
     this.service.getmessagebyid(this.currentUser.id);
     this.loading = false;
@@ -32,6 +31,7 @@ export class NotificationComponent implements OnInit {
 
   opendetail(id) {
     this.service.messageid = id;
+    this.service.uid = this.currentUser.id;
     this.route.navigate(['/notification-detail']);
   }
 

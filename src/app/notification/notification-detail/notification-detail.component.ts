@@ -6,6 +6,9 @@ import { Inbox } from 'src/app/shared/inbox/inbox.model';
 import { DatePipe } from '@angular/common';
 import { User } from 'src/app/shared/login/User.model';
 import { LoginService } from 'src/app/shared/login/login.service';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ActionplanService } from 'src/app/shared/inbox/actionplan.service';
 
 @Component({
   selector: 'app-notification-detail',
@@ -15,24 +18,65 @@ import { LoginService } from 'src/app/shared/login/login.service';
 })
 export class NotificationDetailComponent implements OnInit {
 
-  private messageid: number;
   public currentUser: User;
-  public todayDate: string;
   private loading = false;
   public inbox: Inbox;
-  constructor(private lservice: LoginService, private route: ActivatedRoute, public service: InboxService, private datePipe: DatePipe
+  public cDate: string;
+  public todayDate: Date;
+  public login: string;
+  // tslint:disable-next-line:max-line-length
+  constructor(public acservice: ActionplanService, private toastr: ToastrService, private lservice: LoginService, private route: ActivatedRoute, public service: InboxService, private datePipe: DatePipe
     ) {
       this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-      this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-      this.service.actionplanData.userid = this.currentUser.id;
-    }
+      this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+      }
 
   ngOnInit() {
-    this.messageid = this.service.messageid;
-    this.service.actionplanData.messageid = this.messageid;
-    // this.service.actionplanData.createddate = this.todayDate;
-    console.log(this.messageid);
-    this.service.messagebyid(this.messageid);
+    this.resetForm();
+    if  (this.service.messageid > 0)
+    {
+      this.service.messagebyid(this.service.messageid);
+    }
+    this.acservice.actionplanData.messageid = this.service.messageid;
+    // this.acservice.actionplanData.loginid = this.service.uid;
+    
+    this.acservice.actionplanData.isopen = '1';
+    this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.acservice.actionplanData.createddate = this.cDate;
+   // this.acservice.actionplanData.closedate = '';
+    console.log(this.service.uid);
+    console.log(this.service.messageid);
+   
+   }
+   resetForm(form?: NgForm) {
+    if (form != null) {
+      form.form.reset();
+    }
+    this.acservice.actionplanData = {
+      id: 0,
+      description: '',
+      messageid: 0,
+      loginid: Number(this.service.uid),
+      actiondate: '',
+     createddate: '',
+    // closedate: '',
+     isopen: '',
+    };
    }
 
+   OnSubmit(form: NgForm) {
+    this.acservice.insertActionPlans().subscribe(
+      res => {
+        this.resetForm(form);
+        this.toastr.success('Submitted Successfully', 'Save ActionPlan');
+        console.log('Saved successfully');
+        // this.service.refreshList();
+
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    console.log(form.value);
+  }
 }

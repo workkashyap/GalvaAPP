@@ -56,62 +56,46 @@
             
             <!-- /.card-footer -->
             <div class="card-footer">
-              <form #form="ngForm" autocomplete="off" >
+              <form #form='ngForm' autocomplete="off" (submit)="OnSubmit(form)" >
+                <input type='hidden' name="id" #id="ngModel" [(ngModel)]="acservice.actionplanData.id" >
+                <input type='hidden' name="messageid" #messageid="ngModel" [(ngModel)]="acservice.actionplanData.messageid" >
+                <input type='hidden' name="loginid" #loginid="ngModel" [(ngModel)]="acservice.actionplanData.loginid" >
+                <input type='hidden' name="isopen" #isopen="ngModel" [(ngModel)]="acservice.actionplanData.isopen" >
+                 <input type='hidden' name="createddate" #createddate="ngModel" [(ngModel)]="acservice.actionplanData.createddate" >
+                 <!-- <input type='text' name="closedate" #closedate="ngModel" [(ngModel)]="acservice.actionplanData.closedate" > -->
+ 
+                
                 <div class="row">
                   <div class="col-lg-6">
-                    <!-- <input type="hidden" name="id" [value]="0" /> -->
-                    <input type="hidden" name="isopen" [value]="1" />
-                    <!-- <input type="hidden" name="closedate" [value]="" /> -->
-
-                    <input
-                      type="hidden"
-                      name="createddate"
-                      #createddate="ngModel"
-                      [(ngModel)]="todayDate"
-                      id="isopen"
-                    />
-                    <input
-                      type="hidden"
-                      name="userid"
-                      #userid="ngModel"
-                      [(ngModel)]="this.currentUser.id"
-                    />
-                    <input
-                      type="hidden"
-                      name="messageid"
-                      #messageid="ngModel"
-                      [(ngModel)]="this.service.messageid"
-                    />
                     <div class="row">
                       <div class="col-md-3">
                         <label>Action Date:</label>
                       </div>
-                      <div class="col-md-9">
+                       <div class="col-md-9">
                         <p-calendar
                           aria-placeholder="Action Date"
-                          name="actiondate"
+                          name="actiondate" #actiondate="ngModel" [(ngModel)]="acservice.actionplanData.actiondate"
                           class="input-append date"
-                          dateFormat="yy-mm-dd"
+                         
                         ></p-calendar>
                       </div>
-                    </div>
+                    </div> 
                     <div class="row mt-3">
                       <div class="col-md-3">
                         <label>Description:</label>
                       </div>
                       <div class="col-md-9">
                         <textarea
-                          name="description"
+                        name="description" #description="ngModel" [(ngModel)]="acservice.actionplanData.description"
                           class="form-control"
                           rows="2"
-                          id="comment"
                         ></textarea>
                       </div>
                     </div>
                     <div class="row mt-3">
                       <div class="col-md-3"></div>
                       <div class="col-md-9">
-                        <button type="submit" class="btn btn-primary ">
+                        <button type="submit" class="btn btn-primary">
                           Action Plan
                         </button>
                       </div>

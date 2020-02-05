@@ -1,10 +1,10 @@
-export class ActionPlan {
+export class Actionplan {
     id: number;
-    messageid: number;
-    actiondate: Date;
-    createddate: Date;
-    isopen: string;
-    closedate: Date;
     description: string;
-    userid: number;
-  }  
+    messageid: number;
+    actiondate: string;
+    loginid: number;
+    createddate: string;
+ //   closedate: string;
+    isopen: string;
+  } 
