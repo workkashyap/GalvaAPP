@@ -21,7 +21,7 @@ export class TaskComponent implements OnInit {
   public description: string;
   public days: number;
   public cDate: string;
-
+  cpage: {};
   constructor(
     public service: ActionplanService,
     public lservice: LoginService,

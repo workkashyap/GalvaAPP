@@ -130,13 +130,11 @@
                                 </div>
                                 <div class="col-md-9">
                                   <textarea
-                                    name="description"
                                     class="form-control"
                                     rows="2"
-                                    [ngModel]="data"
-                                    (ngModelChange)="changeisopen($event)"
                                     name="resolvedesc"
                                     #resolvedesc="ngModel"
+                                    (Change)="changeisopen()"
                                     [(ngModel)]="service.taskdata.resolvedesc"
                                   ></textarea>
                                 </div>
