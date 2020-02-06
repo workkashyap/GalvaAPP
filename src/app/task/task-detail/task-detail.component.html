@@ -27,6 +27,14 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
+          <div class="col-md-3">
+            <Button
+              [routerLink]="'./task'"
+              class="btn btn-primary btn-block mb-3"
+              >Back to Task</Button
+            >
+          </div>
+
           <!-- /.card -->
           <section class="content">
             <div class="container-fluid">
@@ -34,58 +42,95 @@
                 <!-- left column -->
                 <div class="col-md-6">
                   <!-- general form elements -->
-                  <div class="card card-primary">
+                  <div class="card card-primary card-outline">
                     <div class="card-header">
-                      <h3 class="card-title">Task Detail</h3>
+                      <h3 class="card-title">Read Task</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form name="form">
                       <div class="card-body">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Created Date:</label>
-                          <span class="mailbox-read-time float-right">
-                            {{ service.taskdata.createddate }}
-                          </span>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label for="exampleInputEmail1"
+                                >CREATED DATE:</label
+                              >
+                            </div>
+                            <div class="col-md-8">
+                              <span class="mailbox-read-time justify-left">
+                                {{
+                                  service.taskdata?.createddate
+                                    | date: "mediumDate"
+                                }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label for="exampleInputPassword1"
+                                >ACTION DATE:</label
+                              >
+                            </div>
+                            <div class="col-md-8">
+                              <span class="mailbox-read-time float-left">
+                                {{
+                                  service.taskdata?.actiondate
+                                    | date: "mediumDate"
+                                }}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputPassword1"
-                            >Action Date:</label
-                          >
-                          <span class="mailbox-read-time float-right">
-                            {{
-                              service.taskdata.actiondate | date: "mediumDate"
-                            }}
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleInputPassword1"
-                            >Description:</label
-                          >
-                          <span class="mailbox-read-time float-right">
-                            {{ service.taskdata.description }}
-                          </span>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label for="exampleInputPassword1"
+                                >DESCRIPTION:</label
+                              >
+                            </div>
+                            <div class="col-md-8">
+                              <span class="mailbox-read-time float-left">
+                                {{ service.taskdata?.description }}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
+
                       <!-- /.card-body -->
 
                       <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">
-                          Update
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                          Submit
-                        </button>
+                        <div class="row">
+                          <div class="col-md-4 text-center"></div>
+                          <div class="col-md-4">
+                            <button
+                              type="submit"
+                              class="btn btn-primary  float-left"
+                            >
+                              Update
+                            </button>
+                            <button
+                              type="submit"
+                              class="btn btn-primary float-right"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                          <div class="col-md-4 text-center"></div>
+                        </div>
                       </div>
                     </form>
+                    <!-- </form> -->
                   </div>
                   <!-- /.card -->
 
                   <!-- /.card -->
                 </div>
                 <!--/.col (left) -->
-                <!-- right column -->
-
                 <!--/.col (right) -->
               </div>
               <!-- /.row -->

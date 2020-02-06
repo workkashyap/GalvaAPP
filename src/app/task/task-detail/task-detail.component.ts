@@ -4,7 +4,7 @@ import { LoginService } from "src/app/shared/login/login.service";
 import { InboxService } from "src/app/shared/inbox/inbox.service";
 import { Router } from "@angular/router";
 import { User } from "src/app/shared/login/User.model";
-import { create } from "domain";
+//import { create } from "domain";
 
 @Component({
   selector: "app-task-detail",
@@ -25,7 +25,6 @@ export class TaskDetailComponent implements OnInit {
     console.log(this.iservice.uid);
     console.log(this.service.id);
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-    // this.iservice.messagebyid(this.iservice.messageid);
     this.service.getTaskDetailbyid(this.service.id);
   }
 }

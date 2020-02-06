@@ -15,6 +15,8 @@ export class ActionplanService {
   //   })
   // }
   public id: number;
+  public actiondate: number;
+  public createddate: number;
   readonly rootUrl = environment.apiUrl;
   public taskdata: Actionplan;
   public tasklist: Actionplan[] = [];
