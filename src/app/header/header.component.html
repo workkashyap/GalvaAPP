@@ -194,37 +194,25 @@
         >
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a [routerLink]="'./'" class="nav-link active">
+          <li class="nav-item ">
+            <a
+              [routerLink]="'./'"
+              class="nav-link "
+              [routerLinkActive]="['active']"
+            >
               <i class="nav-icon"><fa name="home"></fa></i>
               <p>
-                <span class="mr-5">My Page</span>
-                <span class="ml-5"
-                  ><i><fa name="angle-left"></fa></i>
-                </span>
+                <span class="mr-5">My Notification</span>
               </p>
             </a>
           </li>
+
           <li class="nav-item">
-            <a href="Dashboard1.html" class="nav-link">
-              <i class="nav-icon"><fa name="circle"></fa></i>
-              <p>
-                Dashboard 1
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="Dashboard2.html" class="nav-link">
-              <i class="nav-icon"><fa name="circle"></fa></i>
-              <p>
-                Dashboard 2
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="'./task'" class="nav-link ">
+            <a
+              [routerLink]="'./task'"
+              class="nav-link "
+              [routerLinkActive]="['active']"
+            >
               <i class="nav-icon"><fa name="circle"></fa></i>
               <p>
                 My Task
@@ -233,10 +221,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="myNotification.html" class="nav-link">
+            <a
+              [routerLink]="'./task-approve'"
+              class="nav-link "
+              [routerLinkActive]="['active']"
+            >
               <i class="nav-icon"><fa name="circle"></fa></i>
               <p>
-                My Notifications
+                Approvals
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>

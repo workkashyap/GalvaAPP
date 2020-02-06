@@ -60,7 +60,8 @@ export class NotificationDetailComponent implements OnInit {
       loginid: Number(this.service.uid),
       actiondate: "",
       createddate: "",
-      isopen: ""
+      isopen: "",
+      resolvedesc: ""
     };
   }
   OnSubmit(form: NgForm) {

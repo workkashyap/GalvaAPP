@@ -43,4 +43,10 @@ export class ActionplanService {
         this.taskdata = res as Actionplan;
       });
   }
+  public putTaskData(): any {
+    return this.http.put(
+      this.rootUrl + "/actionplans/" + this.taskdata.id,
+      this.taskdata
+    );
+  }
 }

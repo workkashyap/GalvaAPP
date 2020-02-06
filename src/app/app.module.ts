@@ -22,6 +22,7 @@ import { TaskComponent } from "./task/task.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CalendarModule } from "primeng/calendar";
 import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
+import { ApprovalComponent } from "./approval/approval.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
     NotificationComponent,
     NotificationDetailComponent,
     TaskComponent,
-    TaskDetailComponent
+    TaskDetailComponent,
+    ApprovalComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,11 @@ import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
       {
         path: "task-detail",
         component: TaskDetailComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "task-approve",
+        component: ApprovalComponent,
         canActivate: [AuthGuard]
       },
       { path: "**", redirectTo: "" }
