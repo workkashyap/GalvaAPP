@@ -96,6 +96,8 @@
                             View
                           </button>
                         </td>
+                        <td class="text-danger" *ngIf="message.avgrejper != null"> Reject: {{ message.avgrejper }}%</td>
+                        <td *ngIf="message.avgrejper == null"></td>
                         <td class="mailbox-name">
                           <p [ngStyle]="{
                               'font-weight':
@@ -118,10 +120,12 @@
                           {{ message.createddate | date: "mediumDate" }}
                         </td>
                         <td class="text-danger">
-                          Reject: {{ message.avgrejper }}%
+                          
                           <fa *ngIf="message.avgrejper >= 15" class="text-danger" name="star">
+                           
                           </fa>
                         </td>
+                      
                       </tr>
                     </tbody>
                   </table>
