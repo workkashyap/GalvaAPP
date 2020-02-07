@@ -89,10 +89,11 @@
                                   <label for="exampleInputPassword1">User:</label>
                                 </div>
                                 <div class="col-md-4 pr-5">
-                                  <select class="browser-default custom-select" name="mySelect"
-                                    [(ngModel)]="acservice.actionplanData.loginid" #mySelect
-                                    (change)="setPlan(mySelect.value)">
-                                    <option *ngFor="let system of uservice.userlist" [value]="system.id">
+                                  <select class=" custom-select" name="myselect" #mySelect
+                                    [(ngModel)]="acservice.actionplanData.loginid"
+                                    (change)="setPlan($event.target.value)">
+                                    <option value="0">--Select--</option>
+                                    <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
                                       {{ system.username }}
                                     </option>
                                   </select>
