@@ -89,35 +89,13 @@
                                   <label for="exampleInputPassword1">User:</label>
                                 </div>
                                 <div class="col-md-4 pr-5">
-                                  <select class="browser-default custom-select" [(ngModel)]="
-                                      acservice.actionplanData.loginid
-                                    " (change)="setPlan($event.target.value)">
+                                  <select class="browser-default custom-select" name="mySelect"
+                                    [(ngModel)]="acservice.actionplanData.loginid" #mySelect
+                                    (change)="setPlan(mySelect.value)">
                                     <option *ngFor="let system of uservice.userlist" [value]="system.id">
                                       {{ system.username }}
                                     </option>
                                   </select>
-
-                                  <!-- <select
-                                    class="browser-default custom-select"
-                                    [(ngModel)]="
-                                      acservice.actionplanData.loginid
-                                    "
-                                  >
-                                    style="width:150px;" >
-                                    <option value="0">--Select--</option>
-                                    <option
-                                      *ngFor="let summary of uservice.userlist"
-                                      [value]="{{ summary.id }}"
-                                    >
-                                      {{ summary.username }}
-                                    </option> -->
-                                  <!-- <option
-                                      *ngFor="let ulist of lservice.list"
-                                      [value]="ulist.id"
-                                    >
-                                      {{ ulist.username }}
-                                    </option> -->
-                                  <!-- </select> -->
                                 </div>
                               </div>
                             </div>

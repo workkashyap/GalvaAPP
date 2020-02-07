@@ -50,13 +50,13 @@ export class TaskDetailComponent implements OnInit {
       resolvedesc: ""
     };
   }
- 
+
   onComplete(form: NgForm) {
     this.service.taskdata.isopen = "2";
     this.service.putTaskData().subscribe(
       res => {
         this.resetForm(form);
-        this.toastr.warning("Pending for Approval", "for Approval");
+        this.toastr.success("Pending for Approval", "for Approval");
         // this.ngOnInit();
         // this.service.refreshList();
       },
