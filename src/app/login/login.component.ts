@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
       username: '',
       password: '',
       computername: '',
-      ipaddress: ''
+      ipaddress: '',
+      isparent: 0,
+      designation: '',
+      aboutwork: ''
     };
   }
   OnSubmit(form: NgForm) {

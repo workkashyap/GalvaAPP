@@ -5,4 +5,7 @@ export class User {
   computername: string;
   ipaddress: string;
   token?: string;
+  isparent: number;
+  designation: string;
+  aboutwork: string;
 }
