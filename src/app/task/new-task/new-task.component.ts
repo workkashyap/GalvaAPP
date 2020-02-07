@@ -71,13 +71,7 @@ export class NewTaskComponent implements OnInit {
     console.log(form.value);
   }
 
-  setPlan(value) {
-    //if you're on older versions of ES, use for-in instead
-    var plan = this.uservice.userlist.find(p => (p.id = value));
-
-    if (plan) {
-      this.acservice.actionplanData.loginid = Number(plan.id);
-      console.log(this.acservice.actionplanData.loginid);
-    }
+  setPlan(ev) {
+    this.acservice.actionplanData.loginid = Number(ev);
   }
 }
