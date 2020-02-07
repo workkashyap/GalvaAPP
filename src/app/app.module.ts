@@ -40,8 +40,7 @@ import { NewTaskComponent } from "./task/new-task/new-task.component";
     TaskDetailComponent,
     ApprovalComponent,
     PendingtaskComponent,
-    PendingtaskdetailComponent
-
+    PendingtaskdetailComponent,
     NewTaskComponent
   ],
   imports: [
