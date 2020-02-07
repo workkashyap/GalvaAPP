@@ -76,7 +76,7 @@
                         {{ task.description }}
                       </div>
                       <div class="col-md-1">
-                        <span
+                        <span *ngIf="getdays(task.actiondate, this.cDate) >0"
                           class=" badge  text-right align-self-center "
                           id="result"
                           [ngClass]="{
@@ -89,6 +89,12 @@
                           }"
                         >
                           {{ getdays(task.actiondate, this.cDate) }} days to go
+                        </span>
+                        <span *ngIf="getdays(task.actiondate, this.cDate) <0"
+                          class="badge badge-danger  text-right align-self-center "
+                          id="result"
+                        >
+                          {{ getdays(task.actiondate, this.cDate) }} days ago
                         </span>
                       </div>
                     </div>

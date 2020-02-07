@@ -54,7 +54,7 @@
                               <div class="row">
                                 <input type="hidden" name="isopen" #isopen="ngModel"
                                   [(ngModel)]="service.taskdata.isopen" />
-                                <div class="col-md-2">
+                                <div class="col-md-2 text-center">
                                   <label for="exampleInputEmail1">Created Date:</label>
                                 </div>
                                 <div class="col-md-9">
@@ -70,7 +70,7 @@
 
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2  text-center">
                                   <label for="exampleInputPassword1">Action Date:</label>
                                 </div>
                                 <div class="col-md-9">
@@ -85,7 +85,7 @@
                             </div>
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2  text-center">
                                   <label for="exampleInputPassword1">Description:</label>
                                 </div>
                                 <div class="col-md-9">
@@ -97,7 +97,7 @@
                             </div>
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2  text-center">
                                   <label for="exampleInputPassword1">Reason for complete:</label>
                                 </div>
                                 <div class="col-md-9">
@@ -116,9 +116,9 @@
                       <div class="card-footer">
                         <div class="row">
                           <div class="col-md-5 text-center"></div>
-                          <div class="col-md-2">
-                            <button type="submit" (click)="onReopenClick()" class="btn btn-warning  float-left px-3">
-                              Reopen
+                          <div class="col-md-2 ">
+                            <button type="submit" (click)="onReopenClick()" class="btn btn-danger  float-left px-3">
+                              Reject
                             </button>
                             <button type="submit" (click)="onSubmitClick()" class="btn btn-success float-right">
                               Approve

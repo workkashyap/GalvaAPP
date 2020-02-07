@@ -5,6 +5,7 @@ export class Actionplan {
   actiondate: string;
   loginid: number;
   createddate: string;
+  closedate: string;
   isopen: string;
   resolvedesc: string;
 }

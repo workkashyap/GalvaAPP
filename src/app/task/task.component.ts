@@ -37,7 +37,7 @@ export class TaskComponent implements OnInit {
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
   }
   getdays(currentdate, actiondate) {
-    this.days = Math.abs(moment(actiondate).diff(moment(currentdate), "days"));
+    this.days = moment(currentdate).diff(moment(actiondate), "days");
     console.log(this.days);
     return this.days;
   }

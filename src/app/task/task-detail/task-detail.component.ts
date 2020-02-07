@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { ActionplanService } from "src/app/shared/inbox/actionplan.service";
-import { LoginService } from "src/app/shared/login/login.service";
-import { InboxService } from "src/app/shared/inbox/inbox.service";
-import { Router } from "@angular/router";
-import { User } from "src/app/shared/login/User.model";
-import { NgForm } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
+import { Component, OnInit } from '@angular/core';
+import { ActionplanService } from 'src/app/shared/inbox/actionplan.service';
+import { LoginService } from 'src/app/shared/login/login.service';
+import { InboxService } from 'src/app/shared/inbox/inbox.service';
+import { Router } from '@angular/router';
+import { User } from 'src/app/shared/login/User.model';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 //import { create } from "domain";
 
 @Component({
-  selector: "app-task-detail",
-  templateUrl: "./task-detail.component.html",
-  styleUrls: ["./task-detail.component.css"]
+  selector: 'app-task-detail',
+  templateUrl: './task-detail.component.html',
+  styleUrls: ['./task-detail.component.css']
 })
 export class TaskDetailComponent implements OnInit {
   public currentUser: User;
@@ -25,7 +25,7 @@ export class TaskDetailComponent implements OnInit {
   ) {}
 
   backtotask() {
-    this.route.navigate(["./task"]);
+    this.route.navigate(['./task']);
   }
   ngOnInit() {
     this.resetForm();
@@ -41,24 +41,26 @@ export class TaskDetailComponent implements OnInit {
     }
     this.service.taskdata = {
       id: this.service.id,
-      description: "",
+      description: '',
       messageid: 0,
       loginid: 0,
-      actiondate: "",
-      createddate: "",
-      isopen: "2",
-      resolvedesc: ""
+      actiondate: '',
+      createddate: '',
+      closedate: '',
+      isopen: '2',
+      resolvedesc: ''
     };
   }
 
   onComplete(form: NgForm) {
-    this.service.taskdata.isopen = "2";
+    this.service.taskdata.isopen = '2';
     this.service.putTaskData().subscribe(
       res => {
         this.resetForm(form);
-        this.toastr.success("Pending for Approval", "for Approval");
+        this.toastr.success('Pending for Approval', 'for Approval');
         // this.ngOnInit();
         // this.service.refreshList();
+        this.route.navigate(["./task"]);
       },
       err => {
         console.log(err);

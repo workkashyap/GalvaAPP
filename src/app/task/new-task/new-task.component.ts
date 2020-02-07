@@ -50,6 +50,7 @@ export class NewTaskComponent implements OnInit {
       loginid: 0,
       actiondate: "",
       createddate: this.cDate,
+      closedate: '',
       isopen: "1",
       resolvedesc: ""
     };

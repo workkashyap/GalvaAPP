@@ -6,22 +6,26 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/login/User.model';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-detail',
   templateUrl: './pendingtask-detail.component.html',
-  styleUrls: ['./pendingtask-detail.component.css']
+  styleUrls: ['./pendingtask-detail.component.css'],
+  providers: [DatePipe]
 })
 export class PendingtaskdetailComponent implements OnInit {
   public currentUser: User;
   public actionvalue: string;
+  public cDate: string;
 
   constructor(
     public service: ActionplanService,
     private toastr: ToastrService,
     public lservice: LoginService,
     public iservice: InboxService,
-    private route: Router
+    private route: Router,
+    private datePipe: DatePipe
     
   ) {}
 
@@ -29,6 +33,7 @@ export class PendingtaskdetailComponent implements OnInit {
     this.route.navigate(['./task']);
   }
   ngOnInit() {
+    this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.resetForm();
     console.log(this.iservice.uid);
     console.log(this.service.id);
@@ -47,6 +52,7 @@ export class PendingtaskdetailComponent implements OnInit {
       loginid: 0,
       actiondate: '',
       createddate: '',
+      closedate: '',
       isopen: '2',
       resolvedesc: ''
     };
@@ -57,10 +63,12 @@ export class PendingtaskdetailComponent implements OnInit {
     if (this.actionvalue === 'Submit')
     {
       this.service.taskdata.isopen = '4' ;
+      this.service.taskdata.closedate = this.cDate;
       this.service.putTaskData().subscribe(
         res => {
           this.resetForm(form);
-          this.toastr.warning('Pending for Approval', 'for Approval');
+          this.toastr.success('Completed', 'Approved task');
+          this.route.navigate(["./task-approve"]);
           // this.ngOnInit();
           // this.service.refreshList();
         },
@@ -72,10 +80,12 @@ export class PendingtaskdetailComponent implements OnInit {
     else
     {
       this.service.taskdata.isopen = '1' ;
+      this.service.taskdata.actiondate = this.cDate;
       this.service.putTaskData().subscribe(
         res => {
           this.resetForm(form);
-          this.toastr.warning('Pending for Approval', 'for Approval');
+          this.toastr.warning('Reopen task', 'Reopen task');
+          this.route.navigate(["./task-approve"]);
           // this.ngOnInit();
           // this.service.refreshList();
         },
