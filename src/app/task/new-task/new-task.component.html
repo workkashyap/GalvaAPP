@@ -1,0 +1,164 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Task Detail</h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">My Task</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- /.card -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <h3 class="card-title">Read Task</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form #form="ngForm" autocomplete="off" (submit)="OnSubmit(form)">
+                      <div class="card-body">
+                        <div class="row">
+                          <input type="hidden" name="isopen" />
+
+                          <div class="col-md-8">
+                            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="acservice.actionplanData.id" />
+                            <input type="hidden" name="messageid" #messageid="ngModel"
+                              [(ngModel)]="acservice.actionplanData.messageid" />
+
+                            <input type="hidden" name="isopen" #isopen="ngModel"
+                              [(ngModel)]="acservice.actionplanData.isopen" />
+
+                            <input type="hidden" name="resolvedesc" #resolvedesc="ngModel"
+                              [(ngModel)]="acservice.actionplanData.resolvedesc" />
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <label for="exampleInputEmail1">Created Date:</label>
+                                </div>
+                                <div class="col-md-4 pr-5">
+                                  <input class="form-control" type="text" name="createddate" #createddate="ngModel"
+                                    [(ngModel)]="
+                                      acservice.actionplanData.createddate
+                                    " disabled />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <label for="exampleInputPassword1">Action Date:</label>
+                                </div>
+                                <div class="col-md-4 ">
+                                  <p-calendar aria-placeholder="Action Date" name="actiondate" #actiondate="ngModel"
+                                    [(ngModel)]="
+                                      acservice.actionplanData.actiondate" class="input-append date"
+                                    dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <label for="exampleInputPassword1">User:</label>
+                                </div>
+                                <div class="col-md-4 pr-5">
+                                  <select class="browser-default custom-select" [(ngModel)]="
+                                      acservice.actionplanData.loginid
+                                    " (change)="setPlan($event.target.value)">
+                                    <option *ngFor="let system of uservice.userlist" [value]="system.id">
+                                      {{ system.username }}
+                                    </option>
+                                  </select>
+
+                                  <!-- <select
+                                    class="browser-default custom-select"
+                                    [(ngModel)]="
+                                      acservice.actionplanData.loginid
+                                    "
+                                  >
+                                    style="width:150px;" >
+                                    <option value="0">--Select--</option>
+                                    <option
+                                      *ngFor="let summary of uservice.userlist"
+                                      [value]="{{ summary.id }}"
+                                    >
+                                      {{ summary.username }}
+                                    </option> -->
+                                  <!-- <option
+                                      *ngFor="let ulist of lservice.list"
+                                      [value]="ulist.id"
+                                    >
+                                      {{ ulist.username }}
+                                    </option> -->
+                                  <!-- </select> -->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <label for="exampleInputPassword1">Description:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <textarea name="description" #description="ngModel" [(ngModel)]="
+                                      acservice.actionplanData.description
+                                    " class="form-control" rows="2"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-md-5 text-center"></div>
+                          <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary  float-left px-3">
+                              Save
+                            </button>
+                          </div>
+                          <div class="col-md-5 text-center"></div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- </form> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -23,8 +23,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CalendarModule } from "primeng/calendar";
 import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
 import { ApprovalComponent } from "./approval/approval.component";
+<<<<<<< HEAD
 import { PendingtaskComponent } from './approval/pendingtask/pendingtask.component';
 import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-detail/pendingtask-detail.component';
+=======
+import { NewTaskComponent } from "./task/new-task/new-task.component";
+>>>>>>> 504fbf1b6f15fabe0673da65b67f7487e85f3873
 
 @NgModule({
   declarations: [
@@ -38,9 +42,13 @@ import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-d
     TaskComponent,
     TaskDetailComponent,
     ApprovalComponent,
+<<<<<<< HEAD
     PendingtaskComponent,
     PendingtaskdetailComponent
 
+=======
+    NewTaskComponent
+>>>>>>> 504fbf1b6f15fabe0673da65b67f7487e85f3873
   ],
   imports: [
     BrowserModule,
@@ -87,6 +95,7 @@ import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-d
         canActivate: [AuthGuard]
       },
       {
+<<<<<<< HEAD
         path: "pending-task",
         component: PendingtaskComponent,
         canActivate: [AuthGuard]
@@ -94,6 +103,10 @@ import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-d
       {
         path: "pending-task-detail",
         component: PendingtaskdetailComponent,
+=======
+        path: "new-task",
+        component: NewTaskComponent,
+>>>>>>> 504fbf1b6f15fabe0673da65b67f7487e85f3873
         canActivate: [AuthGuard]
       },
       { path: "**", redirectTo: "" }

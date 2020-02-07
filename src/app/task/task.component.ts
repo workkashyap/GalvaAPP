@@ -47,4 +47,8 @@ export class TaskComponent implements OnInit {
     this.iservice.uid = this.currentUser.id;
     this.route.navigate(["/task-detail"]);
   }
+  addNewTask() {
+    this.iservice.uid = this.currentUser.id;
+    this.route.navigate(["./new-task"]);
+  }
 }
