@@ -32,6 +32,11 @@ ngOnInit() {
   pendingapprovalcount() {
     return 0;
   }
+  gotopendingtask(id)
+  {
+    this.sactionservice.userid = id;
+    this.route.navigate(['/pending-task']);
+  }
 }
 
 

@@ -39,12 +39,7 @@
                 <h3 class="card-title mt-1">Inbox</h3>
 
                 <div class="card-tools">
-                  <input
-                    class="form-control "
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
+                  <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
                 </div>
                 <!-- /.card-tools -->
               </div>
@@ -52,26 +47,33 @@
               <div class="card-body p-0">
                 <div class="mailbox-controls">
                   <!-- Check all button -->
-                  <button
-                    type="button"
-                    class="btn btn-default btn-sm checkbox-toggle"
-                  >
-                    <i><fa name="square"></fa></i>
+                  <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                    <i>
+                      <fa name="square"></fa>
+                    </i>
                   </button>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm">
-                      <i><fa name="trash"></fa></i>
+                      <i>
+                        <fa name="trash"></fa>
+                      </i>
                     </button>
                     <button type="button" class="btn btn-default btn-sm">
-                      <i><fa name="reply"></fa></i>
+                      <i>
+                        <fa name="reply"></fa>
+                      </i>
                     </button>
                     <button type="button" class="btn btn-default btn-sm">
-                      <i><fa name="share"></fa></i>
+                      <i>
+                        <fa name="share"></fa>
+                      </i>
                     </button>
                   </div>
                   <!-- /.btn-group -->
                   <button type="button" class="btn btn-default btn-sm">
-                    <i><fa name="sync-alt"></fa></i>
+                    <i>
+                      <fa name="sync-alt"></fa>
+                    </i>
                   </button>
 
                   <!-- /.float-right -->
@@ -79,12 +81,10 @@
                 <div class="table-responsive mailbox-messages">
                   <table class="table table-hover table-striped">
                     <tbody>
-                      <tr
-                        *ngFor="
+                      <tr *ngFor="
                           let message of service.inboxlist
                             | paginate: { itemsPerPage: 5, currentPage: cpage }
-                        "
-                      >
+                        ">
                         <td>
                           <div class="icheck-primary">
                             <input type="checkbox" value="" id="check5" />
@@ -92,48 +92,34 @@
                         </td>
                         <td class="mailbox-star">
                           <!-- <fa [ngStyle]="{'name': message.avgrejper>10 ? 'Star': 'None'}></fa> -->
-                          <button
-                            class="btn btn-primary"
-                            (click)="opendetail(message.messageid)"
-                          >
+                          <button class="btn btn-primary" (click)="opendetail(message.messageid)">
                             View
                           </button>
                         </td>
                         <td class="mailbox-name">
-                          <p
-                            [ngStyle]="{
+                          <p [ngStyle]="{
                               'font-weight':
                                 message.isread == 0 ? 'Bold' : 'Normal'
-                            }"
-                          >
+                            }">
                             Rejection Alert
                           </p>
                         </td>
-                        <td
-                          [ngStyle]="{
+                        <td [ngStyle]="{
                             'font-weight':
                               message.isread == 0 ? 'Bolder' : 'Normal'
-                          }"
-                          class="mailbox-subject"
-                        >
+                          }" class="mailbox-subject">
                           Daily: {{ message.ptype }} | PLANT CODE:
-                          {{ message.pcode }} | Reject: {{ message.avgrejper }}%
+                          {{ message.pcode }}
                         </td>
-                        <td
-                          [ngStyle]="{
+                        <td [ngStyle]="{
                             'font-weight':
                               message.isread == 0 ? 'Bolder' : 'Normal'
-                          }"
-                          class="mailbox-date"
-                        >
+                          }" class="mailbox-date">
                           {{ message.createddate | date: "mediumDate" }}
                         </td>
-                        <td>
-                          <fa
-                            *ngIf="message.avgrejper >= 15"
-                            class="text-danger"
-                            name="star"
-                          >
+                        <td class="text-danger">
+                          Reject: {{ message.avgrejper }}%
+                          <fa *ngIf="message.avgrejper >= 15" class="text-danger" name="star">
                           </fa>
                         </td>
                       </tr>
@@ -148,9 +134,7 @@
               <div class="card-footer p-0">
                 <div class="mailbox-controls">
                   <div class="float-right">
-                    <pagination-controls
-                      (pageChange)="cpage = $event"
-                    ></pagination-controls>
+                    <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                     <div class="btn-group"></div>
                   </div>
                 </div>
@@ -169,9 +153,9 @@
 <!-- /.content-wrapper -->
 
 <script>
-  $(function() {
+  $(function () {
     //Enable check and uncheck all functionality
-    $(".checkbox-toggle").click(function() {
+    $(".checkbox-toggle").click(function () {
       var clicks = $(this).data("clicks");
       if (clicks) {
         //Uncheck all checkboxes
@@ -191,4 +175,5 @@
   });
   //get the current year for the copyright
   $("#year").text(new Date().getFullYear());
+
 </script>

@@ -23,6 +23,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CalendarModule } from "primeng/calendar";
 import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
 import { ApprovalComponent } from "./approval/approval.component";
+import { PendingtaskComponent } from './approval/pendingtask/pendingtask.component';
+import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-detail/pendingtask-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,10 @@ import { ApprovalComponent } from "./approval/approval.component";
     NotificationDetailComponent,
     TaskComponent,
     TaskDetailComponent,
-    ApprovalComponent
+    ApprovalComponent,
+    PendingtaskComponent,
+    PendingtaskdetailComponent
+
   ],
   imports: [
     BrowserModule,
@@ -79,6 +84,16 @@ import { ApprovalComponent } from "./approval/approval.component";
       {
         path: "task-approve",
         component: ApprovalComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "pending-task",
+        component: PendingtaskComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "pending-task-detail",
+        component: PendingtaskdetailComponent,
         canActivate: [AuthGuard]
       },
       { path: "**", redirectTo: "" }

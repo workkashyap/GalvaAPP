@@ -5,12 +5,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Contacts</h1>
+          <h1>Approvals</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Contacts</li>
+            <li class="breadcrumb-item active">Approvals</li>
           </ol>
         </div>
       </div>
@@ -50,14 +50,13 @@
               </div>
               <div class="card-footer">
                 <div class="text-left">
-                  <a href="#" class="btn btn-sm btn-warning m-1"  >
-                    <fa name="user"></fa> Pending Approvals ({{ this.pendingapproval[i] }})
+                  <button (click)="gotopendingtask(user.id)"  class="btn btn-sm btn-warning m-2"  >
+                    <fa name="user"></fa> Pending </button>
+                  <a href="#" class="btn btn-sm btn-danger m-2">
+                    <fa name="user"></fa> Open
                   </a>
-                  <a href="#" class="btn btn-sm btn-primary m-1">
-                    <fa name="user"></fa> Pending Task (4)
-                  </a>
-                  <a href="#" class="btn btn-sm btn-success m-1">
-                    <fa name="user"></fa> Completed Task (10)
+                  <a href="#" class="btn btn-sm btn-success m-2">
+                    <fa name="user"></fa> Completed
                   </a>
                 </div>
               </div>
@@ -67,20 +66,7 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <nav aria-label="Contacts Page Navigation">
-          <ul class="pagination justify-content-center m-0">
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">7</a></li>
-            <li class="page-item"><a class="page-link" href="#">8</a></li>
-          </ul>
-        </nav>
+       
       </div>
       <!-- /.card-footer -->
     </div>

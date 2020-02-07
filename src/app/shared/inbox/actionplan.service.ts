@@ -22,10 +22,11 @@ export class ActionplanService {
   public tasklist: Actionplan[] = [];
   public pendingapp: Actionplan[] = [];
   public Completedtask: Actionplan[] = [];
-  public totpendingapp: string;
-  public totcomptask: string;
-  public totpentask: string;
- 
+  
+  public pendinglist: Actionplan[] = [];
+  public completedlist: Actionplan[] = [];
+  public openlistlist: Actionplan[] = [];
+  public userid: number;
   
   constructor(public http: HttpClient) {}
 
@@ -44,28 +45,28 @@ export class ActionplanService {
 
   public pendingapproval(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/pendingapproval/' + id)
+      .get(this.rootUrl + '/actionplans/pendingtask/' + id)
       .toPromise()
       .then(res => {
-        this.totpendingapp = res as string;
+        this.pendinglist = res as Actionplan[];
       });
   }
 
   public completedtask(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/completdtask/' + id)
+      .get(this.rootUrl + '/actionplans/completedtask/' + id)
       .toPromise()
       .then(res => {
-        this.totcomptask = res as string;
+        this.completedlist =  res as Actionplan[];
       });
   }
 
-  public pendingtask(id): any {
+  public opentask(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/pendingtask/' + id)
+      .get(this.rootUrl + '/actionplans/opentask/' + id)
       .toPromise()
       .then(res => {
-        this.totpentask = res as string;
+        this.openlistlist =  res as Actionplan[];
       });
   }
 

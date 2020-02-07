@@ -50,11 +50,9 @@ export class TaskDetailComponent implements OnInit {
       resolvedesc: ""
     };
   }
-  changeisopen() {
-    this.service.taskdata.isopen = "2";
-    console.log(this.service.taskdata.isopen);
-  }
+ 
   onComplete(form: NgForm) {
+    this.service.taskdata.isopen = "2";
     this.service.putTaskData().subscribe(
       res => {
         this.resetForm(form);
