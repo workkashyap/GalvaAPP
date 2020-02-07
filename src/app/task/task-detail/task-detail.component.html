@@ -28,11 +28,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-3">
-            <Button
-              (click)="backtotask()"
-              class="btn btn-primary btn-block mb-3"
-              >Back to Task</Button
-            >
+            <Button (click)="backtotask()" class="btn btn-primary btn-block mb-3">Back to Task</Button>
           </div>
 
           <!-- /.card -->
@@ -48,33 +44,19 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form
-                      #form="ngForm"
-                      autocomplete="off"
-                      (submit)="onComplete(form)"
-                    >
+                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
                       <div class="card-body">
                         <div class="row">
-                          <input
-                            type="hidden"
-                            name="isopen"
-                            #isopen="ngModel"
-                            [(ngModel)]="service.taskdata.isopen"
-                          />
+                          <input type="hidden" name="isopen" #isopen="ngModel" [(ngModel)]="service.taskdata.isopen" />
 
                           <div class="col-md-8">
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputEmail1"
-                                    >Created Date:</label
-                                  >
+                                <div class="col-md-2 ml-2 text-center">
+                                  <label for="exampleInputEmail1">Created Date:</label>
                                 </div>
-                                <div class="col-md-9">
-                                  <span
-                                    class="mailbox-read-time justify-left text-md"
-                                    name="createddate"
-                                  >
+                                <div class="col-md-7">
+                                  <span class="mailbox-read-time justify-left text-md" name="createddate">
                                     {{
                                       service.taskdata?.createddate
                                         | date: "mediumDate"
@@ -86,16 +68,11 @@
 
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1"
-                                    >Action Date:</label
-                                  >
+                                <div class="col-md-2 ml-2 text-center">
+                                  <label for="exampleInputPassword1">Action Date:</label>
                                 </div>
-                                <div class="col-md-9">
-                                  <span
-                                    class="mailbox-read-time float-left text-md"
-                                    name="actiondate"
-                                  >
+                                <div class="col-md-7">
+                                  <span class="mailbox-read-time float-left text-md" name="actiondate">
                                     {{
                                       service.taskdata?.actiondate
                                         | date: "mediumDate"
@@ -106,16 +83,11 @@
                             </div>
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1"
-                                    >Description:</label
-                                  >
+                                <div class="col-md-2 ml-2 text-center">
+                                  <label for="exampleInputPassword1">Description:</label>
                                 </div>
-                                <div class="col-md-9">
-                                  <span
-                                    class="mailbox-read-time float-left text-md"
-                                    name="description"
-                                  >
+                                <div class="col-md-7">
+                                  <span class="mailbox-read-time float-left text-md" name="description">
                                     {{ service.taskdata?.description }}
                                   </span>
                                 </div>
@@ -123,20 +95,12 @@
                             </div>
                             <div class="form-group">
                               <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1"
-                                    >Reason for Completion:</label
-                                  >
+                                <div class="col-md-2 ml-2 text-center">
+                                  <label for="exampleInputPassword1">Reason for Completion:</label>
                                 </div>
-                                <div class="col-md-9">
-                                  <textarea
-                                    class="form-control"
-                                    rows="2"
-                                    name="resolvedesc"
-                                    #resolvedesc="ngModel"
-                                    (Change)="changeisopen()"
-                                    [(ngModel)]="service.taskdata.resolvedesc"
-                                  ></textarea>
+                                <div class="col-md-7">
+                                  <textarea class="form-control" rows="2" name="resolvedesc" #resolvedesc="ngModel"
+                                    (Change)="changeisopen()" [(ngModel)]="service.taskdata.resolvedesc"></textarea>
                                 </div>
                               </div>
                             </div>
@@ -153,10 +117,7 @@
                             <button class="btn btn-warning  float-left px-3">
                               Reopen
                             </button>
-                            <button
-                              type="submit"
-                              class="btn btn-success float-right"
-                            >
+                            <button type="submit" class="btn btn-success float-right">
                               Complete
                             </button>
                           </div>
@@ -192,9 +153,9 @@
 <!-- /.content-wrapper -->
 
 <script>
-  $(function() {
+  $(function () {
     //Enable check and uncheck all functionality
-    $(".checkbox-toggle").click(function() {
+    $(".checkbox-toggle").click(function () {
       var clicks = $(this).data("clicks");
       if (clicks) {
         //Uncheck all checkboxes
@@ -214,4 +175,5 @@
   });
   //get the current year for the copyright
   $("#year").text(new Date().getFullYear());
+
 </script>
