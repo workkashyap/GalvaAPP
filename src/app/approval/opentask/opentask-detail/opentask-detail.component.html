@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2 ml-1">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Task Detail</h1>
+            <h1 class="m-0 text-dark">Open Task Detail</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -28,8 +28,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-3">
-            <Button (click)="backtopendingtask()" class="btn btn-primary btn-block mb-3">Back to Pending
-              Approvals</Button>
+            <Button (click)="backtoopentask()" class="btn btn-primary btn-block mb-3">Back to OpenApprovals</Button>
           </div>
 
           <!-- /.card -->
@@ -108,19 +107,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2  text-center">
-                                  <label for="exampleInputPassword1">New Action Date:</label>
-                                </div>
-                                <div class="col-md-9">
-                                  <p-calendar aria-placeholder="Action Date" name="newactiondate"
-                                    [(ngModel)]="newactiondate" class="input-append date" [showIcon]="true"
-                                    dateFormat="yy-mm-dd">
-                                  </p-calendar>
-                                </div>
-                              </div>
-                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -128,18 +115,7 @@
                       <!-- /.card-body -->
 
                       <div class="card-footer">
-                        <div class="row">
-                          <div class="col-md-5 text-center"></div>
-                          <div class="col-md-2 ">
-                            <button type="submit" (click)="onReopenClick()" class="btn btn-danger  float-left px-3">
-                              Reject
-                            </button>
-                            <button type="submit" (click)="onSubmitClick()" class="btn btn-success float-right">
-                              Approve
-                            </button>
-                          </div>
-                          <div class="col-md-5 text-center"></div>
-                        </div>
+
                       </div>
                     </form>
                     <!-- </form> -->

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Actionplan } from './actionplan.model';
-import { TaskComponent } from 'src/app/task/task.component';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { Actionplan } from "./actionplan.model";
+import { TaskComponent } from "src/app/task/task.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ActionplanService {
   public actionplanData: Actionplan;
@@ -22,21 +22,21 @@ export class ActionplanService {
   public tasklist: Actionplan[] = [];
   public pendingapp: Actionplan[] = [];
   public Completedtask: Actionplan[] = [];
-  
+
   public pendinglist: Actionplan[] = [];
   public completedlist: Actionplan[] = [];
   public openlistlist: Actionplan[] = [];
   public userid: number;
-  
+
   constructor(public http: HttpClient) {}
 
   public insertActionPlans(): any {
-    return this.http.post(this.rootUrl + '/actionplans', this.actionplanData);
+    return this.http.post(this.rootUrl + "/actionplans", this.actionplanData);
   }
 
   public getTaskDatabyid(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/byuser/' + id)
+      .get(this.rootUrl + "/actionplans/byuser/" + id)
       .toPromise()
       .then(res => {
         this.tasklist = res as Actionplan[];
@@ -45,7 +45,7 @@ export class ActionplanService {
 
   public pendingapproval(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/pendingtask/' + id)
+      .get(this.rootUrl + "/actionplans/pendingtask/" + id)
       .toPromise()
       .then(res => {
         this.pendinglist = res as Actionplan[];
@@ -54,25 +54,25 @@ export class ActionplanService {
 
   public completedtask(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/completedtask/' + id)
+      .get(this.rootUrl + "/actionplans/completedtask/" + id)
       .toPromise()
       .then(res => {
-        this.completedlist =  res as Actionplan[];
+        this.completedlist = res as Actionplan[];
       });
   }
 
   public opentask(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/opentask/' + id)
+      .get(this.rootUrl + "/actionplans/opentask/" + id)
       .toPromise()
       .then(res => {
-        this.openlistlist =  res as Actionplan[];
+        this.openlistlist = res as Actionplan[];
       });
   }
 
   public getTaskDetailbyid(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/' + id)
+      .get(this.rootUrl + "/actionplans/" + id)
       .toPromise()
       .then(res => {
         this.taskdata = res as Actionplan;
@@ -80,7 +80,7 @@ export class ActionplanService {
   }
   public putTaskData(): any {
     return this.http.put(
-      this.rootUrl + '/actionplans/' + this.taskdata.id,
+      this.rootUrl + "/actionplans/" + this.taskdata.id,
       this.taskdata
     );
   }
