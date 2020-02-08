@@ -29,8 +29,9 @@ export class PendingtaskdetailComponent implements OnInit {
     private datePipe: DatePipe
   ) {}
 
-  backtotask() {
-    this.route.navigate(["./task"]);
+  backtopendingtask() {
+   
+    this.route.navigate(["./pending-task"]);
   }
   ngOnInit() {
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");

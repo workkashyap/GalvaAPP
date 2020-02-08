@@ -1,3 +1,107 @@
-<p>
-  opentask works!
-</p>
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Open Approval</h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">My Task</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- /.card -->
+
+          <!-- /.col -->
+          <div class="mx-2">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Tasks
+                </h3>
+
+                <div class="card-tools">
+                  <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                </div>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="todo-list text-success" data-widget="todo-list" *ngIf="service.openlistlist.length == 0">
+                  No Records Found
+                </div>
+                <ul class="todo-list" data-widget="todo-list">
+                  <li *ngFor="
+                      let task of service.openlistlist
+                        | paginate: { itemsPerPage: 5, currentPage: cpage }
+                    ">
+
+                    <div class="row">
+                      <div class="col-md-1 ">
+                        <button class="btn btn-primary mt-1" (click)="opendetail(task.id)">
+                          View
+                        </button>
+                      </div>
+                      <div class="col-md-9 text align-self-center">
+                        {{ task.description }}
+                      </div>
+                      <div class="col-md-1">
+                        <span *ngIf="getdays(task.actiondate, this.cDate) >0"
+                          class=" badge  text-right align-self-center " id="result" [ngClass]="{
+                            'badge-danger':
+                              getdays(task.actiondate, this.cDate) == 1,
+                            'badge-warning':
+                              getdays(task.actiondate, this.cDate) == 2,
+                            'badge-success':
+                              getdays(task.actiondate, this.cDate) > 2
+                          }">
+                          {{ getdays(task.actiondate, this.cDate) }} days to go
+                        </span>
+                        <span *ngIf="getdays(task.actiondate, this.cDate) <0"
+                          class="badge badge-danger  text-right align-self-center " id="result">
+                          {{ getdays(task.actiondate, this.cDate) }} days ago
+                        </span>
+                      </div>
+                    </div>
+                    <!-- todo text -->
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <div class="mailbox-controls">
+                  <div class="float-right">
+                    <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
+                    <div class="btn-group"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

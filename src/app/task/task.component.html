@@ -29,11 +29,7 @@
         <div class="col-md-12">
           <!-- /.card -->
           <div class="col-md-3">
-            <Button
-              (click)="addNewTask()"
-              class="btn btn-primary btn-block mb-3"
-              >Add New Task</Button
-            >
+            <Button (click)="addNewTask()" class="btn btn-primary btn-block mb-3">Add New Task</Button>
           </div>
           <!-- /.col -->
           <div class="mx-2">
@@ -45,30 +41,23 @@
                 </h3>
 
                 <div class="card-tools">
-                  <input
-                    class="form-control "
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
+                  <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
                 </div>
               </div>
 
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="todo-list text-success" data-widget="todo-list" *ngIf="service.tasklist.length == 0">
+                  No Records Found
+                </div>
                 <ul class="todo-list" data-widget="todo-list">
-                  <li
-                    *ngFor="
+                  <li *ngFor="
                       let task of service.tasklist
                         | paginate: { itemsPerPage: 5, currentPage: cpage }
-                    "
-                  >
+                    ">
                     <div class="row">
                       <div class="col-md-1 ">
-                        <button
-                          class="btn btn-primary mt-1"
-                          (click)="opendetail(task.id)"
-                        >
+                        <button class="btn btn-primary mt-1" (click)="opendetail(task.id)">
                           View
                         </button>
                       </div>
@@ -77,23 +66,18 @@
                       </div>
                       <div class="col-md-1">
                         <span *ngIf="getdays(task.actiondate, this.cDate) >0"
-                          class=" badge  text-right align-self-center "
-                          id="result"
-                          [ngClass]="{
+                          class=" badge  text-right align-self-center " id="result" [ngClass]="{
                             'badge-danger':
                               getdays(task.actiondate, this.cDate) == 1,
                             'badge-warning':
                               getdays(task.actiondate, this.cDate) == 2,
                             'badge-success':
                               getdays(task.actiondate, this.cDate) > 2
-                          }"
-                        >
+                          }">
                           {{ getdays(task.actiondate, this.cDate) }} days to go
                         </span>
                         <span *ngIf="getdays(task.actiondate, this.cDate) <0"
-                          class="badge badge-danger  text-right align-self-center "
-                          id="result"
-                        >
+                          class="badge badge-danger  text-right align-self-center " id="result">
                           {{ getdays(task.actiondate, this.cDate) }} days ago
                         </span>
                       </div>
@@ -106,9 +90,7 @@
               <div class="card-footer p-0">
                 <div class="mailbox-controls">
                   <div class="float-right">
-                    <pagination-controls
-                      (pageChange)="cpage = $event"
-                    ></pagination-controls>
+                    <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                     <div class="btn-group"></div>
                   </div>
                 </div>
