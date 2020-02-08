@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/router": "~8.0.3",
+    "@fullcalendar/core": "^4.3.1",
+    "@fullcalendar/daygrid": "^4.3.0",
     "@types/jquery": "^3.3.32",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.4.1",
