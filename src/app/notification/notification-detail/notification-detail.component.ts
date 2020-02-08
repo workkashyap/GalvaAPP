@@ -46,6 +46,8 @@ export class NotificationDetailComponent implements OnInit {
     this.acservice.actionplanData.isopen = '1';
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.acservice.actionplanData.createddate = this.cDate;
+    this.acservice.actionplanData.closedate = null;
+  
     console.log(this.service.uid);
     console.log(this.service.messageid);
   }

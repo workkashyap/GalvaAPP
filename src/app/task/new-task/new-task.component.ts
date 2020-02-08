@@ -32,6 +32,7 @@ export class NewTaskComponent implements OnInit {
   ngOnInit() {
     this.resetForm();
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.acservice.actionplanData.closedate = null;
     this.acservice.actionplanData.createddate = this.cDate;
     console.log(this.acservice.actionplanData.createddate);
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));

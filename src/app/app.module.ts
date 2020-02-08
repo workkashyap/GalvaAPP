@@ -26,6 +26,9 @@ import { ApprovalComponent } from './approval/approval.component';
 import { PendingtaskComponent } from './approval/pendingtask/pendingtask.component';
 import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-detail/pendingtask-detail.component';
 import { NewTaskComponent } from './task/new-task/new-task.component';
+import { CompletedtaskComponent } from './approval/completedtask/completedtask.component';
+import { OpentaskComponent } from './approval/opentask/opentask.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { NewTaskComponent } from './task/new-task/new-task.component';
     ApprovalComponent,
     PendingtaskComponent,
     PendingtaskdetailComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    CompletedtaskComponent,
+    OpentaskComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +108,12 @@ import { NewTaskComponent } from './task/new-task/new-task.component';
         component: NewTaskComponent,
         canActivate: [AuthGuard]
       },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
+        canActivate: [AuthGuard]
+      },
+      
       { path: '**', redirectTo: '' }
     ]),
     ToastrModule.forRoot(),
