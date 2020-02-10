@@ -91,4 +91,7 @@ export class RejectionDetailComponent implements OnInit {
     //this.iservice.uid = this.currentUser.id;
     this.router.navigate(["./rejection"]);
   }
+  setPlan(ev) {
+    this.acservice.actionplanData.loginid = Number(ev);
+  }
 }

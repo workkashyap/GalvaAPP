@@ -1,25 +1,22 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Dailyproduction } from "./dailyproduction.model";
+import { Plant } from "./plant.model";
 import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
-export class DailyproductionService {
+export class PlantService {
+  public plantlist: Plant[];
   readonly rootUrl = environment.apiUrl;
-  public dailyprodlist: Dailyproduction[] = [];
-
-  public id: number;
-
   constructor(public http: HttpClient) {}
 
-  public getDailyPReject(id): any {
+  public getPlantData(): any {
     return this.http
-      .get(this.rootUrl + "/dailyproductions/rejectdata/" + id + "/Reject")
+      .get(this.rootUrl + "/plants")
       .toPromise()
       .then(res => {
-        this.dailyprodlist = res as Dailyproduction[];
+        this.plantlist = res as Plant[];
       });
   }
 }
