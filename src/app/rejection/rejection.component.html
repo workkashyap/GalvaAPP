@@ -12,7 +12,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-              <li class="breadcrumb-item active">My Rejection</li>
+              <li class="breadcrumb-item active">Daily Rejection</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -24,135 +24,107 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- <div class="col-md-3" >
-          <a href="#" class="btn btn-primary btn-block mb-3">New Task</a>
-          </div> -->
-          <!-- /.card -->
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
 
-          <!-- /.col -->
-          <div class="mx-2">
-            <div class="card card-primary card-outline">
-              <div class="card-header ">
-                <h3 class="card-title mt-1">Inbox</h3>
 
-                <div class="card-tools">
-                  <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
-                </div>
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <div class="mailbox-controls">
-                  <!-- Check all button -->
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                    <i>
-                      <fa name="square"></fa>
-                    </i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="trash"></fa>
-                      </i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="reply"></fa>
-                      </i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="share"></fa>
-                      </i>
-                    </button>
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mx-2">
+                <div class="card card-primary card-outline">
+                  <div class="card-header ">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <h3 class="card-title mt-1">Inbox</h3>
+                      </div>
+                      <div class="col-md-2">
+                        <select class=" custom-select" name="myselect" #mySelect
+                          (change)="selectedGrid($event.target.value)">
+                          <option value="1010">GDPL Vapi</option>
+                          <option value="1020">GDPL Zaroli</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                      </div>
+                    </div>
+                    <!-- /.card-tools -->
                   </div>
-                  <!-- /.btn-group -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i>
-                      <fa name="sync-alt"></fa>
-                    </i>
-                  </button>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0">
 
-                  <!-- /.float-right -->
-                </div>
-                <div class="table-responsive mailbox-messages">
-                  <table class="table table-hover table-striped">
-                    <tbody>
-                      <ng-container *ngFor="
-                      let message of SelectedNotification()| paginate: { itemsPerPage: 5, currentPage: cpage }
-                      ">
-                        <tr>
-                          <td>
-                            <div class="icheck-primary">
-                              <input type="checkbox" value="" id="check5" />
-                            </div>
-                          </td>
-                          <td class="mailbox-star">
-                            <!-- <fa [ngStyle]="{'name': message.avgrejper>10 ? 'Star': 'None'}></fa> -->
-                            <button class="btn btn-primary" (click)="opendetail(message.messageid)">
-                              View
-                            </button>
-                          </td>
-                          <td class="text-danger"> Reject: {{ message.avgrejper }}%
-                          </td>
-                          <td *ngIf="message.avgrejper == null"></td>
-                          <td class="mailbox-name">
-                            <p [ngStyle]="{
-                              'font-weight':
-                                message.isread == 0 ? 'Bold' : 'Normal'
-                            }">
-                              Rejection Alert
-                            </p>
-                          </td>
-                          <td [ngStyle]="{
-                            'font-weight':
-                              message.isread == 0 ? 'Bolder' : 'Normal'
-                          }" class="mailbox-subject">
-                            Daily: {{ message.ptype }} | PLANT CODE:
-                            {{ message.pcode }}
-                          </td>
-                          <td [ngStyle]="{
-                            'font-weight':
-                              message.isread == 0 ? 'Bolder' : 'Normal'
-                          }" class="mailbox-date">
-                            {{ message.createddate | date: "mediumDate" }}
-                          </td>
-                          <td class="text-danger">
+                    <div class="table-responsive mailbox-messages">
+                      <table class="table table-hover table-striped">
+                        <thead>
+                          <tr class="text-center">
+                            <th></th>
+                            <th> Date </th>
+                            <th>Rejection %</th>
 
-                            <fa *ngIf="message.avgrejper >= 15" class="text-danger" name="star">
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="
+                            let message of DPservice.dailyprodlist| paginate: { itemsPerPage: 5, currentPage: cpage }
+                            ">
+                            <tr class="text-center">
+                              <td class="mailbox-star">
+                                <button class="btn btn-primary" [ngClass]="{
+                                  'disabled': message.percentage < 20
+                                }" (click)="openRejectiondetail(message.id)">
+                                  View
+                                </button>
+                              </td>
+                              <td class="font-weight-bold">
+                                {{ message.date | date: "mediumDate" }}
+                              </td>
+                              <td>
+                                <span class=" badge px-3 text-lg  text-right align-self-center " id="result" [ngClass]="{
+                                'badge-danger':
+                                message.percentage >=20 ,
+                                'badge-warning':
+                                message.percentage >=15 && message.percentage<20,
+                                'badge-success':
+                                message.percentage<15
+                                
+                              }">
+                                  {{ message.percentage }}
+                                </span>
+                              </td>
+                              <!-- <td>
+                            {{ message.value }}
+                          </td> -->
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
 
-                            </fa>
-                          </td>
-
-                        </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
-
-                  <!-- /.table -->
-                </div>
-                <!-- /.mail-box-messages -->
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer p-0">
-                <div class="mailbox-controls">
-                  <div class="float-right">
-                    <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
-                    <div class="btn-group"></div>
+                      <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer p-0">
+                    <div class="mailbox-controls">
+                      <div class="float-right">
+                        <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
+                        <div class="btn-group"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <!-- /.card -->
               </div>
+              <!-- /.col -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
-        </div>
+          <!-- /.row -->
+        </section>
       </div>
-      <!-- /.row -->
-    </section>
+      <div class="col-md-1"></div>
+    </div>
   </div>
   <!-- /.content -->
 </div>

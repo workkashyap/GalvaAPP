@@ -28,9 +28,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-3">
-          <a [routerLink]="'./home'" class="btn btn-primary btn-block mb-3"
-            >Back to Notification</a
-          >
+          <a [routerLink]="'./home'" class="btn btn-primary btn-block mb-3">Back to Notification</a>
         </div>
 
         <div class="mx-2">
@@ -39,20 +37,10 @@
               <h3 class="card-title">Read Message</h3>
 
               <div class="card-tools">
-                <a
-                  href="#"
-                  class="btn btn-tool"
-                  data-toggle="tooltip"
-                  title="Previous"
-                  ><i class="fas fa-chevron-left"></i
-                ></a>
-                <a
-                  href="#"
-                  class="btn btn-tool"
-                  data-toggle="tooltip"
-                  title="Next"
-                  ><i class="fas fa-chevron-right"></i
-                ></a>
+                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i
+                    class="fas fa-chevron-left"></i></a>
+                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i
+                    class="fas fa-chevron-right"></i></a>
               </div>
             </div>
             <!-- /.card-header -->
@@ -70,17 +58,14 @@
               <!-- /.mailbox-read-info -->
 
               <!-- /.mailbox-controls -->
-              <div
-                class="mailbox-read-message"
-                [innerHTML]="service.inboxData?.message"
-              ></div>
+              <div class="mailbox-read-message" [innerHTML]="service.inboxData?.message"></div>
               <!-- /.mailbox-read-message -->
             </div>
             <!-- /.card-body -->
 
             <!-- /.card-footer -->
             <div class="card-footer">
-              <form #form="ngForm" autocomplete="off" (submit)="OnSubmit(form)">
+              <!-- <form #form="ngForm" autocomplete="off" (submit)="OnSubmit(form)">
                 <input
                   type="hidden"
                   name="id"
@@ -160,7 +145,7 @@
                     </div>
                   </div>
                 </div>
-              </form>
+              </form> -->
             </div>
 
             <!-- /.card-footer -->

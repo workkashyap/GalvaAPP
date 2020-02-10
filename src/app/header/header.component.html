@@ -142,13 +142,20 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="Home.html" class="brand-link">
-      <img src="../../assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-        style="opacity: .8" />
-      <span class="brand-text font-weight-light">Galva</span>
-    </a>
+
     <!-- Sidebar -->
     <div class="sidebar">
+      <div class="row ">
+        <div class="col-md-3 col-xs-4"></div>
+        <div class="col-md-4 col-xs-4">
+          <a href="Home.html" class="nav-logo ">
+            <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image    pt-1 rounded"
+              style="opacity: 0.8" />
+          </a>
+        </div>
+        <div class="col-md-4 col-xs-4"></div>
+      </div>
+
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
@@ -164,27 +171,29 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-          <li class="nav-item ">
-            <a [routerLink]="'./'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <fa name="home"></fa>
-              </i>
-              <p>
-                <span class="mr-5">My Notification</span>
-              </p>
-            </a>
-          </li>
           <li class="nav-item">
             <a [routerLink]="'./rejection'" class="nav-link " [routerLinkActive]="['active']">
               <i class="nav-icon">
                 <fa name="circle"></fa>
               </i>
               <p>
-                Rejection>20
+                Action Plan
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a [routerLink]="'./'" class="nav-link " [routerLinkActive]="['active']">
+              <i class="nav-icon">
+                <!-- <fa name="home"></fa> -->
+                <fa name="circle"></fa>
+              </i>
+              <p>
+                <span class="mr-5">My Notification</span>
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a [routerLink]="'./new-task'" class="nav-link " [routerLinkActive]="['active']">
               <i class="nav-icon">
@@ -224,4 +233,5 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
 </div>

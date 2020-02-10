@@ -8,7 +8,10 @@ import { ActivatedRoute } from "@angular/router";
 import { InboxService } from "src/app/shared/inbox/inbox.service";
 import { DatePipe } from "@angular/common";
 import { NgForm } from "@angular/forms";
+
 import { Router } from "@angular/router";
+import { DailyproductionService } from "src/app/shared/dailyProduction/dailyproduction.service";
+import { UserService } from "src/app/shared/user/user.service";
 
 @Component({
   selector: "app-rejection-detail",
@@ -30,6 +33,8 @@ export class RejectionDetailComponent implements OnInit {
     private lservice: LoginService,
     private route: ActivatedRoute,
     public service: InboxService,
+    public uservice: UserService,
+    public DPservice: DailyproductionService,
     private router: Router,
     private datePipe: DatePipe
   ) {
@@ -39,17 +44,18 @@ export class RejectionDetailComponent implements OnInit {
 
   ngOnInit() {
     this.resetForm();
-    if (this.service.messageid > 0) {
-      this.service.messagebyid(this.service.messageid);
+    if (this.DPservice.id > 0) {
+      this.service.messagebyid(this.DPservice.id);
     }
-    this.acservice.actionplanData.messageid = this.service.messageid;
+    this.acservice.actionplanData.messageid = this.DPservice.id;
     this.acservice.actionplanData.isopen = "1";
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.acservice.actionplanData.createddate = this.cDate;
     this.acservice.actionplanData.closedate = null;
+    this.uservice.getuserbyid(this.currentUser.id);
 
     console.log(this.service.uid);
-    console.log(this.service.messageid);
+    console.log(this.DPservice.id);
   }
   resetForm(form?: NgForm) {
     if (form != null) {
