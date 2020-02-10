@@ -1,0 +1,61 @@
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- /.card -->
+           
+            <!-- /.col -->
+            <div class="mx-2">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    Reject Calendar
+                  </h3>
+  
+                  <div class="card-tools">
+                    <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                  </div>
+                </div>
+  
+                <!-- /.card-header -->
+                <div class="card-body" >
+                    <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" 
+                        defaultView="dayGridMonth"
+                        [plugins]="calendarPlugins"
+                        [weekends]="true"
+                        [events]="
+                       rejectdata"></full-calendar>
+                   
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer p-0">
+                  <div class="mailbox-controls">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </section>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
