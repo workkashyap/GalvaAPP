@@ -78,9 +78,13 @@
                             ">
                             <tr class="text-center">
                               <td class="mailbox-star">
-                                <button class="btn btn-primary" [ngClass]="{
+                                <button class="btn btn-secondary" *ngIf="message.percentage < 20" [ngClass]="{
                                   'disabled': message.percentage < 20
-                                }" (click)="openRejectiondetail(message.id)">
+                                }">
+                                  View
+                                </button>
+                                <button class="btn btn-primary" *ngIf="message.percentage >=20" (click)="
+                                  openRejectiondetail(message.id)">
                                   View
                                 </button>
                               </td>

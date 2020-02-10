@@ -10,7 +10,7 @@
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
-           
+
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
               <li class="breadcrumb-item active">Rejection Calender</li>
@@ -29,39 +29,41 @@
       <div class="col-md-1"></div>
       <div class="col-md-10">
 
-       
+
         <section class="content">
           <div class="row">
             <div class="col-md-12">
               <div class="mx-2">
                 <div class="card card-primary card-outline">
                   <div class="card-header ">
-                    <div class="row">
-                      <div class="col-md-8">
-                        <h3 class="card-title mt-1">Inbox</h3>
-                        <button (click)="Previous()">Previous</button>
-                        <button (click)="Next()">Next</button>
+                    <div class="row ">
+                      <div class="col-md-5 col-sm-5"></div>
+                      <div class="col-md-2 col-sm-2 mt-2">
+                        <div class="btn-group btn-group-toggle">
+                          <button class="btn btn-primary" (click)="Previous()">Previous</button>
+                          <button class="btn btn-primary " (click)="Next()">Next</button>
+                        </div>
                       </div>
-                      <div class="col-md-2">
-                        
-                      </div>
-                      <div class="col-md-2">
-                        <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                      <div class="col-md-3 col-sm-3"></div>
+                      <div class="col-md-2 col-sm-2 my-2">
+                        <select class=" custom-select" name="myselect" #mySelect>
+                          <option value="0">--Select--</option>
+                          <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantCode}}">
+                            {{ pl.plantShortName }}
+                          </option>
+                        </select>
                       </div>
                     </div>
                     <!-- /.card-tools -->
                   </div>
                   <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" 
-                    defaultView="dayGridMonth"
-                    [plugins]="calendarPlugins"
-                    [header]="options.header" 
-                    [weekends]="true"
-                    [events]="
+                  <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
+                    <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
+                      defaultView="dayGridMonth" [plugins]="calendarPlugins" [header]="options.header" [weekends]="true"
+                      [events]="
                    rejectdata"></full-calendar>
                     <div class="table-responsive mailbox-messages">
-                      
+
                       <!-- /.table -->
                     </div>
                     <!-- /.mail-box-messages -->
@@ -70,12 +72,13 @@
                   <div class="card-footer p-0">
                     <div class="mailbox-controls">
                       <div class="float-right">
-                        
+
                         <div class="btn-group"></div>
                       </div>
                     </div>
                   </div>
                 </div>
+
                 <!-- /.card -->
               </div>
               <!-- /.col -->
