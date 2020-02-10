@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { InboxService } from "../shared/inbox/inbox.service";
 import { DailyproductionService } from "../shared/dailyProduction/dailyproduction.service";
+import { PlantService } from "../shared/plant/plant.service";
 
 @Component({
   selector: "app-rejection",
@@ -26,6 +27,7 @@ export class RejectionComponent implements OnInit {
     public service: InboxService,
     public lservice: LoginService,
     public DPservice: DailyproductionService,
+    public plantservice: PlantService,
     private route: Router
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
@@ -33,7 +35,9 @@ export class RejectionComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.plantservice.getPlantData();
     this.DPservice.getDailyPReject(1010);
+
     this.loading = false;
   }
 
