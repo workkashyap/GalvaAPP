@@ -45,21 +45,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-              <div class="mailbox-read-info">
-                <h5 [innerHTML]="service.inboxData?.subject"></h5>
-                <br />
-                <h6>
-                  From: Admin@GalvaDecoparts.com
-                  <span class="mailbox-read-time float-right">
-                    {{ service.inboxData?.createddate | date: "mediumDate" }}
-                  </span>
-                </h6>
-              </div>
-              <!-- /.mailbox-read-info -->
-
-              <!-- /.mailbox-controls -->
               <div class="mailbox-read-message" [innerHTML]="service.inboxData?.message"></div>
-              <!-- /.mailbox-read-message -->
             </div>
             <!-- /.card-body -->
 
@@ -89,6 +75,21 @@
                         </p-calendar>
                       </div>
                     </div>
+                    <div class="row mt-3">
+                      <div class="col-md-3">
+                        <label>User:</label>
+                      </div>
+                      <div class="col-md-9">
+                        <select class=" custom-select" name="myselect" #mySelect
+                          [(ngModel)]="acservice.actionplanData.loginid">
+                          <option value="0">--Select--</option>
+                          <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
+                            {{ system.username }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
                     <div class="row mt-3">
                       <div class="col-md-3">
                         <label>Description:</label>

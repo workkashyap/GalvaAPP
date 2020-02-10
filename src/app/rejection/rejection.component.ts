@@ -5,6 +5,7 @@ import { LoginService } from "../shared/login/login.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { InboxService } from "../shared/inbox/inbox.service";
+import { DailyproductionService } from "../shared/dailyProduction/dailyproduction.service";
 
 @Component({
   selector: "app-rejection",
@@ -24,6 +25,7 @@ export class RejectionComponent implements OnInit {
     private toastr: ToastrService,
     public service: InboxService,
     public lservice: LoginService,
+    public DPservice: DailyproductionService,
     private route: Router
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
@@ -31,16 +33,20 @@ export class RejectionComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.service.getmessagebyid(this.currentUser.id);
+    this.DPservice.getDailyPReject(1010);
     this.loading = false;
   }
 
-  opendetail(id) {
-    this.service.messageid = id;
+  openRejectiondetail(id) {
+    this.DPservice.id = id;
     this.service.uid = this.currentUser.id;
     this.route.navigate(["/rejection-detail"]);
   }
+
   public SelectedNotification() {
     return this.service.inboxlist.filter(x => x.avgrejper >= 15);
+  }
+  selectedGrid(ev) {
+    this.DPservice.getDailyPReject(ev);
   }
 }
