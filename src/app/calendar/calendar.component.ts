@@ -19,18 +19,11 @@ export class CalendarComponent implements OnInit {
   ];
   constructor() { 
     this.options = {
-
       editable: true,
-      // header: {
-      //   left: 'prev,next today',
-      //   center: 'title',
-      //   right: 'dayGridMonth, listDay'
-      // },
       header: {
         left:   'title',
         center: '',
-        right:  'today',
-        height: 500
+        right:  'today'
     },
       plugins: [dayGridPlugin],
     };
