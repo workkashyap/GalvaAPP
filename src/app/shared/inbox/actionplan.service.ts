@@ -23,10 +23,12 @@ export class ActionplanService {
   public pendingapp: Actionplan[] = [];
   public Completedtask: Actionplan[] = [];
 
+  public allpendinglist: Actionplan[] = [];
   public pendinglist: Actionplan[] = [];
   public completedlist: Actionplan[] = [];
   public openlistlist: Actionplan[] = [];
   public userid: number;
+  public loginid: number;
 
   constructor(public http: HttpClient) {}
 
@@ -49,6 +51,15 @@ export class ActionplanService {
       .toPromise()
       .then(res => {
         this.pendinglist = res as Actionplan[];
+      });
+  }
+
+  public getPendingApprovals(): any {
+    return this.http
+      .get(this.rootUrl + "/actionplans")
+      .toPromise()
+      .then(res => {
+        this.allpendinglist = res as Actionplan[];
       });
   }
 

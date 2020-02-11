@@ -24,6 +24,7 @@ export class PendingtaskComponent implements OnInit {
   cpage: {};
   constructor(
     public service: ActionplanService,
+    public sactionservice: ActionplanService,
     public lservice: LoginService,
     public iservice: InboxService,
     private route: Router,
@@ -34,8 +35,8 @@ export class PendingtaskComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.service.userid);
-    if (this.service.userid != null) {
-      this.service.pendingapproval(this.service.userid);
+    if (this.sactionservice.userid != null) {
+      this.sactionservice.pendingapproval(this.service.userid);
     }
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
   }

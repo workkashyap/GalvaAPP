@@ -30,14 +30,14 @@ export class PendingtaskdetailComponent implements OnInit {
   ) {}
 
   backtopendingtask() {
-   
+    console.log(this.iservice.uid);
+
+    this.iservice.uid = this.currentUser.id;
     this.route.navigate(["./pending-task"]);
   }
   ngOnInit() {
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.resetForm();
-    console.log(this.iservice.uid);
-    console.log(this.service.id);
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.service.getTaskDetailbyid(this.service.id);
   }
