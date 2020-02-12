@@ -35,12 +35,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.User = this.authenticationService.list.filter(c => c.username).toString();
-    // console.log(this.User);
     if (this.authenticationService.currentUser) {
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
       this.service.getPendingApprovals();
-
       this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     }
     this.pageservice.getPagesDetail();
@@ -60,9 +57,5 @@ export class HeaderComponent implements OnInit {
     this.service.id = id;
     this.service.userid = loginid;
     this.route.navigate(["/pending-task-detail"]);
-  }
-  openpage(url) {
-    console.log(url);
-    this.route.navigate(["/" + url]);
   }
 }

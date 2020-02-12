@@ -62,12 +62,12 @@
 </nav>
 <!-- /.navbar -->
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-info" style="background-color:#2579D9;">
+<aside class="main-sidebar sidebar-dark-primary" style="background-color:#2579D9;">
   <!-- Brand Logo -->
 
   <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="row " style="background-color:#0129CD;opacity:0.7; overflow-x:hidden;">
+  <div class=" sidebar ">
+    <div class=" row " style=" background-color:#0129CD;opacity:0.7; overflow-x:hidden;">
       <a href="#" class="nav-logo pl-3">
         <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image pt-1 rounded" />
       </a>
@@ -86,14 +86,13 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item  has-treeview" *ngFor="let task of pageservice.pagelist">
-          <a role="button" (click)="openpage(task.url)" class="nav-link">
+        <li class="nav-item   has-treeview" *ngFor="let task of pageservice.pagelist">
+          <a class="nav-link" routerLink="{{task.url}}" routerLinkActive="active">
             <i class="nav-icon">
               <fa name="circle"></fa>
             </i>
             <p>
               {{task.name}}
-
             </p>
           </a>
           <!-- <ul class="nav list-unstyle " *ngIf="task.parentid == 1">
