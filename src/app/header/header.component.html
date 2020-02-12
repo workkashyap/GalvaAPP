@@ -17,220 +17,100 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i>
-              <fa name="search"></fa>
-            </i>
-          </button>
-        </div>
-      </div>
-    </form>
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i>
-            <fa name="comments"></fa>
-          </i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle" />
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger">
-                    <i>
-                      <fa name="comments"></fa>
-                    </i>
-                  </span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted">
-                  <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                </p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3" />
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted">
-                  <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                </p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../../assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3" />
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted">
-                  <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                </p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i>
             <fa name="bell"></fa>
           </i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-danger navbar-badge">{{service.allpendinglist.length}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-header">2 Notifications</span>
+          <span class="dropdown-header">{{service.allpendinglist.length}} Notifications</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> PLANT CODE: 1010
-            <span class="float-right text-muted text-sm">24/01/2020</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- <i class="fas fa-users mr-2"></i> 8 friend requests -->
-            <i class="fas fa-envelope mr-2"></i> PLANT CODE: 1010
-            <span class="float-right text-muted text-sm">22/01/2020</span>
-          </a>
-          <div class="dropdown-divider"></div>
-
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
+      <li class="nav-item dropdown" *ngFor="
+          let task of service.allpendinglist">
+        <a role=" button" (click)="opendetail(task.id,task.loginid)" class="dropdown-item">
+          <i class="nav-icon">
+            <fa name="envelope"></fa>
+          </i>
+          {{ task.description }}
+          <span class="float-right text-muted text-sm">{{ getdays(task.actiondate, this.cDate) }} days to go</span>
+        </a>
+        <div class="dropdown-divider"></div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " data-widget="control-sidebar" data-slide="true" href="#">
-          <button class="btn " (click)="logout()">
-            <i>
-              <fa name="lock"></fa>
-            </i></button></a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary">
-    <!-- Brand Logo -->
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="row " style="background-color:#002FC2;">
+      <div class="dropdown-divider"></div>
 
-        <div class="col-md-4 col-xs-4 ml-2">
-          <a href="Home.html" class="nav-logo ">
-            <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image    pt-1 rounded" />
-          </a>
-        </div>
-        <div class="col-md-4 col-xs-4"></div>
-      </div>
+      <!-- <div class="dropdown-divider"></div>
+      <a href="#" *ngIf="service.allpendinglist.length > 5" class="dropdown-item dropdown-footer">See All
+        Notifications</a> -->
+</div>
+</li>
+<li class="nav-item">
+  <a role="button" (click)="logout()" class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="../../assets/img/user1.png" class="img-circle elevation-2" alt="User Image" />
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ this.currentUser.username }}</a>
-        </div>
-      </div>
+    <i>
+      <fa name="lock"></fa>
+    </i></a>
+</li>
+</ul>
+</nav>
+<!-- /.navbar -->
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary" style="background-color:#2579D9;">
+  <!-- Brand Logo -->
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a [routerLink]="'./rejection'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <fa name="circle"></fa>
-              </i>
-              <p>
-                Action Plan
-
-              </p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a [routerLink]="'./'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <!-- <fa name="home"></fa> -->
-                <fa name="circle"></fa>
-              </i>
-              <p>
-                <span class="mr-5">My Notification</span>
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a [routerLink]="'./new-task'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <fa name="circle"></fa>
-              </i>
-              <p>
-                Add New Task
-
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="'./task'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <fa name="circle"></fa>
-              </i>
-              <p>
-                My Task
-
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="'./task-approve'" class="nav-link " [routerLinkActive]="['active']">
-              <i class="nav-icon">
-                <fa name="circle"></fa>
-              </i>
-              <p>
-                Approval
-
-              </p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+  <!-- Sidebar -->
+  <div class=" sidebar ">
+    <div class=" row " style=" background-color:#0129CD;opacity:0.7; overflow-x:hidden;">
+      <a href="#" class="nav-logo pl-3">
+        <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image pt-1 rounded" />
+      </a>
     </div>
-    <!-- /.sidebar -->
-  </aside>
+
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="../../assets/img/user1.png" class="img-circle elevation-2" alt="User Image" />
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">{{ this.currentUser.username }}</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item   has-treeview" *ngFor="let task of pageservice.pagelist">
+          <a class="nav-link" routerLink="{{task.url}}" routerLinkActive="active">
+            <i class="nav-icon">
+              <fa name="circle"></fa>
+            </i>
+            <p>
+              {{task.name}}
+            </p>
+          </a>
+          <!-- <ul class="nav list-unstyle " *ngIf="task.parentid == 1">
+            <li class="nav-item ">
+              <a role="button" (click)="openpage(task.url)" class="nav-link">
+                <i class="nav-icon">
+                  <fa name="angle-right"></fa>
+                </i>
+                <p>{{task.name}}</p>
+              </a>
+            </li>
+          </ul> -->
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
 
 </div>

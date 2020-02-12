@@ -24,8 +24,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div class="row">
-      <div class="col-md-1"></div>
+    <div class="row ml-1">
       <div class="col-md-10">
 
 
@@ -55,8 +54,11 @@
                     <!-- /.card-tools -->
                   </div>
                   <!-- /.card-header -->
-                  <div class="card-body p-0">
-
+                  <div class="card-body ">
+                    <div class="todo-list text-success ml-3" data-widget="todo-list"
+                      *ngIf="DPservice.dailyprodlist.length == 0">
+                      No Records Found
+                    </div>
                     <div class="table-responsive mailbox-messages">
 
                       <table class="table table-hover table-striped">
@@ -68,10 +70,7 @@
 
                           </tr>
                         </thead>
-                        <div class="todo-list text-success ml-3" data-widget="todo-list"
-                          *ngIf="DPservice.dailyprodlist.length == 0">
-                          No Records Found
-                        </div>
+
                         <tbody>
                           <ng-container *ngFor="
                             let message of DPservice.dailyprodlist| paginate: { itemsPerPage: 5, currentPage: cpage }
@@ -112,7 +111,7 @@
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer p-0">
-                    <div class="mailbox-controls">
+                    <div class="mailbox-controls" *ngIf="DPservice.dailyprodlist.length > 0">
                       <div class="float-right">
                         <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                         <div class="btn-group"></div>

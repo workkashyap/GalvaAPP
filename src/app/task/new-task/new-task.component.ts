@@ -41,9 +41,9 @@ export class NewTaskComponent implements OnInit {
   }
 
   resetForm(form?: NgForm) {
-    if (form != null) {
-      form.form.reset();
-    }
+    // if (form != null) {
+    //   form.form.reset();
+    // }
     this.acservice.actionplanData = {
       id: 0,
       description: "",
@@ -51,7 +51,7 @@ export class NewTaskComponent implements OnInit {
       loginid: 0,
       actiondate: "",
       createddate: this.cDate,
-      closedate: '',
+      closedate: "",
       isopen: "1",
       resolvedesc: ""
     };

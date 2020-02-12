@@ -33,10 +33,9 @@
           </div>
           <!-- /.col -->
           <div class="mx-2">
-            <div class="card">
+            <div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
+                <h3 class="card-title pt-1">
                   To Do List
                 </h3>
 
@@ -53,8 +52,7 @@
                 <ul class="todo-list" data-widget="todo-list">
                   <li *ngFor="
                       let task of service.tasklist
-                        | paginate: { itemsPerPage: 5, currentPage: cpage }
-                    ">
+                        | paginate: { itemsPerPage: 5, currentPage: cpage}">
                     <div class="row">
                       <div class="col-md-1 ">
                         <button class="btn btn-primary mt-1" (click)="opendetail(task.id)">
@@ -88,7 +86,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer p-0">
-                <div class="mailbox-controls">
+                <div class="mailbox-controls" *ngIf="service.tasklist.length >0">
                   <div class="float-right">
                     <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                     <div class="btn-group"></div>
