@@ -45,39 +45,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <div class="mailbox-controls">
-                  <!-- Check all button -->
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                    <i>
-                      <fa name="square"></fa>
-                    </i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="trash"></fa>
-                      </i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="reply"></fa>
-                      </i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i>
-                        <fa name="share"></fa>
-                      </i>
-                    </button>
-                  </div>
-                  <!-- /.btn-group -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i>
-                      <fa name="sync-alt"></fa>
-                    </i>
-                  </button>
 
-                  <!-- /.float-right -->
-                </div>
                 <div class="table-responsive mailbox-messages">
                   <div class="todo-list text-success" data-widget="todo-list" *ngIf="service.inboxlist.length == 0">
                     No Records Found
@@ -139,7 +107,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer p-0">
-                <div class="mailbox-controls">
+                <div class="mailbox-controls" *ngIf="service.inboxlist.length > 0">
                   <div class="float-right">
                     <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
                     <div class="btn-group"></div>

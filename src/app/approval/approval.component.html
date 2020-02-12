@@ -1,75 +1,83 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Approvals</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Approvals</li>
-          </ol>
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Approvals</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Approvals</li>
+            </ol>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- /.container-fluid -->
-  </section>
+      <!-- /.container-fluid -->
+    </section>
 
-  <!-- Main content -->
-  <section class="content">
-    <!-- Default box -->
-    <div class="card card-solid">
-      <div class="card-body pb-0">
-        <div class="row d-flex align-items-stretch">
-          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch"
-            *ngFor="let user of service.userlist; let i = index ">
-            <div class="card bg-light">
-              <div class="card-header text-muted border-bottom-0">
-                {{ user.designation }}
-              </div>
-              <div class="card-body pt-0">
-                <div class="row">
-                  <div class="col-7">
-                    <h2 class="lead"><b>{{ user.username }}</b></h2>
-                    <p class="text-muted text-sm">
-                      <b>About: </b> {{ user.aboutwork }}
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="mx-2">
+        <div class="card card-solid card-primary card-outline">
+          <div class="card-header">
+            <h3 class="card-title">
+              Inbox
+            </h3>
+          </div>
+          <div class="card-body ">
+            <div class="todo-list text-success" data-widget="todo-list" *ngIf="service.userlist.length == 0">
+              No Records Found
+            </div>
+            <div class="row d-flex align-items-stretch">
 
-                    </p>
-
+              <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" *ngFor="let user of service.userlist">
+                <div class="card bg-light">
+                  <div class="card-header text-muted border-bottom-0">
+                    {{ user.designation }}
                   </div>
-                  <div class="col-5 text-center">
-                    <img src="../../assets/img/user.png" alt="" class="img-circle img-fluid" />
+                  <div class="card-body pt-0">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="lead"><b>{{ user.username }}</b></h2>
+                        <p class="text-muted text-sm">
+                          <b>About: </b> {{ user.aboutwork }}
+                        </p>
+                      </div>
+                      <div class="col-5 text-center">
+                        <img src="../../assets/img/user.png" alt="" class="img-circle img-fluid" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="text-left ml-4">
-                  <button (click)="gotopendingtask(user.id)" class="btn btn-sm btn-warning m-2">
-                    <fa name="user"></fa> Pending
-                  </button>
-                  <button (click)="gotopentask(user.id)" class="btn btn-sm btn-danger m-2">
-                    <fa name="user"></fa> Open
-                  </button>
-                  <button (click)="gotcompletedtask(user.id)" class="btn btn-sm btn-success m-2">
-                    <fa name="user"></fa> Completed
-                  </button>
+                  <div class="card-footer">
+                    <div class="text-left ml-4">
+                      <button (click)="gotopendingtask(user.id)" class="btn btn-sm btn-warning m-2">
+                        <fa name="user"></fa> Pending
+                      </button>
+                      <button (click)="gotopentask(user.id)" class="btn btn-sm btn-danger m-2">
+                        <fa name="user"></fa> Open
+                      </button>
+                      <button (click)="gotcompletedtask(user.id)" class="btn btn-sm btn-success m-2">
+                        <fa name="user"></fa> Completed
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- /.card-body -->
+
+          <!-- /.card-footer -->
         </div>
       </div>
-      <!-- /.card-body -->
-      <div class="card-footer">
-
-      </div>
-      <!-- /.card-footer -->
-    </div>
-    <!-- /.card -->
-  </section>
-  <!-- /.content -->
+      <!-- /.card -->
+    </section>
+    <!-- /.content -->
+  </div>
 </div>
 <!-- /.content-wrapper -->

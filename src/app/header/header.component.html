@@ -17,18 +17,7 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i>
-              <fa name="search"></fa>
-            </i>
-          </button>
-        </div>
-      </div>
-    </form>
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -44,10 +33,12 @@
           <span class="dropdown-header">{{service.allpendinglist.length}} Notifications</span>
           <div class="dropdown-divider"></div>
       <li class="nav-item dropdown" *ngFor="
-          let task of service.allpendinglist
-            | paginate: { itemsPerPage: 5, currentPage: cpage}">
-        <a role="button" (click)="opendetail(task.id,task.loginid)" class="dropdown-item">
-          <i class="fas fa-envelope mr-2"></i> {{ task.description }}
+          let task of service.allpendinglist">
+        <a role=" button" (click)="opendetail(task.id,task.loginid)" class="dropdown-item">
+          <i class="nav-icon">
+            <fa name="envelope"></fa>
+          </i>
+          {{ task.description }}
           <span class="float-right text-muted text-sm">{{ getdays(task.actiondate, this.cDate) }} days to go</span>
         </a>
         <div class="dropdown-divider"></div>
@@ -55,35 +46,31 @@
 
       <div class="dropdown-divider"></div>
 
-      <div class="dropdown-divider"></div>
+      <!-- <div class="dropdown-divider"></div>
       <a href="#" *ngIf="service.allpendinglist.length > 5" class="dropdown-item dropdown-footer">See All
-        Notifications</a>
+        Notifications</a> -->
 </div>
 </li>
 <li class="nav-item">
-  <a class="nav-link " data-widget="control-sidebar" data-slide="true" href="#">
-    <button class="btn " (click)="logout()">
-      <i>
-        <fa name="lock"></fa>
-      </i></button></a>
+  <a role="button" (click)="logout()" class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+
+    <i>
+      <fa name="lock"></fa>
+    </i></a>
 </li>
 </ul>
 </nav>
 <!-- /.navbar -->
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary">
+<aside class="main-sidebar sidebar-dark-info" style="background-color:#2579D9;">
   <!-- Brand Logo -->
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="row " style="background-color:#002FC2;">
-
-      <div class="col-md-4 col-xs-4 ml-2">
-        <a href="Home.html" class="nav-logo ">
-          <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image    pt-1 rounded" />
-        </a>
-      </div>
-      <div class="col-md-4 col-xs-4"></div>
+    <div class="row " style="background-color:#0129CD;opacity:0.7; overflow-x:hidden;">
+      <a href="#" class="nav-logo pl-3">
+        <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image pt-1 rounded" />
+      </a>
     </div>
 
     <!-- Sidebar user panel (optional) -->
@@ -100,7 +87,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item  has-treeview" *ngFor="let task of pageservice.pagelist">
-          <a role="button" (click)="openpage(task.url)" class="nav-link" *ngIf="task.parentid == 0">
+          <a role="button" (click)="openpage(task.url)" class="nav-link">
             <i class="nav-icon">
               <fa name="circle"></fa>
             </i>
@@ -109,7 +96,7 @@
 
             </p>
           </a>
-          <ul class="nav list-unstyle " *ngIf="task.parentid == 1">
+          <!-- <ul class="nav list-unstyle " *ngIf="task.parentid == 1">
             <li class="nav-item ">
               <a role="button" (click)="openpage(task.url)" class="nav-link">
                 <i class="nav-icon">
@@ -118,7 +105,7 @@
                 <p>{{task.name}}</p>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </li>
       </ul>
     </nav>
