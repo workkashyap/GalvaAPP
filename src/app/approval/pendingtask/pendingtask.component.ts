@@ -17,7 +17,7 @@ import { DatePipe } from "@angular/common";
 })
 export class PendingtaskComponent implements OnInit {
   public currentUser: User;
-
+  public loading = false;
   public description: string;
   public days: number;
   public cDate: string;
@@ -34,11 +34,13 @@ export class PendingtaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     console.log(this.service.userid);
     if (this.sactionservice.userid != null) {
       this.sactionservice.pendingapproval(this.service.userid);
     }
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.loading = false;
   }
   getdays(currentdate, actiondate) {
     this.days = Math.abs(moment(actiondate).diff(moment(currentdate), "days"));

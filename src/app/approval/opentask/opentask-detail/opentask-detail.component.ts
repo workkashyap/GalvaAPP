@@ -19,6 +19,7 @@ export class OpentaskDetailComponent implements OnInit {
   public actionvalue: string;
   public cDate: string;
   public newactiondate: string;
+  public loading = false;
 
   constructor(
     public service: ActionplanService,
@@ -33,12 +34,14 @@ export class OpentaskDetailComponent implements OnInit {
     this.route.navigate(["./open-task"]);
   }
   ngOnInit() {
+    this.loading = true;
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.resetForm();
     console.log(this.iservice.uid);
     console.log(this.service.id);
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.service.getTaskDetailbyid(this.service.id);
+    this.loading = false;
   }
 
   resetForm(form?: NgForm) {
