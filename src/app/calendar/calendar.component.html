@@ -60,8 +60,7 @@
                   <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
                     <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                       defaultView="dayGridMonth" [plugins]="calendarPlugins" [header]="options.header" [weekends]="true"
-                      [events]="
-                   rejectdata"></full-calendar>
+                      [displayEventTime]="false" [events]="dpservice.dailyprodlist"></full-calendar>
                     <div class="table-responsive mailbox-messages">
 
                       <!-- /.table -->

@@ -77,12 +77,12 @@
                             ">
                             <tr class="text-center">
                               <td class="mailbox-star">
-                                <button class="btn btn-secondary" *ngIf="message.percentage < 20" [ngClass]="{
-                                  'disabled': message.percentage < 20
+                                <button class="btn btn-secondary" *ngIf="message.title < 20" [ngClass]="{
+                                  'disabled': message.title < 20
                                 }">
                                   View
                                 </button>
-                                <button class="btn btn-primary" *ngIf="message.percentage >=20" (click)="
+                                <button class="btn btn-primary" *ngIf="message.title >=20" (click)="
                                   openRejectiondetail(message.id)">
                                   View
                                 </button>
@@ -93,14 +93,14 @@
                               <td>
                                 <span class=" badge px-3 text-lg  text-right align-self-center " id="result" [ngClass]="{
                                 'badge-danger':
-                                message.percentage >=20 ,
+                                message.title >=20 ,
                                 'badge-warning':
-                                message.percentage >=15 && message.percentage<20,
+                                message.title >=15 && message.title<20,
                                 'badge-success':
-                                message.percentage<15
+                                message.title<15
                                 
                               }">
-                                  {{ message.percentage }}
+                                  {{ message.title }}
                                 </span>
                               </td>
                             </tr>

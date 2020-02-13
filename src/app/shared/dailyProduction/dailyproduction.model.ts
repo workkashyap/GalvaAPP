@@ -1,7 +1,7 @@
 export class Dailyproduction {
   id: number;
   date: string;
-  percentage: number;
+  title: number;
   value: number;
   plant: number;
   backgroundColor: string;
