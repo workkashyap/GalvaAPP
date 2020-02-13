@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
   public cDate: string;
 
   constructor(
-    private router: Router,
     private authenticationService: LoginService,
     public service: ActionplanService,
     public iservice: InboxService,
@@ -45,7 +44,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(["/login"]);
+    this.route.navigate(["/login"]);
   }
 
   getdays(currentdate, actiondate) {

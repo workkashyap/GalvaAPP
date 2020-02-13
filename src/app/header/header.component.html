@@ -12,7 +12,7 @@
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a routerLink="./home" routerLinkActive="active" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -62,13 +62,13 @@
 </nav>
 <!-- /.navbar -->
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary" style="background-color:#2579D9;">
+<aside class="main-sidebar sidebar-dark-light" style="background-color:#2579D9;">
   <!-- Brand Logo -->
 
   <!-- Sidebar -->
   <div class=" sidebar ">
     <div class=" row " style=" background-color:#0129CD;opacity:0.7; overflow-x:hidden;">
-      <a href="#" class="nav-logo pl-3">
+      <a routerLink="./home" routerLinkActive="active" class="nav-logo pl-3">
         <img src="../../assets/img/0_galva.jpg" alt="Galva Logo" class="brand-image pt-1 rounded" />
       </a>
     </div>
@@ -79,7 +79,7 @@
         <img src="../../assets/img/user1.png" class="img-circle elevation-2" alt="User Image" />
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ this.currentUser.username }}</a>
+        <a routerLink="./home" routerLinkActive="active" class="d-block">{{ this.currentUser.username }}</a>
       </div>
     </div>
 

@@ -14,7 +14,7 @@ import { User } from "src/app/shared/login/User.model";
 })
 export class CompletedtaskComponent implements OnInit {
   public currentUser: User;
-
+  public loading = false;
   public description: string;
   public days: number;
   public cDate: string;
@@ -30,11 +30,13 @@ export class CompletedtaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     console.log(this.service.userid);
     if (this.service.userid != null) {
       this.service.completedtask(this.service.userid);
     }
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.loading = false;
   }
   getdays(currentdate, actiondate) {
     this.days = Math.abs(moment(actiondate).diff(moment(currentdate), "days"));
