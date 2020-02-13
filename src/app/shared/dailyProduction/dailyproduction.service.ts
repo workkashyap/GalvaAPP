@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 export class DailyproductionService {
   readonly rootUrl = environment.apiUrl;
   public dailyprodlist: Dailyproduction[] = [];
+  public title: string[] = [];
+  public date: string;
 
   public id: number;
 
@@ -28,6 +30,9 @@ export class DailyproductionService {
       .toPromise()
       .then(res => {
         this.dailyprodlist = res as Dailyproduction[];
+        console.log(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date);
+        this.date = this.dailyprodlist[0].date;
+        console.log(this.date);
       });
   }
 }
