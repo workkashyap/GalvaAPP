@@ -31,8 +31,6 @@ export class DailyproductionService {
       .then(res => {
         this.dailyprodlist = res as Dailyproduction[];
         console.log(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date);
-        this.date = this.dailyprodlist[0].date;
-        console.log(this.date);
       });
   }
 }

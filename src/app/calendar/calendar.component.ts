@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   public sDate: Date;
   public dailyprodlist: Dailyproduction[] = [];
   public title: string;
+  public selectedcode: number;
   calendarPlugins = [dayGridPlugin];
   @ViewChild("calendar", { static: false })
   calendarComponent: FullCalendarComponent;
@@ -30,7 +31,6 @@ export class CalendarComponent implements OnInit {
     public dpservice: DailyproductionService,
     public datePipe: DatePipe
   ) {
-    this.dpservice.getDailyPReject(1010);
     this.options = {
       editable: true,
       header: {
@@ -43,6 +43,8 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.plantservice.getPlantData();
+    this.selectedcode = 1010;
     // this.rejectdata = [
     //   {
     //     title: val[0].title,
@@ -51,6 +53,9 @@ export class CalendarComponent implements OnInit {
     //     borderColor: "#da532c"
     //   }
     // ];
+    this.startdate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.dpservice.getRejectcalendar( this.selectedcode, this.startdate);
+
   }
 
   Next() {
@@ -58,9 +63,21 @@ export class CalendarComponent implements OnInit {
     this.calendarApi.next();
     this.sDate = this.calendarApi.getDate();
     this.startdate = this.datePipe.transform(this.sDate, "yyyy-MM-dd");
-  }
+   }
   Previous() {
     this.calendarApi = this.calendarComponent.getApi();
     this.calendarApi.prev();
+    this.sDate = this.calendarApi.getDate();
+    this.startdate = this.datePipe.transform(this.sDate, "yyyy-MM-dd");
   }
+
+  loaddata() {
+    this.dpservice.getRejectcalendar( this.selectedcode, this.startdate);
+  }
+  selectedGrid(ev) {
+    this.selectedcode = ev;
+    this.dpservice.getRejectcalendar(ev, this.startdate);
+   
+  }
+
 }
