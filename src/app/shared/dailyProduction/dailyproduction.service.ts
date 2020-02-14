@@ -25,17 +25,21 @@ export class DailyproductionService {
   //       this.dailyprodlist = res as Dailyproduction[];
   //     });
   // }
-  public getRejectcalendar(id, date): any {
-    return this.http
-      .get(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date)
-      .toPromise()
-      .then(res => {
-        this.dailyprodlist = res as Dailyproduction[];
-        console.log(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date);
-      });
-  }
+  // public getRejectcalendar(id, date): any {
+  //   return this.http
+  //     .get(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date)
+  //     .toPromise()
+  //     .then(res => {
+  //       this.dailyprodlist = res as Dailyproduction[];
+  //       console.log(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date);
+  //     });
+  // }
   public getDailyPReject(id): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject');
+
+   }
+   public getRejectcalendar(id, date): Observable<Dailyproduction[]> {
+    return this.http.get<Dailyproduction[]>(this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date);
 
    }
 }

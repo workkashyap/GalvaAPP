@@ -60,6 +60,7 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
+                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
                     <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                       defaultView="dayGridMonth" [plugins]="calendarPlugins" [header]="options.header" [weekends]="true"
                       [displayEventTime]="false" [events]="dpservice.dailyprodlist"></full-calendar>
