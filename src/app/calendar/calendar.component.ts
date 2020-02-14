@@ -26,6 +26,7 @@ export class CalendarComponent implements OnInit {
 
   public startdate: string;
   public rejectdata: any;
+  public loading = false;
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -43,18 +44,17 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.plantservice.getPlantData();
-    this.selectedcode = 1010;
-    // this.rejectdata = [
-    //   {
-    //     title: val[0].title,
-    //     date: "2020-02-08",
-    //     backgroundColor: "#da532c",
-    //     borderColor: "#da532c"
-    //   }
-    // ];
+   
     this.startdate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate);
+    this.loading = true;
+    this.dpservice.getRejectcalendar(1010, this.startdate)
+    .toPromise()
+     .then(res => {
+      this.dpservice.dailyprodlist = res as Dailyproduction[];
+      this.loading = false;
+    });
+    this.selectedcode = 1010;
+    this.plantservice.getPlantData();
   }
 
   Next() {
@@ -71,10 +71,20 @@ export class CalendarComponent implements OnInit {
   }
 
   loaddata() {
-    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate);
+    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate)
+    .toPromise()
+     .then(res => {
+      this.dpservice.dailyprodlist = res as Dailyproduction[];
+      this.loading = false;
+    });
   }
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.dpservice.getRejectcalendar(ev, this.startdate);
+    this.dpservice.getRejectcalendar(ev, this.startdate)
+    .toPromise()
+     .then(res => {
+      this.dpservice.dailyprodlist = res as Dailyproduction[];
+      this.loading = false;
+    });
   }
 }
