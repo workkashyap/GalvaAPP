@@ -1,6 +1,6 @@
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="overflow-y: hidden;overflow-x: hidden;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -26,10 +26,8 @@
 
     <!-- Main content -->
     <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
 
-
+      <div class="col-md-10 ml-2">
         <section class="content">
           <div class="row">
             <div class="col-md-12">
@@ -60,7 +58,7 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
-                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                     <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                       defaultView="dayGridMonth" [plugins]="calendarPlugins" [header]="options.header" [weekends]="true"
                       [displayEventTime]="false" [events]="dpservice.dailyprodlist"></full-calendar>
@@ -72,12 +70,7 @@
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer p-0">
-                    <div class="mailbox-controls">
-                      <div class="float-right">
 
-                        <div class="btn-group"></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 

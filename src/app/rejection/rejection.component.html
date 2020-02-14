@@ -1,6 +1,6 @@
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="overflow-y: hidden;overflow-x: hidden;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -60,7 +60,7 @@
                       No Records Found
                     </div>
                     <div class="table-responsive mailbox-messages">
-                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                       <table class="table table-hover table-striped">
                         <thead *ngIf="DPservice.dailyprodlist.length > 0">
                           <tr class="text-center">

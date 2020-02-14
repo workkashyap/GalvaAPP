@@ -44,15 +44,15 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-   
     this.startdate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.loading = true;
-    this.dpservice.getRejectcalendar(1010, this.startdate)
-    .toPromise()
-     .then(res => {
-      this.dpservice.dailyprodlist = res as Dailyproduction[];
-      this.loading = false;
-    });
+    this.dpservice
+      .getRejectcalendar(1010, this.startdate)
+      .toPromise()
+      .then(res => {
+        this.dpservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
     this.selectedcode = 1010;
     this.plantservice.getPlantData();
   }
@@ -71,20 +71,22 @@ export class CalendarComponent implements OnInit {
   }
 
   loaddata() {
-    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate)
-    .toPromise()
-     .then(res => {
-      this.dpservice.dailyprodlist = res as Dailyproduction[];
-      this.loading = false;
-    });
+    this.dpservice
+      .getRejectcalendar(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        this.dpservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
   }
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.dpservice.getRejectcalendar(ev, this.startdate)
-    .toPromise()
-     .then(res => {
-      this.dpservice.dailyprodlist = res as Dailyproduction[];
-      this.loading = false;
-    });
+    this.dpservice
+      .getRejectcalendar(ev, this.startdate)
+      .toPromise()
+      .then(res => {
+        this.dpservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
   }
 }
