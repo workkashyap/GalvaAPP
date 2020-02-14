@@ -7,6 +7,7 @@ import * as moment from "moment";
 import { DatePipe } from "@angular/common";
 import { InboxService } from "../shared/inbox/inbox.service";
 import { PagesService } from "../shared/pages/pages.service";
+import { Actionplan } from "../shared/inbox/actionplan.model";
 
 @Component({
   selector: "app-header",
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   User: string;
   public days: number;
   public cDate: string;
+  public loading = false;
 
   constructor(
     private authenticationService: LoginService,
@@ -34,6 +36,14 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
+    this.service
+      .getPendingApprovals()
+      .toPromise()
+      .then(res => {
+        this.service.allpendinglist = res as Actionplan[];
+      });
+
     if (this.authenticationService.currentUser) {
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
       this.service.getPendingApprovals();

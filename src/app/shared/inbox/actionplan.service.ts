@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Actionplan } from "./actionplan.model";
 import { TaskComponent } from "src/app/task/task.component";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -54,13 +55,17 @@ export class ActionplanService {
       });
   }
 
-  public getPendingApprovals(): any {
-    return this.http
-      .get(this.rootUrl + "/actionplans")
-      .toPromise()
-      .then(res => {
-        this.allpendinglist = res as Actionplan[];
-      });
+  // public getPendingApprovals(): any {
+  //   return this.http
+  //     .get(this.rootUrl + "/actionplans")
+  //     .toPromise()
+  //     .then(res => {
+  //       this.allpendinglist = res as Actionplan[];
+  //     });
+  // }
+
+  public getPendingApprovals(): Observable<Actionplan[]> {
+    return this.http.get<Actionplan[]>(this.rootUrl + "/actionplans");
   }
 
   public completedtask(id): any {
