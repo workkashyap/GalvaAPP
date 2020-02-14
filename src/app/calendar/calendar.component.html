@@ -36,24 +36,19 @@
               <div class="mx-2">
                 <div class="card card-primary card-outline">
                   <div class="card-header ">
-                    <div class="row ">
-                      <div class="col-md-5 col-sm-5">
-                        <button class="btn btn-primary" (click)="Previous()">Previous</button>
-                        <button class="btn btn-primary " (click)="Next()">Next</button>
-                    
-                      </div>
-                      <div class="col-md-2 col-sm-2 mt-2">
-                        <div class="btn-group btn-group-toggle">
-                          
-                        <button class="btn btn-primary " (click)="loaddata()">Load Data</button>
-               
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6">
+                        <div class="btn-group btn-group-toggle btn-sm" role="group">
+                          <button class="btn btn-primary" (click)="Previous()">Previous</button>
+                          <button class="btn btn-primary" (click)="Next()">Next</button>
                         </div>
-                     
+                        <button class="btn btn-primary " (click)="loaddata()">Load Data</button>
                       </div>
                       <div class="col-md-3 col-sm-3"></div>
-                      <div class="col-md-2 col-sm-2 my-2">
-               
-                        <select class=" custom-select" name="myselect" #mySelect  (change)="selectedGrid($event.target.value)">
+                      <div class="col-md-3 col-sm-3 px-3">
+
+                        <select class=" custom-select" name="myselect" #mySelect
+                          (change)="selectedGrid($event.target.value)">
                           <!-- <option value="0">--Select--</option> -->
                           <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantCode}}">
                             {{ pl.plantShortName }}

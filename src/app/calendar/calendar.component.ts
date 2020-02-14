@@ -54,8 +54,7 @@ export class CalendarComponent implements OnInit {
     //   }
     // ];
     this.startdate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.dpservice.getRejectcalendar( this.selectedcode, this.startdate);
-
+    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate);
   }
 
   Next() {
@@ -63,7 +62,7 @@ export class CalendarComponent implements OnInit {
     this.calendarApi.next();
     this.sDate = this.calendarApi.getDate();
     this.startdate = this.datePipe.transform(this.sDate, "yyyy-MM-dd");
-   }
+  }
   Previous() {
     this.calendarApi = this.calendarComponent.getApi();
     this.calendarApi.prev();
@@ -72,12 +71,10 @@ export class CalendarComponent implements OnInit {
   }
 
   loaddata() {
-    this.dpservice.getRejectcalendar( this.selectedcode, this.startdate);
+    this.dpservice.getRejectcalendar(this.selectedcode, this.startdate);
   }
   selectedGrid(ev) {
     this.selectedcode = ev;
     this.dpservice.getRejectcalendar(ev, this.startdate);
-   
   }
-
 }
