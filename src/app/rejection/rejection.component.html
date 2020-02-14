@@ -60,7 +60,7 @@
                       No Records Found
                     </div>
                     <div class="table-responsive mailbox-messages">
-
+                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
                       <table class="table table-hover table-striped">
                         <thead *ngIf="DPservice.dailyprodlist.length > 0">
                           <tr class="text-center">
