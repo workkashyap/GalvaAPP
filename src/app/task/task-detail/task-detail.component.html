@@ -4,152 +4,158 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
+
         <div class="row mb-2 ml-1">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Task Detail</h1>
+
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-              <li class="breadcrumb-item active">My Task</li>
+              <li class="breadcrumb-item active">Daily Rejection</li>
             </ol>
           </div>
-          <!-- /.col -->
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /.container-fluid -->
       </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+      <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="col-md-3">
-            <Button (click)="backtotask()" class="btn btn-primary btn-block mb-3">Back to Task</Button>
-          </div>
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="col-md-3">
+            </div>
 
-          <!-- /.card -->
-          <section class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                  <!-- general form elements -->
-                  <div class="card card-primary card-outline">
-                    <div class="card-header">
-                      <h3 class="card-title">Read Task</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
-                      <div class="card-body">
-                        <div class="row">
+            <!-- /.card -->
+            <section class="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <div class="row ">
+                          <div class="col-md-11">
+                            <h3 class="card-title-md"> Task Detail</h3>
+                          </div>
+                          <div class="col-md-1">
+                            <Button (click)="backtotask()" class="btn btn-primary btn-block mb-3">Back</Button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                        <div class="card-body">
+                          <div class="row">
 
-                          <div class="col-md-8">
-                            <div class="form-group">
-                              <div class="row">
-                                <input type="hidden" name="isopen" #isopen="ngModel"
-                                  [(ngModel)]="service.taskdata.isopen" />
+                            <div class="col-md-8">
+                              <div class="form-group">
+                                <div class="row">
+                                  <input type="hidden" name="isopen" #isopen="ngModel"
+                                    [(ngModel)]="service.taskdata.isopen" />
 
-                                <div class="col-md-2  text-center">
-                                  <label for="exampleInputEmail1">Created Date:</label>
-                                </div>
-                                <div class="col-md-7">
-                                  <span class="mailbox-read-time justify-left text-md" name="createddate">
-                                    {{
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputEmail1">Created Date:</label>
+                                  </div>
+                                  <div class="col-md-7">
+                                    <span class="mailbox-read-time justify-left text-md" name="createddate">
+                                      {{
                                       service.taskdata?.createddate
                                         | date: "mediumDate"
                                     }}
-                                  </span>
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2  text-center">
-                                  <label for="exampleInputPassword1">Action Date:</label>
-                                </div>
-                                <div class="col-md-7">
-                                  <span class="mailbox-read-time float-left text-md" name="actiondate">
-                                    {{
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Action Date:</label>
+                                  </div>
+                                  <div class="col-md-7">
+                                    <span class="mailbox-read-time float-left text-md" name="actiondate">
+                                      {{
                                       service.taskdata?.actiondate
                                         | date: "mediumDate"
                                     }}
-                                  </span>
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2  text-center">
-                                  <label for="exampleInputPassword1">Description:</label>
-                                </div>
-                                <div class="col-md-7">
-                                  <span class="mailbox-read-time float-left text-md" name="description">
-                                    {{ service.taskdata?.description }}
-                                  </span>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Description:</label>
+                                  </div>
+                                  <div class="col-md-7">
+                                    <span class="mailbox-read-time float-left text-md" name="description">
+                                      {{ service.taskdata?.description }}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2  text-center">
-                                  <label for="exampleInputPassword1">Reason for Completion:</label>
-                                </div>
-                                <div class="col-md-9">
-                                  <textarea class="form-control" rows="2" name="resolvedesc" #resolvedesc="ngModel"
-                                    [(ngModel)]="service.taskdata.resolvedesc"></textarea>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Reason for Completion:</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <textarea class="form-control" rows="2" name="resolvedesc" #resolvedesc="ngModel"
+                                      [(ngModel)]="service.taskdata.resolvedesc"></textarea>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <!-- /.card-body -->
+                        <!-- /.card-body -->
 
-                      <div class="card-footer">
-                        <div class="row">
-                          <div class="col-md-5 text-center"></div>
-                          <div class="col-md-2">
-                            <!-- <button class="btn btn-warning  float-left px-3">
+                        <div class="card-footer">
+                          <div class="row">
+                            <div class="col-md-5 text-center"></div>
+                            <div class="col-md-2">
+                              <!-- <button class="btn btn-warning  float-left px-3">
                               Reopen
                             </button> -->
-                            <button type="submit" class="btn btn-success float-left">
-                              Send for Approval
-                            </button>
+                              <button type="submit" class="btn btn-success float-left">
+                                Send for Approval
+                              </button>
+                            </div>
+                            <div class="col-md-5 text-center"></div>
                           </div>
-                          <div class="col-md-5 text-center"></div>
                         </div>
-                      </div>
-                    </form>
-                    <!-- </form> -->
-                  </div>
-                  <!-- /.card -->
+                      </form>
+                      <!-- </form> -->
+                    </div>
+                    <!-- /.card -->
 
-                  <!-- /.card -->
+                    <!-- /.card -->
+                  </div>
+                  <!--/.col (left) -->
+                  <!--/.col (right) -->
                 </div>
-                <!--/.col (left) -->
-                <!--/.col (right) -->
+                <!-- /.row -->
               </div>
-              <!-- /.row -->
+              <!-- /.container-fluid -->
+            </section>
+            <!-- /.col -->
+            <div class="mx-2">
+              <div></div>
             </div>
-            <!-- /.container-fluid -->
-          </section>
-          <!-- /.col -->
-          <div class="mx-2">
-            <div></div>
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
         </div>
-      </div>
-      <!-- /.row -->
-    </section>
+        <!-- /.row -->
+      </section>
+    </div>
+    <!-- /.content -->
   </div>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+  <!-- /.content-wrapper -->

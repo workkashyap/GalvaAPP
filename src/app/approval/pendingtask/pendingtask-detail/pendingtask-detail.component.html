@@ -6,7 +6,6 @@
       <div class="container-fluid">
         <div class="row mb-2 ml-1">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Task Detail</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -26,11 +25,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-md-12">
-          <div class="col-md-3">
-            <Button (click)="backtopendingtask()" class="btn btn-primary btn-block mb-3">Back to Pending
-              Approvals</Button>
-          </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
 
           <!-- /.card -->
           <section class="content">
@@ -41,7 +38,14 @@
                   <!-- general form elements -->
                   <div class="card card-primary card-outline">
                     <div class="card-header">
-                      <h3 class="card-title">Read Task</h3>
+                      <div class="row ">
+                        <div class="col-md-11">
+                          <h3 class="card-title-md">Pending Task Detail</h3>
+                        </div>
+                        <div class="col-md-1">
+                          <Button (click)="backtopendingtask()" class="btn btn-primary btn-block mb-3">Back</Button>
+                        </div>
+                      </div>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->

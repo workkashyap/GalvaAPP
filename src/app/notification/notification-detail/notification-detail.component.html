@@ -1,78 +1,82 @@
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Read Task</h1>
-        </div>
-        <!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item active"><a href="Home.html">Home</a></li>
-            <li class="breadcrumb-item active">
-              <a href="myTask.html">My Task</a>
-            </li>
-            <li class="breadcrumb-item active">Read Message</li>
-          </ol>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
 
-  <section class="content">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-3">
-          <a [routerLink]="'./home'" class="btn btn-primary btn-block mb-3">Back to Notification</a>
-        </div>
-
-        <div class="mx-2">
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title">Read Message</h3>
-
-              <div class="card-tools">
-                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i
-                    class="fas fa-chevron-left"></i></a>
-                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i
-                    class="fas fa-chevron-right"></i></a>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <div class="mailbox-read-info">
-                <h5 [innerHTML]="service.inboxData?.subject"></h5>
-                <br />
-                <h6>
-                  From: Admin@GalvaDecoparts.com
-                  <span class="mailbox-read-time float-right">
-                    {{ service.inboxData?.createddate | date: "mediumDate" }}
-                  </span>
-                </h6>
-              </div>
-              <!-- /.mailbox-read-info -->
-
-              <!-- /.mailbox-controls -->
-              <div class="mailbox-read-message" [innerHTML]="service.inboxData?.message"></div>
-              <!-- /.mailbox-read-message -->
-            </div>
-            <!-- /.card-body -->
-
-            <!-- /.card-footer -->
-            <div class="card-footer">
-
-            </div>
-
-            <!-- /.card-footer -->
           </div>
-          <!-- /.card -->
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">
+                <a href="myTask.html">My Task</a>
+              </li>
+              <li class="breadcrumb-item active">Read Message</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="col-md-3">
+
+          </div>
+
+          <div class="mx-2">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+
+                <div class="row ">
+                  <div class="col-md-11">
+                    <h3 class="card-title-md">Read Notification</h3>
+                  </div>
+                  <div class="col-md-1">
+                    <a [routerLink]="'./home'" class="btn btn-primary btn-block mb-3">Back</a>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="mailbox-read-info">
+                  <h5 [innerHTML]="service.inboxData?.subject"></h5>
+                  <br />
+                  <h6>
+                    From: Admin@GalvaDecoparts.com
+                    <span class="mailbox-read-time float-right">
+                      {{ service.inboxData?.createddate | date: "mediumDate" }}
+                    </span>
+                  </h6>
+                </div>
+                <!-- /.mailbox-read-info -->
+
+                <!-- /.mailbox-controls -->
+                <div class="mailbox-read-message" [innerHTML]="service.inboxData?.message"></div>
+                <!-- /.mailbox-read-message -->
+              </div>
+              <!-- /.card-body -->
+
+              <!-- /.card-footer -->
+              <div class="card-footer">
+
+              </div>
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

@@ -34,6 +34,7 @@ import { RejectionComponent } from "./rejection/rejection.component";
 import { RejectionDetailComponent } from "./rejection/rejection-detail/rejection-detail.component";
 import { OpentaskDetailComponent } from "./approval/opentask/opentask-detail/opentask-detail.component";
 import { CompletedTaskDetailComponent } from "./approval/completedtask/completed-task-detail/completed-task-detail.component";
+import { ChartComponent } from "./chart/chart.component";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CompletedTaskDetailComponent } from "./approval/completedtask/completed
     RejectionComponent,
     RejectionDetailComponent,
     OpentaskDetailComponent,
-    CompletedTaskDetailComponent
+    CompletedTaskDetailComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -151,6 +153,11 @@ import { CompletedTaskDetailComponent } from "./approval/completedtask/completed
       {
         path: "rejection-detail",
         component: RejectionDetailComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "chart",
+        component: ChartComponent,
         canActivate: [AuthGuard]
       },
 

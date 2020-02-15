@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2 ml-1">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Notifications</h1>
+
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -23,16 +23,22 @@
 
     <section class="content">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
           <div class="mx-2">
             <div class="card card-primary card-outline">
               <div class="card-header ">
-                <h3 class="card-title mt-1">Inbox</h3>
+                <div class="row">
+                  <div class="col-md-10">
+                    <h3 class="card-title-md">Notifications</h3>
+                  </div>
+                  <div class="col-md-2">
 
-                <div class="card-tools">
-                  <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                    <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+
+                  </div>
+                  <!-- /.card-tools -->
                 </div>
-                <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body ">
@@ -58,7 +64,8 @@
                             View
                           </button>
                         </td>
-                        <td class="text-danger" *ngIf="message.avgrejper != null"> Reject: {{ message.avgrejper }}%</td>
+                        <td class="text-danger" *ngIf="message.avgrejper != null"> Reject: {{ message.avgrejper }}%
+                        </td>
                         <td *ngIf="message.avgrejper == null"></td>
                         <td class="mailbox-name">
                           <p [ngStyle]="{

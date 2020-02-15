@@ -41,6 +41,7 @@ export class RejectionComponent implements OnInit {
       .then(res => {
         this.DPservice.dailyprodlist = res as Dailyproduction[];
         this.loading = false;
+        console.log(res);
       });
     this.plantservice.getPlantData();
   }

@@ -1,124 +1,124 @@
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Read Rejection</h1>
+<div class="wrapper" style="overflow-y: hidden;">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">
+                <a href="myTask.html">My Task</a>
+              </li>
+              <li class="breadcrumb-item active">Read Message</li>
+            </ol>
+          </div>
+          <!-- /.col -->
         </div>
-        <!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item active"><a href="Home.html">Home</a></li>
-            <li class="breadcrumb-item active">
-              <a href="myTask.html">My Task</a>
-            </li>
-            <li class="breadcrumb-item active">Read Message</li>
-          </ol>
-        </div>
-        <!-- /.col -->
+        <!-- /.row -->
       </div>
-      <!-- /.row -->
+      <!-- /.container-fluid -->
     </div>
-    <!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+    <!-- /.content-header -->
 
-  <section class="content">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-3">
-          <Button (click)="backtoRejection()" class="btn btn-primary btn-block mb-3">Back to Rejection</Button>
-        </div>
+    <section class="content">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="col-md-2">
 
-        <div class="mx-2">
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title">Read Message</h3>
+          </div>
 
-              <div class="card-tools">
-                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i
-                    class="fas fa-chevron-left"></i></a>
-                <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i
-                    class="fas fa-chevron-right"></i></a>
+          <div class="mx-2">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <div class="row ">
+                  <div class="col-md-11">
+                    <h3 class="card-title-md">Read Rejection</h3>
+                  </div>
+                  <div class="col-md-1">
+                    <Button (click)="backtoRejection()" class="btn btn-primary btn-block ">Back</Button>
+                  </div>
+                </div>
               </div>
+              <form #form="ngForm" autocomplete="off" (submit)="OnSubmit(form)">
+                <div class="card-body">
+                  <input type="hidden" name="id" #id="ngModel" [(ngModel)]="acservice.actionplanData.id" />
+                  <input type="hidden" name="messageid" #messageid="ngModel"
+                    [(ngModel)]="acservice.actionplanData.messageid" />
+                  <input type="hidden" name="loginid" #loginid="ngModel"
+                    [(ngModel)]="acservice.actionplanData.loginid" />
+                  <input type="hidden" name="isopen" #isopen="ngModel" [(ngModel)]="acservice.actionplanData.isopen" />
+                  <input type="hidden" name="createddate" #createddate="ngModel"
+                    [(ngModel)]="acservice.actionplanData.createddate" />
+
+                  <input type="hidden" name="closedate" #createddate="ngModel"
+                    [(ngModel)]="acservice.actionplanData.closedate" />
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label>Action Date:</label>
+                        </div>
+                        <div class="col-md-9">
+                          <p-calendar aria-placeholder="Action Date" name="actiondate" #actiondate="ngModel"
+                            [(ngModel)]="acservice.actionplanData.actiondate" class="input-append date"
+                            [showIcon]="true">
+                          </p-calendar>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-md-3">
+                          <label>User:</label>
+                        </div>
+                        <div class="col-md-9">
+                          <select class=" custom-select" name="myselect" #mySelect
+                            [(ngModel)]="acservice.actionplanData.loginid" (change)="setPlan($event.target.value)">
+
+                            <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
+                              {{ system.username }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row mt-3">
+                        <div class="col-md-3">
+                          <label>Description:</label>
+                        </div>
+                        <div class="col-md-9">
+                          <textarea name="description" #description="ngModel"
+                            [(ngModel)]="acservice.actionplanData.description" class="form-control" rows="2"></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-footer -->
+                <div class="card-footer">
+
+                  <div class="row mt-3">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-primary btn- block">
+                        Create Action Plan
+                      </button>
+                    </div>
+                    <div class="col-md-5"></div>
+                  </div>
+                </div>
+              </form>
+              <!-- </form> -->
             </div>
-            <!-- /.card-header -->
-
-            <!-- /.card-body -->
-            <form #form="ngForm" autocomplete="off" (submit)="OnSubmit(form)">
-              <div class="card-body">
-                <input type="hidden" name="id" #id="ngModel" [(ngModel)]="acservice.actionplanData.id" />
-                <input type="hidden" name="messageid" #messageid="ngModel"
-                  [(ngModel)]="acservice.actionplanData.messageid" />
-                <input type="hidden" name="loginid" #loginid="ngModel" [(ngModel)]="acservice.actionplanData.loginid" />
-                <input type="hidden" name="isopen" #isopen="ngModel" [(ngModel)]="acservice.actionplanData.isopen" />
-                <input type="hidden" name="createddate" #createddate="ngModel"
-                  [(ngModel)]="acservice.actionplanData.createddate" />
-
-                <input type="hidden" name="closedate" #createddate="ngModel"
-                  [(ngModel)]="acservice.actionplanData.closedate" />
-
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <label>Action Date:</label>
-                      </div>
-                      <div class="col-md-9">
-                        <p-calendar aria-placeholder="Action Date" name="actiondate" #actiondate="ngModel"
-                          [(ngModel)]="acservice.actionplanData.actiondate" class="input-append date" [showIcon]="true">
-                        </p-calendar>
-                      </div>
-                    </div>
-                    <div class="row mt-3">
-                      <div class="col-md-3">
-                        <label>User:</label>
-                      </div>
-                      <div class="col-md-9">
-                        <select class=" custom-select" name="myselect" #mySelect
-                          [(ngModel)]="acservice.actionplanData.loginid" (change)="setPlan($event.target.value)">
-
-                          <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
-                            {{ system.username }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="row mt-3">
-                      <div class="col-md-3">
-                        <label>Description:</label>
-                      </div>
-                      <div class="col-md-9">
-                        <textarea name="description" #description="ngModel"
-                          [(ngModel)]="acservice.actionplanData.description" class="form-control" rows="2"></textarea>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-footer -->
-              <div class="card-footer">
-
-                <div class="row mt-3">
-                  <div class="col-md-5"></div>
-                  <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary btn- block">
-                      Create Action Plan
-                    </button>
-                  </div>
-                  <div class="col-md-5"></div>
-                </div>
-              </div>
-            </form>
-            <!-- </form> -->
-
-            <!-- /.card -->
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
