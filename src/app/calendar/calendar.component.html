@@ -34,16 +34,26 @@
                 <div class="card card-primary card-outline">
                   <div class="card-header ">
                     <div class="row">
-                      <div class="col-md-6 col-sm-6">
+                      <div class="col-md-4 col-sm-3">
                         <div class="btn-group btn-group-toggle btn-sm" role="group">
                           <button class="btn btn-primary" (click)="Previous()">Previous</button>
                           <button class="btn btn-primary" (click)="Next()">Next</button>
                         </div>
-                        <button class="btn btn-primary " (click)="loaddata()">Load Data</button>
+                        <button class="btn btn-primary" (click)="loaddata()">Refresh</button>
+                    
+                        <!-- <span class="text-dark bg-warning m-2">Rejection 15% {{ this.rejless15 }} Days </span>
+                        <span class="text-dark bg-dark m-1">VS</span> 
+                        <span class="text-dark bg-danger m-2">{{ this.rejgreater15 }} Days Actual</span>
+                     -->
+                     
                       </div>
-                      <div class="col-md-3 col-sm-3"></div>
-                      <div class="col-md-3 col-sm-3 px-3">
-
+                      <div class="col-md-4 col-sm-3">
+                        <span class="p-2 text-dark bg-primary m-2">Less Then 15%</span>
+                        <span class="p-2 text-dark bg-warning m-2">{{ this.rejless15 }} Days</span>
+                        <span class="p-2 text-dark bg-dark m-2">VS</span> 
+                        <span class="p-2 text-dark bg-danger m-2">{{ this.rejgreater15 }} Days</span>
+                      </div>
+                      <div class="col-md-4 col-sm-3">
                         <select class=" custom-select" name="myselect" #mySelect
                           (change)="selectedGrid($event.target.value)">
                           <!-- <option value="0">--Select--</option> -->
@@ -51,6 +61,7 @@
                             {{ pl.plantShortName }}
                           </option>
                         </select>
+                    
                       </div>
                     </div>
                     <!-- /.card-tools -->
@@ -59,8 +70,11 @@
                   <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
                     <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                     <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
-                      defaultView="dayGridMonth" [plugins]="calendarPlugins" [header]="options.header" [weekends]="true"
-                      [displayEventTime]="false" [events]="dpservice.dailyprodlist"></full-calendar>
+                      [header]="options.header" [weekends]="true"
+                      [displayEventTime]="false" [events]="dpservice.dailyprodlist"  [editable]="true"
+                      (dateClick)="dateClick($event)"
+                      (eventClick)="eventClick($event)"
+                      ></full-calendar>
                     <div class="table-responsive mailbox-messages">
 
                       <!-- /.table -->
@@ -86,4 +100,26 @@
   </div>
   <!-- /.content -->
 </div>
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- /.content-wrapper -->

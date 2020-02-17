@@ -57,15 +57,15 @@
                         </div>
                       </div>
                       <div class="card-footer">
-                        <div class="text-left ml-4">
+                        <div class="text-left ml-2">
                           <button (click)="gotopendingtask(user.id)" class="btn btn-sm btn-warning m-2">
-                            <fa name="user"></fa> Pending
+                            <fa name="user"></fa> Pending {{ getpendingcount (user?.id) }}
                           </button>
-                          <button (click)="gotopentask(user.id)" class="btn btn-sm btn-danger m-2">
-                            <fa name="user"></fa> Open
+                          <button (click)="gotopentask(user.id)" class="btn btn-sm btn-danger m-2"  >
+                            <fa name="user"></fa> Open {{ getopentaskcount(user?.id)}}
                           </button>
                           <button (click)="gotcompletedtask(user.id)" class="btn btn-sm btn-success m-2">
-                            <fa name="user"></fa> Completed
+                            <fa name="user"></fa> Completed {{ getcompletedcount(user?.id) }}
                           </button>
                         </div>
                       </div>

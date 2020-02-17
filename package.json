@@ -24,6 +24,7 @@
     "@fullcalendar/angular": "^4.3.1",
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
+    "@types/bootstrap": "^4.3.1",
     "@types/jquery": "^3.3.32",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.4.1",

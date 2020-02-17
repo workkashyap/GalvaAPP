@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Dailyproduction } from "./dailyproduction.model";
-import { environment } from "src/environments/environment";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Dailyproduction } from './dailyproduction.model';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DailyproductionService {
   readonly rootUrl = environment.apiUrl;
@@ -35,13 +35,13 @@ export class DailyproductionService {
   //     });
   // }
   public getDailyPReject(id): Observable<Dailyproduction[]> {
-    return this.http.get<Dailyproduction[]>(
-      this.rootUrl + "/dailyproductions/rejectdata/" + id + "/Reject"
+      return this.http.get<Dailyproduction[]>(
+      this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject'
     );
   }
   public getRejectcalendar(id, date): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(
-      this.rootUrl + "/dailyproductions/Getallrejdata/" + id + "/Reject/" + date
+      this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date
     );
   }
 }
