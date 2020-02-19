@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { NgForm } from "@angular/forms";
-import { ActionplanService } from "src/app/shared/inbox/actionplan.service";
-import { InboxService } from "src/app/shared/inbox/inbox.service";
-import { DatePipe } from "@angular/common";
-import { User } from "src/app/shared/login/User.model";
-import { LoginService } from "src/app/shared/login/login.service";
-import { UserService } from "src/app/shared/user/user.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
+import { ActionplanService } from 'src/app/shared/inbox/actionplan.service';
+import { InboxService } from 'src/app/shared/inbox/inbox.service';
+import { DatePipe } from '@angular/common';
+import { User } from 'src/app/shared/login/User.model';
+import { LoginService } from 'src/app/shared/login/login.service';
+import { UserService } from 'src/app/shared/user/user.service';
 
 @Component({
-  selector: "app-new-task",
-  templateUrl: "./new-task.component.html",
-  styleUrls: ["./new-task.component.css"],
+  selector: 'app-new-task',
+  templateUrl: './new-task.component.html',
+  styleUrls: ['./new-task.component.css'],
   providers: [DatePipe]
 })
 export class NewTaskComponent implements OnInit {
@@ -31,7 +31,7 @@ export class NewTaskComponent implements OnInit {
 
   ngOnInit() {
     this.resetForm();
-    this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.acservice.actionplanData.closedate = null;
     this.acservice.actionplanData.createddate = this.cDate;
     console.log(this.acservice.actionplanData.createddate);
@@ -46,14 +46,14 @@ export class NewTaskComponent implements OnInit {
     // }
     this.acservice.actionplanData = {
       id: 0,
-      description: "",
+      description: '',
       messageid: 0,
       loginid: 0,
-      actiondate: "",
+      actiondate: '',
       createddate: this.cDate,
-      closedate: "",
-      isopen: "1",
-      resolvedesc: ""
+      closedate: '',
+      isopen: '1',
+      resolvedesc: ''
     };
   }
 
@@ -61,8 +61,8 @@ export class NewTaskComponent implements OnInit {
     this.acservice.insertActionPlans().subscribe(
       res => {
         this.resetForm(form);
-        this.toastr.success("Submitted Successfully", "Save ActionPlan");
-        console.log("Saved successfully");
+        this.toastr.success('Submitted Successfully', 'Save ActionPlan');
+        console.log('Saved successfully');
         // this.service.refreshList();
       },
       err => {

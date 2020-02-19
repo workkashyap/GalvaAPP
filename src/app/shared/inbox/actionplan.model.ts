@@ -8,4 +8,11 @@ export class Actionplan {
   closedate: string;
   isopen: string;
   resolvedesc: string;
+  rejectper?: number;
+  startdate?: string;
+  enddate?: string;
+  isauto?: string;
+  attachment?: string;
+  plantcode?: string;
+  progress?: number;
 }

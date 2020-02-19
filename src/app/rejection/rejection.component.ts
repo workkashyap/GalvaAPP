@@ -43,7 +43,7 @@ export class RejectionComponent implements OnInit {
         this.loading = false;
         console.log(res);
       });
-    this.plantservice.getPlantData();
+    this.plantservice.getPlantData(this.currentUser.id);
   }
 
   openRejectiondetail(id) {

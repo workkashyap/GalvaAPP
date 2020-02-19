@@ -1,40 +1,44 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { AngularFontAwesomeModule } from "angular-font-awesome";
-import { ToastrModule } from "ngx-toastr";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
-import { NgxLoadingModule } from "ngx-loading";
-import { NgxPaginationModule } from "ngx-pagination";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { FullCalendarModule } from "@fullcalendar/angular";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { NgxLoadingModule } from 'ngx-loading';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
-import { HeaderComponent } from "./header/header.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { MainComponent } from "./main/main.component";
-import { NotificationComponent } from "./notification/notification.component";
-import { LoginComponent } from "./login/login.component";
-import { AuthGuard } from "./auth/AuthGuard";
-import { NotificationDetailComponent } from "./notification/notification-detail/notification-detail.component";
-import { TaskComponent } from "./task/task.component";
+import { HeaderComponent } from './header/header.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from './main/main.component';
+import { NotificationComponent } from './notification/notification.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth/AuthGuard';
+import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
+import { TaskComponent } from './task/task.component';
 
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CalendarModule } from "primeng/calendar";
-import { TaskDetailComponent } from "./task/task-detail/task-detail.component";
-import { ApprovalComponent } from "./approval/approval.component";
-import { PendingtaskComponent } from "./approval/pendingtask/pendingtask.component";
-import { PendingtaskdetailComponent } from "./approval/pendingtask/pendingtask-detail/pendingtask-detail.component";
-import { NewTaskComponent } from "./task/new-task/new-task.component";
-import { CompletedtaskComponent } from "./approval/completedtask/completedtask.component";
-import { OpentaskComponent } from "./approval/opentask/opentask.component";
-import { CalendarComponent } from "./calendar/calendar.component";
-import { RejectionComponent } from "./rejection/rejection.component";
-import { RejectionDetailComponent } from "./rejection/rejection-detail/rejection-detail.component";
-import { OpentaskDetailComponent } from "./approval/opentask/opentask-detail/opentask-detail.component";
-import { CompletedTaskDetailComponent } from "./approval/completedtask/completed-task-detail/completed-task-detail.component";
-import { ChartComponent } from "./chart/chart.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'primeng/calendar';
+import { TaskDetailComponent } from './task/task-detail/task-detail.component';
+import { ApprovalComponent } from './approval/approval.component';
+import { PendingtaskComponent } from './approval/pendingtask/pendingtask.component';
+import { PendingtaskdetailComponent } from './approval/pendingtask/pendingtask-detail/pendingtask-detail.component';
+import { NewTaskComponent } from './task/new-task/new-task.component';
+import { CompletedtaskComponent } from './approval/completedtask/completedtask.component';
+import { OpentaskComponent } from './approval/opentask/opentask.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { RejectionComponent } from './rejection/rejection.component';
+import { RejectionDetailComponent } from './rejection/rejection-detail/rejection-detail.component';
+import { OpentaskDetailComponent } from './approval/opentask/opentask-detail/opentask-detail.component';
+import { CompletedTaskDetailComponent } from './approval/completedtask/completed-task-detail/completed-task-detail.component';
+import { ChartComponent } from './chart/chart.component';
+import { Ng5SliderModule } from 'ng5-slider';
+
+import { FileuploadComponent } from './Fileupload/Fileupload.component';
+import { FiledownloadComponent } from './Filedownload/Filedownload.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,9 @@ import { ChartComponent } from "./chart/chart.component";
     RejectionDetailComponent,
     OpentaskDetailComponent,
     CompletedTaskDetailComponent,
-    ChartComponent
+    ChartComponent,
+    FileuploadComponent,
+    FiledownloadComponent
   ],
   imports: [
     BrowserModule,
@@ -68,100 +74,101 @@ import { ChartComponent } from "./chart/chart.component";
     AngularFontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    Ng5SliderModule,
     FullCalendarModule,
     CalendarModule,
     RouterModule.forRoot([
       {
-        path: "",
+        path: '',
         component: NotificationComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "login",
+        path: 'login',
         component: LoginComponent
       },
       {
-        path: "home",
+        path: 'home',
         component: NotificationComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "notification-detail",
+        path: 'notification-detail',
         component: NotificationDetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "task",
+        path: 'task',
         component: TaskComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "task-detail",
+        path: 'task-detail',
         component: TaskDetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "task-approve",
+        path: 'task-approve',
         component: ApprovalComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "pending-task",
+        path: 'pending-task',
         component: PendingtaskComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "pending-task-detail",
+        path: 'pending-task-detail',
         component: PendingtaskdetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "open-task",
+        path: 'open-task',
         component: OpentaskComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "opentask-detail",
+        path: 'opentask-detail',
         component: OpentaskDetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "completed-task",
+        path: 'completed-task',
         component: CompletedtaskComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "completed-task-detail",
+        path: 'completed-task-detail',
         component: CompletedTaskDetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "new-task",
+        path: 'new-task',
         component: NewTaskComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "calendar",
+        path: 'calendar',
         component: CalendarComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "rejection",
+        path: 'rejection',
         component: RejectionComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "rejection-detail",
+        path: 'rejection-detail',
         component: RejectionDetailComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: "chart",
+        path: 'chart',
         component: ChartComponent,
         canActivate: [AuthGuard]
       },
 
-      { path: "**", redirectTo: "" }
+      { path: '**', redirectTo: '' }
     ]),
     ToastrModule.forRoot(),
 

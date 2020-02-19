@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/login/User.model';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-//import { create } from "domain";
+import { Options } from 'ng5-slider';
+import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -15,13 +16,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TaskDetailComponent implements OnInit {
   public currentUser: User;
-
+  public actionvalue: string;
+  value: number = 0;
+  options: Options = {
+    floor: 0,
+    ceil: 100
+  };
   constructor(
     public service: ActionplanService,
     private toastr: ToastrService,
     public lservice: LoginService,
     public iservice: InboxService,
-    private route: Router
+    private route: Router,
+    public fservice: DownloadfileService
   ) {}
 
   backtotask() {
@@ -48,11 +55,15 @@ export class TaskDetailComponent implements OnInit {
       createddate: '',
       closedate: '',
       isopen: '2',
-      resolvedesc: ''
+      resolvedesc: '',
+      attachment: '',
+      progress: 0
     };
   }
 
   onComplete(form: NgForm) {
+    if (this.actionvalue === 'SendApproval')
+    {
     this.service.taskdata.isopen = '2';
     this.service.putTaskData().subscribe(
       res => {
@@ -60,11 +71,36 @@ export class TaskDetailComponent implements OnInit {
         this.toastr.success('Pending for Approval', 'for Approval');
         // this.ngOnInit();
         // this.service.refreshList();
-        this.route.navigate(["./task"]);
+        this.route.navigate(['./task']);
       },
       err => {
         console.log(err);
       }
     );
+    }
+    else {
+      // this.service.taskdata.isopen = '1';
+      this.service.taskdata.progress = this.service.taskdata.progress;
+      this.service.taskdata.attachment = this.fservice.fileName;
+      this.service.putTaskData().subscribe(
+        res => {
+          this.resetForm(form);
+          this.toastr.success('Save', 'Save Task');
+          // this.ngOnInit();
+          // this.service.refreshList();
+          this.route.navigate(['./task']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+  }
+  onSaveClick() {
+    this.actionvalue = 'Save';
+
+  }
+  onSendapprovalClick() {
+    this.actionvalue = 'SendApproval';
   }
 }

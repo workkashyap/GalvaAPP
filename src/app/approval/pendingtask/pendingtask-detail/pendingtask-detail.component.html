@@ -125,10 +125,32 @@
                                 </div>
                               </div>
                             </div>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="exampleInputPassword1">Completion Slider:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input type="hidden" name="slider" #slider="ngModel" [(ngModel)]="this.service.taskdata.progress">
+                                  <ng5-slider [(value)]="this.service.taskdata.progress"   [options]="options"></ng5-slider>
+                                 </div>
+                              </div>
+                            </div>
+                            <div class="form-group" *ngIf="this.service.taskdata.attachment != null">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="exampleInputPassword1">Proof document:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input type="hidden" name="filename" #filename="ngModel" [(ngModel)]="this.service.taskdata.attachment">
+                                  <app-filedownload [Filename]="this.service.taskdata.attachment"></app-filedownload>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           </div>
                         </div>
-                      </div>
-
+                      
                       <!-- /.card-body -->
 
                       <div class="card-footer">

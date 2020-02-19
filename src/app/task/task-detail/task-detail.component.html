@@ -112,6 +112,39 @@
                                   </div>
                                 </div>
                               </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Completion Slider:</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input type="hidden" name="slider" #slider="ngModel" [(ngModel)]="this.service.taskdata.progress">
+                                    <ng5-slider [(value)]="this.service.taskdata.progress"   [options]="options"></ng5-slider>
+                                    <input name="filename" type="hidden"  #filename="ngModel"
+                                    [(ngModel)]="fservice.fileName">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Proof document:</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <app-fileupload></app-fileupload>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group" *ngIf="this.service.taskdata.attachment != null">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="exampleInputPassword1">Document:</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                  <span>{{ this.service.taskdata.attachment }}</span>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -120,12 +153,9 @@
 
                         <div class="card-footer">
                           <div class="row">
-                            <div class="col-md-5 text-center"></div>
-                            <div class="col-md-2">
-                              <!-- <button class="btn btn-warning  float-left px-3">
-                              Reopen
-                            </button> -->
-                              <button type="submit" class="btn btn-success float-left">
+                            <div class="col-md-4">
+                               <button type="submit" (click)="onSaveClick()" class="btn btn-primary  float-left px-3">Save Progress/Attachment</button>
+                              <button type="submit" (click)="onSendapprovalClick()"  class="btn btn-success float-left"> 
                                 Send for Approval
                               </button>
                             </div>

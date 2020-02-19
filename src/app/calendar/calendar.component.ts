@@ -7,6 +7,8 @@ import { DailyproductionService } from '../shared/dailyProduction/dailyproductio
 import { Dailyproduction } from '../shared/dailyProduction/dailyproduction.model';
 import * as bootstrap from 'bootstrap';
 import * as $AB from 'jquery';
+import { LoginService } from '../shared/login/login.service';
+import { User } from '../shared/login/User.model';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -31,12 +33,14 @@ export class CalendarComponent implements OnInit {
   public startdate: string;
   public rejectdata: any;
   public loading = false;
+  public currentUser: User;
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    public lservice: LoginService
   ) {
-    
+    this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
@@ -63,7 +67,7 @@ export class CalendarComponent implements OnInit {
         this.loading = false;
       });
     this.selectedcode = 1010;
-    this.plantservice.getPlantData();
+    this.plantservice.getPlantData(this.currentUser.id);
     this.countRejrecord();
   }
   
