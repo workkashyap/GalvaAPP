@@ -1,1 +1,14 @@
-
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+  
+  .calendar-parent {
+    height: 100vh;
+  }
+  
+  .fc-toolbar {
+    padding: 15px 20px 10px;
+  }

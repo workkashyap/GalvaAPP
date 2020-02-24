@@ -9,6 +9,7 @@ import * as bootstrap from 'bootstrap';
 import * as $AB from 'jquery';
 import { LoginService } from '../shared/login/login.service';
 import { User } from '../shared/login/User.model';
+import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -22,6 +23,11 @@ export class CalendarComponent implements OnInit {
   public title: string;
   public rejless15: number;
   public rejgreater15: number;
+  cols: any[];
+  editcols: any[];
+  actions: any[];
+  selectedItemrej: Itemwiserej;
+  public selectedtype: string;
   
   public selectedcode: number;
   calendarPlugins = [dayGridPlugin];
@@ -38,25 +44,35 @@ export class CalendarComponent implements OnInit {
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
     public datePipe: DatePipe,
-    public lservice: LoginService
+    public lservice: LoginService,
   ) {
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
+    
     this.rejless15 = 0;
     this.rejgreater15 = 0;
     this.options = {
       editable: true,
+      aspectRatio: 3.5,
       header: {
         left: '',
         center: 'title',
         right: 'dayGridMonth,dayGridWeek'
       },
-      
       plugins: [dayGridPlugin],
-      
     };
+    this.cols = [
+      { field: 'id', header: 'ID' },
+      { field: 'pstngdate', header: 'Posting Date' },
+      { field: 'item_type', header: 'Type' },
+      { field: 'itemcode', header: 'Code' },
+      { field: 'itemname', header: 'Name' },
+      { field: 'reject_qty', header: 'Reject qty' },
+      { field: 'rejper', header: 'Rej %' },
+      { field: 'reject_value', header: 'Reject Value' },
+    ];
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.loading = true;
     this.dpservice
@@ -89,9 +105,15 @@ export class CalendarComponent implements OnInit {
   eventClick(model) {
     // console.log(model);
     $('#basicExampleModal').modal('show');
-    alert(model.event.title);
-    const eventdate = this.datePipe.transform(model.event.start, 'dd/MM/yyyy');
-    alert(eventdate);
+    const eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
+    this.loading = true;
+    this.selectedtype = 'NULL';
+    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype , eventdate, eventdate)
+        .toPromise()
+        .then(res => {
+          this.dpservice.itemwiserejlist = res as Itemwiserej[];
+          this.loading = false;
+        });
   }
   loaddata() {
     this.dpservice

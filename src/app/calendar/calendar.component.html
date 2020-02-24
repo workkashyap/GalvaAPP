@@ -1,122 +1,136 @@
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="overflow-y: hidden;overflow-x: hidden;">
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-5"></div>
-          <div class="col-sm-2">
-            <h1 class="m-0 text-dark">Quality Calender</h1>
+          <div class="col-sm-6">
+            <h1>Quality Calendar</h1>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-              <li class="breadcrumb-item active">Rejection Calender</li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Quality Calendar</li>
             </ol>
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+      </div><!-- /.container-fluid -->
+    </section>
 
     <!-- Main content -->
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10 ml-2">
-        <section class="content">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="mx-2">
-                <div class="card card-primary card-outline">
-                  <div class="card-header ">
-                    <div class="row">
-                      <div class="col-md-4 col-sm-3">
-                        <div class="btn-group btn-group-toggle btn-sm" role="group">
-                          <button class="btn btn-primary" (click)="Previous()">Previous</button>
-                          <button class="btn btn-primary" (click)="Next()">Next</button>
+    <section class="content">
+      <div class="row">
+              <div class="col-md-12">
+                <div class="mx-2">
+                  <div class="card card-primary card-outline">
+                    <div class="card-header ">
+                      <div class="row">
+                        <div class="col-md-4 col-sm-3">
+                          <div class="btn-group btn-group-toggle btn-sm" role="group">
+                            <button class="btn btn-primary" (click)="Previous()">Previous</button>
+                            <button class="btn btn-primary" (click)="Next()">Next</button>
+                          </div>
+                          <button class="btn btn-primary" (click)="loaddata()">Refresh</button>
+                      
+                          <!-- <span class="text-dark bg-warning m-2">Rejection 15% {{ this.rejless15 }} Days </span>
+                          <span class="text-dark bg-dark m-1">VS</span> 
+                          <span class="text-dark bg-danger m-2">{{ this.rejgreater15 }} Days Actual</span>
+                       -->
+                       
                         </div>
-                        <button class="btn btn-primary" (click)="loaddata()">Refresh</button>
-                    
-                        <!-- <span class="text-dark bg-warning m-2">Rejection 15% {{ this.rejless15 }} Days </span>
-                        <span class="text-dark bg-dark m-1">VS</span> 
-                        <span class="text-dark bg-danger m-2">{{ this.rejgreater15 }} Days Actual</span>
-                     -->
-                     
+                        <div class="col-md-4 col-sm-3">
+                          <span class="p-2 text-dark bg-primary m-2">Less Then 15%</span>
+                          <span class="p-2 text-dark bg-warning m-2">{{ this.rejless15 }} Days</span>
+                          <span class="p-2 text-dark bg-dark m-2">VS</span> 
+                          <span class="p-2 text-dark bg-danger m-2">{{ this.rejgreater15 }} Days</span>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                          <select class=" custom-select" name="myselect" #mySelect
+                            (change)="selectedGrid($event.target.value)">
+                            <!-- <option value="0">--Select--</option> -->
+                            <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                              {{ pl.plantshortname }}
+                            </option>
+                          </select>
+                      
+                        </div>
                       </div>
-                      <div class="col-md-4 col-sm-3">
-                        <span class="p-2 text-dark bg-primary m-2">Less Then 15%</span>
-                        <span class="p-2 text-dark bg-warning m-2">{{ this.rejless15 }} Days</span>
-                        <span class="p-2 text-dark bg-dark m-2">VS</span> 
-                        <span class="p-2 text-dark bg-danger m-2">{{ this.rejgreater15 }} Days</span>
-                      </div>
-                      <div class="col-md-4 col-sm-3">
-                        <select class=" custom-select" name="myselect" #mySelect
-                          (change)="selectedGrid($event.target.value)">
-                          <!-- <option value="0">--Select--</option> -->
-                          <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
-                            {{ pl.plantshortname }}
-                          </option>
-                        </select>
-                    
-                      </div>
+                      <!-- /.card-tools -->
                     </div>
-                    <!-- /.card-tools -->
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body p-0" style="overflow-y: scroll; height:500px;">
-                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-                    <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
-                      [header]="options.header" [weekends]="true"
-                      [displayEventTime]="false" [events]="dpservice.dailyprodlist"  [editable]="true"
-                      (dateClick)="dateClick($event)"
-                      (eventClick)="eventClick($event)"
-                      ></full-calendar>
-                    <div class="table-responsive mailbox-messages">
-
-                      <!-- /.table -->
+                    <!-- /.card-header -->
+                    <div class="card-body p-0" style="overflow-y: scroll; height:650px;">
+                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+                      <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
+                        [header]="options.header" [weekends]="true" 
+                        [displayEventTime]="false" [events]="dpservice.dailyprodlist"  [editable]="true" [aspectRatio]="3.5"
+                        (dateClick)="dateClick($event)"
+                        (eventClick)="eventClick($event)"
+                        ></full-calendar>
+                      <div class="table-responsive mailbox-messages">
+  
+                        <!-- /.table -->
+                      </div>
+                      <!-- /.mail-box-messages -->
                     </div>
-                    <!-- /.mail-box-messages -->
+                    <!-- /.card-body -->
+                    <div class="card-footer p-0">
+  
+                    </div>
                   </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer p-0">
-
-                  </div>
+  
+                  <!-- /.card -->
                 </div>
-
-                <!-- /.card -->
+                <!-- /.col -->
               </div>
-              <!-- /.col -->
-            </div>
-          </div>
-          <!-- /.row -->
-        </section>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-  </div>
-  <!-- /.content -->
-</div>
+       </div>
+    </section> 
+
 <!-- Modal -->
-<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Detail Components</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div style="overflow:scroll; ">
+          <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"   selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="dpservice.itemwiserejlist"  [paginator]="true" [rows]="5"  >
+             <ng-template pTemplate="caption">
+                 <div style="text-align: right">        
+                     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                     <input type="text" pInputText placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" >
+                 </div>
+             </ng-template>
+             <ng-template pTemplate="header" let-columns>
+                 <tr>
+                       
+                     <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px">
+                         {{col.header}}
+                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                     </th>
+                 </tr>
+             </ng-template>
+             <ng-template pTemplate="body" let-rowData let-columns="columns">
+                 <tr [pSelectableRow]="rowData"   >
+                         
+                     <td *ngFor="let col of columns">
+                             {{rowData[col.field]}}
+                     </td>
+                     
+                 </tr>
+             </ng-template>
+             
+         </p-table>
+         </div>
+       
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

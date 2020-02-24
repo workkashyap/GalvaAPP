@@ -41,5 +41,5 @@ constructor(public http: HttpClient
   public opentaskcount(): Observable<Opentask[]> {
     return this.http.get<Opentask[]>(this.rootUrl + '/opentasks');
   }
-  
+
 }

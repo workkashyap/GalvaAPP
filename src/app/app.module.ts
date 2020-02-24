@@ -10,6 +10,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import {TableModule} from 'primeng/table';
+
 
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -39,6 +41,8 @@ import { Ng5SliderModule } from 'ng5-slider';
 
 import { FileuploadComponent } from './Fileupload/Fileupload.component';
 import { FiledownloadComponent } from './Filedownload/Filedownload.component';
+import { ActionplanComponent } from './task/actionplan/actionplan.component';
+import { TaskReportComponent } from './task/task-report/task-report.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +68,9 @@ import { FiledownloadComponent } from './Filedownload/Filedownload.component';
     CompletedTaskDetailComponent,
     ChartComponent,
     FileuploadComponent,
-    FiledownloadComponent
+    FiledownloadComponent,
+    ActionplanComponent,
+    TaskReportComponent
   ],
   imports: [
     BrowserModule,
@@ -76,13 +82,14 @@ import { FiledownloadComponent } from './Filedownload/Filedownload.component';
     FormsModule,
     Ng5SliderModule,
     FullCalendarModule,
+    TableModule,
     CalendarModule,
     RouterModule.forRoot([
-      {
-        path: '',
-        component: NotificationComponent,
-        canActivate: [AuthGuard]
-      },
+      // {
+      //   path: '',
+      //   component: NotificationComponent,
+      //   canActivate: [AuthGuard]
+      // },
       {
         path: 'login',
         component: LoginComponent
@@ -165,6 +172,16 @@ import { FiledownloadComponent } from './Filedownload/Filedownload.component';
       {
         path: 'chart',
         component: ChartComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'actionview',
+        component: ActionplanComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'task-report',
+        component: TaskReportComponent,
         canActivate: [AuthGuard]
       },
 

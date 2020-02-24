@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 public userlist: User[];
+public alluserlist: User[];
+
 readonly rootUrl = environment.apiUrl;
 
 constructor(public http: HttpClient) { }
@@ -17,6 +19,17 @@ public getuserbyid(id): any {
   .toPromise()
   .then(res => {
     this.userlist = res as User[];
+    }
+    );
+
+
+}
+
+public getusers(): any {
+  return this.http.get(this.rootUrl + '/users')
+  .toPromise()
+  .then(res => {
+    this.alluserlist = res as User[];
     }
     );
 

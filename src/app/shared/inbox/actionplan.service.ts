@@ -28,6 +28,9 @@ export class ActionplanService {
   public pendinglist: Actionplan[] = [];
   public completedlist: Actionplan[] = [];
   public openlistlist: Actionplan[] = [];
+  public actionviewlist: Actionplan[] = [];
+  public taskrepprtlist: Actionplan[] = [];
+  
   public userid: number;
   public loginid: number;
 
@@ -83,6 +86,24 @@ export class ActionplanService {
       .toPromise()
       .then(res => {
         this.openlistlist = res as Actionplan[];
+      });
+  }
+
+  public getactionview(): any {
+    return this.http
+      .get(this.rootUrl + '/actionplans/actionview')
+      .toPromise()
+      .then(res => {
+        this.actionviewlist = res as Actionplan[];
+      });
+  }
+
+  public gettaskreport(): any {
+    return this.http
+      .get(this.rootUrl + '/actionplans/taskreport')
+      .toPromise()
+      .then(res => {
+        this.taskrepprtlist = res as Actionplan[];
       });
   }
 

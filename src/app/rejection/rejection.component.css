@@ -1,0 +1,13 @@
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before,
+.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #337ab7;
+}
+
+.btn-primary:active:focus {
+    color: #ffffff; 
+    background-color: #161617; 
+    border-color: #494F57;
+    outline: thick;
+  }

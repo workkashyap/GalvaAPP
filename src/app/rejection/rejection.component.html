@@ -36,11 +36,30 @@
                 <div class="card card-primary card-outline">
                   <div class="card-header ">
                     <div class="row">
-                      <div class="col-md-8">
-                        <h3 class="card-title-md ">My Rejection</h3>
-                      </div>
                       <div class="col-md-2">
-                        <select class=" custom-select" name="myselect" #mySelect
+                        <div class="custom-control funkyradio">
+                          <div class="funkyradio-primary">
+                            <input type="checkbox" name="theCheckbox"   (change)="checkchange($event)" />
+                            <label for="checkbox2">Date option</label>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6" *ngIf="this.marked === false">
+                         <button (click)="monthclick()"  class="btn btn-primary m-1">This Month</button>
+                         <button (click)="weekclick()"  class="btn btn-info  m-1">This Week</button>
+                         <button (click)="dayclick()"  class="btn btn-warning  m-1">Today</button>
+                      </div>
+                      <div class="col-md-6" *ngIf="this.marked === true">
+                        <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel" [(ngModel)]="this.fDate"
+                         class="input-append date m-1" 
+                         dateFormat="yy-mm-dd"  [showIcon]="true" dataType="string" ></p-calendar>
+
+                        <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="this.tDate"
+                        class="input-append date"
+                        dateFormat="yy-mm-dd"  [showIcon]="true" dataType="string" ></p-calendar>
+                     </div>
+                      <div class="col-md-2">
+                        <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]= "this.DPservice.plantcode"
                           (change)="selectedGrid($event.target.value)">
                           <option value="0">--Select--</option>
                           <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
@@ -49,7 +68,7 @@
                         </select>
                       </div>
                       <div class="col-md-2">
-                        <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                        <button  class="btn btn-info" (click)="Loadrec()">View</button>
                       </div>
                     </div>
                     <!-- /.card-tools -->
@@ -60,6 +79,10 @@
                       *ngIf="DPservice.dailyprodlist.length == 0">
                       No Records Found
                     </div>
+                    <div class="card-header  text-success ml-3" data-widget="todo-list"
+                    *ngIf="DPservice.dailyprodlist.length != 0 && this.modename != ''">
+                      {{ this.modename }}
+                  </div>
                     <div class="table-responsive mailbox-messages">
                       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                       <table class="table table-hover table-striped">
@@ -78,14 +101,9 @@
                             ">
                             <tr class="text-center">
                               <td class="mailbox-star">
-                                <button class="btn btn-secondary" *ngIf="message.title < 20" [ngClass]="{
-                                  'disabled': message.title < 20
-                                }">
-                                  View
-                                </button>
-                                <button class="btn btn-primary" *ngIf="message.title >=20" (click)="
-                                  openRejectiondetail(message.id)">
-                                  View
+                                <button class="btn btn-primary"  (click)="
+                                  openRejectiondetail(message.id, message.date)">
+                                  Detail
                                 </button>
                               </td>
                               <td class="font-weight-bold">
