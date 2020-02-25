@@ -62,7 +62,15 @@ export class RejectionDetailComponent implements OnInit {
   editcols: any[];
   actions: any[];
   selectedItemrej: Itemwiserej;
-
+  selectedItemrejarray: Itemwiserej[] = [];
+  filterItemrejarray: Itemwiserej[] = [];
+ 
+  totalRejQty: number;
+  totalinsQty: number;
+  totalRejPer: number;
+  totalRejVal: number;
+  iv: number;
+  filterenable = false;
   constructor(
     public acservice: ActionplanService,
     private toastr: ToastrService,
@@ -81,25 +89,27 @@ export class RejectionDetailComponent implements OnInit {
   onselecttype(ev) {
      this.selectedtype = ev;
   }
-  exportExcel() {
-    import('xlsx').then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
-        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, 'DetailComponents');
-    });
-}
-saveAsExcelFile(buffer: any, fileName: string): void {
-  import('file-saver').then(FileSaver => {
-      const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-      const EXCEL_EXTENSION = '.xlsx';
-      const data: Blob = new Blob([buffer], {
-          type: EXCEL_TYPE
-      });
-      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-  });
-}
+//   exportExcel(dt) {
+//     console.log(dt.data);
+//     import('xlsx').then(xlsx => {
+//         const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
+//         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+//         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+//         this.saveAsExcelFile(excelBuffer, 'DetailComponents');
+//     });
+// }
+// saveAsExcelFile(buffer: any, fileName: string): void {
+//   import('file-saver').then(FileSaver => {
+//       const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+//       const EXCEL_EXTENSION = '.xlsx';
+//       const data: Blob = new Blob([buffer], {
+//           type: EXCEL_TYPE
+//       });
+//       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+//   });
+// }
   onviewDetail() {
+    this.filterenable = false;
     this.loading = true;
     console.log(this.selectedtype);
     if (this.selectedtype !== '') {
@@ -114,8 +124,38 @@ saveAsExcelFile(buffer: any, fileName: string): void {
           this.DPservice.itemwiserejlist = res as Itemwiserej[];
           this.loading = false;
         });
+ 
+    this.rejectpersum();
+    this.rejectqtysum();
+    this.rejectvaluesum();
   }
-
+  
+  loadper(ev , dt) {
+    this.filterenable = true;
+    this.selectedItemrejarray = dt.value;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of this.selectedItemrejarray)
+    {
+      if (c.itemcode.toString().includes(ev.toString())  || c.itemname.toString().includes(ev.toString()) 
+      || c.pstngdate.toString().includes(ev.toString()) ||  c.item_type.toString().includes(ev.toString()
+      || c.plant.toString().includes(ev.toString()) ||  c.id.toString().includes(ev.toString())))
+      {
+        this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      }
+      else {
+        this.iv += 1;
+      }
+    }
+    this.rejectpersum();
+    this.rejectqtysum();
+    this.rejectvaluesum();
+  }
+  refresh() {
+    
+  }
   ngOnInit() {
     this.Fromdate = this.DPservice.date.replace('T00:00:00', '');
     this.Todate =  this.DPservice.date.replace('T00:00:00', '');
@@ -180,4 +220,70 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     $('#basicExampleModal').modal('show');
 
   }
+  rejectqtysum() {
+      if (this.filterenable === true)
+      {
+          this.totalRejQty = 0;
+          for (const rq of this.filterItemrejarray) {
+          const rejqty =  rq.reject_qty;
+          this.totalRejQty +=  rejqty;
+        }
+      }
+      else {
+
+        this.totalRejQty = 0;
+        for (const rq of this.DPservice.itemwiserejlist) {
+        const rejqty =  rq.reject_qty;
+        this.totalRejQty +=  rejqty;
+        }
+      }
+      return this.totalRejQty;
+  }
+  rejectpersum() {
+    if (this.filterenable === true)
+    {
+        this.totalRejQty = 0;
+        this.totalinsQty = 0;
+        this.totalRejPer = 0;
+        for (const rq of this.filterItemrejarray) {
+          const rejqty =  rq.reject_qty;
+          const insqty = rq.inspection_qty;
+          this.totalRejQty +=  rejqty;
+          this.totalinsQty += insqty;
+        }
+    }
+    else {
+      this.totalRejQty = 0;
+      this.totalinsQty = 0;
+      this.totalRejPer = 0;
+      for (const rq of this.DPservice.itemwiserejlist) {
+          const rejqty =  rq.reject_qty;
+          const insqty = rq.inspection_qty;
+          this.totalRejQty +=  rejqty;
+          this.totalinsQty += insqty;
+        }
+    }
+  
+    this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
+    return this.totalRejPer;
+}
+rejectvaluesum() {
+  if (this.filterenable === true)
+  {
+      this.totalRejVal = 0;
+      for (const rq of this.filterItemrejarray) {
+        const rejvalue =  rq.reject_value;
+        this.totalRejVal +=  rejvalue;
+    }
+  }
+  else {
+
+    this.totalRejVal = 0;
+    for (const rq of this.DPservice.itemwiserejlist) {
+        const rejvalue =  rq.reject_value;
+        this.totalRejVal +=  rejvalue;
+    }
+  }
+  return this.totalRejVal;
+}
 }

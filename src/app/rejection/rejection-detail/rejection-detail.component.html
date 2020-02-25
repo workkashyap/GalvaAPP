@@ -20,7 +20,7 @@
                     <h3 class="card-title-md">Detail View</h3>
                   </div>
                   <div class="col-md-1">
-                    <button type="button"  label="EXCEL" (click)="exportExcel()" class="btn btn-success">Export</button>
+                    <button type="button"  label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-block">Export</button>
                  </div> 
                   <div class="col-md-1">
                     <Button (click)="backtoRejection()" class="btn btn-primary btn-block ">Back</Button>
@@ -82,7 +82,7 @@
                           </select>
                         </div>
                         <div class="col-md-1">
-                          <button class="btn btn-primary" (click) ="onviewDetail()">View</button>
+                          <button class="btn btn-primary " (click) ="onviewDetail()">View</button>
                         </div>
                       </div>
                     </div>
@@ -92,11 +92,27 @@
             </div>
           </div>
         </div>
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
         <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"   selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="DPservice.itemwiserejlist"  [paginator]="true" [rows]="20" [resizableColumns]="true" (onRowSelect)="onRowSelect($event)" >
           <ng-template pTemplate="caption">
-              <div style="text-align: right">        
-                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                  <input type="text" pInputText placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" >
+              <div class="row">
+                <div class="col-sm-7">
+                  <div style="text-align: left">
+                    <i class="fa fa-search"  style="margin:4px 4px 0 0"></i>
+                    <input type="text" style="width:auto" pInputText placeholder="Global Filter" (input)="loadper($event.target.value , dt)"  (input)="dt.filterGlobal($event.target.value, 'contains')" >
+                </div>
+               
+                </div>
+                <div class="h6 col-sm-2 p-1 text-dark bg-warning   text-align: center">
+                    Total: {{ this.rejectqtysum() }}
+                </div>
+                <div class="h6 col-sm-1 p-1 text-dark bg-danger  text-align: center">
+                  Total %: {{ this.rejectpersum() | number:'1.2-2'   }}
+              </div>
+              <div class="h6 col-sm-2 p-1 text-dark bg-info  text-align: center">
+                Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }}
+            </div>
+           
               </div>
           </ng-template>
           <ng-template pTemplate="header" let-columns>

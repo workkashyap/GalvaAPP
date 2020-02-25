@@ -45,10 +45,7 @@ export class RejectionComponent implements OnInit {
     this.fDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.tDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.plantservice.getPlantData(this.currentUser.id);
-    if (this.selectedPlant !== '')
-    {
-      this.selectedPlant = this.DPservice.plantcode;
-    }
+    this.DPservice.plantcode = '1010';
   }
   Loadrec() {
     this.GetRejectionAPI();
@@ -82,7 +79,7 @@ export class RejectionComponent implements OnInit {
       this.mode = '';
       this.loading = true;
       console.log(this.fDate);
-      this.DPservice.getDailyPReject(this.selectedPlant, this.fDate, this.tDate)
+      this.DPservice.getDailyPReject(this.DPservice.plantcode, this.fDate, this.tDate)
         .toPromise()
         .then(res => {
           this.DPservice.dailyprodlist = res as Dailyproduction[];
@@ -91,7 +88,7 @@ export class RejectionComponent implements OnInit {
    }
    else {
     this.loading = true;
-    this.DPservice.getDailyPRejectmode(this.selectedPlant,  this.mode)
+    this.DPservice.getDailyPRejectmode(this.DPservice.plantcode,  this.mode)
       .toPromise()
       .then(res => {
         this.DPservice.dailyprodlist = res as Dailyproduction[];
@@ -102,13 +99,35 @@ export class RejectionComponent implements OnInit {
 monthclick() {
   this.mode = 'M';
   this.modename = 'Current Month';
+
+  this.loading = true;
+  this.DPservice.getDailyPRejectmode(this.DPservice.plantcode,  this.mode)
+      .toPromise()
+      .then(res => {
+        this.DPservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
 }
 weekclick() {
   this.mode = 'W';
   this.modename = 'Current Week';
+  this.loading = true;
+  this.DPservice.getDailyPRejectmode(this.selectedPlant,  this.mode)
+      .toPromise()
+      .then(res => {
+        this.DPservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
 }
 dayclick() {
   this.mode = 'D';
   this.modename = 'Today';
+  this.loading = true;
+  this.DPservice.getDailyPRejectmode(this.selectedPlant,  this.mode)
+      .toPromise()
+      .then(res => {
+        this.DPservice.dailyprodlist = res as Dailyproduction[];
+        this.loading = false;
+      });
 }
 }

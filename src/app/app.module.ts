@@ -85,11 +85,11 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
     TableModule,
     CalendarModule,
     RouterModule.forRoot([
-      // {
-      //   path: '',
-      //   component: NotificationComponent,
-      //   canActivate: [AuthGuard]
-      // },
+      {
+        path: '',
+        component: NotificationComponent,
+        canActivate: [AuthGuard]
+      },
       {
         path: 'login',
         component: LoginComponent

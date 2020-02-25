@@ -4,19 +4,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2 ml-1">
-          <div class="col-sm-6">
-
-          </div>
-          <!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-              <li class="breadcrumb-item active">Daily Rejection</li>
-            </ol>
-          </div>
-          <!-- /.col -->
-        </div>
+        
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
@@ -61,7 +49,7 @@
                       <div class="col-md-2">
                         <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]= "this.DPservice.plantcode"
                           (change)="selectedGrid($event.target.value)">
-                          <option value="0">--Select--</option>
+                          <!-- <option value="0">--Select--</option> -->
                           <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
                             {{ pl.plantshortname }}
                           </option>
@@ -75,12 +63,12 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body ">
-                    <div class="todo-list text-success ml-3" data-widget="todo-list"
+                    <!-- <div class="todo-list text-success ml-3" data-widget="todo-list"
                       *ngIf="DPservice.dailyprodlist.length == 0">
                       No Records Found
-                    </div>
-                    <div class="card-header  text-success ml-3" data-widget="todo-list"
-                    *ngIf="DPservice.dailyprodlist.length != 0 && this.modename != ''">
+                    </div> -->
+                    <div class="display-4 card-header  text-success ml-3" data-widget="todo-list"
+                    *ngIf="DPservice.dailyprodlist.length != 0 || this.modename != ''">
                       {{ this.modename }}
                   </div>
                     <div class="table-responsive mailbox-messages">
