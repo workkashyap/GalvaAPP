@@ -17,7 +17,7 @@
               <div class="card-header">
                 <div class="row ">
                   <div class="col-md-10">
-                    <h3 class="card-title-md">Summary Report</h3>
+                    <h3 class="card-title-md">Detail Report</h3>
                   </div>
                   <div class="col-md-1">
                     <button type="button"  label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-block">Export</button>
@@ -76,9 +76,9 @@
                           <select class=" custom-select" name="typeSelect" #typeSelect="ngModel" [(ngModel)]="this.selectedtype"
                             (change)="onselecttype($event.target.value)">
                             <option value="NULL">--Select Type--</option>
-                            <option value="zcrm">CHROME</option>
-                            <option value="zsat">SATIN</option>
-                            <option value="ZMLD">MOULDING</option>
+                            <option value="CHROME">CHROME</option>
+                            <option value="SATIN">SATIN</option>
+                            <option value="MOULDING">MOULDING</option>
                           </select>
                         </div>
                         <div class="col-md-1">
@@ -93,7 +93,7 @@
           </div>
         </div>
         <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-        <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"   selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="DPservice.itemwiserejlist"  [paginator]="true" [rows]="20" [resizableColumns]="true" (onRowSelect)="onRowSelect($event)" >
+        <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"   selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="DPservice.itemwiserejdetaillist"  [paginator]="true" [rows]="20" [resizableColumns]="true" (onRowSelect)="onRowSelect($event)" >
           <ng-template pTemplate="caption">
               <div class="row">
                 <div class="col-sm-7">

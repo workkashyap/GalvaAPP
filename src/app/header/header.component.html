@@ -14,7 +14,7 @@
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-3">
         <ng-container *ngFor="let parent of pageservice.pagelist">
           <li class="nav-item dropdown ">
-            <a routerLink="{{parent.url}}" routerLinkActive="active" href="#" class="nav-link
+            <a   routerLinkActive="active" href="#" class="nav-link
             dropdown-toggle pt-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               *ngIf="parent.parentid == 0">
               {{parent.name}}</a>

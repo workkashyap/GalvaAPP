@@ -43,6 +43,7 @@ import { FileuploadComponent } from './Fileupload/Fileupload.component';
 import { FiledownloadComponent } from './Filedownload/Filedownload.component';
 import { ActionplanComponent } from './task/actionplan/actionplan.component';
 import { TaskReportComponent } from './task/task-report/task-report.component';
+import { RejectionMainComponent } from './rejection/rejection-main/rejection-main.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
     FileuploadComponent,
     FiledownloadComponent,
     ActionplanComponent,
-    TaskReportComponent
+    TaskReportComponent,
+    RejectionMainComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,7 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
     RouterModule.forRoot([
       {
         path: '',
-        component: NotificationComponent,
+        component: ChartComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -170,8 +172,18 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
         canActivate: [AuthGuard]
       },
       {
-        path: 'chart',
+        path: 'rejection-main',
+        component: RejectionMainComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'dashboard',
         component: ChartComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'dashboard1',
+        component: DashboardComponent,
         canActivate: [AuthGuard]
       },
       {

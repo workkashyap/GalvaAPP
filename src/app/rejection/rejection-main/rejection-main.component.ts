@@ -15,10 +15,11 @@ import { UserService } from 'src/app/shared/user/user.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Itemwiserej } from 'src/app/shared/dailyProduction/itemwiserej.model';
 import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
+import {  ItemwiseRejDetail } from 'src/app/shared/dailyProduction/itemwiserejdetail.model';
 
 @Component({
-  selector: 'app-rejection-detail',
-  templateUrl: './rejection-detail.component.html',
+  selector: 'app-rejection-main',
+  templateUrl: './rejection-main.component.html',
   providers: [DatePipe],
   styles: [`
   :host ::ng-deep .ui-table .ui-table-thead > tr > th {
@@ -46,7 +47,7 @@ import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
 
 `]
 })
-export class RejectionDetailComponent implements OnInit {
+export class RejectionMainComponent implements OnInit {
   public currentUser: User;
   public loading = false;
   public inbox: Inbox;
@@ -61,9 +62,9 @@ export class RejectionDetailComponent implements OnInit {
   subcols: any[];
   editcols: any[];
   actions: any[];
-  selectedItemrej: Itemwiserej;
-  selectedItemrejarray: Itemwiserej[] = [];
-  filterItemrejarray: Itemwiserej[] = [];
+  selectedItemrej: ItemwiseRejDetail;
+  selectedItemrejarray: ItemwiseRejDetail[] = [];
+  filterItemrejarray: ItemwiseRejDetail[] = [];
  
   totalRejQty: number;
   totalinsQty: number;
@@ -89,25 +90,7 @@ export class RejectionDetailComponent implements OnInit {
   onselecttype(ev) {
      this.selectedtype = ev;
   }
-//   exportExcel(dt) {
-//     console.log(dt.data);
-//     import('xlsx').then(xlsx => {
-//         const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
-//         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-//         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-//         this.saveAsExcelFile(excelBuffer, 'DetailComponents');
-//     });
-// }
-// saveAsExcelFile(buffer: any, fileName: string): void {
-//   import('file-saver').then(FileSaver => {
-//       const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-//       const EXCEL_EXTENSION = '.xlsx';
-//       const data: Blob = new Blob([buffer], {
-//           type: EXCEL_TYPE
-//       });
-//       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-//   });
-// }
+
   onviewDetail() {
     this.filterenable = false;
     this.loading = true;
@@ -117,10 +100,10 @@ export class RejectionDetailComponent implements OnInit {
     } else {
       this.selectedtype = 'NULL';
     }
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, this.selectedtype , this.Fromdate, this.Todate)
+    this.DPservice.getRejectmaindetail(this.DPservice.plantcode, this.selectedtype , this.Fromdate, this.Todate)
         .toPromise()
         .then(res => {
-          this.DPservice.itemwiserejlist = res as Itemwiserej[];
+          this.DPservice.itemwiserejdetaillist = res as ItemwiseRejDetail[];
           this.loading = false;
         });
  
@@ -138,7 +121,7 @@ export class RejectionDetailComponent implements OnInit {
     for (const c of this.selectedItemrejarray)
     {
       if (c.itemcode.toString().includes(ev.toString())  || c.itemname.toString().includes(ev.toString()) 
-      ||   c.item_type.toString().includes(ev.toString()
+      || c.pstngdate.toString().includes(ev.toString()) ||  c.item_type.toString().includes(ev.toString()
       || c.plant.toString().includes(ev.toString()) ||  c.id.toString().includes(ev.toString())))
       {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
@@ -156,20 +139,14 @@ export class RejectionDetailComponent implements OnInit {
     
   }
   ngOnInit() {
-    if (!this.DPservice.date) {
-     console.log(this.DPservice.date); 
-     this.Fromdate = this.cDate;
-     this.Todate =  this.cDate;
-    }
-    else {
-      this.Fromdate = this.DPservice.date.replace('T00:00:00', '');
-      this.Todate =  this.DPservice.date.replace('T00:00:00', '');
-    }
+    this.Fromdate = this.cDate;
+    this.Todate =  this.cDate;
     this.plantservice.getPlantData(this.currentUser.id);
-
+    this.DPservice.plantcode = '1010';
     this.cols = [
       { field: 'id', header: 'ID' },
-   //   { field: 'pstngdate', header: 'Posting Date' },
+      { field: 'pstngdate', header: 'Posting Date' },
+      { field: 'insplot', header: 'insplot' },
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
@@ -188,20 +165,20 @@ export class RejectionDetailComponent implements OnInit {
   ];
 
     this.loading = true;
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, 'NULL' , this.Fromdate, this.Todate)
+    this.DPservice.getRejectmaindetail(this.DPservice.plantcode, 'NULL' , this.Fromdate, this.Todate)
         .toPromise()
         .then(res => {
-          this.DPservice.itemwiserejlist = res as Itemwiserej[];
+          this.DPservice.itemwiserejdetaillist = res as ItemwiseRejDetail[];
           this.loading = false;
         });
     this.loading = true;
         // tslint:disable-next-line:max-line-length
-    // this.DPservice.getRejectdefectdetail(this.DPservice.plantcode, 'CHROME' , this.Fromdate, this.Todate, '91000149')
-    //       .toPromise()
-    //       .then(res => {
-    //         this.DPservice.itemtopdefectlist = res as TopDefect[];
-    //         this.loading = false;
-    //       });
+    this.DPservice.getRejectdefectdetail(this.DPservice.plantcode, 'CHROME' , this.Fromdate, this.Todate, '91000149')
+          .toPromise()
+          .then(res => {
+            this.DPservice.itemtopdefectlist = res as TopDefect[];
+            this.loading = false;
+          });
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;
@@ -214,16 +191,16 @@ export class RejectionDetailComponent implements OnInit {
   }
 
   onRowSelect(ev) {
-    // this.selectedItemrej = ev.data;
-    // this.loading = true;
-    // // tslint:disable-next-line:max-line-length
-    // this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant, this.selectedItemrej.item_type , this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.itemcode)
-    //   .toPromise()
-    //   .then(res => {
-    //     this.DPservice.itemtopdefectlist = res as TopDefect[];
-    //     this.loading = false;
-    //   });
-    // $('#basicExampleModal').modal('show');
+    this.selectedItemrej = ev.data;
+    this.loading = true;
+    // tslint:disable-next-line:max-line-length
+    this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant, this.selectedItemrej.item_type , this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.itemcode)
+      .toPromise()
+      .then(res => {
+        this.DPservice.itemtopdefectlist = res as TopDefect[];
+        this.loading = false;
+      });
+    $('#basicExampleModal').modal('show');
 
   }
   rejectqtysum() {
@@ -238,7 +215,7 @@ export class RejectionDetailComponent implements OnInit {
       else {
 
         this.totalRejQty = 0;
-        for (const rq of this.DPservice.itemwiserejlist) {
+        for (const rq of this.DPservice.itemwiserejdetaillist) {
         const rejqty =  rq.reject_qty;
         this.totalRejQty +=  rejqty;
         }
@@ -262,7 +239,7 @@ export class RejectionDetailComponent implements OnInit {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
       this.totalRejPer = 0;
-      for (const rq of this.DPservice.itemwiserejlist) {
+      for (const rq of this.DPservice.itemwiserejdetaillist) {
           const rejqty =  rq.reject_qty;
           const insqty = rq.inspection_qty;
           this.totalRejQty +=  rejqty;
@@ -285,7 +262,7 @@ rejectvaluesum() {
   else {
 
     this.totalRejVal = 0;
-    for (const rq of this.DPservice.itemwiserejlist) {
+    for (const rq of this.DPservice.itemwiserejdetaillist) {
         const rejvalue =  rq.reject_value;
         this.totalRejVal +=  rejvalue;
     }

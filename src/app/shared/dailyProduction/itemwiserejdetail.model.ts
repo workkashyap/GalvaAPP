@@ -1,7 +1,8 @@
-export class Itemwiserej {
+export class ItemwiseRejDetail {
     id: number;
-  //  pstngdate: string;
+    pstngdate: string;
     plant: number;
+    insplot: number;
     // tslint:disable-next-line: variable-name
     item_type: string;
     itemcode: string;

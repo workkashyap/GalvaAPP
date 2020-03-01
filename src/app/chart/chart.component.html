@@ -1,22 +1,80 @@
-<!-- <div class="wrapper">
+<div class="wrapper">
   <div class="content-wrapper">
-    <canvas id="myChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-  </div>
-</div> -->
-<div class="card card-primary">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-3">
+            <select class=" custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname = 'ngModel' [(ngModel)] = 'this.monthname'  > 
+              >
+              <option value="0">--Select Month--</option>
+              <option value="Jan">Jan</option>
+              <option value="Feb">Feb</option>
+              <option value="Mar">Mar</option>
+              <option value="Apr">Apr</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="Aug">Aug</option>
+              <option value="Sept">Sept</option>
+              <option value="Oct">Oct</option>
+              <option value="Nov">Nov</option>
+              <option value="Dec">Dec</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]= "this.service.plantcode"
+                          (change)="selectedGrid($event.target.value)">
+                          <option value="0">--Select Plant--</option>
+                          <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                            {{ pl.plantshortname }}
+                          </option>
+                        </select>
+          </div>
+          <div class="col-sm-3">
+            <button (click)="monthclick()"  class="btn btn-primary ml-1">This Month</button>
+                         <button (click)="weekclick()"  class="btn btn-info  ml-1">This Week</button>
+                         <button (click)="dayclick()"  class="btn btn-warning  ml-1">Today</button>
+          </div>
+          <div class="col-sm-3">
+            <select class=" custom-select" (change)="getselectedtype($event.target.value)" name="Typename" #Typename = 'ngModel' [(ngModel)] = 'this.typename'  > 
+              >
+              <option value="PLATING">--Select Type--</option>
+              <option value="PLATING">PLATING</option>
+              <option value="MOULDING">MOULDING</option>
+              </select>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    
+       
+      
+<div class="card card-info">
   <div class="card-header">
-    <h3 class="card-title">Area Chart</h3>
-
-    <div class="card-tools">
-      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-      </button>
-      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+    <h3 class="card-title">Inspection Chart {{ this.typename }} - {{ this.service.plantcode }}</h3>
+    <div class="card-tools" *ngFor="let tot of this.service.dailyreportsummary">
+      <ng-container *ngIf="tot.itemtype==this.typename">
+      Insp. Value = <b>{{ tot.producevalue }}</b>
+      Ok value = <b>{{ tot.okvalue }}</b>
+      Reject value = <b>{{ tot.rejectvalue }}</b>
+      Reject % = <b>{{ tot.rejper }}</b>
+    </ng-container>
     </div>
   </div>
   <div class="card-body">
     <div class="chart">
-      <canvas id="myChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+      <div class="row">
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+        <div class="col-md-12">
+          <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- /.card-body -->
+</div>
+
+
+
+</div>
 </div>
