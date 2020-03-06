@@ -4,7 +4,26 @@ body {
     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
     font-size: 14px;
   }
-  
+  .m-2 {
+    margin: 0.2rem !important;
+}
+.margin-left {
+  margin-left: 2px;
+}
+.text-adjust{
+  text-align: right;
+}
+@media only screen and (max-width: 600px) {
+  .btn-group {
+    padding-left: unset;
+  }
+  .margin-top {
+    margin-top: 12px;
+  }
+  .text-adjust{
+    text-align: left;
+  }
+}
   .calendar-parent {
     height: 100vh;
   }

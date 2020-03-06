@@ -11,3 +11,7 @@
     border-color: #494F57;
     outline: thick;
   }
+  .input-group.col-5 {
+    margin-bottom: 6px;
+    padding-left: 0px;
+}
