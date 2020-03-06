@@ -90,13 +90,13 @@ export class CalendarComponent implements OnInit {
     });
   
     this.loading = true;
+    const me = this;
     this.dpservice
       .getRejectcalendar( this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.loading = false;
-        
         me.loadchart1();
       });
     // this.selectedcode = 1010;
@@ -133,7 +133,7 @@ export class CalendarComponent implements OnInit {
       });
   }
   loaddata() {
-    let me =this;
+    const me = this;
     this.dpservice
       .getRejectcalendar(this.selectedcode, this.startdate)
       .toPromise()
@@ -145,9 +145,8 @@ export class CalendarComponent implements OnInit {
       });
   }
   loadchart1() {
-    var month = new Date(this.startdate).getMonth();
-    console.log("startdate : ", this.startdate);
-    var monthName = this.monthNames[month];
+    const month = new Date(this.startdate).getMonth();
+    const monthName = this.monthNames[month];
     this.dpservice.getprochartsummary(this.selectedcode, "M", monthName);
     
 
@@ -155,14 +154,14 @@ export class CalendarComponent implements OnInit {
 
   selectedGrid(ev) {
     this.selectedcode = ev;
-    let me =this;
+    const me = this;
     this.dpservice
       .getRejectcalendar(ev, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.countRejrecord();
-         me.loadchart1();
+        me.loadchart1();
         this.loading = false;
       });
 
