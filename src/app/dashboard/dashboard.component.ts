@@ -372,7 +372,7 @@ export class DashboardComponent implements OnInit {
       // this.monthname = this.monthNames[this.d.getMonth()];
     }
     // this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname);
-    if (this.typename === "CHROME")
+    if (this.typename === 'CHROME')
     {
       if (this.myChartcrm) this.myChartcrm.destroy();
       this.daylistch = [];
@@ -495,7 +495,7 @@ export class DashboardComponent implements OnInit {
       // this.monthname = this.monthNames[this.d.getMonth()];
     }
     // this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname);
-    if (this.typename === "CHROME")
+    if (this.typename === 'CHROME')
     {
       if (this.myChartdef) this.myChartdef.destroy();
       this.defectlist = [];
