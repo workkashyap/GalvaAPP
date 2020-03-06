@@ -20,6 +20,7 @@ import {  ItemwiseRejDetail } from 'src/app/shared/dailyProduction/itemwiserejde
 @Component({
   selector: 'app-rejection-main',
   templateUrl: './rejection-main.component.html',
+  styleUrls: ['./rejection-main.component.css'],
   providers: [DatePipe],
   styles: [`
   :host ::ng-deep .ui-table .ui-table-thead > tr > th {
@@ -84,6 +85,7 @@ export class RejectionMainComponent implements OnInit {
     private datePipe: DatePipe,
     public plantservice: PlantService,
   ) {
+    this.selectedtype ="CHROME";
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   }

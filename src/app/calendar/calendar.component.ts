@@ -28,14 +28,14 @@ export class CalendarComponent implements OnInit {
   actions: any[];
   selectedItemrej: Itemwiserej;
   public selectedtype: string;
-  
+
   public selectedcode: number;
   calendarPlugins = [dayGridPlugin];
   @ViewChild('calendar', { static: false })
   calendarComponent: FullCalendarComponent;
   calendarApi: any;
   options: any;
-
+  monthNames:any;
   public startdate: string;
   public rejectdata: any;
   public loading = false;
@@ -46,11 +46,15 @@ export class CalendarComponent implements OnInit {
     public datePipe: DatePipe,
     public lservice: LoginService,
   ) {
+    this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+  'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+  ];
+  
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
-    
+
     this.rejless15 = 0;
     this.rejgreater15 = 0;
     this.options = {
@@ -75,19 +79,22 @@ export class CalendarComponent implements OnInit {
     ];
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.loading = true;
+    let me =this;
     this.dpservice
       .getRejectcalendar(1010, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.loading = false;
+        
+        me.loadchart1();
       });
     this.selectedcode = 1010;
     this.plantservice.getPlantData(this.currentUser.id);
     this.countRejrecord();
   }
-  
-   Next() {
+
+  Next() {
     this.calendarApi = this.calendarComponent.getApi();
     this.calendarApi.next();
     this.sDate = this.calendarApi.getDate();
@@ -108,44 +115,57 @@ export class CalendarComponent implements OnInit {
     const eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
     this.loading = true;
     this.selectedtype = 'NULL';
-    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype , eventdate, eventdate)
-        .toPromise()
-        .then(res => {
-          this.dpservice.itemwiserejlist = res as Itemwiserej[];
-          this.loading = false;
-        });
+    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype, eventdate, eventdate)
+      .toPromise()
+      .then(res => {
+        this.dpservice.itemwiserejlist = res as Itemwiserej[];
+        this.loading = false;
+      });
   }
   loaddata() {
+    let me =this;
     this.dpservice
       .getRejectcalendar(this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.countRejrecord();
+        me.loadchart1();
         this.loading = false;
       });
   }
+  loadchart1() {
+    var month = new Date(this.startdate).getMonth();
+    console.log("startdate : ", this.startdate);
+    var monthName = this.monthNames[month];
+    this.dpservice.getprochartsummary(this.selectedcode, "M", monthName);
+    
+
+  }
+
   selectedGrid(ev) {
     this.selectedcode = ev;
+    let me =this;
     this.dpservice
       .getRejectcalendar(ev, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.countRejrecord();
+         me.loadchart1();
         this.loading = false;
       });
-      
+
   }
   countRejrecord() {
     this.rejless15 = 0;
     this.rejgreater15 = 0;
-    for (const item of  this.dpservice.dailyprodlist) {
+    for (const item of this.dpservice.dailyprodlist) {
       if (item.title >= 15) {
-          this.rejgreater15 = this.rejgreater15 + 1;
+        this.rejgreater15 = this.rejgreater15 + 1;
       }
       else {
-          this.rejless15 = this.rejless15 + 1;
+        this.rejless15 = this.rejless15 + 1;
       }
     }
   }

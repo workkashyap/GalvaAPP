@@ -18,6 +18,7 @@ import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
 
 @Component({
   selector: 'app-rejection-detail',
+  styleUrls: ['./rejection-detail.component.css'],
   templateUrl: './rejection-detail.component.html',
   providers: [DatePipe],
   styles: [`

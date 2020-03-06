@@ -1,0 +1,11 @@
+/* gnhub */
+.container-start{
+    margin-left: unset;
+    margin-right: unset;
+}
+.text-wrap {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  /* */
