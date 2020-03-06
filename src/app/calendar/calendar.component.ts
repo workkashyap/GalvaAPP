@@ -29,14 +29,18 @@ export class CalendarComponent implements OnInit {
   actions: any[];
   selectedItemrej: Itemwiserej;
   public selectedtype: string;
-  
+  typename: any;
   public selectedcode: string;
+  public selected_plantname: string;
+  public selected_eventdate: any;
+  public rejectvsum: any;
+  public inspectionvsum: any;
   calendarPlugins = [dayGridPlugin];
   @ViewChild('calendar', { static: false })
   calendarComponent: FullCalendarComponent;
   calendarApi: any;
   options: any;
-  monthNames:any;
+  monthNames: any;
   public startdate: string;
   public rejectdata: any;
   public loading = false;
@@ -48,13 +52,14 @@ export class CalendarComponent implements OnInit {
     public lservice: LoginService,
   ) {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-  'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
-  ];
-  
+      'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ];
+
+    this.typename = "PLATING";
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
-
   ngOnInit() {
+    const me = this;
 
     this.rejless15 = 0;
     this.rejgreater15 = 0;
@@ -64,43 +69,57 @@ export class CalendarComponent implements OnInit {
       header: {
         left: '',
         center: 'title',
-        right: 'dayGridMonth,dayGridWeek'
+        right: ''//'dayGridMonth,dayGridWeek'
       },
       plugins: [dayGridPlugin],
     };
     this.cols = [
-      { field: 'id', header: 'ID' },
-      { field: 'pstngdate', header: 'Posting Date' },
+      //{ field: 'id', header: 'ID' },
+      //{ field: 'pstngdate', header: 'Posting Date' },
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
       { field: 'reject_qty', header: 'Reject qty' },
       { field: 'rejper', header: 'Rej %' },
       { field: 'reject_value', header: 'Reject Value' },
+      { field: 'inspection_value', header: 'Insp. Value' },
+
     ];
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.loading = true;
-    this.plantservice
-    .sgetPlantData(this.currentUser.id)
-    .toPromise()
-    .then(res => {
-      this.plantservice.splantlist = res as Plant[];
-      this.selectedcode = this.plantservice.splantlist[0].plantcode;
-      this.loading = false;
-    });
-  
-    this.loading = true;
-    const me = this;
+      this.plantservice
+        .sgetPlantData(me.currentUser.id)
+        .toPromise()
+        .then(res => {
+          me.plantservice.splantlist = res as Plant[];
+          me.selectedcode = me.plantservice.splantlist[0].plantcode;
+          me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
+          me.loading = false;
+          if (res) {
+            me.dpservice
+              .getRejectcalendar(me.selectedcode, me.startdate)
+              .toPromise()
+              .then(res => {
+                me.dpservice.dailyprodlist = res as Dailyproduction[];
+                me.loading = false;
+                me.loadchart1();
+              });
+          }
+          //
+
+          //
+        });
+    /*this.loading = true;
     this.dpservice
-      .getRejectcalendar( this.selectedcode, this.startdate)
+      .getRejectcalendar(this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.loading = false;
         me.loadchart1();
-      });
+      });*/
     // this.selectedcode = 1010;
-   // this.plantservice.getPlantData(this.currentUser.id);
+    // this.plantservice.getPlantData(this.currentUser.id);
     this.countRejrecord();
   }
 
@@ -120,12 +139,13 @@ export class CalendarComponent implements OnInit {
     console.log(model.date);
   }
   eventClick(model) {
-    // console.log(model);
+
     $('#basicExampleModal').modal('show');
-    const eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
+    this.selected_eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
+    console.log(this.selected_eventdate);
     this.loading = true;
     this.selectedtype = 'NULL';
-    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype, eventdate, eventdate)
+    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype, this.selected_eventdate, this.selected_eventdate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
@@ -148,13 +168,15 @@ export class CalendarComponent implements OnInit {
     const month = new Date(this.startdate).getMonth();
     const monthName = this.monthNames[month];
     this.dpservice.getprochartsummary(this.selectedcode, "M", monthName);
-    
+
 
   }
 
   selectedGrid(ev) {
     this.selectedcode = ev;
     const me = this;
+    this.selectedPlanName();
+
     this.dpservice
       .getRejectcalendar(ev, this.startdate)
       .toPromise()
@@ -177,5 +199,32 @@ export class CalendarComponent implements OnInit {
     //       this.rejless15 = this.rejless15 + 1;
     //   }
     // }
+  }
+  rejectvaluesum() {
+    this.rejectvsum = 0;
+
+    for (const rq of this.dpservice.itemwiserejlist) {
+      this.rejectvsum += rq.reject_value;
+    }
+    return this.rejectvsum;
+  }
+  inspqtysum() {
+    this.inspectionvsum = 0;
+
+    for (const rq of this.dpservice.itemwiserejlist) {
+      this.inspectionvsum += rq.inspection_value;
+    }
+    return this.inspectionvsum;
+  }
+  selectedPlanName() {
+    const me = this;
+    if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
+      this.plantservice.splantlist.forEach(function (element, i) {
+        if (element.plantcode = me.selectedcode) {
+          me.selected_plantname = element.plantshortname;
+        }
+      });
+    }
+    // return this.selected_plantname;
   }
 }

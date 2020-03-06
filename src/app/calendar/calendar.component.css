@@ -31,3 +31,52 @@ body {
   .fc-toolbar {
     padding: 15px 20px 10px;
   }
+  .no-padding{
+    padding: unset;
+  }
+  .set-padding{
+    padding: 7px 0px 7px 0px;
+    text-align: center;
+  }
+  .custom-card{
+    box-shadow: unset;
+    margin: unset;
+  }
+  .no-margin {
+    margin: unset;
+  }
+  .custom-col-3{
+    flex: 0 0 24%;
+    max-width: 24%;
+    margin: 1px;
+  }
+  .set-select-plant{
+   width: 75%;    
+   float: left;
+   margin-right: 10px;
+  }
+  .refresh-btn{
+    width: 20%;
+  }
+  .custom-col-2 {
+    flex: 0 0 49%;
+    max-width: 40%;
+    padding: unset;
+    margin: 0px 0px 0px 7px;
+  }
+  .tbl-th{
+    position: sticky;
+    background: blue;
+    color: white;
+    top: 0px;
+    z-index: 1;
+  }
+  .fix-height{
+    height: 32px !important;
+  }
+  .text-target{
+    text-align: right;
+    margin: unset;
+    padding: 5px 5px 5px 5px;
+  }
+  

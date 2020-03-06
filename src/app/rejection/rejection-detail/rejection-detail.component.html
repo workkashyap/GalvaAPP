@@ -97,7 +97,7 @@
         (onRowSelect)="onRowSelect($event)">
         <ng-template pTemplate="caption"> 
           <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-6">
               <div class="input-group col-5">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="loadper($event.target.value , dt)"
@@ -118,7 +118,7 @@
             </div>-->
             <div class=" col-sm-2 custom-col-2">
               <div class="card text-dark bg-warning no-margin">
-                <div class="card-body set-padding">Total: {{ this.rejectqtysum() }}</div>
+                <div class="card-body set-padding">Total Qty: {{ this.rejectqtysum() }}</div>
               </div>
             </div>
             <div class=" col-sm-2 custom-col-2">
@@ -128,7 +128,7 @@
             </div>
             <div class=" col-sm-2 custom-col-2">
               <div class="card text-dark bg-info no-margin">
-                <div class="card-body set-padding" >Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }}</div>
+                <div class="card-body set-padding" >Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }} </div>
               </div>
             </div>
 
@@ -147,11 +147,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
-
             <td *ngFor="let col of columns" class="ui-resizable-column">
               {{rowData[col.field]}}
             </td>
-
           </tr>
         </ng-template>
 

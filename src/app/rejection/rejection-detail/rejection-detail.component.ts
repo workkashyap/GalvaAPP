@@ -169,7 +169,7 @@ export class RejectionDetailComponent implements OnInit {
     this.plantservice.getPlantData(this.currentUser.id);
 
     this.cols = [
-      { field: 'id', header: 'ID' },
+     // { field: 'id', header: 'ID' },
    //   { field: 'pstngdate', header: 'Posting Date' },
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },

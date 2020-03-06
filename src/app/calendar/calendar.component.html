@@ -5,10 +5,17 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Quality Calendar</h1>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-4">
+                <h1>Quality Calendar</h1>
+              </div>
+              <div class="col-sm-8">
+                <h4 class="text-target">Target Less than 15% has to be updated</h4>
+              </div>
+            </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Quality Calendar</li>
@@ -26,8 +33,8 @@
             <div class="card card-primary card-outline">
               <div class="card-header ">
                 <div class="row">
-                  <div class="col-md-3">
-                    <div class="btn-group btn-group-toggle btn-sm" role="group">
+                  <div class="col-md-2">
+                    <div class="btn-group btn-group-toggle btn-sm no-padding" role="group">
                       <button class="btn btn-primary" (click)="Previous()">Previous</button>
                       <button class="btn btn-primary" (click)="Next()">Next</button>
                     </div>
@@ -36,32 +43,51 @@
                           <span class="text-dark bg-danger m-2">{{ this.rejgreater15 }} Days Actual</span>
                        -->
                   </div>
-                  <div class="col-md-6">
-                     <!--<p class="text-adjust">
+                  <div class="col-md-8">
+                    <!--<p class="text-adjust">
                       <span class="text-dark m-2">Less Then 15%</span>
                       <span class="text-dark m-2">{{ this.rejless15 }} Days</span>
                       <span class="text-dark m-2">VS</span>
                       <span class="text-dark m-2">{{ this.rejgreater15 }} Days</span>
                     </p>-->
-                   <div class="card-tools" *ngFor="let tot of this.dpservice.dailyreportsummary">
-                        Insp. Value = <b>{{ tot.producevalue }}</b>
-                        Ok value = <b>{{ tot.okvalue }}</b>
-                        Reject value = <b>{{ tot.rejectvalue }}</b>
-                        Reject % = <b>{{ tot.rejper }}</b>
+                    <div class="card-tools" *ngFor="let tot of this.dpservice.dailyreportsummary">
+                      <div class="row" *ngIf="tot.itemtype==this.typename">
+                        <div class="col-md-3 custom-col-3 no-padding">
+                          <div class="card text-dark bg-info no-margin">
+                            <div class="card-body set-padding">Insp. Value = <b>{{ tot.producevalue }}</b> Lacs</div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 custom-col-3 no-padding">
+                          <div class="card text-dark bg-success no-margin">
+                            <div class="card-body set-padding">Ok value = <b>{{ tot.okvalue }}</b> Lacs</div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-3 custom-col-3 no-padding">
+                          <div class="card text-dark bg-danger  no-margin">
+                            <div class="card-body set-padding">Reject value = <b>{{ tot.rejectvalue }}</b> Lacs</div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 custom-col-3 no-padding">
+                          <div class="card text-dark bg-warning no-margin">
+                            <div class="card-body set-padding">Reject % = <b>{{ tot.rejper }}</b> Lacs</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-2">
-                    <select class="form-control" name="myselect" #mySelect (change)="selectedGrid($event.target.value)">
+                  <div class="col-md-2 no-padding">
+                    <select class="form-control set-select-plant" *ngIf="this.plantservice" name="myselect" #mySelect
+                      (change)="selectedGrid($event.target.value)">
                       <!-- <option value="0">--Select--</option> -->
-                      <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                      <option *ngFor="let pl of this.plantservice.plantlist" value="{{pl.plantcode}}">
                         {{ pl.plantshortname }}
                       </option>
                     </select>
+                    <button class="btn btn-primary margin-top refresh-btn" (click)="loaddata()"
+                      style="padding: 6px 5px 5px 5px;">
+                      <i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
-                  <div class="col-md-1">
-                    <button class="btn btn-primary margin-top" (click)="loaddata()" style="padding: 6px 5px 5px 5px;">
-                      <i class="fa fa-refresh" aria-hidden="true"></i>
-                      Refresh</button></div>
                 </div>
                 <!-- /.card-tools -->
               </div>
@@ -97,27 +123,67 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Detail Components</h5>
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Rejection Summary
+                  ({{selected_eventdate | date :'dd MMM, y'}})</h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
+              </div>
+            </div>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
+
           </div>
           <div class="modal-body">
-            <div style="overflow:scroll; ">
+            <div style="overflow-y: scroll; height: 350px;">
               <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-                [value]="dpservice.itemwiserejlist" [paginator]="true" [rows]="5">
+                [value]="dpservice.itemwiserejlist" [paginator]="false" [rows]="5">
                 <ng-template pTemplate="caption">
-                  <div style="text-align: right">
-                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                    <input type="text" pInputText placeholder="Global Filter"
-                      (input)="dt.filterGlobal($event.target.value, 'contains')">
+
+                  <div class="row">
+                    <div class="col-md-7">
+                      <!-- <div style="text-align: left">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')">
+                      </div>-->
+                      <div class="input-group col-4">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="row">
+
+                        <div class="col-sm-6 custom-col-2-n" style="margin-left: 80px;">
+                          <div class="card text-dark bg-warning no-margin">
+                            <div class="card-body set-padding">Total Reject:
+                              {{ this.rejectvaluesum()  | number:'1.2-2'  }} Lacs </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 custom-col-2-n">
+                          <div class="card  text-dark bg-danger no-margin">
+                            <div class="card-body set-padding">Total Insp.: {{ this.inspqtysum() | number:'1.2-2'}} Lacs
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
+
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
-                  <tr>
+                  <tr class="tbl-tr">
 
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
                       {{col.header}}
                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                         ariaLabelDesc="Activate to sort in descending order"
