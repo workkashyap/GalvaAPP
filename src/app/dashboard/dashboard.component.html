@@ -81,7 +81,22 @@
     </div>
   </div>
   
- 
+  <div class="card card-info">
+    <div class="card-header">
+      <h3 class="card-title">Top Defect wise Rejection  - {{ this.service.plantcode }}</h3>
+    </div>
+    <div class="card-body">
+      <div class="chart">
+        <div class="row">
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+          <div class="col-md-12">
+            <canvas id="myChartdefect" style="width: 100% !important;height:250px !important;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   
   
   </div>

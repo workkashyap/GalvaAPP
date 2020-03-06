@@ -8,6 +8,7 @@ import { PlantService } from '../shared/plant/plant.service';
 import { LoginService } from '../shared/login/login.service';
 import { Top5Rejection } from '../shared/dailyProduction/top5rejection.model';
 import { DailyReportDisplayChrome } from '../shared/dailyProduction/dailyreportdisplaychrome.model';
+import { TopDefectsummary } from '../shared/dailyProduction/TopDefectssummary.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,14 +26,23 @@ export class DashboardComponent implements OnInit {
   canvascrm: any;
   ctxcrm: any;
 
+  public myChartdef: Chart;
+  canvasdef: any;
+  ctxdef: any;
+
   public selectedchart: Top5Rejection[] = [];
   public selectedcharttot: Top5Rejection[] = [];
   public selectedchrome: DailyReportDisplayChrome[] = [];
+  public selecteddefectsummary: TopDefectsummary[] = [];
   
   public itemlist: string[] = [];
   public inspectionvalue: number[] = [];
   public rejectvalue: number[] = [];
   public rejectper: number[] = [];
+
+
+  public defectlist: string[] = [];
+  public rejectvaluedefect: number[] = [];
 
   public daylistch: string[] = [];
   public inspectionvaluech: number[] = [];
@@ -75,6 +85,7 @@ export class DashboardComponent implements OnInit {
     this.typename = 'CHROME';
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
 
   getselectedtype(ev) {
@@ -84,6 +95,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   selectedGrid(ev) {
     this.Month = 'a';
@@ -92,6 +104,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   getselectedmonth() {
     this.Month = 'a';
@@ -99,6 +112,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   monthclick() {
     this.Month = 'M';
@@ -106,6 +120,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   weekclick() {
     this.Month = 'W';
@@ -113,6 +128,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   dayclick() {
     this.Month = 'D';
@@ -120,6 +136,7 @@ export class DashboardComponent implements OnInit {
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
+    this.loadchartdefect();
   }
   loadchart() {
     // if (this.canvas) this.ctx.destroy(); //destroy prev chart instance
@@ -399,6 +416,116 @@ export class DashboardComponent implements OnInit {
             this.Rejectperch.push(xx.rejper);
         }
         this.setchartchrome();
+        this.loading = false;
+      });
+    }
+   
+  }
+
+  setchartdefect() {
+    // if (this.canvas) this.ctx.destroy(); //destroy prev chart instance
+     Chart.defaults.global.legend.display = false;
+     this.canvasdef = document.getElementById('myChartdefect');
+     this.ctxdef = this.canvasdef.getContext('2d');
+     this.myChartdef = new Chart(this.ctxdef, {
+   type: 'bar',
+   data: {
+     labels: this.defectlist,
+     datasets: [
+       {
+         label: 'Total Rejection',
+         type: 'bar',
+         backgroundColor: '#d9534f',
+         data: this.rejectvaluedefect
+       }
+     ]
+   },
+   options: {
+     scaleBeginAtZero: true,
+     scaleShowGridLines: true,
+     // tslint:disable-next-line:quotemark
+     scaleGridLineColor: "rgba(0,0,0,.05)",
+     scaleGridLineWidth: 1,
+     scaleShowHorizontalLines: true,
+     scaleShowVerticalLines: true,
+     barShowStroke: true,
+     barStrokeWidth: 2,
+     barValueSpacing: 5,
+     barDatasetSpacing: 1,
+     responsive: true,
+     tooltips: {
+       mode: 'index',
+       intersect: true
+     },
+     maintainAspectRatio: false,
+     hover: {
+         mode: 'label'
+     },
+     scales: {
+         yAxes: [{
+             scaleLabel: {
+                 display: true,
+                 labelString: 'In Lakhs'
+             }
+         }]
+     },
+   }
+ });
+   }
+
+   loadchartdefect() {
+    this.defectlist = [];
+    this.rejectvaluedefect = [];
+    this.loading = true;
+    if (this.Month === 'M')
+    {
+      this.Month = 'M';
+      this.monthname = this.monthNames[this.d.getMonth()];
+    }
+    else if (this.Month === 'W') {
+      this.Month = 'W';
+      this.monthname = this.monthNames[this.d.getMonth()];
+    }
+    else if (this.Month === 'D') {
+      this.Month = 'D';
+      this.monthname = this.monthNames[this.d.getMonth()];
+    }
+    else {
+      this.Month = 'a';
+      // this.monthname = this.monthNames[this.d.getMonth()];
+    }
+    // this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname);
+    if (this.typename === "CHROME")
+    {
+      if (this.myChartdef) this.myChartdef.destroy();
+      this.defectlist = [];
+      this.rejectvaluedefect = [];
+      this.service.getprochartdefect(this.service.plantcode, 'ZCRM', this.monthname)
+      .toPromise()
+      .then(res => {
+        this.selecteddefectsummary = res as TopDefectsummary[];
+        for (const xx of this.selecteddefectsummary) {
+            this.defectlist.push(xx.defect);
+            this.rejectvaluedefect.push(xx.rejvalue);
+        }
+        this.setchartdefect();
+        this.loading = false;
+      });
+    }
+    else
+    {
+      if (this.myChartdef) this.myChartdef.destroy();
+      this.defectlist = [];
+      this.rejectvaluedefect = [];
+      this.service.getprochartdefect(this.service.plantcode, 'ZSAT', this.monthname)
+      .toPromise()
+      .then(res => {
+        this.selecteddefectsummary = res as TopDefectsummary[];
+        for (const xx of this.selecteddefectsummary) {
+            this.defectlist.push(xx.defect);
+            this.rejectvaluedefect.push(xx.rejvalue);
+        }
+        this.setchartdefect();
         this.loading = false;
       });
     }

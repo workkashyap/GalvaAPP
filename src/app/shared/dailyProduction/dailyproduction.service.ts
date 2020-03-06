@@ -11,6 +11,7 @@ import { Top5Rejection } from './top5rejection.model';
 import { DailyReportDisplayChrome } from './dailyreportdisplaychrome.model';
 import { DailyReportDisplaySatin } from './dailyreportdisplaysatin.model';
 import { ItemwiseRejDetail } from './itemwiserejdetail.model';
+import { TopDefectsummary } from './TopDefectssummary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,7 @@ export class DailyproductionService {
   }
 
   public getRejectdetail(plantcode, type, fromdate, todate): Observable<Itemwiserej[]> {
-    return this.http.get<Itemwiserej[]>(
+   return this.http.get<Itemwiserej[]>(
       this.rootUrl + '/itemwiserejs/rejectdetaildata/' + plantcode + '/' + type + '/' + fromdate + '/' + todate
     );
   }
@@ -101,6 +102,12 @@ export class DailyproductionService {
       this.rootUrl + '/DailyReportDisplaySatin/getsatindata/' + plantcode + '/'  + type  + '/'  + month
     );
   }
+
+  public getprochartdefect(plantcode, type, month): Observable<TopDefectsummary[]> {
+    return this.http.get<TopDefectsummary[]>(
+      this.rootUrl + '/TopDefectssummary/gettopdefectsummary/' + plantcode + '/'  + type  + '/'  + month
+    );
+  }
  
   public getprochartsummary(plantcode, type, month): any {
    return this.http
@@ -108,7 +115,6 @@ export class DailyproductionService {
       .toPromise()
       .then(res => {
         this.dailyreportsummary = res as DailyReportSummary[];
-        console.log(this.rootUrl + '/DailySummaryReport/getallchartsummary/' + plantcode + '/'  + type  + '/'  + month);
       });
   }
 
