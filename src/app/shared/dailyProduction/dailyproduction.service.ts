@@ -50,12 +50,12 @@ export class DailyproductionService {
   //     });
   // }
   public getDailyPReject(id, startdate, endate): Observable<Dailyproduction[]> {
-      console.log( this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject/' + startdate + '/' + endate);
       return this.http.get<Dailyproduction[]>(
       this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject/' + startdate + '/' + endate
     );
   }
   public getDailyPRejectmode(id, mode): Observable<Dailyproduction[]> {
+    
     return this.http.get<Dailyproduction[]>(
     this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject/' + mode
   );

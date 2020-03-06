@@ -10,6 +10,7 @@ import * as $AB from 'jquery';
 import { LoginService } from '../shared/login/login.service';
 import { User } from '../shared/login/User.model';
 import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
+import { Plant } from '../shared/plant/plant.model';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -29,7 +30,7 @@ export class CalendarComponent implements OnInit {
   selectedItemrej: Itemwiserej;
   public selectedtype: string;
   
-  public selectedcode: number;
+  public selectedcode: string;
   calendarPlugins = [dayGridPlugin];
   @ViewChild('calendar', { static: false })
   calendarComponent: FullCalendarComponent;
@@ -75,15 +76,25 @@ export class CalendarComponent implements OnInit {
     ];
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.loading = true;
+    this.plantservice
+    .sgetPlantData(this.currentUser.id)
+    .toPromise()
+    .then(res => {
+      this.plantservice.splantlist = res as Plant[];
+      this.selectedcode = this.plantservice.splantlist[0].plantcode;
+      this.loading = false;
+    });
+  
+    this.loading = true;
     this.dpservice
-      .getRejectcalendar(1010, this.startdate)
+      .getRejectcalendar( this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
         this.loading = false;
       });
-    this.selectedcode = 1010;
-    this.plantservice.getPlantData(this.currentUser.id);
+    // this.selectedcode = 1010;
+   // this.plantservice.getPlantData(this.currentUser.id);
     this.countRejrecord();
   }
   
@@ -138,15 +149,15 @@ export class CalendarComponent implements OnInit {
       
   }
   countRejrecord() {
-    this.rejless15 = 0;
-    this.rejgreater15 = 0;
-    for (const item of  this.dpservice.dailyprodlist) {
-      if (item.title >= 15) {
-          this.rejgreater15 = this.rejgreater15 + 1;
-      }
-      else {
-          this.rejless15 = this.rejless15 + 1;
-      }
-    }
+    // this.rejless15 = 0;
+    // this.rejgreater15 = 0;
+    // for (const item of  this.dpservice.dailyprodlist) {
+    //   if (item.title >= 15) {
+    //       this.rejgreater15 = this.rejgreater15 + 1;
+    //   }
+    //   else {
+    //       this.rejless15 = this.rejless15 + 1;
+    //   }
+    // }
   }
 }
