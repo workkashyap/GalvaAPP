@@ -28,7 +28,7 @@
         <div class="card-header">
           <h3 class="card-title">Task</h3>
 
-          <div class="card-tools">
+          <div class="card-tools" hidden>
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
               <i class="fas fa-minus"></i></button>
             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
@@ -91,7 +91,7 @@
                          {{ this.getusername(this.ac.loginid) }} 
                       </td>
                      
-                      <td class="project-state" *ngIf="this.ac.progress >=0 && this.ac.progress <= 25 ">
+                      <td class="" *ngIf="this.ac.progress >=0 && this.ac.progress <= 25 ">
                           <span class="badge badge-danger">Not Started</span>
                       </td>
                       <td class="project-state" *ngIf="this.ac.progress >=26 && this.ac.progress <= 50 ">

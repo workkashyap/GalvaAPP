@@ -69,7 +69,8 @@ export class CalendarComponent implements OnInit {
       header: {
         left: '',
         center: 'title',
-        right: ''//'dayGridMonth,dayGridWeek'
+        right: ''//'dayGridMonth,dayGridWeek',
+        
       },
       plugins: [dayGridPlugin],
     };
@@ -220,7 +221,7 @@ export class CalendarComponent implements OnInit {
     const me = this;
     if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
       this.plantservice.splantlist.forEach(function (element, i) {
-        if (element.plantcode = me.selectedcode) {
+        if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
         }
       });

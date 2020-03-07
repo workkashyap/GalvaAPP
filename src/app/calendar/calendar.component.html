@@ -93,7 +93,9 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0" style="overflow-y: scroll; height:650px;">
+                
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+                <span style="padding: 0px 10px 0px 20px;color: gray;">Notes: Amounts in Lacs</span>
                 <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                   [header]="options.header" [weekends]="true" [displayEventTime]="false"
                   [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5"

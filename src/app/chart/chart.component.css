@@ -1,0 +1,15 @@
+.custom-col-3{
+    flex: 0 0 24%;
+    max-width: 24%;
+    margin: 1px;
+  }
+  .no-margin {
+    margin: unset;
+  }
+  .no-padding{
+    padding: unset;
+  }
+  .set-padding{
+    padding: 7px 0px 7px 0px;
+    text-align: center;
+  }

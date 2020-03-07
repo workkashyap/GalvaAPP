@@ -298,7 +298,7 @@ export class RejectionMainComponent implements OnInit {
     const me = this;
     if (this.plantservice && this.plantservice.plantlist && me.selectedPlant) {
       this.plantservice.plantlist.forEach(function (element, i) {
-        if (element.plantcode = me.selectedPlant) {
+        if (element.plantcode == me.selectedPlant) {
           me.plant_name = element.plantshortname;
         }
       });

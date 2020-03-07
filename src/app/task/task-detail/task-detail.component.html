@@ -41,10 +41,11 @@
                       <div class="card-header">
                         <div class="row ">
                           <div class="col-md-11">
-                            <h3 class="card-title-md"> Task Detail</h3>
+                            <h3 class="card-title-md">Task Detail</h3>
                           </div>
                           <div class="col-md-1">
-                            <Button (click)="backtotask()" class="btn btn-primary btn-block mb-3">Back</Button>
+                            <Button (click)="backtotask()" class="btn btn-primary btn-sm mb-3">
+                              <i class="fa fa-angle-left"></i> Back</Button>
                           </div>
                         </div>
                       </div>
@@ -55,94 +56,74 @@
                           <div class="row">
 
                             <div class="col-md-8">
-                              <div class="form-group">
-                                <div class="row">
-                                  <input type="hidden" name="isopen" #isopen="ngModel"
-                                    [(ngModel)]="service.taskdata.isopen" />
+                              <div class="form-group row">
+                                <input type="hidden" name="isopen" #isopen="ngModel"
+                                  [(ngModel)]="service.taskdata.isopen" />
 
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputEmail1">Created Date:</label>
-                                  </div>
-                                  <div class="col-md-7">
-                                    <span class="mailbox-read-time justify-left text-md" name="createddate">
-                                      {{
+                                <label for="exampleInputEmail1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Created Date</label>
+                                <div class="col-sm-9">
+                                  <span class="mailbox-read-time justify-left text-md" name="createddate">
+                                    {{
                                       service.taskdata?.createddate
                                         | date: "mediumDate"
                                     }}
-                                    </span>
-                                  </div>
+                                  </span>
                                 </div>
                               </div>
 
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Action Date:</label>
-                                  </div>
-                                  <div class="col-md-7">
-                                    <span class="mailbox-read-time float-left text-md" name="actiondate">
-                                      {{
+                              <div class="form-group row">
+                                <label for="exampleInputPassword1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Action Date</label>
+                                <div class="col-md-9">
+                                  <span class="mailbox-read-time float-left text-md" name="actiondate">
+                                    {{
                                       service.taskdata?.actiondate
                                         | date: "mediumDate"
                                     }}
-                                    </span>
-                                  </div>
+                                  </span>
                                 </div>
                               </div>
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Description:</label>
-                                  </div>
-                                  <div class="col-md-7">
-                                    <span class="mailbox-read-time float-left text-md" name="description">
-                                      {{ service.taskdata?.description }}
-                                    </span>
-                                  </div>
+                              <div class="form-group row">
+                                <label for="exampleInputPassword1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Description</label>
+                                <div class="col-md-9">
+                                  <span class="mailbox-read-time float-left text-md" name="description">
+                                    {{ service.taskdata?.description }}
+                                  </span>
                                 </div>
                               </div>
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Reason for Completion:</label>
-                                  </div>
-                                  <div class="col-md-9">
-                                    <textarea class="form-control" rows="2" name="resolvedesc" #resolvedesc="ngModel"
-                                      [(ngModel)]="service.taskdata.resolvedesc"></textarea>
-                                  </div>
+                              <div class="form-group row">
+                                <label for="exampleInputPassword1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Reason for Completion</label>
+                                <div class="col-md-9">
+                                  <textarea class="form-control" rows="2" name="resolvedesc" #resolvedesc="ngModel"
+                                    [(ngModel)]="service.taskdata.resolvedesc"></textarea>
                                 </div>
                               </div>
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Completion Slider:</label>
-                                  </div>
-                                  <div class="col-md-9">
-                                    <input type="hidden" name="slider" #slider="ngModel" [(ngModel)]="this.service.taskdata.progress">
-                                    <ng5-slider [(value)]="this.service.taskdata.progress"   [options]="options"></ng5-slider>
-                                    <input name="filename" type="hidden"  #filename="ngModel"
+                              <div class="form-group row">
+                                <label for="exampleInputPassword1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Completion Slider</label>
+                                <div class="col-md-9">
+                                  <input type="hidden" name="slider" #slider="ngModel"
+                                    [(ngModel)]="this.service.taskdata.progress">
+                                  <ng5-slider [(value)]="this.service.taskdata.progress" [options]="options">
+                                  </ng5-slider>
+                                  <input name="filename" type="hidden" #filename="ngModel"
                                     [(ngModel)]="fservice.fileName">
-                                  </div>
                                 </div>
                               </div>
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Proof document:</label>
-                                  </div>
-                                  <div class="col-md-9">
-                                    <app-fileupload></app-fileupload>
-                                  </div>
+                              <div class="form-group row">
+                                <label for="exampleInputPassword1"
+                                  class="col-sm-3 col-form-label col-form-label-sm">Proof document</label>
+                                <div class="col-md-9">
+                                  <app-fileupload></app-fileupload>
                                 </div>
                               </div>
-                              <div class="form-group" *ngIf="this.service.taskdata.attachment != null">
-                                <div class="row">
-                                  <div class="col-md-2  text-center">
-                                    <label for="exampleInputPassword1">Document:</label>
-                                  </div>
-                                  <div class="col-md-9">
+                              <div class="form-group row" *ngIf="this.service.taskdata.attachment != null">
+                                <label for="exampleInputPassword1">Document:</label>
+                                <div class="col-md-9">
                                   <span>{{ this.service.taskdata.attachment }}</span>
-                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -153,9 +134,13 @@
 
                         <div class="card-footer">
                           <div class="row">
-                            <div class="col-md-4">
-                               <button type="submit" (click)="onSaveClick()" class="btn btn-primary  float-left px-3">Save Progress/Attachment</button>
-                              <button type="submit" (click)="onSendapprovalClick()"  class="btn btn-success float-left"> 
+                            <div class="col-md-3">
+                              <button type="submit" (click)="onSaveClick()"
+                                class="btn btn-primary  float-left px-3">Save
+                                Progress/Attachment</button>
+                            </div>
+                            <div class="col-md-3">
+                              <button type="submit" (click)="onSendapprovalClick()" class="btn btn-success float-left">
                                 Send for Approval
                               </button>
                             </div>

@@ -89,9 +89,9 @@ export class ActionplanService {
       });
   }
 
-  public getactionview(): any {
+  public getactionview(id): any {
     return this.http
-      .get(this.rootUrl + '/actionplans/actionview')
+      .get(this.rootUrl + '/actionplans/actionview/')
       .toPromise()
       .then(res => {
         this.actionviewlist = res as Actionplan[];
