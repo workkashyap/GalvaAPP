@@ -86,6 +86,7 @@ export class RejectionDetailComponent implements OnInit {
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.selectedtype ="zcrm";
   }
   onselecttype(ev) {
      this.selectedtype = ev;

@@ -57,71 +57,50 @@
                             <input type="hidden" name="resolvedesc" #resolvedesc="ngModel"
                               [(ngModel)]="acservice.actionplanData.resolvedesc" />
 
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputEmail1">Created Date:</label>
-                                </div>
-                                <div class="col-md-4 pr-5">
-                                  <input class="form-control" type="text" name="createddate" #createddate="ngModel"
-                                    [(ngModel)]="
-                                      acservice.actionplanData.createddate
-                                    " disabled />
-                                </div>
+                            <div class="form-group row">
+                              <label for="createddate" class="col-sm-3 col-form-label">Created Date</label>
+                              <div class="col-sm-9">
+                                <input class="form-control" type="text" id="createddate" name="createddate"
+                                  #createddate="ngModel" [(ngModel)]="acservice.actionplanData.createddate" disabled />
                               </div>
                             </div>
 
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1">Action Date:</label>
-                                </div>
-                                <div class="col-md-4 ">
-                                  <p-calendar aria-placeholder="Action Date" name="actiondate" #actiondate="ngModel"
-                                    [(ngModel)]=" 
-                                      acservice.actionplanData.actiondate" class="input-append date"
-                                    dateFormat="yy-mm-dd" [showIcon]="true" ></p-calendar>
-                                </div>
+                            <div class="form-group row">
+                              <label for="actiondate" class="col-sm-3 col-form-label">Action Date </label>
+                              <div class="col-sm-9">
+                                <p-calendar  aria-placeholder="Action Date" id="actiondate" name="actiondate"
+                                  #actiondate="ngModel" [(ngModel)]="acservice.actionplanData.actiondate"
+                                  class="input-append date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                               </div>
                             </div>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1">User:</label>
-                                </div>
-                                <div class="col-md-4 pr-5">
-                                  <select class=" custom-select" name="myselect" #mySelect
-                                    [(ngModel)]="acservice.actionplanData.loginid"
-                                    (change)="setPlan($event.target.value)">
-                                    <option value="0">--Select--</option>
-                                    <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
-                                      {{ system.username }}
-                                    </option>
-                                  </select>
-                                </div>
+                            <div class="form-group row">
+                              <label for="myselect" class="col-sm-3 col-form-label">User</label>
+                              <div class="col-sm-9">
+                                <select class=" custom-select" id="myselect" name="myselect" #mySelect
+                                  [(ngModel)]="acservice.actionplanData.loginid"
+                                  (change)="setPlan($event.target.value)">
+                                  <option value="0">--Select--</option>
+                                  <option *ngFor="let system of uservice.userlist" value="{{system.id}}">
+                                    {{ system.username }}
+                                  </option>
+                                </select>
                               </div>
                             </div>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-2">
-                                  <label for="exampleInputPassword1">Description:</label>
-                                </div>
-                                <div class="col-md-9">
-                                  <textarea name="description" #description="ngModel" [(ngModel)]="
-                                      acservice.actionplanData.description
-                                    " class="form-control" rows="2"></textarea>
-                                </div>
+                            <div class="form-group row">
+                              <label for="description" class="col-sm-3 col-form-label">Description:</label>
+                              <div class="col-sm-9">
+                                <textarea name="description" id="description" #description="ngModel"
+                                  [(ngModel)]="acservice.actionplanData.description" class="form-control"
+                                  rows="2"></textarea>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
                       <!-- /.card-body -->
-
                       <div class="card-footer">
                         <div class="row">
-                          <div class="col-md-5 text-center"></div>
+                          <div class="col-md-2 text-center"></div>
                           <div class="col-md-2">
                             <button type="submit" class="btn btn-primary  float-left font-weight-bold px-5">
                               Save

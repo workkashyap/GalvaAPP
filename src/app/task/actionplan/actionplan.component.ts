@@ -11,7 +11,7 @@ import { PlantService } from 'src/app/shared/plant/plant.service';
   styleUrls: ['./actionplan.component.css']
 })
 export class ActionplanComponent implements OnInit {
-
+  selectedPlant:any;
   currentUser: User;
   constructor(public service: ActionplanService , public lservice: LoginService,  public uservice: UserService,   public plantservice: PlantService,
     ) {
@@ -20,9 +20,19 @@ export class ActionplanComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.service.getactionview();
+   
     this.uservice.getusers();
+    this.selectedPlant="1010";
+
+    this.service.getactionview(this.selectedPlant);
+
     this.plantservice.getPlantData(this.currentUser.id);
+  }
+  
+  selectedGrid(ev) {
+    this.selectedPlant = ev;
+    console.log("code",ev);
+    this.service.getactionview(ev);
   }
   getusername(id) {
     for (const item of  this.uservice.alluserlist) {

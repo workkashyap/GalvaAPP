@@ -4,7 +4,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-3">
-            <select class=" custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname = 'ngModel' [(ngModel)] = 'this.monthname'  > 
+            <select class=" custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel'
+              [(ngModel)]='this.monthname'>
               >
               <option value="0">--Select Month--</option>
               <option value="Jan">Jan</option>
@@ -22,59 +23,86 @@
             </select>
           </div>
           <div class="col-sm-3">
-            <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]= "this.service.plantcode"
-                          (change)="selectedGrid($event.target.value)">
-                          <option value="0">--Select Plant--</option>
-                          <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
-                            {{ pl.plantshortname }}
-                          </option>
-                        </select>
+            <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.service.plantcode"
+              (change)="selectedGrid($event.target.value)">
+              <option value="0">--Select Plant--</option>
+              <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                {{ pl.plantshortname }}
+              </option>
+            </select>
           </div>
           <div class="col-sm-3">
-            <button (click)="monthclick()"  class="btn btn-primary ml-1">This Month</button>
-                         <button (click)="weekclick()"  class="btn btn-info  ml-1">This Week</button>
-                         <button (click)="dayclick()"  class="btn btn-warning  ml-1">Today</button>
+            <button (click)="monthclick()" class="btn btn-primary ml-1">This Month</button>
+            <button (click)="weekclick()" class="btn btn-info  ml-1">This Week</button>
+            <button (click)="dayclick()" class="btn btn-warning  ml-1">Today</button>
           </div>
           <div class="col-sm-3">
-            <select class=" custom-select" (change)="getselectedtype($event.target.value)" name="Typename" #Typename = 'ngModel' [(ngModel)] = 'this.typename'  > 
+            <select class=" custom-select" (change)="getselectedtype($event.target.value)" name="Typename"
+              #Typename='ngModel' [(ngModel)]='this.typename'>
               >
               <option value="">--Select Type--</option>
               <option value="PLATING">PLATING</option>
               <option value="MOULDING">MOULDING</option>
-              </select>
+            </select>
           </div>
         </div>
       </div>
       <!-- /.container-fluid -->
     </section>
+
+
+
+    <div class="card card-info">
+      <div class="card-header" style="background-color: #9a9a9a;">
+        <div class="row">
+          <div class="col-md-4">
+            <h3 class="card-title">Inspection Chart {{ this.typename }} - {{ this.service.plantshortname }}</h3>
+          </div>
+          <div class="col-md-8">
+            <div class="card-tools" *ngFor="let tot of this.service.dailyreportsummary">
+              <!-- -->
+              <div class="row" *ngIf="tot.itemtype==this.typename">
+                <div class="col-md-3 custom-col-3 no-padding">
+                  <div class="card text-dark bg-info no-margin">
+                    <div class="card-body set-padding">Insp. Value = <b>{{ tot.producevalue }}</b> Lacs</div>
+                  </div>
+                </div>
+                <div class="col-md-3 custom-col-3 no-padding">
+                  <div class="card text-dark bg-success no-margin">
+                    <div class="card-body set-padding">Ok value = <b>{{ tot.okvalue }}</b> Lacs</div>
+                  </div>
+                </div>
     
-       
-      
-<div class="card card-info">
-  <div class="card-header">
-    <h3 class="card-title">Inspection Chart {{ this.typename }} - {{ this.service.plantcode }}</h3>
-    <div class="card-tools" *ngFor="let tot of this.service.dailyreportsummary">
-      <ng-container *ngIf="tot.itemtype==this.typename">
-      Insp. Value = <b>{{ tot.producevalue }}</b>
-      Ok value = <b>{{ tot.okvalue }}</b>
-      Reject value = <b>{{ tot.rejectvalue }}</b>
-      Reject % = <b>{{ tot.rejper }}</b>
-    </ng-container>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="chart">
-      <div class="row">
-        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-        <div class="col-md-12">
-          <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
+                <div class="col-md-3 custom-col-3 no-padding">
+                  <div class="card text-dark bg-danger  no-margin">
+                    <div class="card-body set-padding">Reject value = <b>{{ tot.rejectvalue }}</b> Lacs</div>
+                  </div>
+                </div>
+                <div class="col-md-3 custom-col-3 no-padding">
+                  <div class="card text-dark bg-warning no-margin">
+                    <div class="card-body set-padding">Reject % = <b>{{ tot.rejper }}</b> Lacs</div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="card-body">
+        <div class="chart">
+          <div class="row">
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            <div class="col-md-12">
+              <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+
+
   </div>
-</div>
-
-
-
-</div>
 </div>

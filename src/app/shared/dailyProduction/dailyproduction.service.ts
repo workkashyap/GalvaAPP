@@ -28,6 +28,7 @@ export class DailyproductionService {
   public title: string[] = [];
   public date: string;
   public plantcode: string;
+  public plantshortname: string;
 
   public id: number;
 

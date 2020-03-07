@@ -56,7 +56,6 @@ export class DashboardComponent implements OnInit {
   public Week: string;
   public Day: string;
 
-  public selectedPlant: string;
   public monthname: string;
   public typename: string;
 
@@ -74,6 +73,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.plantservice.getPlantData(this.currentUser.id);
     this.service.plantcode = '1010';
+    this.service.plantshortname = 'GDPL Vapi';
+    
     this.loading = true;
     this.itemlist = [];
     this.cv = 0;
@@ -91,6 +92,7 @@ export class DashboardComponent implements OnInit {
   getselectedtype(ev) {
     this.Month = 'a';
     this.typename = ev;
+
       if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
@@ -100,6 +102,8 @@ export class DashboardComponent implements OnInit {
   selectedGrid(ev) {
     this.Month = 'a';
     this.service.plantcode = ev;
+    this.selectedPlant();
+
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
@@ -530,5 +534,15 @@ export class DashboardComponent implements OnInit {
       });
     }
    
+  }
+  selectedPlant() {
+    const me = this;
+    if (this.plantservice && this.plantservice.plantlist && me.service.plantcode) {
+      this.plantservice.plantlist.forEach(function (element, i) {
+        if (element.plantcode == me.service.plantcode) {
+          me.service.plantshortname = element.plantshortname;
+        }
+      });
+    }
   }
 }
