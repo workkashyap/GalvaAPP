@@ -88,7 +88,7 @@ export class CalendarComponent implements OnInit {
     ];
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.loading = true;
-      this.plantservice
+    this.plantservice
         .sgetPlantData(me.currentUser.id)
         .toPromise()
         .then(res => {
