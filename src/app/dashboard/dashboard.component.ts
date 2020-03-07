@@ -92,6 +92,7 @@ export class DashboardComponent implements OnInit {
     this.Month = 'a';
     this.typename = ev;
       if (this.myChart) this.myChart.destroy();
+      if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
@@ -101,6 +102,7 @@ export class DashboardComponent implements OnInit {
     this.Month = 'a';
     this.service.plantcode = ev;
     if (this.myChart) this.myChart.destroy();
+    if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
@@ -109,6 +111,7 @@ export class DashboardComponent implements OnInit {
   getselectedmonth() {
     this.Month = 'a';
     if (this.myChart) this.myChart.destroy();
+    if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
@@ -117,6 +120,7 @@ export class DashboardComponent implements OnInit {
   monthclick() {
     this.Month = 'M';
     if (this.myChart) this.myChart.destroy();
+    if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
@@ -125,6 +129,7 @@ export class DashboardComponent implements OnInit {
   weekclick() {
     this.Month = 'W';
     if (this.myChart) this.myChart.destroy();
+    if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
@@ -133,6 +138,7 @@ export class DashboardComponent implements OnInit {
   dayclick() {
     this.Month = 'D';
     if (this.myChart) this.myChart.destroy();
+    if (this.myChartdef) this.myChartdef.destroy();
     this.ctx.clearRect(0 , 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
     this.loadchartcrm();
