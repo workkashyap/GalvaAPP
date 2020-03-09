@@ -105,10 +105,10 @@ export class HolnbuffComponent implements OnInit {
   }
   statusFilter(ev) {
     if(ev.target.checked){
-      this.completed_days = 1;
+      this.completed_days = 0;
     }else
     {
-      this.completed_days = 0;
+      this.completed_days = 1;
     }
     this.filterByStatus();
   }

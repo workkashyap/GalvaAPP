@@ -17,12 +17,10 @@
             <div class="card-header">
               <div class="row ">
                 <div class="col-md-10">
-                  <h3 class="card-title-md">Detail Report</h3>
+                  <h3 class="card-title-md">Hold And Buffing Report</h3>
                 </div>
                 <div class="col-md-2 text-center">
-
                 </div>
-
               </div>
             </div>
             <div class="card-body">
@@ -52,9 +50,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2  ">
                   <div class="row mt-3">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                       <select class="form-control set-select-plant" *ngIf="this.plantservice" name="myselect" #mySelect
                         (change)="selectedGrid($event.target.value)" [ngModel]="selectedtype">
                         <!-- <option value="0">--Select--</option> -->
@@ -62,22 +60,22 @@
                           {{ pl.plantshortname }}
                         </option>
                       </select>
+                     
                     </div>
-                    <div class="col-md-4">
+                  </div>
+                </div>
+                <div class="col-md-2" style="margin-left: 5px;">
+                  <div class="row mt-3">
+                    <div class="col-md-6">
                       <button class="btn btn-primary margin-top refresh-btn" (click)="loaddata()"
                         style="padding: 6px 5px 5px 5px;">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
                     </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="row mt-3">
-                    <div class="col-md-8">
-
+                    <div class="col-md-6">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success margin-top" style="padding:6px 8px 5px 8px;">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
                     </div>
-                    <div class="col-md-1">
-                      <!-- <button class="btn btn-primary " (click)="onviewDetail()">View</button> -->
-                    </div>
+                   
                   </div>
                 </div>
               </div>
@@ -97,7 +95,7 @@
               <div class="row">
                 <div class="col-sm-3" >
                   <div class="form-group row">
-                      <input type="checkbox" class="form-check-label" id="inputPassword" (change)="statusFilter($event)">
+                      <input type="checkbox" class="form-check-label" id="inputPassword" checked (change)="statusFilter($event)">
                       <label for="inputPassword" class="col-form-label">Completed within 3 Days</label>
                   </div>
                 </div>
