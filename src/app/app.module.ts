@@ -44,6 +44,7 @@ import { ActionplanComponent } from "./task/actionplan/actionplan.component";
 import { TaskReportComponent } from "./task/task-report/task-report.component";
 import { RejectionMainComponent } from "./rejection/rejection-main/rejection-main.component";
 import { HolnbuffComponent } from "./holnbuff/holnbuff.component";
+import { Top5RejDefectwiseComponent } from "./top5-rej-defectwise/top5-rej-defectwise.component";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { HolnbuffComponent } from "./holnbuff/holnbuff.component";
     ActionplanComponent,
     TaskReportComponent,
     RejectionMainComponent,
-    HolnbuffComponent
+    HolnbuffComponent,
+    Top5RejDefectwiseComponent
   ],
   imports: [
     BrowserModule,
@@ -200,6 +202,11 @@ import { HolnbuffComponent } from "./holnbuff/holnbuff.component";
       {
         path: "holdnbuff-report",
         component: HolnbuffComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "Top5RejDefwise-report",
+        component: Top5RejDefectwiseComponent,
         canActivate: [AuthGuard]
       },
 

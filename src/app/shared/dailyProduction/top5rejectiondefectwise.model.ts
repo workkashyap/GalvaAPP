@@ -1,0 +1,33 @@
+export class Top5rejectiondefectwise {
+  id: number;
+  plantcode: string;
+  itemcode: string;
+  itemname: string;
+  pitting: number;
+  pinhole: number;
+  patchmark: number;
+  nickle: number;
+  crburning: number;
+  skipplating: number;
+  dent: number;
+  handmouldingrej: number;
+  scratchmark: number;
+  roughness: number;
+  silver: number;
+  mouldingrej: number;
+  warpage: number;
+  copperburning: number;
+  whitemark: number;
+  dotplastic: number;
+  watermark: number;
+  blister: number;
+  jigdamage: number;
+  otheR1: number;
+  otheR2: number;
+  otheR3: number;
+  otheR4: number;
+  rejectqty: number;
+  rejectper: number;
+  rejectvalue: number;
+  producevalue: number;
+}
