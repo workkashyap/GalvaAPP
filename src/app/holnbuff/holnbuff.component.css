@@ -1,0 +1,16 @@
+.custom-col-6 {
+    flex: 0 0 38.666667%;
+    max-width: 30.966667%;
+    padding: unset;
+    margin: 2px;
+}
+.no-margin {
+    margin: unset;
+}
+.set-padding{
+    padding: 10px 5px;
+}
+.form-check-label {
+    margin: 10px;
+    margin-right: 3px;
+}

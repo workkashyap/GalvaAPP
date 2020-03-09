@@ -26,7 +26,10 @@ export class HolnbuffComponent implements OnInit {
   public selectedtype: string;
   cols: any[];
   subcols: any[];
-
+  buffqtySum: number = 0;
+  holdqtySum: number = 0;
+  completed_days: number=0;
+  holdnbufflist: any[];
   constructor(
     public plantservice: PlantService,
     public DPservice: DailyproductionService,
@@ -36,15 +39,17 @@ export class HolnbuffComponent implements OnInit {
   ) {
     this.selectedtype = "1010";
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-    this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.cDate = this.datePipe.transform((new Date()), "yyyy-MM-dd");
+   // this.cDate = "2020-02-03";
   }
 
   ngOnInit() {
+    const me =this;
+
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
     this.plantservice.getPlantData(this.currentUser.id);
     this.DPservice.plantcode = "1010";
-
     this.cols = [
       // { field: "id", header: "ID" },
       { field: "aufnr", header: "aufnr" },
@@ -58,14 +63,81 @@ export class HolnbuffComponent implements OnInit {
       { field: "holdqty", header: "holdqty" },
       { field: "status", header: "status" }
     ];
-
+    
     this.loading = true;
+
+    console.log("hi");
     this.hnbservice
-      .getholdnbuffalldetail("1010", this.Fromdate, this.Todate)
+      .getholdnbuffalldetail("1010", me.Fromdate, me.Todate)
       .toPromise()
       .then(res => {
-        this.hnbservice.holdnbufflist = res as Holdnbuff[];
-        this.loading = false;
+        console.log("hi");
+        // this.hnbservice.holdnbufflist = res as Holdnbuff[];
+        me.holdnbufflist = res as Holdnbuff[];
+        me.filterByStatus();
+        me.loading = false;
       });
   }
+  selectedGrid(ev) {
+    this.selectedtype = ev;
+    const me = this;
+    this.hnbservice
+      .getholdnbuffalldetail(ev, this.Fromdate, this.Todate)
+      .toPromise()
+      .then(res => {
+        //this.hnbservice.holdnbufflist = res as Holdnbuff[];
+        me.holdnbufflist = res as Holdnbuff[];
+        me.filterByStatus();
+        me.loading = false;
+      });
+  }
+  loaddata() {
+    const me = this;
+    this.hnbservice
+      .getholdnbuffalldetail(this.selectedtype, this.Fromdate, this.Todate)
+      .toPromise()
+      .then(res => {
+        //this.hnbservice.holdnbufflist = res as Holdnbuff[];
+        me.holdnbufflist = res as Holdnbuff[];
+        me.filterByStatus();
+        me.loading = false;
+      });
+  }
+  statusFilter(ev) {
+    if(ev.target.checked){
+      this.completed_days = 0;
+    }else
+    {
+      this.completed_days = 1;
+    }
+    this.filterByStatus();
+  }
+  filterByStatus() {
+    const me = this;
+    console.log(me.completed_days);
+    this.hnbservice.holdnbufflist =[];
+    if (this.hnbservice && this.holdnbufflist) {
+      for (const rq of this.holdnbufflist) {
+        if(rq.status==me.completed_days){
+          me.hnbservice.holdnbufflist.push(rq);
+        }
+      } 
+      //return this.holdqtySum;
+    }
+  }
+  buffqtyTotle() {
+    this.buffqtySum = 0;
+    for (const rq of this.hnbservice.holdnbufflist) {
+      this.buffqtySum += rq.buffqty;
+    }
+    return this.buffqtySum;
+  }
+  holdqtyTotal() {
+    this.holdqtySum = 0;
+    for (const rq of this.hnbservice.holdnbufflist) {
+      this.holdqtySum += rq.holdqty;
+    }
+    return this.holdqtySum;
+  }
+
 }
