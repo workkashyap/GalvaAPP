@@ -1,20 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { DailyproductionService } from "../shared/dailyProduction/dailyproduction.service";
-import { PlantService } from "../shared/plant/plant.service";
-import { LoginService } from "../shared/login/login.service";
-import * as Chart from "chart.js";
-import { User } from "../shared/login/User.model";
-import * as ChartAnnotation from "chartjs-plugin-annotation";
-import { DailyReportDisplay } from "../shared/dailyProduction/dailyreportdisplay.model";
-import { Top5rejectiondefectwise } from "../shared/dailyProduction/top5rejectiondefectwise.model";
+import { Component, OnInit } from '@angular/core';
+import { DailyproductionService } from '../shared/dailyProduction/dailyproduction.service';
+import { PlantService } from '../shared/plant/plant.service';
+import { LoginService } from '../shared/login/login.service';
+import * as Chart from 'chart.js';
+import { User } from '../shared/login/User.model';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import { DailyReportDisplay } from '../shared/dailyProduction/dailyreportdisplay.model';
+import { Top5rejectiondefectwise } from '../shared/dailyProduction/top5rejectiondefectwise.model';
 
 @Component({
-  selector: "app-top5-rej-defectwise",
-  templateUrl: "./top5-rej-defectwise.component.html",
-  styleUrls: ["./top5-rej-defectwise.component.css"]
+  selector: 'app-top5-rej-defectwise',
+  templateUrl: './top5-rej-defectwise.component.html',
+  styleUrls: ['./top5-rej-defectwise.component.css']
 })
 export class Top5RejDefectwiseComponent implements OnInit {
-  title = "Chart";
+  title = 'Chart';
   public myChart: Chart;
   canvas: any;
   ctx: any;
@@ -73,31 +73,31 @@ export class Top5RejDefectwiseComponent implements OnInit {
 
   ngOnInit() {
     const namedChartAnnotation = ChartAnnotation;
-    namedChartAnnotation["id"] = "annotation";
+    namedChartAnnotation['id'] = 'annotation';
     Chart.pluginService.register(namedChartAnnotation);
     this.plantservice.getPlantData(this.currentUser.id);
-    this.service.plantcode = "1010";
-    this.service.plantshortname = "GDPL Vapi";
+    this.service.plantcode = '1010';
+    this.service.plantshortname = 'GDPL Vapi';
     this.loading = true;
     this.itemlist = [];
     this.cv = 0;
     this.monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "June",
-      "July",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
-    this.typename = "CHROME";
+    this.typename = 'ZCRM';
     this.loadchart1();
   }
 
@@ -131,24 +131,24 @@ export class Top5RejDefectwiseComponent implements OnInit {
     this.rejectvalue = [];
     this.producevalue = [];
     this.loading = true;
-    if (this.Month === "M") {
-      this.Month = "M";
+    if (this.Month === 'M') {
+      this.Month = 'M';
       this.monthname = this.monthNames[this.d.getMonth()];
-    } else if (this.Month === "W") {
-      this.Month = "W";
+    } else if (this.Month === 'W') {
+      this.Month = 'W';
       this.monthname = this.monthNames[this.d.getMonth()];
-    } else if (this.Month === "D") {
-      this.Month = "D";
+    } else if (this.Month === 'D') {
+      this.Month = 'D';
       this.monthname = this.monthNames[this.d.getMonth()];
     } else {
-      this.Month = "a";
+      this.Month = 'a';
       // this.monthname = this.monthNames[this.d.getMonth()];
     }
 
     this.service
       .gettop5rejectiondefectwise(
         this.service.plantcode,
-        this.Month,
+        this.typename,
         this.monthname
       )
       .toPromise()
@@ -217,150 +217,150 @@ export class Top5RejDefectwiseComponent implements OnInit {
   loadchart() {
     const typevalue = this.typename;
     Chart.defaults.global.legend.display = false;
-    this.canvas = document.getElementById("myChart");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById('myChart');
+    this.ctx = this.canvas.getContext('2d');
     this.myChart = new Chart(this.ctx, {
-      type: "bar",
+      type: 'bar',
       data: {
         labels: this.itemlist,
         datasets: [
           {
-            label: "PITTING",
-            type: "bar",
-            backgroundColor: "#0275d8",
+            label: 'PITTING',
+            type: 'bar',
+            backgroundColor: '#0275d8',
             data: this.pitting
           },
           {
-            label: "PINHOLE",
-            type: "bar",
-            backgroundColor: "#5cb85c",
+            label: 'PINHOLE',
+            type: 'bar',
+            backgroundColor: '#5cb85c',
             data: this.PINHOLE
           },
 
           {
-            label: "PATCHMARK",
-            type: "bar",
-            backgroundColor: "#5bc0de",
+            label: 'PATCHMARK',
+            type: 'bar',
+            backgroundColor: '#5bc0de',
             data: this.PATCHMARK
           },
           {
-            label: "NICKLE",
-            type: "bar",
-            backgroundColor: "#f0ad4e",
+            label: 'NICKLE',
+            type: 'bar',
+            backgroundColor: '#f0ad4e',
             data: this.NICKLE
           },
           {
-            label: "CRBURNING",
-            type: "bar",
-            backgroundColor: "#d9534f",
+            label: 'CRBURNING',
+            type: 'bar',
+            backgroundColor: '#d9534f',
             data: this.CRBURNING
           },
           {
-            label: "SKIPPLATING",
-            type: "bar",
-            backgroundColor: "#292b2c",
+            label: 'SKIPPLATING',
+            type: 'bar',
+            backgroundColor: '#292b2c',
             data: this.SKIPPLATING
           },
           {
-            label: "DENT",
-            type: "bar",
-            backgroundColor: "#0d47a1",
+            label: 'DENT',
+            type: 'bar',
+            backgroundColor: '#0d47a1',
             data: this.DENT
           },
           {
-            label: "HANDMOULDINGREJ",
-            type: "bar",
-            backgroundColor: "#007E33",
+            label: 'HANDMOULDINGREJ',
+            type: 'bar',
+            backgroundColor: '#007E33',
             data: this.HANDMOULDINGREJ
           },
           {
-            label: "SCRATCHMARK",
-            type: "bar",
-            backgroundColor: "#00C851",
+            label: 'SCRATCHMARK',
+            type: 'bar',
+            backgroundColor: '#00C851',
             data: this.SCRATCHMARK
           },
           {
-            label: "ROUGHNESS",
-            type: "bar",
-            backgroundColor: "#FF8800",
+            label: 'ROUGHNESS',
+            type: 'bar',
+            backgroundColor: '#FF8800',
             data: this.ROUGHNESS
           },
           {
-            label: "SILVER",
-            type: "bar",
-            backgroundColor: "#CC0000",
+            label: 'SILVER',
+            type: 'bar',
+            backgroundColor: '#CC0000',
             data: this.SILVER
           },
           {
-            label: "MOULDINGREJ",
-            type: "bar",
-            backgroundColor: "#a1887f",
+            label: 'MOULDINGREJ',
+            type: 'bar',
+            backgroundColor: '#a1887f',
             data: this.MOULDINGREJ
           },
           {
-            label: "WARPAGE",
-            type: "bar",
-            backgroundColor: "#59698d",
+            label: 'WARPAGE',
+            type: 'bar',
+            backgroundColor: '#59698d',
             data: this.WARPAGE
           },
           {
-            label: "COPPERBURNING",
-            type: "bar",
-            backgroundColor: "#01579b",
+            label: 'COPPERBURNING',
+            type: 'bar',
+            backgroundColor: '#01579b',
             data: this.COPPERBURNING
           },
           {
-            label: "WHITEMARK",
-            type: "bar",
-            backgroundColor: "#1e88e5",
+            label: 'WHITEMARK',
+            type: 'bar',
+            backgroundColor: '#1e88e5',
             data: this.WHITEMARK
           },
           {
-            label: "DOTPLASTIC",
-            type: "bar",
-            backgroundColor: "#f50057",
+            label: 'DOTPLASTIC',
+            type: 'bar',
+            backgroundColor: '#f50057',
             data: this.DOTPLASTIC
           },
           {
-            label: "WATERMARK",
-            type: "bar",
-            backgroundColor: "#bf360c",
+            label: 'WATERMARK',
+            type: 'bar',
+            backgroundColor: '#bf360c',
             data: this.WATERMARK
           },
           {
-            label: "BLISTER",
-            type: "bar",
-            backgroundColor: "#6d4c41",
+            label: 'BLISTER',
+            type: 'bar',
+            backgroundColor: '#6d4c41',
             data: this.BLISTER
           },
           {
-            label: "JIGDAMAGE",
-            type: "bar",
-            backgroundColor: "#90a4ae",
+            label: 'JIGDAMAGE',
+            type: 'bar',
+            backgroundColor: '#90a4ae',
             data: this.JIGDAMAGE
           },
           {
-            label: "OTHER1",
-            type: "bar",
-            backgroundColor: "#4caf50",
+            label: 'OTHER1',
+            type: 'bar',
+            backgroundColor: '#4caf50',
             data: this.OTHER1
           },
           {
-            label: "OTHER2",
-            type: "bar",
-            backgroundColor: "#009688",
+            label: 'OTHER2',
+            type: 'bar',
+            backgroundColor: '#009688',
             data: this.OTHER2
           },
           {
-            label: "OTHER3",
-            type: "bar",
-            backgroundColor: "#3F729B",
+            label: 'OTHER3',
+            type: 'bar',
+            backgroundColor: '#3F729B',
             data: this.OTHER3
           },
           {
-            label: "OTHER4",
-            type: "bar",
-            backgroundColor: "#ffbb33",
+            label: 'OTHER4',
+            type: 'bar',
+            backgroundColor: '#ffbb33',
             data: this.OTHER4
           }
           // {
@@ -404,20 +404,20 @@ export class Top5RejDefectwiseComponent implements OnInit {
         barDatasetSpacing: 1,
         responsive: true,
         tooltips: {
-          mode: "index",
+          mode: 'index',
           intersect: true
         },
 
         maintainAspectRatio: false,
         hover: {
-          mode: "label"
+          mode: 'label'
         },
         scales: {
           yAxes: [
             {
               scaleLabel: {
                 display: true,
-                labelString: ""
+                labelString: ''
                 // maxTicksLimit: 5
               }
             }
@@ -433,20 +433,20 @@ export class Top5RejDefectwiseComponent implements OnInit {
               Chart.defaults.global.defaultFontStyle,
               Chart.defaults.global.defaultFontFamily
             );
-            this.textAlign = "center";
-            this.textBaseline = "bottom";
+            this.textAlign = 'center';
+            this.textBaseline = 'bottom';
             // tslint:disable-next-line:only-arrow-functions
             this.data.datasets.forEach(function(dataset, i) {
-              if (dataset.type === "line") {
+              if (dataset.type === 'line') {
                 const meta = chartInstance.controller.getDatasetMeta(i);
                 // tslint:disable-next-line:only-arrow-functions
                 meta.data.forEach(function(bar, index) {
                   const data = dataset.data[index];
-                  if (data !== "0.00") {
-                    chartInstance.ctx.fillStyle = "#dc3545";
-                    chartInstance.ctx.font = "italic bold 8pt verdana";
+                  if (data !== '0.00') {
+                    chartInstance.ctx.fillStyle = '#dc3545';
+                    chartInstance.ctx.font = 'italic bold 8pt verdana';
                     chartInstance.ctx.fillText(
-                      data + " %",
+                      data + ' %',
                       bar._model.x,
                       bar._model.y - 5
                     );
@@ -461,33 +461,33 @@ export class Top5RejDefectwiseComponent implements OnInit {
   }
 
   getselectedmonth() {
-    this.Month = "a";
+    this.Month = 'a';
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
   }
 
   monthclick() {
-    this.Month = "M";
+    this.Month = 'M';
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
   }
   weekclick() {
-    this.Month = "W";
+    this.Month = 'W';
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
   }
   dayclick() {
-    this.Month = "D";
+    this.Month = 'D';
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
   }
 
   getselectedtype(ev) {
-    this.Month = "a";
+    this.Month = 'a';
     this.typename = ev;
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
@@ -495,7 +495,7 @@ export class Top5RejDefectwiseComponent implements OnInit {
   }
 
   selectedGrid(ev) {
-    this.Month = "a";
+    this.Month = 'a';
 
     this.service.plantcode = ev;
 

@@ -1,21 +1,21 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Dailyproduction } from "./dailyproduction.model";
-import { environment } from "src/environments/environment";
-import { Observable } from "rxjs";
-import { Itemwiserej } from "./itemwiserej.model";
-import { TopDefect } from "./topdefect.model";
-import { DailyReportDisplay } from "./dailyreportdisplay.model";
-import { DailyReportSummary } from "./dailyreportsummary.model";
-import { Top5Rejection } from "./top5rejection.model";
-import { DailyReportDisplayChrome } from "./dailyreportdisplaychrome.model";
-import { DailyReportDisplaySatin } from "./dailyreportdisplaysatin.model";
-import { ItemwiseRejDetail } from "./itemwiserejdetail.model";
-import { TopDefectsummary } from "./TopDefectssummary.model";
-import { Top5rejectiondefectwise } from "./top5rejectiondefectwise.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Dailyproduction } from './dailyproduction.model';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { Itemwiserej } from './itemwiserej.model';
+import { TopDefect } from './topdefect.model';
+import { DailyReportDisplay } from './dailyreportdisplay.model';
+import { DailyReportSummary } from './dailyreportsummary.model';
+import { Top5Rejection } from './top5rejection.model';
+import { DailyReportDisplayChrome } from './dailyreportdisplaychrome.model';
+import { DailyReportDisplaySatin } from './dailyreportdisplaysatin.model';
+import { ItemwiseRejDetail } from './itemwiserejdetail.model';
+import { TopDefectsummary } from './TopDefectssummary.model';
+import { Top5rejectiondefectwise } from './top5rejectiondefectwise.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DailyproductionService {
   readonly rootUrl = environment.apiUrl;
@@ -55,22 +55,22 @@ export class DailyproductionService {
   public getDailyPReject(id, startdate, endate): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(
       this.rootUrl +
-        "/dailyproductions/rejectdata/" +
+        '/dailyproductions/rejectdata/' +
         id +
-        "/Reject/" +
+        '/Reject/' +
         startdate +
-        "/" +
+        '/' +
         endate
     );
   }
   public getDailyPRejectmode(id, mode): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(
-      this.rootUrl + "/dailyproductions/rejectdata/" + id + "/Reject/" + mode
+      this.rootUrl + '/dailyproductions/rejectdata/' + id + '/Reject/' + mode
     );
   }
   public getRejectcalendar(id, date): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(
-      this.rootUrl + "/dailyproductions/Getallrejdata/" + id + "/Reject/" + date
+      this.rootUrl + '/dailyproductions/Getallrejdata/' + id + '/Reject/' + date
     );
   }
 
@@ -82,13 +82,13 @@ export class DailyproductionService {
   ): Observable<Itemwiserej[]> {
     return this.http.get<Itemwiserej[]>(
       this.rootUrl +
-        "/itemwiserejs/rejectdetaildata/" +
+        '/itemwiserejs/rejectdetaildata/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         fromdate +
-        "/" +
+        '/' +
         todate
     );
   }
@@ -101,13 +101,13 @@ export class DailyproductionService {
   ): Observable<ItemwiseRejDetail[]> {
     return this.http.get<ItemwiseRejDetail[]>(
       this.rootUrl +
-        "/ItemwiseRejDetail/rejectdetailmaindata/" +
+        '/ItemwiseRejDetail/rejectdetailmaindata/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         fromdate +
-        "/" +
+        '/' +
         todate
     );
   }
@@ -121,15 +121,15 @@ export class DailyproductionService {
   ): Observable<TopDefect[]> {
     return this.http.get<TopDefect[]>(
       this.rootUrl +
-        "/TopDefectsCodeValue/getalldefects/" +
+        '/TopDefectsCodeValue/getalldefects/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         fromdate +
-        "/" +
+        '/' +
         todate +
-        "/" +
+        '/' +
         code
     );
   }
@@ -137,11 +137,11 @@ export class DailyproductionService {
   public getprochart(plantcode, type, month): Observable<DailyReportDisplay[]> {
     return this.http.get<DailyReportDisplay[]>(
       this.rootUrl +
-        "/DailyReportDisplay/getallchartdetail/" +
+        '/DailyReportDisplay/getallchartdetail/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }
@@ -153,11 +153,11 @@ export class DailyproductionService {
   ): Observable<DailyReportDisplayChrome[]> {
     return this.http.get<DailyReportDisplayChrome[]>(
       this.rootUrl +
-        "/DailyReportDisplayChrome/getchromedata/" +
+        '/DailyReportDisplayChrome/getchromedata/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }
@@ -169,11 +169,11 @@ export class DailyproductionService {
   ): Observable<DailyReportDisplaySatin[]> {
     return this.http.get<DailyReportDisplaySatin[]>(
       this.rootUrl +
-        "/DailyReportDisplaySatin/getsatindata/" +
+        '/DailyReportDisplaySatin/getsatindata/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }
@@ -185,11 +185,11 @@ export class DailyproductionService {
   ): Observable<TopDefectsummary[]> {
     return this.http.get<TopDefectsummary[]>(
       this.rootUrl +
-        "/TopDefectssummary/gettopdefectsummary/" +
+        '/TopDefectssummary/gettopdefectsummary/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }
@@ -198,11 +198,11 @@ export class DailyproductionService {
     return this.http
       .get(
         this.rootUrl +
-          "/DailySummaryReport/getallchartsummary/" +
+          '/DailySummaryReport/getallchartsummary/' +
           plantcode +
-          "/" +
+          '/' +
           type +
-          "/" +
+          '/' +
           month
       )
       .toPromise()
@@ -214,11 +214,11 @@ export class DailyproductionService {
   public gettop5rejection(plantcode, type, month): Observable<Top5Rejection[]> {
     return this.http.get<Top5Rejection[]>(
       this.rootUrl +
-        "/Top5Rejection/gettop5rejection/" +
+        '/Top5Rejection/gettop5rejection/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }
@@ -228,13 +228,20 @@ export class DailyproductionService {
     type,
     month
   ): Observable<Top5rejectiondefectwise[]> {
+    console.log(this.rootUrl +
+      '/Top5RejectionDefectwise/gettop5rejectiondefectwise/' +
+      plantcode +
+      '/' +
+      type +
+      '/' +
+      month);
     return this.http.get<Top5rejectiondefectwise[]>(
       this.rootUrl +
-        "/Top5RejectionDefectwise/gettop5rejectiondefectwise/" +
+        '/Top5RejectionDefectwise/gettop5rejectiondefectwise/' +
         plantcode +
-        "/" +
+        '/' +
         type +
-        "/" +
+        '/' +
         month
     );
   }

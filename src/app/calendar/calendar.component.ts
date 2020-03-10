@@ -146,7 +146,7 @@ export class CalendarComponent implements OnInit {
     console.log(this.selected_eventdate);
     this.loading = true;
     this.selectedtype = 'NULL';
-    this.dpservice.getRejectdetail(this.selectedcode, this.selectedtype, this.selected_eventdate, this.selected_eventdate)
+    this.dpservice.getRejectdetail(this.selectedcode, 'NULL', this.selected_eventdate, this.selected_eventdate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
