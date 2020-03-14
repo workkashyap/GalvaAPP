@@ -32,7 +32,7 @@ body {
     padding: 15px 20px 10px;
   }
   .no-padding{
-    padding: unset;
+    /*padding: unset;*/
   }
   .set-padding{
     padding: 7px 0px 7px 0px;
@@ -46,9 +46,9 @@ body {
     margin: unset;
   }
   .custom-col-3{
-    flex: 0 0 24%;
+    /*flex: 0 0 24%;
     max-width: 24%;
-    margin: 1px;
+    margin: 1px;*/
   }
   .set-select-plant{
    width: 75%;    
@@ -79,4 +79,14 @@ body {
     margin: unset;
     padding: 5px 5px 5px 5px;
   }
-  
+  .resonsive-css>.col-sm-3,.col-md-4,.col-md-2 {
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+  }
+  .card-title {
+    margin-bottom: 10px;
+  }
+  .btn-custom {
+    padding: 5px 5px 5px 5px;
+    margin: 5px;
+}

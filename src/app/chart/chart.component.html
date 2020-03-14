@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row  resonsive-css mb-2">
           <div class="col-sm-3">
             <select class=" custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel'
               [(ngModel)]='this.monthname'>
@@ -54,7 +54,7 @@
 
     <div class="card card-info">
       <div class="card-header" style="background-color: #9a9a9a;">
-        <div class="row">
+        <div class="row  resonsive-css">
           <div class="col-md-4">
             <h3 class="card-title">Inspection Chart {{ this.typename }} - {{ this.service.plantshortname }}</h3>
           </div>

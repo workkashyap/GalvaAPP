@@ -1,15 +1,23 @@
 .custom-col-3{
-    flex: 0 0 24%;
+    /*flex: 0 0 24%;
     max-width: 24%;
-    margin: 1px;
+    margin: 1px;*/
   }
   .no-margin {
-    margin: unset;
+   /* margin: unset;*/
   }
   .no-padding{
-    padding: unset;
+    /*padding: unset;*/
   }
   .set-padding{
     padding: 7px 0px 7px 0px;
     text-align: center;
   }
+  .resonsive-css>.col-sm-3,.col-md-4 {
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+  }
+  .card-title {
+    margin-bottom: 10px;
+  }
+  

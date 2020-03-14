@@ -5,15 +5,11 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-8">
-            <div class="row">
-              <div class="col-sm-4">
-                <h1>Quality Calendar</h1>
-              </div>
-              <div class="col-sm-8">
-                <h4 class="text-target">Rejection Target Less than 15%</h4>
-              </div>
-            </div>
+          <div class="col-sm-4">
+            <h1>Quality Calendar</h1>
+          </div>
+          <div class="col-sm-4">
+            <h6 style="margin-bottom: 0.5em;margin-top: 0.5em;">Rejection Target Less than 15%</h6>
           </div>
           <div class="col-sm-4">
             <ol class="breadcrumb float-sm-right">
@@ -32,68 +28,43 @@
           <div class="mx-2">
             <div class="card card-primary card-outline">
               <div class="card-header ">
-                <div class="row">
-                  <div class="col-md-2">
+                <!--  card-tools -->
+                <div class="form-inline">
+                  <div class="col mb-2">
                     <div class="btn-group btn-group-toggle btn-sm no-padding" role="group">
                       <button class="btn btn-primary" (click)="Previous()">Previous</button>
                       <button class="btn btn-primary" (click)="Next()">Next</button>
                     </div>
-                    <!-- <span class="text-dark bg-warning m-2">Rejection 15% {{ this.rejless15 }} Days </span>
-                          <span class="text-dark bg-dark m-1">VS</span> 
-                          <span class="text-dark bg-danger m-2">{{ this.rejgreater15 }} Days Actual</span>
-                       -->
                   </div>
-                  <div class="col-md-8">
-                    <!--<p class="text-adjust">
-                      <span class="text-dark m-2">Less Then 15%</span>
-                      <span class="text-dark m-2">{{ this.rejless15 }} Days</span>
-                      <span class="text-dark m-2">VS</span>
-                      <span class="text-dark m-2">{{ this.rejgreater15 }} Days</span>
-                    </p>-->
-                    <div class="card-tools" *ngFor="let tot of this.dpservice.dailyreportsummary">
-                      <div class="row" *ngIf="tot.itemtype==this.typename">
-                        <div class="col-md-3 custom-col-3 no-padding">
-                          <div class="card text-dark bg-info no-margin">
-                            <div class="card-body set-padding">Insp. Value = <b>{{ tot.producevalue }}</b> Lacs</div>
-                          </div>
-                        </div>
-                        <div class="col-md-3 custom-col-3 no-padding">
-                          <div class="card text-dark bg-success no-margin">
-                            <div class="card-body set-padding">Ok value = <b>{{ tot.okvalue }}</b> Lacs</div>
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 custom-col-3 no-padding">
-                          <div class="card text-dark bg-danger  no-margin">
-                            <div class="card-body set-padding">Reject value = <b>{{ tot.rejectvalue }}</b> Lacs</div>
-                          </div>
-                        </div>
-                        <div class="col-md-3 custom-col-3 no-padding">
-                          <div class="card text-dark bg-warning no-margin">
-                            <div class="card-body set-padding">Reject % = <b>{{ tot.rejper }}</b> </div>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="form-group mx-sm-4 mb-2" *ngFor="let tot of this.dpservice.dailyreportsummary">
+                    <div *ngIf="tot.itemtype==this.typename">
+                      <button class="btn btn-custom text-dark bg-info">Insp. Value = <b>{{ tot.producevalue }}</b>
+                        Lacs</button>
+                      <button class="btn btn-custom text-dark bg-success">Ok Value = <b>{{ tot.okvalue }}</b>
+                        Lacs</button>
+                      <button class="btn btn-custom text-dark bg-danger">Rej. Value = <b>{{ tot.rejectvalue }}</b>
+                        Lacs</button>
+                      <button class="btn btn-custom text-dark bg-warning">Reject % = <b>{{ tot.rejper }}</b></button>
                     </div>
                   </div>
-                  <div class="col-md-2 no-padding">
-                    <select class="form-control set-select-plant" *ngIf="this.plantservice" name="myselect" #mySelect
+                  <div class="col mb-2">
+                    <select class="form-control" *ngIf="this.plantservice" name="myselect" #mySelect
                       (change)="selectedGrid($event.target.value)">
                       <!-- <option value="0">--Select--</option> -->
                       <option *ngFor="let pl of this.plantservice.plantlist" value="{{pl.plantcode}}">
                         {{ pl.plantshortname }}
                       </option>
                     </select>
-                    <button class="btn btn-primary margin-top refresh-btn" (click)="loaddata()"
-                      style="padding: 6px 5px 5px 5px;">
-                      <i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
+                  <div class="col mb-2">
+                    <button class="btn btn-primary" (click)="loaddata()"><i class="fa fa-refresh"
+                        aria-hidden="true"></i></button></div>
                 </div>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0" style="overflow-y: scroll; height:650px;">
-                
+
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                 <span style="padding: 0px 10px 0px 20px;color: gray;">Notes: Amounts in Lacs</span>
                 <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
