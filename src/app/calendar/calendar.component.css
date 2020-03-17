@@ -7,6 +7,15 @@ body {
   .m-2 {
     margin: 0.2rem !important;
 }
+li.breadcrumb-item {
+  font-size: 0.8rem;
+}
+.content-header {
+  padding: 8px .5rem; 
+}
+.card-header {
+  padding: 0.25rem 0.25rem;
+}
 .margin-left {
   margin-left: 2px;
 }
@@ -34,6 +43,9 @@ body {
   .no-padding{
     /*padding: unset;*/
   }
+  .btn-custom-td {
+    font-size: 9px;
+}
   .set-padding{
     padding: 7px 0px 7px 0px;
     text-align: center;
@@ -88,5 +100,16 @@ body {
   }
   .btn-custom {
     padding: 5px 5px 5px 5px;
-    margin: 5px;
-}
+    margin: 4px;
+    font-size: 13px;
+  }
+  .btn-custom-in-grp {
+    padding: 5px 5px 5px 5px;
+    font-size: 13px;
+  }
+  .group-btn-c{
+    padding: 0.20rem 0.3rem;
+  }
+  .my-calender>.fc-header-toolbar{
+    display: none !important;
+  }
