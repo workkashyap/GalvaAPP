@@ -45,6 +45,7 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
 import { RejectionMainComponent } from './rejection/rejection-main/rejection-main.component';
 import { HolnbuffComponent } from './holnbuff/holnbuff.component';
 import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defectwise.component';
+import { SalesComponent } from './sales/sales.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defec
     TaskReportComponent,
     RejectionMainComponent,
     HolnbuffComponent,
-    Top5RejDefectwiseComponent
+    Top5RejDefectwiseComponent,
+    SalesComponent
   ],
   imports: [
     BrowserModule,
