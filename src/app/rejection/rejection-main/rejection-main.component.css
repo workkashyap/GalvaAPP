@@ -1,11 +1,14 @@
     .custom-col-2 {
-        flex: 0 0 38.666667%;
+        /*flex: 0 0 38.666667%;
         max-width: 28.966667%;
         padding: unset;
-        margin: 2px;
+        margin: 2px;*/
     }
     .no-margin {
         margin: unset;
+    }
+    .no-padding {
+        padding: unset;
     }
     .set-padding{
         padding: 10px 5px;
@@ -20,7 +23,7 @@
   }
 @media only screen and (max-width: 600px) {
     .custom-col-2 {
-        flex: 2 0 28.6667%;
-        max-width: 28.6667%;
+        /*flex: 2 0 28.6667%;
+        max-width: 28.6667%;*/
     }
   }
