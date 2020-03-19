@@ -46,6 +46,8 @@ import { RejectionMainComponent } from './rejection/rejection-main/rejection-mai
 import { HolnbuffComponent } from './holnbuff/holnbuff.component';
 import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defectwise.component';
 import { SalesComponent } from './sales/sales.component';
+import { CreateactionplanComponent } from './createactionplan/createactionplan.component';
+import { AddRowDirective } from './add-row.directive';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { SalesComponent } from './sales/sales.component';
     RejectionMainComponent,
     HolnbuffComponent,
     Top5RejDefectwiseComponent,
-    SalesComponent
+    SalesComponent,
+    CreateactionplanComponent,
+    AddRowDirective
   ],
   imports: [
     BrowserModule,
