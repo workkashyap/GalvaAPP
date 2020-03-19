@@ -1,0 +1,31 @@
+export class Sales {
+  id: number;
+  plantcode: string;
+  plant: string;
+  invoiceNumber: number;
+  accDocNo: number;
+  billingDocDate: string;
+  materialType: string;
+  soType: string;
+  soTypedesc: string;
+  billingDocTYPE: string;
+  billingtypedesc: string;
+  divisionCode: number;
+  division: string;
+  soldToParty: number;
+  soldToPartyName: string;
+  payer: number;
+  payerName: string;
+  distChannel: number;
+  materialNumber: number;
+  materialDesc: string;
+  invoiceQty: number;
+  uom: string;
+  rateINR: number;
+  basicAmtINR: number;
+  nettaxinr: number;
+  billamount: number;
+  totalvalue: number;
+  cancellationDoc: string;
+  billingCreationDat: string;
+}

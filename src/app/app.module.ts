@@ -45,8 +45,12 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
 import { RejectionMainComponent } from './rejection/rejection-main/rejection-main.component';
 import { HolnbuffComponent } from './holnbuff/holnbuff.component';
 import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defectwise.component';
+<<<<<<< HEAD
 import { CreateactionplanComponent } from './createactionplan/createactionplan.component';
 import { AddRowDirective } from './add-row.directive';
+=======
+import { SalesComponent } from './sales/sales.component';
+>>>>>>> c1efa391c77cc026ef9c95c5e9a7f3b3255a4dd2
 
 @NgModule({
   declarations: [
@@ -78,8 +82,7 @@ import { AddRowDirective } from './add-row.directive';
     RejectionMainComponent,
     HolnbuffComponent,
     Top5RejDefectwiseComponent,
-    CreateactionplanComponent,
-    AddRowDirective
+    SalesComponent
   ],
   imports: [
     BrowserModule,
