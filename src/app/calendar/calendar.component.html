@@ -10,10 +10,10 @@
             </h5>
           </div>
           <div class="col-sm-4">
-            <h6 style="margin-top: 5px;font-size: 0.9rem;">
+            <h5 style="margin-top: 5px;">
               OK Value Target grater than {{company_per}}
               <!--Rejection Target Less than 15%*-->
-            </h6>
+            </h5>
           </div>
           <div class="col-sm-4">
             <ol class="breadcrumb float-sm-right">
@@ -85,7 +85,7 @@
 
                 <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                   [header]="options.header" [weekends]="true" [displayEventTime]="false"
-                  [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5"
+                  [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5" height="auto"
                   (dateClick)="dateClick($event)" (eventClick)="eventClick($event)" class="my-calender"></full-calendar>
                 <div class="table-responsive mailbox-messages">
 
@@ -189,11 +189,11 @@
                         style="float: right;">Total Reject: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
 
                       <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
-                        style="float: right;">Reject %: {{ rejperPerSum | number:'1.2'  }} </button>
+                        style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
                     </td>
                   </tr>
                   <!-- regular date section -->
-                  <tr *ngIf="!btnLabel" >
+                  <tr *ngIf="!btnLabel">
                     <td colspan="3" style=" width:275px;">
                       <div class="input-group mb-2">
                         <input type="text" pInputText placeholder="Global Filter"

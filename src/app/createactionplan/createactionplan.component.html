@@ -1,0 +1,248 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Create Action Plan</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Create Action Plan</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-1 mb-2 text-center">
+                    <button pButton type="button" icon="pi pi-plus" class="ui-button-info" pAddRow [table]="dt"
+                        [newRow]="newRow()"></button>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <select class=" custom-select" name="Monthname" #Monthname='ngModel' [(ngModel)]='monthname'>
+                        <option value="0">--Select Month--</option>
+                        <option value="Jan">Jan</option>
+                        <option value="Feb">Feb</option>
+                        <option value="Mar">Mar</option>
+                        <option value="Apr">Apr</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="Aug">Aug</option>
+                        <option value="Sept">Sept</option>
+                        <option value="Oct">Oct</option>
+                        <option value="Nov">Nov</option>
+                        <option value="Dec">Dec</option>
+                    </select>
+                </div>
+                <div class="col-sm-3 mb-2">
+                    <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.plantcode"
+                        (change)="selectedGrid($event.target.value)">
+                        <option value="0">--Select Plant--</option>
+                        <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                            {{ pl.plantshortname }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+            <p-table #dt [value]="allActionPlan" dataKey="id" editMode="row"
+                [style]="{'text-align': 'center', 'font-size': '0.7em'}" [paginator]="true" [rows]="20"
+                [resizableColumns]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="rowData">
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.sHash" class="form-control"
+                                        required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.sHash}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.department" class="form-control"
+                                        required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.department}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.materialCode"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.materialCode}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.materialDescription"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.materialDescription}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.project" class="form-control"
+                                        required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.project}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <!--
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.responsibility"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.responsibility}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>-->
+                        <td style="width:150px">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="date" [(ngModel)]="rowData.targetdateofcompletion"
+                                        class="form-control" required>
+
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.targetdateofcompletion | date : 'dd/MM/yyyy' }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="width:150px">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="date" [(ngModel)]="rowData.actualdateofcompletion "
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.actualdateofcompletion | date : 'dd/MM/yyyy'}}
+                                </ng-template>
+                            </p-cellEditor>
+
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.correctiveactiontaken"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.correctiveactiontaken}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.result" class="form-control"
+                                        required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.result}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="width: 120px;">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <span for="foo" class="rangeOutput">{{rowData.progresspercent}}</span>
+                                    <input pInputText type="range" min="0" maxlength="100" style="width: 100%;"
+                                        [(ngModel)]="rowData.progresspercent" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.progresspercent}}
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                            attr.aria-valuenow="{{rowData.progresspercent}}" aria-volumemin="0"
+                                            aria-volumemax="100" [style.width.%]="rowData.progresspercent">
+                                        </div>
+                                    </div>
+
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <span class="badge badge-danger" *ngIf="rowData.approvedstatus==0">Pending</span>
+                            <span class="badge badge-success" *ngIf="rowData.approvedstatus==1">Approved</span>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.remarks2" class="form-control"
+                                        required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.remarks2}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <app-fileupload></app-fileupload>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.attachment}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="text-align:center">
+                            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                                class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
+                            <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
+                                (click)="onRowDelete(rowData)"></button>
+                            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                                class="ui-button-success" style="margin-right: .5em"
+                                (click)="onRowEditSave(rowData)"></button>
+                            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                                class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->

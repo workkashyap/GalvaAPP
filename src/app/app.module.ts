@@ -45,6 +45,8 @@ import { TaskReportComponent } from './task/task-report/task-report.component';
 import { RejectionMainComponent } from './rejection/rejection-main/rejection-main.component';
 import { HolnbuffComponent } from './holnbuff/holnbuff.component';
 import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defectwise.component';
+import { CreateactionplanComponent } from './createactionplan/createactionplan.component';
+import { AddRowDirective } from './add-row.directive';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defec
     TaskReportComponent,
     RejectionMainComponent,
     HolnbuffComponent,
-    Top5RejDefectwiseComponent
+    Top5RejDefectwiseComponent,
+    CreateactionplanComponent,
+    AddRowDirective
   ],
   imports: [
     BrowserModule,
@@ -207,6 +211,11 @@ import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defec
       {
         path: 'Top5RejDefwise-report',
         component: Top5RejDefectwiseComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'createActionPlan',
+        component: CreateactionplanComponent,
         canActivate: [AuthGuard]
       },
 

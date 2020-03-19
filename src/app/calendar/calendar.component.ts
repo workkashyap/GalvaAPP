@@ -49,6 +49,7 @@ export class CalendarComponent implements OnInit {
   okQtySum: any;
 
   rejperPerSum: any;
+  rejperPerSum2: any;
 
   public inspectionvsum: any;
   public inspectionQtysum: any;
@@ -311,7 +312,7 @@ export class CalendarComponent implements OnInit {
     this.okQtySum = 0;
 
     this.rejperPerSum = 0;
-
+    this.rejperPerSum2 = 0;
     for (const rq of this.dpservice.itemwiserejlist) {
       this.rejectvsum += rq.reject_value;
       this.rejectQtysum += rq.reject_qty;
@@ -330,6 +331,7 @@ export class CalendarComponent implements OnInit {
 
       this.rejperPerSum += rq.rejper;
     }
+    this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
   }
   /*rejectvaluesum() {
     this.rejectvsum = 0;
