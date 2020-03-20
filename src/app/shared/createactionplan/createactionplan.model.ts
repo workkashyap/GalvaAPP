@@ -14,5 +14,8 @@ export class Createactionplan {
   approvedstatus: string;
   remarks2: string;
   attachment: string;
+  currentDate: string;
+  monthName: string;
+  plantNo: string;
   edit: boolean=false;
 }

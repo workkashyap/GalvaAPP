@@ -6,6 +6,7 @@ import { Createactionplan } from "../shared/createactionplan/createactionplan.mo
 import { PlantService } from '../shared/plant/plant.service';
 import { ToastrService } from 'ngx-toastr';
 import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
+import { NewTaskComponent } from '../task/new-task/new-task.component';
 
 @Component({
   selector: 'app-createactionplan',
@@ -47,7 +48,7 @@ export class CreateactionplanComponent implements OnInit {
     this.plantservice.getPlantData(this.currentUser.id);
     this.cols = [
       // { field: "id", header: "ID" },
-      { field: "sHash", header: "S#", width: "50px" },
+      //  { field: "sHash", header: "S#", width: "50px" },
       { field: "department", header: "Department", width: "80px" },
       { field: "materialCode", header: "Material Code", width: "80px" },
       { field: "materialDescription", header: "Material Description", width: "80px" },
@@ -65,7 +66,7 @@ export class CreateactionplanComponent implements OnInit {
     ];
     this.loading = true;
     this.apservice
-      .getActionPlan()
+      .getActionPlan(this.monthname, this.plantcode, this.currentUser.username)
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];
@@ -75,20 +76,25 @@ export class CreateactionplanComponent implements OnInit {
   refreshList() {
     let me = this;
     this.apservice
-      .getActionPlan()
+      .getActionPlan(this.monthname, this.plantcode, this.currentUser.username)
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];
       });
   }
 
+  selectedMonth(monthname) {
+    console.log(monthname);
+    this.refreshList();
+  }
   selectedGrid(plantCode) {
     console.log(plantCode);
+    this.refreshList();
   }
   onRowEditInit(row: any) {
     this.cols[0].width = "90px";
     this.cols[1].width = "160px";
-    this.cols[2].width = "120px";
+    this.cols[2].width = "160px";
     this.cols[3].width = "200px";
     this.cols[4].width = "120px";
     this.cols[5].width = "140px";
@@ -97,9 +103,8 @@ export class CreateactionplanComponent implements OnInit {
     this.cols[8].width = "120px";
     this.cols[9].width = "120px";
     this.cols[10].width = "120px";
-    this.cols[11].width = "200px";
-    this.cols[12].width = "240px";
-    this.cols[13].width = "100px";
+    this.cols[11].width = "240px";
+    this.cols[12].width = "100px";
     row.targetdateofcompletion = this.formatDate(new Date(row.targetdateofcompletion));
     row.actualdateofcompletion = this.formatDate(new Date(row.actualdateofcompletion));
     console.log(row);
@@ -122,6 +127,10 @@ export class CreateactionplanComponent implements OnInit {
     if (this.fservice.fileName) {
       row.attachment = this.fservice.fileName;
     }
+    row.sHash = '';
+    row.currentDate = new Date();
+    row.monthName = this.monthname;
+    row.plantNo = this.plantcode;
     row.responsibility = this.currentUser.username;
     if (row.id) {
       this.apservice.updateCreateactionplan(row).subscribe(
@@ -158,7 +167,7 @@ export class CreateactionplanComponent implements OnInit {
       });
   }
   resetColumnWidth() {
-    this.cols[0].width = "50px";
+    this.cols[0].width = "80px";
     this.cols[1].width = "80px";
     this.cols[2].width = "80px";
     this.cols[3].width = "80px";
@@ -170,8 +179,7 @@ export class CreateactionplanComponent implements OnInit {
     this.cols[9].width = "80px";
     this.cols[10].width = "80px";
     this.cols[11].width = "80px";
-    this.cols[12].width = "80px";
-    this.cols[13].width = "100px";
+    this.cols[12].width = "100px";
 
   }
 
@@ -184,20 +192,19 @@ export class CreateactionplanComponent implements OnInit {
     this.resetColumnWidth();
   }
   newRow() {
-    this.cols[0].width = "90px";
-    this.cols[1].width = "160px";
-    this.cols[2].width = "120px";
-    this.cols[3].width = "200px";
-    this.cols[4].width = "120px";
+    this.cols[0].width = "160px";
+    this.cols[1].width = "120px";
+    this.cols[2].width = "160px";
+    this.cols[3].width = "120px";
+    this.cols[4].width = "140px";
     this.cols[5].width = "140px";
     this.cols[6].width = "140px";
     this.cols[7].width = "200px";
     this.cols[8].width = "120px";
-    this.cols[9].width = "120px";
-    this.cols[10].width = "120px";
-    this.cols[11].width = "200px";
-    this.cols[12].width = "240px";
-    this.cols[13].width = "100px";
+    this.cols[9].width = "100px";
+    this.cols[10].width = "140px";
+    this.cols[11].width = "240px";
+    this.cols[12].width = "100px";
     return {
       "id": 0,
       "sHash": "",
@@ -210,7 +217,7 @@ export class CreateactionplanComponent implements OnInit {
       "actualdateofcompletion": "",
       "correctiveactiontaken": "",
       "result": "",
-      "progresspercent": '',
+      "progresspercent": '0',
       "approvedstatus": "",
       "remarks2": "",
       "attachment": "",

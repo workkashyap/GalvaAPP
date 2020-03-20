@@ -12,11 +12,16 @@ export class CreateactionplanService {
   constructor(public http: HttpClient) { }
 
   readonly rootUrl = environment.apiUrl;
-
-  //create action plan
-  public getActionPlan(): Observable<Createactionplan[]> {
+  //get Action PLan Report
+  public getActionPlanReport(monthname, plantcode): Observable<Createactionplan[]> {
     return this.http.get<Createactionplan[]>(
-      this.rootUrl + "/newactionplans/"
+      this.rootUrl + "/newactionplans/Getnewactionplanreport/" + monthname + '/' + plantcode
+    );
+  }
+  //create action plan
+  public getActionPlan(monthname, plantcode, currentUser): Observable<Createactionplan[]> {
+    return this.http.get<Createactionplan[]>(
+      this.rootUrl + "/newactionplans/Getnewactionplan/" + monthname + '/' + plantcode + '/' + currentUser
     );
   }
   public insertCreateactionplan(data) {

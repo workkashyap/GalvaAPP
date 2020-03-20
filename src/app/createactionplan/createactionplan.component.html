@@ -28,8 +28,8 @@
                 </div>
 
                 <div class="col-sm-3 mb-2">
-                    <select class=" custom-select" name="Monthname" #Monthname='ngModel' [(ngModel)]='monthname'>
-                        <option value="0">--Select Month--</option>
+                    <select class=" custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
+                        #Monthname='ngModel' [(ngModel)]='monthname'>
                         <option value="Jan">Jan</option>
                         <option value="Feb">Feb</option>
                         <option value="Mar">Mar</option>
@@ -47,15 +47,14 @@
                 <div class="col-sm-3 mb-2">
                     <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.plantcode"
                         (change)="selectedGrid($event.target.value)">
-                        <option value="0">--Select Plant--</option>
                         <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
                             {{ pl.plantshortname }}
                         </option>
                     </select>
                 </div>
             </div>
-            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-
+            <!--<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            -->
             <p-table #dt [value]="allActionPlan" dataKey="id" editMode="row"
                 [style]="{'text-align': 'center', 'font-size': '0.7em'}" [paginator]="true" [rows]="20"
                 [resizableColumns]="true">
@@ -66,17 +65,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
                     <tr [pEditableRow]="rowData">
-                        <td>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="rowData.sHash" class="form-control"
-                                        required>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    {{rowData.sHash}}
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
+
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
@@ -137,7 +126,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="date" [(ngModel)]="rowData.targetdateofcompletion"
-                                        class="form-control" required>
+                                        class="form-control no-spin" required>
 
                                 </ng-template>
                                 <ng-template pTemplate="output">
@@ -149,7 +138,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="date" [(ngModel)]="rowData.actualdateofcompletion "
-                                        class="form-control" required>
+                                        class="form-control no-spin" required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.actualdateofcompletion | date : 'dd/MM/yyyy'}}
@@ -199,7 +188,7 @@
                             </p-cellEditor>
                         </td>
                         <td>
-                            <span class="badge badge-danger" *ngIf="rowData.approvedstatus==0">Pending</span>
+                            <span class="badge badge-info" *ngIf="rowData.approvedstatus==0">Pending</span>
                             <span class="badge badge-success" *ngIf="rowData.approvedstatus==1">Approved</span>
                         </td>
                         <td>

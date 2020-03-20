@@ -5,7 +5,10 @@ import { PlantService } from '../shared/plant/plant.service';
 import { DatePipe } from '@angular/common';
 import { DailyproductionService } from '../shared/dailyProduction/dailyproduction.service';
 import { Dailyproduction } from '../shared/dailyProduction/dailyproduction.model';
+import { CreateactionplanService } from "../shared/createactionplan/createactionplan.service";
+import { Createactionplan } from "../shared/createactionplan/createactionplan.model";
 import * as bootstrap from 'bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import * as $AB from 'jquery';
 import { LoginService } from '../shared/login/login.service';
 import { User } from '../shared/login/User.model';
@@ -53,7 +56,8 @@ export class CalendarComponent implements OnInit {
 
   public inspectionvsum: any;
   public inspectionQtysum: any;
-
+  allActionPlan: any;
+  allActionPlanCol: any;
   btnLabel: any;
   monthName: any;
   calendarPlugins = [dayGridPlugin];
@@ -69,7 +73,8 @@ export class CalendarComponent implements OnInit {
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
-    public datePipe: DatePipe,
+    public toastr: ToastrService,
+    public datePipe: DatePipe, public apservice: CreateactionplanService,
     public lservice: LoginService,
   ) {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
@@ -110,6 +115,27 @@ export class CalendarComponent implements OnInit {
       { field: 'holdvalue', header: 'Hold Value' },
       { field: 'buffingvalue', header: 'Buff. Value' }
     ];
+
+    this.allActionPlanCol = [
+      // { field: "id", header: "ID" },
+      //  { field: "sHash", header: "S#", width: "50px" },
+      { field: "department", header: "Department", width: "160px" },
+      { field: "materialCode", header: "Material Code", width: "120px" },
+      { field: "materialDescription", header: "Material Description", width: "160px" },
+      { field: "project", header: "Project", width: "120px" },
+      //{ field: "responsibility", header: "Responsibility", width: "90px" },
+      { field: "targetdateofcompletion", header: "Target date of completion", width: "140px" },
+      { field: "actualdateofcompletion", header: "Actual date of completion", width: "140px" },
+      { field: "correctiveactiontaken", header: "Corrective action taken", width: "140px" },
+      { field: "result", header: "Result", width: "200px" },
+      { field: "progresspercent", header: "Progress", width: "120px" },
+      { field: "approvedstatus", header: "Approved status", width: "100px" },
+      { field: "responsibility", header: "Responsibility", width: "100px" },
+      { field: "remarks2", header: " Remark 2", width: "140px" },
+      { field: "attachment", header: "Attachment", width: "140px" },
+      { field: "edit", header: "Action", width: "100px" }
+    ];
+
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     var date = new Date();
 
@@ -171,8 +197,73 @@ export class CalendarComponent implements OnInit {
     this.startdate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
     this.lDate = new Date(this.sDate.getFullYear(), this.sDate.getMonth() + 1, 0);
   }
+
+  actionPlanReport(model) {
+    const me = this;
+
+    $('#actionPlanModal').modal('show');
+    this.loading = true;
+
+    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
+    const monthName = this.datePipe.transform(this.monthName, 'MMM'); 
+    this.apservice
+      .getActionPlanReport(monthName, this.selectedcode)
+      .toPromise()
+      .then(res => {
+        me.allActionPlan = res as Createactionplan[];
+        me.loading = false;
+      });
+  }
   dateClick(model) {
     console.log(model.date);
+  }
+
+  refreshList() {
+    let me = this;
+    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
+
+    const monthName = this.datePipe.transform(this.monthName, 'MMM');
+
+    this.apservice
+      .getActionPlanReport(monthName, this.selectedcode)
+      .toPromise()
+      .then(res => {
+        me.allActionPlan = res as Createactionplan[];
+      });
+  }
+  onRowEditSave(row: any) {
+    row.currentDate = new Date();
+    if (row.id) {
+      this.apservice.updateCreateactionplan(row).subscribe(
+        res => {
+          this.toastr.success('Updated Successfully', 'Save ActionPlan');
+          this.refreshList();
+        },
+        err => {
+          console.log(err);
+        });
+    } else {
+      this.apservice.insertCreateactionplan(row).subscribe(
+        res => {
+          this.toastr.success('Submitted Successfully', 'Save ActionPlan');
+          console.log('Saved successfully');
+          this.refreshList();
+        },
+        err => {
+          console.log(err);
+        });
+    }
+  }
+  onRowDelete(row: any) {
+
+    this.apservice.deleteCreateactionplan(row).subscribe(
+      res => {
+        this.toastr.success('Deleted Successfully', 'Save ActionPlan');
+        this.refreshList();
+      },
+      err => {
+        console.log(err);
+      });
   }
   eventClick(model) {
     this.cols = [

@@ -100,8 +100,8 @@ li.breadcrumb-item {
   }
   .btn-custom {
     padding: 5px 5px 5px 5px;
-    margin: 4px;
-    font-size: 13px;
+    margin: 3.3px;
+    font-size: 12px;
   }
   .btn-custom-in-grp {
     padding: 5px 5px 5px 5px;
@@ -113,3 +113,11 @@ li.breadcrumb-item {
   .my-calender>.fc-header-toolbar{
     display: none !important;
   }
+  .bg-action-plan {
+    background-color: mediumvioletred;
+    color: white !important;
+}
+.status{
+  padding: 5px;
+  font-size: 12px;
+}

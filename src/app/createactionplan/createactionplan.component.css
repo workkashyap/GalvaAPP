@@ -11,3 +11,9 @@ li.breadcrumb-item{
 body .ui-table .ui-table-tbody > tr > td {
     padding: 0.371em 0.657em;
 }
+.no-spin::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.no-spin {
+    text-align: center;
+}
