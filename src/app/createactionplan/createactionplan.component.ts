@@ -123,6 +123,7 @@ export class CreateactionplanComponent implements OnInit {
     return year + '-' + month + '-' + day; //day + "-" + month + "-" + year;
   }
   onRowEditSave(row: any) {
+    const me = this;
     //row.id = 0;
     if (this.fservice.fileName) {
       row.attachment = this.fservice.fileName;
@@ -135,9 +136,9 @@ export class CreateactionplanComponent implements OnInit {
     if (row.id) {
       this.apservice.updateCreateactionplan(row).subscribe(
         res => {
-          this.toastr.success('Updated Successfully', 'Save ActionPlan');
-          this.refreshList();
-          this.resetColumnWidth();
+          me.toastr.success('Updated Successfully', 'Save ActionPlan');
+          me.refreshList();
+          me.resetColumnWidth();
         },
         err => {
           console.log(err);
@@ -145,10 +146,10 @@ export class CreateactionplanComponent implements OnInit {
     } else {
       this.apservice.insertCreateactionplan(row).subscribe(
         res => {
-          this.toastr.success('Submitted Successfully', 'Save ActionPlan');
+          me.toastr.success('Submitted Successfully', 'Save ActionPlan');
           console.log('Saved successfully');
-          this.refreshList();
-          this.resetColumnWidth();
+          me.refreshList();
+          me.resetColumnWidth();
         },
         err => {
           console.log(err);

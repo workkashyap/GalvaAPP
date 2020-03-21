@@ -121,3 +121,21 @@ li.breadcrumb-item {
   padding: 5px;
   font-size: 12px;
 }
+
+@media (min-width: 1200px){
+  .modal-xl {
+      max-width: 1240px;
+      margin: 1.25rem auto;
+  }
+
+}
+.mostly-customized-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa; /* or add it to the track */
+}
+
+/* Add a thumb */
+.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: #000; 
+}

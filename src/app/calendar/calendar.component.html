@@ -56,7 +56,9 @@
                         <b>{{ tot.rejper }}</b></button>
                     </div>
                   </div>
-                  <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
+
+                  <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
+                    *ngIf="this.currentUser && this.currentUser.id=='14'">
                     Action Plan</button>
                   <div class="btn-sm no-padding group-btn-c" role="group">
                     <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
@@ -65,10 +67,10 @@
                       style="border-radius: 0px 5px 5px 0px;">Next</button>
                   </div>
                   <div class="col">
-                    <select class="form-control" *ngIf="this.plantservice" name="myselect" #mySelect
+                    <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
                       (change)="selectedGrid($event.target.value)" style="height: calc(2.20rem);">
                       <!-- <option value="0">--Select--</option> -->
-                      <option *ngFor="let pl of this.plantservice.plantlist" value="{{pl.plantcode}}">
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                         {{ pl.plantshortname }}
                       </option>
                     </select>
@@ -109,7 +111,7 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-xl" id="actionPlanModal" tabindex="-1" role="dialog"
+    <div class="modal fade actionPlanModal-xl" id="actionPlanModal" tabindex="-1" role="dialog"
       aria-labelledby="actionPlanModal" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -128,12 +130,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <div style="overflow-y: scroll; height: 350px;">
+            <div style="overflow-y: scroll; height: 350px;" class="">
 
-
-              <p-table #dtt [value]="allActionPlan" dataKey="id" editMode="row"
-                [style]="{'text-align': 'center', 'font-size': '0.7em'}" [paginator]="true" [rows]="20"
-                [resizableColumns]="true">
+              <p-table #dtt [value]="allActionPlan" dataKey="id" editMode="row" [paginator]="true" [rows]="20"
+                [resizableColumns]="true" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" class="mostly-customized-scrollbar" *ngIf="!noRecord">
                 <ng-template pTemplate="header">
                   <tr>
                     <th class="tbl-th" *ngFor="let col of allActionPlanCol" [width]="col.width">{{col.header}}</th>
@@ -141,7 +142,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
                   <tr [pEditableRow]="rowData">
-                    <td *ngFor="let col of allActionPlanCol">
+                    <td *ngFor="let col of allActionPlanCol" [hidden]="!allActionPlan && !allActionPlan.length">
                       <span
                         *ngIf="col.field=='targetdateofcompletion' || col.field=='actualdateofcompletion'">{{rowData[col.field]  | date :'dd MMM, y'}}</span>
                       <span
@@ -184,7 +185,7 @@
                       <div *ngIf="col.field=='edit'">
                         <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
                           class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
-                        
+
                         <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
                           class="ui-button-success" style="margin-right: .5em"
                           (click)="onRowEditSave(rowData)"></button>
@@ -197,7 +198,9 @@
                   </tr>
                 </ng-template>
               </p-table>
-
+              <div *ngIf="noRecord" style="text-align: center;">
+                <h2>{{noRecord}}</h2>
+              </div>
             </div>
           </div>
           <div class="modal-footer">

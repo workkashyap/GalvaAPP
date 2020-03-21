@@ -38,7 +38,7 @@ export class CalendarComponent implements OnInit {
   public selected_plantname: string;
   company_per: any;
   public selected_eventdate: any;
-
+  noRecord: any;
   public rejectvsum: any;
   public rejectQtysum: any;
 
@@ -142,11 +142,13 @@ export class CalendarComponent implements OnInit {
     this.sDate = new Date(date.getFullYear(), date.getMonth(), 1);
     this.lDate = new Date(me.sDate.getFullYear(), me.sDate.getMonth() + 1, 0);
     this.loading = true;
+
     this.plantservice
       .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
         me.plantservice.splantlist = res as Plant[];
+        console.log("splantlist", me.plantservice.splantlist);
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
         if (me.selectedcode == "1010") {
           me.company_per = "85%";
@@ -202,14 +204,18 @@ export class CalendarComponent implements OnInit {
     const me = this;
 
     $('#actionPlanModal').modal('show');
+    $('#actionPlanModal').css('padding', 'unset');
     this.loading = true;
-
+    this.noRecord = '';
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-    const monthName = this.datePipe.transform(this.monthName, 'MMM'); 
+    const monthName = this.datePipe.transform(this.monthName, 'MMM');
     this.apservice
       .getActionPlanReport(monthName, this.selectedcode)
       .toPromise()
       .then(res => {
+        if (res && !res.length) {
+          this.noRecord = "No record found";
+        }
         me.allActionPlan = res as Createactionplan[];
         me.loading = false;
       });
@@ -221,7 +227,7 @@ export class CalendarComponent implements OnInit {
   refreshList() {
     let me = this;
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-
+    this.noRecord = '';
     const monthName = this.datePipe.transform(this.monthName, 'MMM');
 
     this.apservice
@@ -232,12 +238,13 @@ export class CalendarComponent implements OnInit {
       });
   }
   onRowEditSave(row: any) {
+    const me = this;
     row.currentDate = new Date();
     if (row.id) {
       this.apservice.updateCreateactionplan(row).subscribe(
         res => {
-          this.toastr.success('Updated Successfully', 'Save ActionPlan');
-          this.refreshList();
+          me.toastr.success('Updated Successfully', 'Save ActionPlan');
+          me.refreshList();
         },
         err => {
           console.log(err);
