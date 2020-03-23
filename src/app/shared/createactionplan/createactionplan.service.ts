@@ -14,6 +14,7 @@ export class CreateactionplanService {
   readonly rootUrl = environment.apiUrl;
   //get Action PLan Report
   public getActionPlanReport(monthname, plantcode): Observable<Createactionplan[]> {
+    console.log("Test")
     return this.http.get<Createactionplan[]>(
       this.rootUrl + "/newactionplans/Getnewactionplanreport/" + monthname + '/' + plantcode
     );

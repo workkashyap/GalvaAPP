@@ -134,6 +134,7 @@ export class CreateactionplanComponent implements OnInit {
     row.plantNo = this.plantcode;
     row.responsibility = this.currentUser.username;
     if (row.id) {
+      console.log("Update", row);
       this.apservice.updateCreateactionplan(row).subscribe(
         res => {
           me.toastr.success('Updated Successfully', 'Save ActionPlan');
@@ -144,6 +145,7 @@ export class CreateactionplanComponent implements OnInit {
           console.log(err);
         });
     } else {
+      console.log("Insert", row);
       this.apservice.insertCreateactionplan(row).subscribe(
         res => {
           me.toastr.success('Submitted Successfully', 'Save ActionPlan');

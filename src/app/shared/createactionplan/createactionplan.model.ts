@@ -17,5 +17,5 @@ export class Createactionplan {
   currentDate: string;
   monthName: string;
   plantNo: string;
-  edit: boolean=false;
+  edit: boolean=false;  
 }
