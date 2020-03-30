@@ -1,0 +1,19 @@
+.form-control{
+    padding: 3px;
+    font-size: 11px;
+}
+li.breadcrumb-item{
+    font-size: 0.8rem;
+}
+.content-header {
+  padding: 8px .5rem; 
+}
+body .ui-table .ui-table-tbody > tr > td {
+    padding: 0.371em 0.657em;
+}
+.no-spin::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.no-spin {
+    text-align: center;
+}

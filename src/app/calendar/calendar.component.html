@@ -10,10 +10,10 @@
             </h5>
           </div>
           <div class="col-sm-4">
-            <h6 style="margin-top: 5px;font-size: 0.9rem;">
+            <h5 style="margin-top: 5px;">
               OK Value Target grater than {{company_per}}
               <!--Rejection Target Less than 15%*-->
-            </h6>
+            </h5>
           </div>
           <div class="col-sm-4">
             <ol class="breadcrumb float-sm-right">
@@ -56,6 +56,10 @@
                         <b>{{ tot.rejper }}</b></button>
                     </div>
                   </div>
+
+                  <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
+                    *ngIf="this.currentUser && this.currentUser.id==14">
+                    Action Plan</button>
                   <div class="btn-sm no-padding group-btn-c" role="group">
                     <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
                       style="border-radius: 5px 0px 0px 5px">Previous</button>
@@ -63,10 +67,10 @@
                       style="border-radius: 0px 5px 5px 0px;">Next</button>
                   </div>
                   <div class="col">
-                    <select class="form-control" *ngIf="this.plantservice" name="myselect" #mySelect
+                    <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
                       (change)="selectedGrid($event.target.value)" style="height: calc(2.20rem);">
                       <!-- <option value="0">--Select--</option> -->
-                      <option *ngFor="let pl of this.plantservice.plantlist" value="{{pl.plantcode}}">
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                         {{ pl.plantshortname }}
                       </option>
                     </select>
@@ -85,7 +89,7 @@
 
                 <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                   [header]="options.header" [weekends]="true" [displayEventTime]="false"
-                  [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5"
+                  [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5" height="auto"
                   (dateClick)="dateClick($event)" (eventClick)="eventClick($event)" class="my-calender"></full-calendar>
                 <div class="table-responsive mailbox-messages">
 
@@ -105,6 +109,106 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade actionPlanModal-xl" id="actionPlanModal" tabindex="-1" role="dialog"
+      aria-labelledby="actionPlanModal" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Action Plan
+                  <span *ngIf="monthName">({{monthName| date :'MMM'}})</span> </h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
+              </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 350px;" class="">
+
+              <p-table #dtt [value]="allActionPlan" dataKey="id" editMode="row" [paginator]="true" [rows]="20"
+                [resizableColumns]="true" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" class="mostly-customized-scrollbar" *ngIf="!noRecord">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="tbl-th" *ngFor="let col of allActionPlanCol" [width]="col.width">{{col.header}}</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="rowData">
+                    <td *ngFor="let col of allActionPlanCol" [hidden]="!allActionPlan && !allActionPlan.length">
+                      <span
+                        *ngIf="col.field=='targetdateofcompletion' || col.field=='actualdateofcompletion'">{{rowData[col.field]  | date :'dd MMM, y'}}</span>
+                      <span
+                        *ngIf="col.field!='progresspercent' && col.field!='attachment' &&  col.field!='approvedstatus' && col.field!='targetdateofcompletion' && col.field!='actualdateofcompletion'">{{rowData[col.field]}}</span>
+                      <!--progress bar-->
+                      <span *ngIf="col.field=='progresspercent'">{{rowData[col.field]}}</span>
+                      <div class="progress progress-sm" *ngIf="col.field=='progresspercent'">
+                        <div class="progress-bar bg-green" role="progressbar"
+                          attr.aria-valuenow="{{rowData.progresspercent}}" aria-volumemin="0" aria-volumemax="100"
+                          [style.width.%]="rowData.progresspercent">
+                        </div>
+                      </div>
+                      <!--end progress bar-->
+
+                      <!--Status-->
+                      <p-cellEditor *ngIf="col.field=='approvedstatus'">
+                        <ng-template pTemplate="input">
+                          <select name="approvedstatus" [(ngModel)]="rowData.approvedstatus"
+                            class="form-control status">
+                            <option value="0">Pending</option>
+                            <option value="1">Aprrove</option>
+                            <option value="2">Reject</option>
+                          </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <span class="badge badge-info" *ngIf="rowData[col.field]==0">Pending</span>
+                          <span class="badge badge-success" *ngIf="rowData[col.field]==1">Approved</span>
+                          <span class="badge badge-danger" *ngIf="rowData[col.field]==2">Rejected</span>
+                        </ng-template>
+                      </p-cellEditor>
+                      <!--End Status-->
+
+                      <!--Attachment-->
+                      <app-filedownload [Filename]="rowData.attachment"
+                        *ngIf="col.field=='attachment' && rowData.attachment"></app-filedownload>
+                      <span *ngIf="col.field=='attachment' && !rowData.attachment"> No attachment found</span>
+                      <!--End Attachment-->
+
+                      <!--Buttons-->
+                      <div *ngIf="col.field=='edit'">
+                        <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                          class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
+
+                        <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                          class="ui-button-success" style="margin-right: .5em"
+                          (click)="onRowEditSave(rowData)"></button>
+                        <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                          class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                      </div>
+                      <!--End Buttons-->
+
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <div *ngIf="noRecord" style="text-align: center;">
+                <h2>{{noRecord}}</h2>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
@@ -148,11 +252,13 @@
                     <td style=" width:140px;"></td>
                     <td *ngIf="btnLabel!='6'" style=" width:140px;">
                       <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
-                        style="float: right;">Insp. Qty: {{ inspectionQtysum | number:'1.2-2'}}
+                        style="float: right;">Insp.
+                        Qty: {{ inspectionQtysum | number:'1.2-2'}}
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
-                        style="float: right;">Ok Qty: {{ okQtySum | number:'1.2-2'}}
+                        style="float: right;">Ok
+                        Qty: {{ okQtySum | number:'1.2-2'}}
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
@@ -160,7 +266,8 @@
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
-                        style="float: right;">Buff. Qty: {{ buffingQtySum | number:'1.2-2'}}
+                        style="float: right;">Buff.
+                        Qty: {{ buffingQtySum | number:'1.2-2'}}
                       </button>
 
                       <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
@@ -170,11 +277,13 @@
                     </td>
                     <td style=" width:140px;">
                       <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
-                        style="float: right;">Total Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
+                        style="float: right;">Total
+                        Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
-                        style="float: right;">Ok Value: {{ okvalueSum | number:'1.2-2'}} Lacs
+                        style="float: right;">Ok
+                        Value: {{ okvalueSum | number:'1.2-2'}} Lacs
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
@@ -182,18 +291,19 @@
                       </button>
 
                       <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
-                        style="float: right;">Buff. Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
+                        style="float: right;">Buff.
+                        Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
                       </button>
 
                       <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
                         style="float: right;">Total Reject: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
 
                       <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
-                        style="float: right;">Reject %: {{ rejperPerSum | number:'1.2'  }} </button>
+                        style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
                     </td>
                   </tr>
                   <!-- regular date section -->
-                  <tr *ngIf="!btnLabel" >
+                  <tr *ngIf="!btnLabel">
                     <td colspan="3" style=" width:275px;">
                       <div class="input-group mb-2">
                         <input type="text" pInputText placeholder="Global Filter"

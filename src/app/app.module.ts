@@ -38,6 +38,7 @@ import { CompletedTaskDetailComponent } from "./approval/completedtask/completed
 import { ChartComponent } from "./chart/chart.component";
 import { Ng5SliderModule } from "ng5-slider";
 
+<<<<<<< HEAD
 import { FileuploadComponent } from "./Fileupload/Fileupload.component";
 import { FiledownloadComponent } from "./Filedownload/Filedownload.component";
 import { ActionplanComponent } from "./task/actionplan/actionplan.component";
@@ -49,6 +50,18 @@ import { SalesComponent } from "./sales/sales.component";
 import { JobworkmaterialComponent } from "./jobworkmaterial/jobworkmaterial.component";
 import { JobwmDetailComponent } from "./jobworkmaterial/jobwm-detail/jobwm-detail.component";
 import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.component";
+=======
+import { FileuploadComponent } from './Fileupload/Fileupload.component';
+import { FiledownloadComponent } from './Filedownload/Filedownload.component';
+import { ActionplanComponent } from './task/actionplan/actionplan.component';
+import { TaskReportComponent } from './task/task-report/task-report.component';
+import { RejectionMainComponent } from './rejection/rejection-main/rejection-main.component';
+import { HolnbuffComponent } from './holnbuff/holnbuff.component';
+import { Top5RejDefectwiseComponent } from './top5-rej-defectwise/top5-rej-defectwise.component';
+import { SalesComponent } from './sales/sales.component';
+import { CreateactionplanComponent } from './createactionplan/createactionplan.component';
+import { AddRowDirective } from './add-row.directive';
+>>>>>>> 1278c170a6d8ff2ecd8b82d27cfd9d9a6ea04e33
 
 @NgModule({
   declarations: [
@@ -81,9 +94,14 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
     HolnbuffComponent,
     Top5RejDefectwiseComponent,
     SalesComponent,
+<<<<<<< HEAD
     JobworkmaterialComponent,
     JobwmDetailComponent,
     NewJobwmComponent
+=======
+    CreateactionplanComponent,
+    AddRowDirective
+>>>>>>> 1278c170a6d8ff2ecd8b82d27cfd9d9a6ea04e33
   ],
   imports: [
     BrowserModule,
@@ -235,6 +253,8 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
       {
         path: "Sales",
         component: SalesComponent,
+        path: 'createActionPlan',
+        component: CreateactionplanComponent,
         canActivate: [AuthGuard]
       },
 
