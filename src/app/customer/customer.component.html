@@ -1,0 +1,98 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row ">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2">
+            <Button (click)="addNewCustomer()" class="btn btn-primary btn-block mb-3">Add New Customer</Button>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-9">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">Customer</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="mx-2">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-10">
+                    <h3 class="card-title-md">
+                      My Customers
+                    </h3>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="card-tools">
+                      <input class="form-control " type="search" placeholder="Search" aria-label="Search" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="todo-list text-success" data-widget="todo-list" *ngIf="custService.custList.length == 0">
+                  No Records Found
+                </div>
+                <ul class="todo-list" data-widget="todo-list">
+                  <li *ngFor="let cust of custService.custList
+                        | paginate: { itemsPerPage: 5, currentPage: cpage}">
+                    <div class="row">
+                      <div class="col-md-1">
+                        <button class="btn btn-primary mt-1" (click)="opendetail(cust.id)">
+                          View
+                        </button>
+                      </div>
+
+                      <div class="col-md-2 text text-center">
+                        {{ cust.customer }}
+                      </div>
+                      <div class="col-md-7 text text-center ">
+                        {{ cust.customerName  }}
+                      </div>
+                      <div class="col-md-1">
+                        <button class="btn btn-secondary btn-sm ml-5" (click)="deleteSelected(cust.id)">
+                          <fa name="trash"></fa>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- todo text -->
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <div class="mailbox-controls" *ngIf="custService.custList.length >0">
+                  <div class="float-right">
+                    <pagination-controls (pageChange)="cpage = $event"></pagination-controls>
+                    <div class="btn-group"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

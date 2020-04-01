@@ -1,0 +1,128 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">Customer</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+
+          <!-- /.card -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <div class="row ">
+                        <div class="col-md-11">
+                          <h3 class="card-title-md">Customer Details</h3>
+                        </div>
+                        <div class="col-md-1">
+                          <Button (click)="backtoCustomer()" class="btn btn-primary btn-block mb-3">Back</Button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <div class="form-group">
+                              <div class="row">
+                                <input type="hidden" name="id" #id="ngModel" [(ngModel)]="custService.custData.id" />
+                                <div class="col-md-2 text-center">
+                                  <label for="lblcustomer">Customer Code:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type="number" id="customer" name="customer"
+                                    #customer="ngModel" [(ngModel)]="custService.custData.customer" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="lblcustomerName">Customer Name:</label>
+                                </div>
+                                <div class="col-md-9">
+
+                                  <input class="form-control" type="text" id="customerName" name="customerName"
+                                    #customerName="ngModel" [(ngModel)]="custService.custData.customerName" />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-md-5 text-center"></div>
+                          <div class="col-md-2 ">
+                            <button type="submit" (click)="onSaveClick()" class="btn btn-danger  float-left px-3">
+                              Save
+                            </button>
+                            <button type="submit" (click)="backtoCustomer()" class="btn btn-success float-right">
+                              Cancel
+                            </button>
+                          </div>
+                          <div class="col-md-5 text-center"></div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- </form> -->
+                  </div>
+                  <!-- /.card -->
+
+                  <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+          </section>
+          <!-- /.col -->
+          <div class="mx-2">
+            <div></div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

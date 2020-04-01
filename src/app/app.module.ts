@@ -51,6 +51,9 @@ import { AddRowDirective } from "./add-row.directive";
 import { JobworkmaterialComponent } from "./jobworkmaterial/jobworkmaterial.component";
 import { JobwmDetailComponent } from "./jobworkmaterial/jobwm-detail/jobwm-detail.component";
 import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.component";
+import { CustomerComponent } from "./customer/customer.component";
+import { CustomerDetailComponent } from "./customer/customer-detail/customer-detail.component";
+import { NewCustomerComponent } from "./customer/new-customer/new-customer.component";
 
 @NgModule({
   declarations: [
@@ -88,10 +91,14 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
     NewJobwmComponent,
 
     CreateactionplanComponent,
-    AddRowDirective
+    AddRowDirective,
+    CustomerComponent,
+    CustomerDetailComponent,
+    NewCustomerComponent
   ],
   imports: [
     BrowserModule,
+
     BrowserAnimationsModule,
     NgxPaginationModule,
     AppRoutingModule,
@@ -245,6 +252,21 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
       {
         path: "Sales",
         component: SalesComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "Customer",
+        component: CustomerComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "Customer-detail",
+        component: CustomerDetailComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "new-Customer",
+        component: NewCustomerComponent,
         canActivate: [AuthGuard]
       },
 
