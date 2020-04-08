@@ -20,6 +20,7 @@ export class JobworkmaterialComponent implements OnInit {
   public cDate: string;
   public currentUser: User;
   public loading = false;
+  cpage: number;
   jobworkMlist: any[];
 
   constructor(

@@ -18,6 +18,7 @@ export class CustomerComponent implements OnInit {
   public currentUser: User;
   public loading = false;
   jobworkMlist: any[];
+  cpage: number;
 
   constructor(
     private toastr: ToastrService,

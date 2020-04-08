@@ -105,7 +105,7 @@ export class RejectionMainComponent implements OnInit {
       this.selectedtype = "NULL";
     }
     this.DPservice.getRejectmaindetail(
-      this.DPservice.plantcode,
+      this.selectedPlant,
       this.selectedtype,
       this.Fromdate,
       this.Todate
