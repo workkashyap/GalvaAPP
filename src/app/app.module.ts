@@ -54,6 +54,7 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
 import { CustomerComponent } from "./customer/customer.component";
 import { CustomerDetailComponent } from "./customer/customer-detail/customer-detail.component";
 import { NewCustomerComponent } from "./customer/new-customer/new-customer.component";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,9 @@ import { NewCustomerComponent } from "./customer/new-customer/new-customer.compo
     AddRowDirective,
     CustomerComponent,
     CustomerDetailComponent,
-    NewCustomerComponent
+    NewCustomerComponent,
+    HomeComponent
+
   ],
   imports: [
     BrowserModule,
@@ -267,6 +270,11 @@ import { NewCustomerComponent } from "./customer/new-customer/new-customer.compo
       {
         path: "new-Customer",
         component: NewCustomerComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "nhome",
+        component: HomeComponent,
         canActivate: [AuthGuard]
       },
 

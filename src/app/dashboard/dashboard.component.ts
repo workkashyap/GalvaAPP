@@ -161,13 +161,13 @@ export class DashboardComponent implements OnInit {
        {
          label: 'Produce Value',
          type: 'bar',
-         backgroundColor: '#5cb85c',
+         backgroundColor: '#73b4fa',
          data: this.inspectionvalue
        },
        {
         label: 'Rejection Value',
         type: 'bar',
-        backgroundColor: '#d9534f',
+        backgroundColor: '#11f2a3',
         data: this.rejectvalue
       },
       {
@@ -285,19 +285,19 @@ export class DashboardComponent implements OnInit {
        {
          label: 'Total Inspection',
          type: 'bar',
-         backgroundColor: '#0275d8',
+         backgroundColor: '#73b4fa',
          data: this.inspectionvaluech
        },
        {
          label: 'Ok Value',
          type: 'bar',
-         backgroundColor: '#5cb85c',
+         backgroundColor: '#11f2a3',
          data: this.Okvaluech
        },
        {
          label: 'Reject Value',
          type: 'bar',
-         backgroundColor: '#d9534f',
+         backgroundColor: '#fe909d',
          data: this.rejectvaluech
        },
        {
@@ -445,7 +445,7 @@ export class DashboardComponent implements OnInit {
        {
          label: 'Total Rejection',
          type: 'bar',
-         backgroundColor: '#d9534f',
+         backgroundColor: '#fe909d',
          data: this.rejectvaluedefect
        }
      ]

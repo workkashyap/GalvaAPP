@@ -124,19 +124,19 @@ export class ChartComponent implements OnInit {
             {
               label: 'Total Inspection',
               type: 'bar',
-              backgroundColor: '#0275d8',
+              backgroundColor: '#73b4fa',
               data: this.inspectionvalue
             },
             {
               label: 'Ok Value',
               type: 'bar',
-              backgroundColor: '#5cb85c',
+              backgroundColor: '#11f2a3',
               data: this.Okvalue
             },
             {
               label: 'Reject Value',
               type: 'bar',
-              backgroundColor: '#d9534f',
+              backgroundColor: '#fe909d',
               data: this.rejectvalue
             },
             {
@@ -172,7 +172,7 @@ export class ChartComponent implements OnInit {
               scaleID: 'y-axis-0',
               value: 15,
               endValue: 15,
-              borderColor: 'rgb(75, 192, 192)',
+              borderColor: '#01a9ac',
               borderWidth: 4,
               label: {
                 enabled: true,
@@ -232,19 +232,19 @@ export class ChartComponent implements OnInit {
             {
               label: 'Total Inspection',
               type: 'bar',
-              backgroundColor: '#0275d8',
+              backgroundColor: '#73b4fa',
               data: this.inspectionvalue
             },
             {
               label: 'Ok Value',
               type: 'bar',
-              backgroundColor: '#5cb85c',
+              backgroundColor: '#11f2a3',
               data: this.Okvalue
             },
             {
               label: 'Reject Value',
               type: 'bar',
-              backgroundColor: '#d9534f',
+              backgroundColor: '#fe909d',
               data: this.rejectvalue
             },
             {
@@ -260,7 +260,7 @@ export class ChartComponent implements OnInit {
           scaleBeginAtZero: true,
           scaleShowGridLines: true,
           // tslint:disable-next-line:quotemark
-          scaleGridLineColor: "rgba(0,0,0,.05)",
+          scaleGridLineColor: "red",
           scaleGridLineWidth: 1,
           scaleShowHorizontalLines: true,
           scaleShowVerticalLines: true,

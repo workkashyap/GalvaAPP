@@ -1,0 +1,60 @@
+
+  .set-padding{
+    padding: 7px 0px 7px 0px;
+    text-align: center;
+  }
+  .resonsive-css>.col-sm-3,.col-md-4 {
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+  }
+  .btn-custom {
+    padding: 5px 5px 5px 5px;
+    margin: 3.3px;
+    font-size: 12px;
+  }
+ 
+.custom-col-2{
+    max-width: 11.67%;
+}
+.custom-card-body{
+    border-radius: 5px;
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+    border: none;
+    margin-bottom: 30px;
+    background: white;
+
+}
+.home-card {
+  background: #f6f7fb;
+  box-shadow: unset;
+  border: unset !important;
+}
+.custom-card-title{
+  background-color: transparent;
+    border-bottom: none;
+    padding: 0px 25px 20px;
+    color: #505458;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.custom-select::-ms-expand {
+  display: none;
+}
+.custom-select {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.5em 2em 0.5em 0.5em;
+  border: 1px solid #eee;
+  font: inherit;
+  line-height: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 15px top 1em, right 10px top 1em;
+  background-size: 5px 5px, 5px 5px;
+}

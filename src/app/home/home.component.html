@@ -1,0 +1,162 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <div class="card  home-card">
+      <div class="card-header">
+        <div class="row  resonsive-css mb-2 ">
+          <div class="col-md-10">
+            
+          </div>
+          <div class="col-sm-2" *ngIf="plantservice.plantlist">
+            <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="plantcode"
+              (change)="selectedGrid($event.target.value)">
+              <option value="0">--Select Plant--</option>
+              <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                {{ pl.plantshortname }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="custom-row  row">
+
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-info update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ inspectionvalueSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Insp. Value</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-success update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ okvalueSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Ok Value</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-danger update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ rejectvalueSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Rej. Value</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-warning update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ rejperSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Reject %</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-primary update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ holdvalueSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Hold Value</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-6">
+            <div class="card bg-dark update-card">
+              <div class="card-block">
+                <div class="row align-items-end">
+                  <div class="col-8">
+                    <h4 class="text-white">{{ buffingvalueSum | number:'1.2-2' }} Lacs</h4>
+                    <h6 class="text-white m-b-0">Buffing Value</h6>
+                  </div>
+                  <div class="col-4 text-right">
+                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="text-white m-b-0">
+                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+        </div>
+        <div class="card-body custom-card-body">
+          <div class="chart">
+            <div class="row">
+              <h3 class="card-title custom-card-title">Yearly Report</h3> 
+              <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+              <div class="col-md-12">
+                <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

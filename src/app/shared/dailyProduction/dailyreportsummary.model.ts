@@ -12,5 +12,11 @@ export class DailyReportSummary {
     rejectqty: number;
     rejper?: number;
     rejectvalue: number;
+    inspection_value:number;
+    inspection_qty:number;
+    holdvalue:number;
+    holdqty:number;
+    buffingvalue:number;
+    buffingqty:number;
   }
   
