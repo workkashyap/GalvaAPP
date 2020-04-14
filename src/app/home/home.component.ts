@@ -39,11 +39,11 @@ export class HomeComponent implements OnInit {
   monthNames2: any;
   inspectionqtySum: number;
   inspectionvalueSum: number;
-  okqtySum: number;
-  okvalueSum: number;
-  rejectqtySum: number;
-  rejectvalueSum: number;
-  rejperSum: number;
+  okqtySum: number = 0;
+  okvalueSum: number = 0;
+  rejectqtySum: number= 0;
+  rejectvalueSum: number= 0;
+  rejperSum: number= 0;
   holdvalueSum: number = 0;
   holdQtySum: number = 0;
   buffingvalueSum: number = 0;
