@@ -115,7 +115,7 @@ import { HomeComponent } from './home/home.component';
     RouterModule.forRoot([
       {
         path: "",
-        component: ChartComponent,
+        component: HomeComponent,
         canActivate: [AuthGuard]
       },
       {

@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { DatePipe } from "@angular/common";
-import { User } from "../shared/login/User.model";
-import { ToastrService } from "ngx-toastr";
-import { LoginService } from "../shared/login/login.service";
-import { InboxService } from "../shared/inbox/inbox.service";
-import { Router } from "@angular/router";
-import { CustomerMasterService } from "../shared/customer/customer-master.service";
+import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { User } from '../shared/login/User.model';
+import { ToastrService } from 'ngx-toastr';
+import { LoginService } from '../shared/login/login.service';
+import { InboxService } from '../shared/inbox/inbox.service';
+import { Router } from '@angular/router';
+import { CustomerMasterService } from '../shared/customer/customer-master.service';
 
 @Component({
-  selector: "app-customer",
-  templateUrl: "./customer.component.html",
-  styleUrls: ["./customer.component.css"],
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css'],
   providers: [DatePipe]
 })
 export class CustomerComponent implements OnInit {
@@ -40,11 +40,11 @@ export class CustomerComponent implements OnInit {
   opendetail(id) {
     this.custService.custid = id;
     // this.iservice.uid = this.currentUser.id;
-    this.route.navigate(["/Customer-detail"]);
+    this.route.navigate(['/Customer-detail']);
   }
   addNewCustomer() {
     // this.iservice.uid = this.currentUser.id;
-    this.route.navigate(["/new-Customer"]);
+    this.route.navigate(['/new-Customer']);
   }
 
   deleteSelected(id) {
@@ -53,8 +53,8 @@ export class CustomerComponent implements OnInit {
     this.custService.deleteCustomerbyid(id).subscribe(
       res => {
         // this.resetForm(form);
-        this.toastr.success("Successfully Deleted Record.", "Customer Data");
-        this.route.navigate(["./Customer"]);
+        this.toastr.success('Successfully Deleted Record.', 'Customer Data');
+        this.route.navigate(['./Customer']);
         this.ngOnInit();
         // this.service.refreshList();
       },
