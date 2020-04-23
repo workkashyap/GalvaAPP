@@ -133,6 +133,10 @@ export class CreateactionplanComponent implements OnInit {
     row.monthName = this.monthname;
     row.plantNo = this.plantcode;
     row.responsibility = this.currentUser.username;
+
+    row.targetdateofcompletion = new Date(row.targetdateofcompletion);
+    row.actualdateofcompletion = new Date(row.actualdateofcompletion);
+
     if (row.id) {
       console.log("Update", row);
       this.apservice.updateCreateactionplan(row).subscribe(
