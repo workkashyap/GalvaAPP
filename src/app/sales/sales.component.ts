@@ -1,27 +1,28 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Sales } from "../shared/sales/sales.model";
-import { Observable } from "rxjs";
-import { HttpHeaders } from "@angular/common/http";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Sales } from '../shared/sales/sales.model';
+import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 import {
   HttpClient,
   HttpRequest,
   HttpEventType,
   HttpResponse
-} from "@angular/common/http";
-import { SalesService } from "../shared/sales/sales.service";
-import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
+} from '@angular/common/http';
+import { SalesService } from '../shared/sales/sales.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-sales",
-  templateUrl: "./sales.component.html",
-  styleUrls: ["./sales.component.css"]
+  selector: 'app-sales',
+  templateUrl: './sales.component.html',
+  styleUrls: ['./sales.component.css']
 })
 export class SalesComponent {
-  @ViewChild("file", { static: false }) file;
+  @ViewChild('file', { static: false }) file;
   public progress: number;
   public message: string;
-
+  readonly rootUrl = environment.apiUrl;
   formData = new FormData();
   public loading = false;
   constructor(
@@ -54,17 +55,17 @@ export class SalesComponent {
 
     this.http
       .post(
-        "http://localhost:50421/api/ExceltoSql?fname=" +
+        this.rootUrl + '/ExceltoSql?fname=' +
           this.file.nativeElement.files[0].name,
         this.formData,
-        { reportProgress: true, observe: "events" }
+        { reportProgress: true, observe: 'events' }
       )
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round((100 * event.loaded) / event.total);
         else if (event.type === HttpEventType.Response) {
           this.message = event.body.toString();
-          if (this.message.toString() == "Records Uploaded SuccessFully") {
+          if (this.message.toString() == 'Records Uploaded SuccessFully') {
             this.toastr.success(this.message);
           } else {
             this.toastr.info(this.message);
@@ -80,7 +81,7 @@ export class SalesComponent {
     this.file.nativeElement.value = null;
   }
   upload(files) {
-    this.message = "  ";
+    this.message = '  ';
     if (files.length === 0) return;
 
     //  const formData = new FormData();
