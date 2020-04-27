@@ -27,4 +27,9 @@ export class Salesdetail {
   totalvalue:number;
   cancellationDoc:string;
   billingCreationDat:Date;
+  netSale:number;
+  grossSale:number;
+  salesReturn:number;
+  cancelInvoice:number;
+
 }

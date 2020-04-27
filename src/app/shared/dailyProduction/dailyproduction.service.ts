@@ -266,10 +266,10 @@ export class DailyproductionService {
     );
   }
 
-  public getSales(plantcode, date): Observable<Salesdetail[]> {
+  public getSales(plantcode, date, url): Observable<Salesdetail[]> {
     return this.http.get<Salesdetail[]>(
       this.rootUrl +
-      '/Salescalendars/getsales/' +
+      '/Salescalendars/' + url + '/' +
       plantcode +
       '/' +
       date

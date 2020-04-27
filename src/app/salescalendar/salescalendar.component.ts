@@ -24,10 +24,12 @@ export class SalescalendarComponent implements OnInit {
   salesRej: number = 0;
   grossSales: number = 0;
   cancelledInvoice: number = 0;
+  totalSumofValue: number = 0;
+  totalSumofTitle: string = '';
 
   basicamtinr: number = 0;
   totalvalue: number = 0;
-
+  modalType: number = 0;
   public sDate: Date;
   public lDate: Date;
   public dailyprodlist: Dailyproduction[] = [];
@@ -61,28 +63,6 @@ export class SalescalendarComponent implements OnInit {
   ) {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
-    ];
-    this.cols = [
-      { field: 'plant', header: 'Plant' },
-      { field: 'plantName', header: 'Plant Name' },
-      { field: 'invoiceNumber', header: 'Invoiceno' },
-      { field: 'accDocNo', header: 'Accdocno' },
-      { field: 'billingDocDate', header: 'Billingdocdate' },
-      { field: 'materialType', header: 'Materialtype' },
-      { field: 'soType', header: 'Sotype' },
-      { field: 'soTypedesc', header: 'Sotypedesc' },
-      { field: 'billingDocTYPE', header: 'Billingdoctype' },
-      { field: 'billingtypedesc', header: 'Billingtypedesc' },
-      { field: 'divisionName', header: 'Devisionname' },
-      { field: 'soldToParty', header: 'soldToParty' },
-      { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      { field: 'payer', header: 'Payer' },
-      { field: 'payerName', header: 'Payername' },
-      { field: 'materialNumber', header: 'Materialnumber' },
-      { field: 'materialDesc', header: 'Materialdesc' },
-      { field: 'invoiceQty', header: 'Invoiceqty' },
-      { field: 'basicAmtINR', header: 'Basicamtinr' },
-      { field: 'totalvalue', header: 'Totalvalue' },
     ];
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -172,25 +152,35 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.netSales = element.netsale;
       });
+      this.netSales = this.netSales / 100000;
+
     });
+
     this.dpservice.getGrossSale(this.selectedcode, this.startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
         this.grossSales = element.grossSale;
       });
+      this.grossSales = this.grossSales / 100000;
+
     });
+
 
     this.dpservice.getCancelInvoice(this.selectedcode, this.startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
         this.cancelledInvoice = element.cancelInvoice;
       });
+      this.cancelledInvoice = this.cancelledInvoice / 100000;
+
     });
+
     this.dpservice.getSalesReturn(this.selectedcode, this.startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
-        this.salesRej = element.salesReturn;
+        this.salesRej = element.salesReturn
       });
+      this.salesRej = this.salesRej / 100000;
     });
   }
   //on change option value
@@ -210,6 +200,30 @@ export class SalescalendarComponent implements OnInit {
   }
   //calendar event click
   eventClick(model) {
+
+    this.modalType = 1;
+    this.cols = [
+      { field: 'plant', header: 'Plant' },
+      { field: 'plantName', header: 'Plant Name' },
+      { field: 'invoiceNumber', header: 'Invoiceno' },
+      { field: 'accDocNo', header: 'Accdocno' },
+      { field: 'billingDocDate', header: 'Billingdocdate' },
+      { field: 'materialType', header: 'Materialtype' },
+      { field: 'soType', header: 'Sotype' },
+      { field: 'soTypedesc', header: 'Sotypedesc' },
+      { field: 'billingDocTYPE', header: 'Billingdoctype' },
+      { field: 'billingtypedesc', header: 'Billingtypedesc' },
+      { field: 'divisionName', header: 'Devisionname' },
+      { field: 'soldToParty', header: 'soldToParty' },
+      { field: 'soldToPartyName', header: 'Soldtopartyname' },
+      { field: 'payer', header: 'Payer' },
+      { field: 'payerName', header: 'Payername' },
+      { field: 'materialNumber', header: 'Materialnumber' },
+      { field: 'materialDesc', header: 'Materialdesc' },
+      { field: 'invoiceQty', header: 'Invoiceqty' },
+      { field: 'basicAmtINR', header: 'Basicamtinr' },
+      { field: 'totalvalue', header: 'Totalvalue' },
+    ];
     this.dpservice.salesdetail = [];
     this.monthName = '';
     $('#basicExampleModal').modal('show');
@@ -219,32 +233,92 @@ export class SalescalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.dpservice.salesdetail = res as Salesdetail[];
-        this.sumgetsale();
+        this.sumgetsale(false);
         this.loading = false;
       });
   }
   //top btn click
   extraVal(val) {
+    this.modalType = 2;
+    this.basicamtinr = 0;
+    this.totalvalue = 0;
+    this.totalSumofValue = 0;
+    this.cols = [
+      { field: 'plant', header: 'Plant' },
+      { field: 'plantName', header: 'Plant Name' },
+      { field: 'billingDocType', header: 'Billingdoctype' },
+      { field: 'invoiceNumber', header: 'Invoiceno' },
+      { field: 'accdocno', header: 'Accdocno' },
+      { field: 'billingDocDate', header: 'Billingdocdate' },
+      { field: 'materialType', header: 'Materialtype' },
+      { field: 'soType', header: 'Sotype' },];
+    if (val == "NetSaleDetail") {
+      this.totalSumofTitle = "Tot. Net.";
+      this.cols.push(
+        { field: 'netSale', header: 'Net Sale' },
+      );
+    } else if (val == "GrosSaleDetail") {
+      this.totalSumofTitle = "Tot. Gross";
+
+      this.cols.push(
+        { field: 'grossSale', header: 'Gross Sale' },
+      );
+    } else if (val == "SalesreturnDetail") {
+
+      this.totalSumofTitle = "Tot. Return";
+
+      this.cols.push(
+        { field: 'salesReturn', header: 'Sales Return' },
+      );
+    } else if (val == "cancelinvoicedetail") {
+      this.totalSumofTitle = "Tot. Cancel";
+      this.cols.push(
+        { field: 'cancelInvoice', header: 'Cancel Inv.' },
+      );
+    }
+    this.cols.push(
+      { field: 'soTypedesc', header: 'Sotypedesc' },
+      { field: 'materialNumber', header: 'Materialnumber' },
+      { field: 'materialDesc', header: 'Materialdesc' },
+      { field: 'soldToParty', header: 'Soldtoparty' },
+      { field: 'soldToPartyName', header: 'Soldtopartyname' },
+      { field: 'payer', header: 'Payer' },
+      { field: 'payerName', header: 'Payername' },
+    );
+
     this.dpservice.salesdetail = [];
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
     $('#basicExampleModal').modal('show');
     this.loading = true;
-    this.dpservice.getSales(this.selectedcode, this.startdate)
+
+    this.dpservice.getSales(this.selectedcode, this.startdate, val)
       .toPromise()
       .then(res => {
         this.dpservice.salesdetail = res as Salesdetail[];
-        this.sumgetsale();
+        this.sumgetsale(val);
         this.loading = false;
       });
 
   }
   //sum
-  sumgetsale() {
+  sumgetsale(val) {
     this.basicamtinr = 0;
     this.totalvalue = 0;
+    this.totalSumofValue = 0;
     for (const sd of this.dpservice.salesdetail) {
       this.basicamtinr = this.basicamtinr + sd.basicAmtINR;
       this.totalvalue = this.totalvalue + sd.totalvalue;
+      if (val == "NetSaleDetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.netSale) / 100000;
+      } else if (val == "GrosSaleDetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.grossSale) / 100000;
+      } else if (val == "SalesreturnDetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn) / 100000;
+      } else if (val == "SalesreturnDetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn) / 100000;
+      } else if (val == "cancelinvoicedetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice) / 100000;
+      }
     }
     this.basicamtinr = (this.basicamtinr / 100000);
     this.totalvalue = (this.totalvalue / 100000);

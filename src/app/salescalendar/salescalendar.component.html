@@ -29,17 +29,19 @@
                 <!--  card-tools -->
                 <div class="form-inline">
 
-                  <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Net Sales =
-                    <b>{{ netSales}}</b>
+                  <button class="btn btn-custom text-dark bg-info" (click)="extraVal('NetSaleDetail')">Net Sales =
+                    <b>{{ netSales | number:'1.2-2'}}</b>
                     Lacs</button>
-                  <button class="btn btn-custom text-dark bg-success" (click)="extraVal(2)">Gross Sales =
-                    <b>{{ grossSales  }}</b>
+                  <button class="btn btn-custom text-dark bg-success" (click)="extraVal('GrosSaleDetail')">Gross Sales =
+                    <b>{{ grossSales | number:'1.2-2' }}</b>
                     Lacs</button>
-                  <button class="btn btn-custom text-dark bg-danger" (click)="extraVal(3)">Sales Rej =
-                    <b>{{ salesRej }}</b>
+                  <button class="btn btn-custom text-dark bg-danger" (click)="extraVal('SalesreturnDetail/')">Sales Rej
+                    =
+                    <b>{{ salesRej| number:'1.2-2' }}</b>
                     Lacs</button>
-                  <button class="btn btn-custom text-dark bg-warning" (click)="extraVal(4)">Cancelled Invoice =
-                    <b>{{ cancelledInvoice }}</b>
+                  <button class="btn btn-custom text-dark bg-warning" (click)="extraVal('cancelinvoicedetail')">Can.
+                    Inv. =
+                    <b>{{ cancelledInvoice| number:'1.2-2' }}</b>
                     Lacs</button>
                   <div class="btn-sm no-padding group-btn-c" role="group">
                     <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
@@ -132,17 +134,26 @@
                         </div>
                       </div>
                     </td>
-                    <td colspan="16" style="width: 1600px;"></td>
-                    <td style="width:140px;">
+                    <td colspan="16" style="width: 1600px;" *ngIf="modalType==1"></td>
+                    <td style="width:140px;" *ngIf="modalType==1">
                       <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
-                        Total Basicamtinr : {{ basicamtinr | number:'1.2-2'}} Lacs
+                        Total Bas. : {{ basicamtinr | number:'1.2-2'}} Lacs
                       </button>
                     </td>
-                    <td style=" width:140px;">
+                    <td style=" width:140px;" *ngIf="modalType==1">
                       <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">
-                        Total Value : {{ totalvalue | number:'1.2-2'}} Lacs
+                        Total Val. : {{ totalvalue | number:'1.2-2'}} Lacs
                       </button>
                     </td>
+
+                    <td colspan="6" style="width: 730px;" *ngIf="modalType==2 "></td>
+                    <td style="width:180px;" *ngIf="modalType==2">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
+                        {{totalSumofTitle}} : {{ totalSumofValue | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td colspan="7" style="width: 900px;" *ngIf="modalType==2"></td>
+
                   </tr>
                   <!-- regular date section -->
 
