@@ -8,4 +8,5 @@ export class Dailyproduction {
   borderColor: string;
   vType: string;
   ptype: string;
+  plantname: string;
 }

@@ -55,6 +55,7 @@ import { CustomerComponent } from "./customer/customer.component";
 import { CustomerDetailComponent } from "./customer/customer-detail/customer-detail.component";
 import { NewCustomerComponent } from "./customer/new-customer/new-customer.component";
 import { HomeComponent } from './home/home.component';
+import { SalescalendarComponent } from './salescalendar/salescalendar.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { HomeComponent } from './home/home.component';
     CustomerComponent,
     CustomerDetailComponent,
     NewCustomerComponent,
-    HomeComponent
+    HomeComponent,
+    SalescalendarComponent
 
   ],
   imports: [
@@ -276,8 +278,11 @@ import { HomeComponent } from './home/home.component';
         path: "nhome",
         component: HomeComponent,
         canActivate: [AuthGuard]
+      }, {
+        path: "salescalendar",
+        component: SalescalendarComponent,
+        canActivate: [AuthGuard]
       },
-
       { path: "**", redirectTo: "" }
     ]),
     ToastrModule.forRoot(),
@@ -287,4 +292,4 @@ import { HomeComponent } from './home/home.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
