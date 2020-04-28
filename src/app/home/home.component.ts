@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
   cancelledInvoice: number = 0;
   constructor(
     public service: HomeService, public lservice: LoginService, public plantservice: PlantService,
-    public dpservice: DailyproductionService,
+    public dpservice: DailyproductionService,public datePipe:DatePipe
 
   ) {
     this.monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -93,7 +93,9 @@ export class HomeComponent implements OnInit {
     this.grossSales = 0;
     this.cancelledInvoice = 0;
     this.salesRej = 0;
-    const startdate = new Date().getFullYear() + '-' + new Date().getMonth() + '-01';
+    const date = new Date();
+    const startdate  =  this.datePipe.transform(date, 'yyyy-MM-dd');
+    //const startdate = new Date().getFullYear() + '-' + new Date().getMonth() + '-01';
     console.log("startdate : ", startdate);
     this.dpservice.getNetSale(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
