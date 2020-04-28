@@ -10,6 +10,7 @@ import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { User } from '../shared/login/User.model';
 import { PlantService } from '../shared/plant/plant.service';
 import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
+import { Salessummary } from '../shared/dailyProduction/salessummary.model';
 
 @Component({
   selector: "app-home",
@@ -41,14 +42,20 @@ export class HomeComponent implements OnInit {
   inspectionvalueSum: number;
   okqtySum: number = 0;
   okvalueSum: number = 0;
-  rejectqtySum: number= 0;
-  rejectvalueSum: number= 0;
-  rejperSum: number= 0;
+  rejectqtySum: number = 0;
+  rejectvalueSum: number = 0;
+  rejperSum: number = 0;
   holdvalueSum: number = 0;
   holdQtySum: number = 0;
   buffingvalueSum: number = 0;
   buffingQtySum: number = 0;
   monthname: any;
+  public salessummary: Salessummary[] = [];
+
+  netSales: number = 0;
+  salesRej: number = 0;
+  grossSales: number = 0;
+  cancelledInvoice: number = 0;
   constructor(
     public service: HomeService, public lservice: LoginService, public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -78,7 +85,51 @@ export class HomeComponent implements OnInit {
     this.plantservice.getPlantData(this.currentUser.id);
 
     this.loadchart1();
+    this.saleSummary();
 
+  }
+  saleSummary() {
+    this.netSales = 0;
+    this.grossSales = 0;
+    this.cancelledInvoice = 0;
+    this.salesRej = 0;
+    const startdate = new Date().getFullYear() + '-' + new Date().getMonth() + '-01';
+    console.log("startdate : ", startdate);
+    this.dpservice.getNetSale(this.plantcode, startdate).toPromise().then(res => {
+      const salesReturn = res as Salessummary[];
+      salesReturn.forEach(element => {
+        this.netSales = element.netsale;
+      });
+      this.netSales = this.netSales / 100000;
+
+    });
+
+    this.dpservice.getGrossSale(this.plantcode, startdate).toPromise().then(res => {
+      const salesReturn = res as Salessummary[];
+      salesReturn.forEach(element => {
+        this.grossSales = element.grossSale;
+      });
+      this.grossSales = this.grossSales / 100000;
+
+    });
+
+
+    this.dpservice.getCancelInvoice(this.plantcode,startdate).toPromise().then(res => {
+      const salesReturn = res as Salessummary[];
+      salesReturn.forEach(element => {
+        this.cancelledInvoice = element.cancelInvoice;
+      });
+      this.cancelledInvoice = this.cancelledInvoice / 100000;
+
+    });
+
+    this.dpservice.getSalesReturn(this.plantcode, startdate).toPromise().then(res => {
+      const salesReturn = res as Salessummary[];
+      salesReturn.forEach(element => {
+        this.salesRej = element.salesReturn
+      });
+      this.salesRej = this.salesRej / 100000;
+    });
   }
   getselectedtype(ev) {
     this.typename = ev;
@@ -92,6 +143,8 @@ export class HomeComponent implements OnInit {
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
+
+    this.saleSummary();
   }
   loadchart1() {
     let me = this;

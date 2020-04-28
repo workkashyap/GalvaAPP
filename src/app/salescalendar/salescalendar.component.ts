@@ -26,7 +26,7 @@ export class SalescalendarComponent implements OnInit {
   cancelledInvoice: number = 0;
   totalSumofValue: number = 0;
   totalSumofTitle: string = '';
-
+  totalSumofBg: string = '';
   basicamtinr: number = 0;
   totalvalue: number = 0;
   modalType: number = 0;
@@ -254,11 +254,13 @@ export class SalescalendarComponent implements OnInit {
       { field: 'soType', header: 'Sotype' },];
     if (val == "NetSaleDetail") {
       this.totalSumofTitle = "Tot. Net.";
+      this.totalSumofBg = "bg-info";
       this.cols.push(
         { field: 'netSale', header: 'Net Sale' },
       );
     } else if (val == "GrosSaleDetail") {
       this.totalSumofTitle = "Tot. Gross";
+      this.totalSumofBg = "bg-success";
 
       this.cols.push(
         { field: 'grossSale', header: 'Gross Sale' },
@@ -266,11 +268,13 @@ export class SalescalendarComponent implements OnInit {
     } else if (val == "SalesreturnDetail") {
 
       this.totalSumofTitle = "Tot. Return";
+      this.totalSumofBg = "bg-danger";
 
       this.cols.push(
         { field: 'salesReturn', header: 'Sales Return' },
       );
     } else if (val == "cancelinvoicedetail") {
+      this.totalSumofBg = "bg-warning";
       this.totalSumofTitle = "Tot. Cancel";
       this.cols.push(
         { field: 'cancelInvoice', header: 'Cancel Inv.' },

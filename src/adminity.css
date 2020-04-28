@@ -332,3 +332,64 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 .card-footer:last-child {
     border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
 }
+.user-widget-card {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #fff;
+}
+.user-widget-card .card-block {
+	/*padding: 1.95rem 1.25rem .85rem;*/
+	padding:2.4rem 1.25rem .85rem;
+}
+.user-widget-card h4 {
+	font-weight: 400;
+	text-align: center;
+    margin-top: 10px;
+}
+.card .card-block p {
+    line-height: 25px;    text-align: center;
+} 
+.bg-simple-c-pink {
+    background: #fe5d70;
+}
+.bg-simple-c-green {
+    background: #0ac282;
+}
+.bg-simple-c-yellow {
+    background: #f3cd46;
+} 
+.user-widget-card .more-info {
+    background: #fff;
+    padding: 5px 15px;
+    border-radius: 15px;
+    position: absolute;
+    left: calc(50% - 45px);
+    -webkit-box-shadow: 0 1px 14px -5px #000;
+    box-shadow: 0 1px 14px -5px #000;
+}
+ .card1-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -15px;
+    left: calc(50% - 20px);
+    font-size: 20px;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 0 5px rgba(255,255,255,.5);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.5);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+.bg-simple-c-blue {
+    background: #01a9ac;
+}

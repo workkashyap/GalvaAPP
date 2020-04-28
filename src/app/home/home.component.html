@@ -4,7 +4,7 @@
       <div class="card-header">
         <div class="row  resonsive-css mb-2 ">
           <div class="col-md-10">
-            
+
           </div>
           <div class="col-sm-2" *ngIf="plantservice.plantlist">
             <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="plantcode"
@@ -18,138 +18,200 @@
         </div>
         <div class="custom-row  row">
 
-          <div class="col-xl-4 col-md-6" >
-            <div class="card bg-info update-card" routerLink="/calendar">
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ inspectionvalueSum | number:'1.2-2' }} Lacs</h4>
-                    <h6 class="text-white m-b-0">Insp. Value</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+          <div class="col-md-6 custom-md-6 border-right">
+            <div class="row">
+              <div class="col-md-12 col-xl-12">
+                <h5>Production Summary </h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-info update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ inspectionvalueSum | number:'1.2-2' }} Lacs</h4>
+                        <h6 class="text-white m-b-0">Insp. Value</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
 
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
 
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-success update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ okvalueSum | number:'1.2-2' }} Lacs</h4>
+                        <h6 class="text-white m-b-0">Ok Value</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-danger update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ rejectvalueSum | number:'1.2-2' }} Lacs</h4>
+                        <h6 class="text-white m-b-0">Rej. Value</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-warning update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ rejperSum | number:'1.2-2' }} <b style="
+                          color: transparent;">Lacs</b></h4>
+                        <h6 class="text-white m-b-0">Reject %</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-primary update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ holdvalueSum | number:'1.2-2' }} Lacs</h4>
+                        <h6 class="text-white m-b-0">Hold Value</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-md-6">
+                <div class="card bg-dark update-card" routerLink="/calendar">
+                  <div class="card-block">
+                    <div class="row align-items-end">
+                      <div class="col-8">
+                        <h4 class="text-white">{{ buffingvalueSum | number:'1.2-2' }} Lacs</h4>
+                        <h6 class="text-white m-b-0" style="font-size: 14px;">Buffing Value</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-white m-b-0">
+                      <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6  custom-md-6">
+            <div class="row">
+              <div class="col-md-12 col-xl-12">
+                <h5>Sales Summary </h5>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-md-6 col-xl-6">
+                <div class="card user-widget-card bg-info">
+                  <div class="card-block">
+                    <i class="feather fa fa-pie-chart	bg-simple-c-blue card1-icon"></i>
+                    <h4>{{netSales | number:'1.2-2' }} Lacs</h4>
+                    <p>Net Sales</p>
+                    <a href="/salescalendar" class="more-info"> {{monthname}} Month</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-6">
+                <div class="card user-widget-card bg-success">
+                  <div class="card-block">
+                    <i class="feather fa fa-pie-chart	 bg-simple-c-green  card1-icon"></i>
+                    <h4>{{grossSales | number:'1.2-2'}} Lacs</h4>
+                    <p>Gross Sales</p>
+                    <a href="/salescalendar" class="more-info"> {{monthname}} Month</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-6">
+                <div class="card user-widget-card bg-danger">
+                  <div class="card-block">
+                    <i class="feather fa fa-pie-chart	 bg-simple-c-pink card1-icon"></i>
+                    <h4>{{salesRej | number:'1.2-2'}} Lacs</h4>
+                    <p>Sales Rej</p>
+                    <a href="/salescalendar" class="more-info"> {{monthname}} Month</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-6">
+                <div class="card user-widget-card bg-warning">
+                  <div class="card-block">
+                    <i class="feather fa fa-pie-chart	 bg-simple-c-yellow card1-icon"></i>
+                    <h4>{{cancelledInvoice | number:'1.2-2'}} Lacs</h4>
+                    <p>Can. Inv.</p>
+                    <a href="/salescalendar" class="more-info">{{monthname}} Month</a>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div class="col-xl-4 col-md-6">
-            <div class="card bg-success update-card"  routerLink="/calendar" >
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ okvalueSum | number:'1.2-2' }} Lacs</h4>
-                    <h6 class="text-white m-b-0">Ok Value</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-xl-4 col-md-6">
-            <div class="card bg-danger update-card"  routerLink="/calendar">
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ rejectvalueSum | number:'1.2-2' }} Lacs</h4>
-                    <h6 class="text-white m-b-0">Rej. Value</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-          <div class="col-xl-4 col-md-6">
-            <div class="card bg-warning update-card"  routerLink="/calendar">
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ rejperSum | number:'1.2-2' }}</h4>
-                    <h6 class="text-white m-b-0">Reject %</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-            <div class="card bg-primary update-card"  routerLink="/calendar">
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ holdvalueSum | number:'1.2-2' }} Lacs</h4>
-                    <h6 class="text-white m-b-0">Hold Value</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-            <div class="card bg-dark update-card"  routerLink="/calendar">
-              <div class="card-block">
-                <div class="row align-items-end">
-                  <div class="col-8">
-                    <h4 class="text-white">{{ buffingvalueSum | number:'1.2-2' }} Lacs</h4>
-                    <h6 class="text-white m-b-0">Buffing Value</h6>
-                  </div>
-                  <div class="col-4 text-right">
-                    <i class="fa fa-bar-chart" aria-hidden="true" style="font-size: 45px;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <p class="text-white m-b-0">
-                  <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                </p>
-              </div>
-            </div>
-          </div>
           <!-- -->
         </div>
         <div class="card-body custom-card-body">
           <div class="chart">
             <div class="row">
-              <h3 class="card-title custom-card-title">Yearly Report</h3> 
+              <h3 class="card-title custom-card-title">Yearly Report</h3>
               <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
               <div class="col-md-12">
                 <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
