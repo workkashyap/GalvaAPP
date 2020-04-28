@@ -152,7 +152,6 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.netSales = element.netsale;
       });
-      this.netSales = this.netSales / 100000;
 
     });
 
@@ -161,7 +160,6 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.grossSales = element.grossSale;
       });
-      this.grossSales = this.grossSales / 100000;
 
     });
 
@@ -171,7 +169,6 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.cancelledInvoice = element.cancelInvoice;
       });
-      this.cancelledInvoice = this.cancelledInvoice / 100000;
 
     });
 
@@ -180,7 +177,6 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.salesRej = element.salesReturn
       });
-      this.salesRej = this.salesRej / 100000;
     });
   }
   //on change option value
@@ -265,7 +261,7 @@ export class SalescalendarComponent implements OnInit {
       this.cols.push(
         { field: 'grossSale', header: 'Gross Sale' },
       );
-    } else if (val == "SalesreturnDetail") {
+    } else if (val == "salesReturnDetail") {
 
       this.totalSumofTitle = "Tot. Return";
       this.totalSumofBg = "bg-danger";
@@ -313,17 +309,16 @@ export class SalescalendarComponent implements OnInit {
       this.basicamtinr = this.basicamtinr + sd.basicAmtINR;
       this.totalvalue = this.totalvalue + sd.totalvalue;
       if (val == "NetSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.netSale) / 100000;
+        this.totalSumofValue = (this.totalSumofValue + sd.netSale);
       } else if (val == "GrosSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.grossSale) / 100000;
-      } else if (val == "SalesreturnDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn) / 100000;
-      } else if (val == "SalesreturnDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn) / 100000;
+        this.totalSumofValue = (this.totalSumofValue + sd.grossSale);
+      } else if (val == "salesReturnDetail") {
+        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn);
       } else if (val == "cancelinvoicedetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice) / 100000;
+        this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
       }
     }
+    this.totalSumofValue = (this.totalSumofValue /100000);
     this.basicamtinr = (this.basicamtinr / 100000);
     this.totalvalue = (this.totalvalue / 100000);
     return;

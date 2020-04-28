@@ -100,8 +100,6 @@ export class HomeComponent implements OnInit {
       salesReturn.forEach(element => {
         this.netSales = element.netsale;
       });
-      this.netSales = this.netSales / 100000;
-
     });
 
     this.dpservice.getGrossSale(this.plantcode, startdate).toPromise().then(res => {
@@ -109,8 +107,6 @@ export class HomeComponent implements OnInit {
       salesReturn.forEach(element => {
         this.grossSales = element.grossSale;
       });
-      this.grossSales = this.grossSales / 100000;
-
     });
 
 
@@ -119,8 +115,6 @@ export class HomeComponent implements OnInit {
       salesReturn.forEach(element => {
         this.cancelledInvoice = element.cancelInvoice;
       });
-      this.cancelledInvoice = this.cancelledInvoice / 100000;
-
     });
 
     this.dpservice.getSalesReturn(this.plantcode, startdate).toPromise().then(res => {
@@ -128,7 +122,6 @@ export class HomeComponent implements OnInit {
       salesReturn.forEach(element => {
         this.salesRej = element.salesReturn
       });
-      this.salesRej = this.salesRej / 100000;
     });
   }
   getselectedtype(ev) {
