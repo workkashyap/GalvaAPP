@@ -333,112 +333,11 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
 }
 .user-widget-card {
-   /* margin-top: 10px;
-    margin-bottom: 40px;
-    text-align: center;
-	color: #fff;*/
-	margin-top: 25px;
+    margin-top: 10px;
     margin-bottom: 40px;
     text-align: center;
     color: #fff;
-    height: 160px;
 }
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-	/* Styles */
-	.user-widget-card {
-		 margin-top: 25px;
-		 margin-bottom: 40px;
-		 text-align: center;
-		 color: #fff;
-		 height: 175px;
-	 }
-	 
-	}
-	
-	/* iPads (landscape) ----------- */
-	@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 174px;
-	}
-	}
-	
-	/* iPads (portrait) ----------- */
-	@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 180px;
-	}
-	}
-	/**********
-	iPad 3
-	**********/
-	@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 179px;
-	}
-	.user-widget-card .card-block {
-		padding: 2.95rem 1.25rem .85rem !important;
-	}
-	}
-	
-	@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 178px;
-	}
-	.user-widget-card .card-block {
-		padding: 2.95rem 1.25rem .85rem !important;
-	}
-	}
-	/* Desktops and laptops ----------- */
-	@media only screen  and (min-width : 1224px) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 177px;
-	}
-	.user-widget-card .card-block {
-		padding: 2.95rem 1.25rem .85rem !important;
-	}
-	}
-	
-	/* Large screens ----------- */
-	@media only screen  and (min-width : 1824px) {
-	/* Styles */
-	.user-widget-card {
-		margin-top: 25px;
-		margin-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		height: 176px;
-	}
-	.user-widget-card .card-block {
-		padding: 2.95rem 1.25rem .85rem !important;
-	}
-	}
 .user-widget-card .card-block {
 	padding: 1.95rem 1.25rem .85rem;
 }
@@ -448,7 +347,9 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     margin-top: 10px;
 }
 .card .card-block p {
-    line-height: 25px;    text-align: center;
+	line-height: 35px;
+    text-align: center;
+    font-size: 20px;
 } 
 .bg-simple-c-pink {
     background: #fe5d70;
@@ -469,8 +370,7 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     width: 115px;
     text-align: center;
     box-shadow: 0 1px 14px -5px #000;
-	margin: auto;
-    bottom: -15px;
+    margin: auto;
 }
 .card2-icon{
 	font-size: 45px;

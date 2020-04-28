@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   monthNames: any;
   monthNames2: any;
   inspectionqtySum: number;
-  inspectionvalueSum: number;
+  inspectionvalueSum: number=0;
   okqtySum: number = 0;
   okvalueSum: number = 0;
   rejectqtySum: number = 0;
