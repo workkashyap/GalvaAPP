@@ -44,15 +44,21 @@ export class CalendarComponent implements OnInit {
 
   buffingvalueSum: any;
   buffingQtySum: any;
-
+  colspanAmount: any = 2;
   holdvalueSum: any;
   holdQtySum: any;
 
   okvalueSum: any;
   okQtySum: any;
+  okperSum: any;
 
   rejperPerSum: any;
   rejperPerSum2: any;
+  filterenable: boolean = false;
+
+  selectedItemrejarray: Itemwiserej[] = [];
+  filterItemrejarray: Itemwiserej[] = [];
+  iv: number;
 
   public inspectionvsum: any;
   public inspectionQtysum: any;
@@ -273,6 +279,8 @@ export class CalendarComponent implements OnInit {
       });
   }
   eventClick(model) {
+    this.dpservice.itemwiserejlist =[];this.filterItemrejarray = [];
+    this.colspanAmount = 2;
     this.cols = [
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
@@ -335,7 +343,29 @@ export class CalendarComponent implements OnInit {
       });
 
   }
+  loadper(ev, dt) {
+    this.filterenable = true;
+    this.selectedItemrejarray = dt.value;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of this.selectedItemrejarray) {
+      if (c.item_type.toString().includes(ev.toString()) || c.itemcode.toString().includes(ev.toString())
+        || c.itemname.toString().includes(ev.toString()) || c.inspection_qty.toString().includes(ev.toString()
+          || c.plant.toString().includes(ev.toString()) || c.id.toString().includes(ev.toString()))) {
+        this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      }
+      else {
+        this.iv += 1;
+      }
+    }
+    this.sumAllData();
+  }
   extraVal(val) {
+    this.colspanAmount = 2;
+    this.dpservice.itemwiserejlist =[];
+    this.filterItemrejarray = [];
     this.cols = [
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
@@ -345,7 +375,15 @@ export class CalendarComponent implements OnInit {
       { field: 'reject_value', header: 'Reject Value' },
       { field: 'inspection_value', header: 'Insp. Value' },*/
     ];
-    if (val == 1) {
+    if (val == 7) {
+      this.cols.push({ field: 'inspection_value', header: 'Insp. Value' },
+        { field: 'okvalue', header: 'Ok Value' },
+        { field: 'okper', header: 'Ok Value %' },
+        { field: 'reject_value', header: 'Rej. Value' },
+        { field: 'rejper', header: 'Reject %' },
+      );
+      this.colspanAmount = 3;
+    } else if (val == 1) {
       this.cols.push({ field: 'inspection_qty', header: 'Insp. Qty' });
       this.cols.push({ field: 'inspection_value', header: 'Insp. Value' });
     } else if (val == 2) {
@@ -394,6 +432,7 @@ export class CalendarComponent implements OnInit {
     // }
   }
   sumAllData() {
+    console.log('hie');
     this.rejectvsum = 0;
     this.rejectQtysum = 0;
 
@@ -408,9 +447,35 @@ export class CalendarComponent implements OnInit {
 
     this.okvalueSum = 0;
     this.okQtySum = 0;
+    this.okperSum = 0;
 
     this.rejperPerSum = 0;
     this.rejperPerSum2 = 0;
+    if (this.filterenable == true) {
+      for (const rq of this.filterItemrejarray) {
+        this.rejectvsum += rq.reject_value;
+        this.rejectQtysum += rq.reject_qty;
+
+        this.inspectionvsum += rq.inspection_value;
+        this.inspectionQtysum += rq.inspection_qty;
+
+        this.holdvalueSum += rq.holdvalue;
+        this.holdQtySum += rq.holdqty;
+
+        this.buffingvalueSum += rq.buffingvalue;
+        this.buffingQtySum += rq.buffingqty;
+
+        this.okvalueSum += rq.okvalue;
+        this.okQtySum += rq.okqty;
+        this.okperSum += rq.okper;
+
+        this.rejperPerSum += rq.rejper;
+      }
+      this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
+      this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
+      return;
+    }
+
     for (const rq of this.dpservice.itemwiserejlist) {
       this.rejectvsum += rq.reject_value;
       this.rejectQtysum += rq.reject_qty;
@@ -426,9 +491,11 @@ export class CalendarComponent implements OnInit {
 
       this.okvalueSum += rq.okvalue;
       this.okQtySum += rq.okqty;
+      this.okperSum += rq.okper;
 
       this.rejperPerSum += rq.rejper;
     }
+    this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
     this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
   }
   /*rejectvaluesum() {

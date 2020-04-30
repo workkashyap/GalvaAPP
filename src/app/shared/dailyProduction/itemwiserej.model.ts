@@ -21,4 +21,5 @@ export class Itemwiserej {
   holdqty:number;
   buffingqty:number;
   okqty:number;
+  okper:number;
 }

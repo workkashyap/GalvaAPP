@@ -37,12 +37,13 @@
 
                   <div *ngFor="let tot of this.dpservice.dailyreportsummary">
                     <div *ngIf="tot.itemtype==this.typename">
+                      <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
                       <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Insp. Value =
                         <b>{{ tot.producevalue }}</b>
                         Lacs</button>
                       <button class="btn btn-custom text-dark bg-success" (click)="extraVal(2)">Ok Value =
-                        <b>{{ tot.okvalue }}</b>
-                        Lacs</button>
+                        <b>{{ tot.okvalue }} Lacs &nbsp;&nbsp; Ok % {{tot.okper }}</b>
+                        </button>
                       <button class="btn btn-custom text-dark bg-primary" (click)="extraVal(3)">Hold Value =
                         <b>{{ tot.holdvalue }}</b>
                         Lacs</button>
@@ -184,16 +185,15 @@
                       <!--Buttons-->
                       <div *ngIf="col.field=='edit'">
                         <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
-                          class="ui-button-info" ></button>&nbsp;
+                          class="ui-button-info"></button>&nbsp;
 
                         <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
                           class="ui-button-success" style="margin-right: .5em"
                           (click)="onRowEditSave(rowData)"></button>
                         <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
-                          class="ui-button-danger" ></button>
+                          class="ui-button-danger"></button>
                       </div>
                       <!--End Buttons-->
-
                     </td>
                   </tr>
                 </ng-template>
@@ -240,17 +240,22 @@
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
                   <tr *ngIf="btnLabel">
-                    <td colspan="2" style=" width:275px;">
+                    <td [attr.colspan]="colspanAmount" style="width:275px;">
                       <div class="input-group mb-2 " style="width: 70%;">
                         <input type="text" pInputText placeholder="Global Filter"
+                          (input)="loadper($event.target.value , dt)"
                           (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
                       </div>
                     </td>
-                    <td style=" width:140px;"></td>
-                    <td *ngIf="btnLabel!='6'" style=" width:140px;">
+                    <!--not for summary -->
+                    <td style="width:140px;" *ngIf="btnLabel!='7'"></td>
+                    <!--not for summary -->
+
+                    <!--not for reject% and summary click event -->
+                    <td *ngIf="btnLabel!='6' && btnLabel!='7'" style=" width:140px;">
                       <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
                         style="float: right;">Insp.
                         Qty: {{ inspectionQtysum | number:'1.2-2'}}
@@ -275,7 +280,10 @@
                       </button>
 
                     </td>
-                    <td style=" width:140px;">
+                    <!--not for reject% and summary click event -->
+
+                    <!--not for summary click event -->
+                    <td style="width:140px;" *ngIf="btnLabel!='7'">
                       <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
                         style="float: right;">Total
                         Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
@@ -301,12 +309,39 @@
                       <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
                         style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
                     </td>
+                    <!--not for summary click event -->
+
+                    <!--only for summary -->
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">Total
+                        Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok
+                        Val.: {{ okvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok %:
+                        {{ okperSum | number:'1.2-2'}}
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm text-dark bg-danger mb-2" style="float: right;">Total Reject:
+                        {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm text-dark bg-warning mb-2" style="float: right;">Reject %:
+                        {{ rejperPerSum2 | number:'1.1-2'  }} </button>
+                    </td>
+                    <!--end for summary -->
                   </tr>
                   <!-- regular date section -->
                   <tr *ngIf="!btnLabel">
                     <td colspan="3" style=" width:275px;">
                       <div class="input-group mb-2">
-                        <input type="text" pInputText placeholder="Global Filter"
+                        <input type="text" pInputText placeholder="Global Filter"  (input)="loadper($event.target.value , dt)"
                           (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>

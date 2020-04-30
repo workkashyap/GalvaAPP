@@ -34,7 +34,9 @@ export class SalescalendarComponent implements OnInit {
   public lDate: Date;
   public dailyprodlist: Dailyproduction[] = [];
   public salessummary: Salessummary[] = [];
-
+  total_netsales: number = 0;
+  grand_netsales: number = 0;
+  i: number;
   cols: any[];
   selectedItemrej: Salesdetail;
 
@@ -53,7 +55,7 @@ export class SalescalendarComponent implements OnInit {
   public rejectdata: any;
   public loading = false;
   public currentUser: User;
-
+  summaryDetail: any = [];
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -233,6 +235,39 @@ export class SalescalendarComponent implements OnInit {
         this.loading = false;
       });
   }
+  totalNetsales() {
+    this.grand_netsales = 0;
+    this.summaryDetail.forEach(element => {
+      this.grand_netsales = this.grand_netsales + element.net_sale;
+    });
+  }
+  summary() {
+    const me = this;
+    this.i = 1;
+    this.loading = true;
+    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
+    this.summaryDetail = [];
+    this.plantservice.splantlist.forEach(plants => {
+      me.dpservice.getSales(plants.plantcode, this.startdate, 'NetSaleDetail')
+        .toPromise()
+        .then(res => {
+          const net_sales = res as Salesdetail[];
+          me.total_netsales = 0;
+          net_sales.forEach(element => {
+            me.total_netsales += element.netSale;
+          });
+          me.total_netsales =(me.total_netsales /100000);
+          me.summaryDetail.push({ plantname: plants.plantshortname, net_sale: me.total_netsales });
+
+          if (this.plantservice.splantlist.length == this.i) {
+            me.loading = false;
+            $('#summaryModal').modal('show');
+            me.totalNetsales();
+          }
+          this.i++;
+        });
+    });
+  }
   //top btn click
   extraVal(val) {
     this.modalType = 2;
@@ -318,7 +353,7 @@ export class SalescalendarComponent implements OnInit {
         this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
       }
     }
-    this.totalSumofValue = (this.totalSumofValue /100000);
+    this.totalSumofValue = (this.totalSumofValue / 100000);
     this.basicamtinr = (this.basicamtinr / 100000);
     this.totalvalue = (this.totalvalue / 100000);
     return;

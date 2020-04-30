@@ -1,0 +1,140 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <div class="row ">
+                <div class="col-md-10">
+                  <h3 class="card-title-md">Sales Detail</h3>
+                </div>
+                <div class="col-md-2 ">
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
+                    <i class="fa fa-file-excel-o"></i> Export</button>
+                    &nbsp;
+                  <Button (click)="backtoRejection()" class="btn btn-primary btn-sm "> <i
+                      class="fa fa-chevron-left"></i> Back</Button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="row mt-3">
+                    <div class="col-md-2">
+                      <label>From</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel"
+                        [(ngModel)]="Fromdate" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                        [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row mt-3">
+                    <div class="col-md-2">
+                      <label>To</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="Todate"
+                        class="input-append date" dateFormat="yy-mm-dd" dataType="string" [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row mt-3">
+                    <div class="col-md-8">
+                      <select class=" custom-select" name="myselect" #mySelect="ngModel"
+                        [(ngModel)]="plantcode" (change)="selectedGrid($event.target.value)">
+                        <option value="0">--Select Plant--</option>
+                        <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                          {{ pl.plantshortname }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row ">
+                    <div class="col-md-8 mt-3">
+                      <select class="custom-select" name="typeSelect" #typeSelect="ngModel"
+                        [(ngModel)]="selectedtype" (change)="onselecttype($event.target.value)">
+                        <option value="NetSaleDetail">Net Sales</option>
+                        <option value="GrosSaleDetail">Gross Sales</option>
+                        <option value="salesReturnDetail">Sales Reject</option>
+                        <option value="cancelinvoicedetail">Cencelled Invoice</option>
+                      </select>
+                    </div>
+                    <div class="col-md-1 mt-3">
+                      <button class="btn btn-primary " (click)="loadData()">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+      <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
+        [value]="dpservice.salesdetail" [paginator]="true" [rows]="20" [resizableColumns]="true"
+        (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="caption"> 
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="input-group col-sm-5 no-padding mb-2">
+                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                  (input)="loadper($event.target.value , dt)"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                <div class="input-group-append">
+                  <i class="fa fa-search input-group-text"></i>
+                </div>
+              </div>
+            </div>
+           
+            <div class="col-sm-2 custom-col-2 mb-2">
+              <div class="card text-dark no-margin" [ngClass]="totalSumofBg">
+                <div class="card-body set-padding">{{totalSumofTitle}}: {{ this.totalSumofValue  | number:'1.2-2' }} Lacs</div>
+              </div>
+            </div>
+           
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+  </div>
+</div>

@@ -140,3 +140,7 @@ li.breadcrumb-item {
 .mostly-customized-scrollbar::-webkit-scrollbar-thumb {
     background: #000; 
 }
+.col-xl-2.custom-xl-2.col-md-6 {
+  flex: 0 0 19.966667%;
+  max-width: 19.966667%;
+}

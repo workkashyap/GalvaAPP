@@ -56,6 +56,7 @@ import { CustomerDetailComponent } from "./customer/customer-detail/customer-det
 import { NewCustomerComponent } from "./customer/new-customer/new-customer.component";
 import { HomeComponent } from './home/home.component';
 import { SalescalendarComponent } from './salescalendar/salescalendar.component';
+import { SalesDetailComponent } from './sales-detail/sales-detail.component';
 
 @NgModule({
   declarations: [
@@ -98,8 +99,8 @@ import { SalescalendarComponent } from './salescalendar/salescalendar.component'
     CustomerDetailComponent,
     NewCustomerComponent,
     HomeComponent,
-    SalescalendarComponent
-
+    SalescalendarComponent,
+    SalesDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -281,6 +282,10 @@ import { SalescalendarComponent } from './salescalendar/salescalendar.component'
       }, {
         path: "salescalendar",
         component: SalescalendarComponent,
+        canActivate: [AuthGuard]
+      }, {
+        path: "salesdetail",
+        component: SalesDetailComponent,
         canActivate: [AuthGuard]
       },
       { path: "**", redirectTo: "" }

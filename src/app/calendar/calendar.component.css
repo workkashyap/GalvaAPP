@@ -139,3 +139,6 @@ li.breadcrumb-item {
 .mostly-customized-scrollbar::-webkit-scrollbar-thumb {
     background: #000; 
 }
+.fixed-150{
+  width: 150px !important;
+}
