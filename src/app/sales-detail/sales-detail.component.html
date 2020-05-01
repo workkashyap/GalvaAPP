@@ -22,7 +22,7 @@
                 <div class="col-md-2 ">
                   <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
                     <i class="fa fa-file-excel-o"></i> Export</button>
-                    &nbsp;
+                  &nbsp;
                   <Button (click)="backtoRejection()" class="btn btn-primary btn-sm "> <i
                       class="fa fa-chevron-left"></i> Back</Button>
                 </div>
@@ -58,8 +58,8 @@
                 <div class="col-md-3">
                   <div class="row mt-3">
                     <div class="col-md-8">
-                      <select class=" custom-select" name="myselect" #mySelect="ngModel"
-                        [(ngModel)]="plantcode" (change)="selectedGrid($event.target.value)">
+                      <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="plantcode"
+                        (change)="selectedGrid($event.target.value)">
                         <option value="0">--Select Plant--</option>
                         <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
                           {{ pl.plantshortname }}
@@ -71,8 +71,8 @@
                 <div class="col-md-3">
                   <div class="row ">
                     <div class="col-md-8 mt-3">
-                      <select class="custom-select" name="typeSelect" #typeSelect="ngModel"
-                        [(ngModel)]="selectedtype" (change)="onselecttype($event.target.value)">
+                      <select class="custom-select" name="typeSelect" #typeSelect="ngModel" [(ngModel)]="selectedtype"
+                        (change)="onselecttype($event.target.value)">
                         <option value="NetSaleDetail">Net Sales</option>
                         <option value="GrosSaleDetail">Gross Sales</option>
                         <option value="salesReturnDetail">Sales Reject</option>
@@ -93,9 +93,8 @@
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
       <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
         selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-        [value]="dpservice.salesdetail" [paginator]="true" [rows]="20" [resizableColumns]="true"
-        (onRowSelect)="onRowSelect($event)">
-        <ng-template pTemplate="caption"> 
+        [value]="dpservice.salesdetail" [paginator]="true" [rows]="20" [resizableColumns]="true">
+        <ng-template pTemplate="caption">
           <div class="row">
             <div class="col-sm-10">
               <div class="input-group col-sm-5 no-padding mb-2">
@@ -107,13 +106,14 @@
                 </div>
               </div>
             </div>
-           
+
             <div class="col-sm-2 custom-col-2 mb-2">
               <div class="card text-dark no-margin" [ngClass]="totalSumofBg">
-                <div class="card-body set-padding">{{totalSumofTitle}}: {{ this.totalSumofValue  | number:'1.2-2' }} Lacs</div>
+                <div class="card-body set-padding">{{totalSumofTitle}}: {{ this.totalSumofValue  | number:'1.2-2' }}
+                  Lacs</div>
               </div>
             </div>
-           
+
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
