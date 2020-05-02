@@ -52,12 +52,19 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     border: unset; 
     background: linear-gradient(to right,#fe5d70,#fe909d);
 }
+.bg-danger-1{
+	border: unset; 
+    background: linear-gradient(to right,#fe5d70,#fe909d);
+}
 .bg-warning{
     border: unset; 
     background: linear-gradient(to right,#d6c532,#e8de9a);
 }
 .text-success {
     color: #0ac282;
+}
+.text-danger-1{
+	color: #fe5d70;
 }
 .f-28 {
     font-size: 28px;

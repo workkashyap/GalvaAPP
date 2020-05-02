@@ -17,3 +17,6 @@ body .ui-table .ui-table-tbody > tr > td {
 .no-spin {
     text-align: center;
 }
+.errorInput{
+    border: 1px solid red;
+}

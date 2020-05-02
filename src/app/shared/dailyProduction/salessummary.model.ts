@@ -4,6 +4,7 @@ export class Salessummary {
     plantname: string;
     netsale: number;
     salesReturn: number;
+    mode:string;
     grossSale: number;
     cancelInvoice:number;
   }

@@ -3,4 +3,5 @@ export class Plant {
   username: string;
   plantcode: string;
   plantshortname: string;
+  totalVal:number = 0;
 }

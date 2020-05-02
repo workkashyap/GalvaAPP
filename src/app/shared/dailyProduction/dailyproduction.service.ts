@@ -298,4 +298,11 @@ export class DailyproductionService {
     );
   }
 
+
+  public getNetSaleSummary(date): Observable<Salessummary[]> {
+    return this.http.get<Salessummary[]>(
+      this.rootUrl + '/Salescalendars/SaleSummary/' + date
+    );
+  }
+
 }

@@ -52,6 +52,13 @@
                         </option>
                     </select>
                 </div>
+                <div class="col-sm-3 mb-2">
+                    <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department"
+                        (change)="selectedGrid($event.target.value)">
+                        <option value="Plating">Plating </option>
+                        <option value="Moulding">Moulding </option>
+                    </select>
+                </div>
             </div>
             <!--<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
             -->
@@ -69,11 +76,13 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="rowData.department" class="form-control"
-                                        required>
+                                    <select pInputText [(ngModel)]="rowData.weeks" class="form-control" required>
+                                        <option value="week {{i+1}}" *ngFor="let week of totalWeeks; let i= index;">Week
+                                            {{i+1}}</option>
+                                    </select>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData.department}}
+                                    {{rowData.weeks}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
@@ -99,7 +108,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <!-- <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="text" [(ngModel)]="rowData.project" class="form-control"
@@ -109,7 +118,7 @@
                                     {{rowData.project}}
                                 </ng-template>
                             </p-cellEditor>
-                        </td>
+                        </td>-->
                         <!--
                         <td>
                             <p-cellEditor>
@@ -137,6 +146,28 @@
                         <td style="width:150px">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
+                                    <textarea pInputText [(ngModel)]="rowData.actionPlan" class="form-control"
+                                        required></textarea>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.actionPlan}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="width:150px">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" [(ngModel)]="rowData.rejper" (change)="myValidation($event.target.value)"
+                                        class="form-control no-spin" min="0" max="100" [ngClass]="errorInput" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.rejper}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <!--<td style="width:150px">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
                                     <input pInputText type="date" [(ngModel)]="rowData.actualdateofcompletion "
                                         class="form-control no-spin" required>
                                 </ng-template>
@@ -156,7 +187,7 @@
                                     {{rowData.correctiveactiontaken}}
                                 </ng-template>
                             </p-cellEditor>
-                        </td>
+                        </td>-->
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
@@ -191,7 +222,7 @@
                             <span class="badge badge-info" *ngIf="rowData.approvedstatus==0">Pending</span>
                             <span class="badge badge-success" *ngIf="rowData.approvedstatus==1">Approved</span>
                         </td>
-                        <td>
+                        <!--<td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="text" [(ngModel)]="rowData.remarks2" class="form-control"
@@ -201,7 +232,7 @@
                                     {{rowData.remarks2}}
                                 </ng-template>
                             </p-cellEditor>
-                        </td>
+                        </td>-->
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
@@ -217,7 +248,7 @@
                                 class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
                             <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
                                 (click)="onRowDelete(rowData)"></button>
-                            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                            <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check" [disabled]="errorInput!=''"
                                 class="ui-button-success" style="margin-right: .5em"
                                 (click)="onRowEditSave(rowData)"></button>
                             <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"

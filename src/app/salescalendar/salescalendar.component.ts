@@ -20,6 +20,7 @@ import { Salessummary } from '../shared/dailyProduction/salessummary.model';
   providers: [DatePipe]
 })
 export class SalescalendarComponent implements OnInit {
+  finlaNetSales: number = 0;
   netSales: number = 0;
   salesRej: number = 0;
   grossSales: number = 0;
@@ -56,6 +57,12 @@ export class SalescalendarComponent implements OnInit {
   public loading = false;
   public currentUser: User;
   summaryDetail: any = [];
+  summaryDetail2: any = [];
+
+  cancelInvTotal: number = 0;
+  salesReturnTotal: number = 0;
+  netSalesTotal: number = 0;
+
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -89,7 +96,7 @@ export class SalescalendarComponent implements OnInit {
 
     this.sDate = new Date(date.getFullYear(), date.getMonth(), 1);
     this.lDate = new Date(me.sDate.getFullYear(), me.sDate.getMonth() + 1, 0);
-    this.loading = true;
+    //this.loading = true;
     //get plant
     this.plantservice
       .sgetPlantData(me.currentUser.id)
@@ -100,7 +107,10 @@ export class SalescalendarComponent implements OnInit {
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
         me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
         me.loading = false;
+
         if (res) {
+          me.summary2();
+
           me.dpservice
             .getSalesCalendar(me.selectedcode, me.startdate)
             .toPromise()
@@ -134,6 +144,7 @@ export class SalescalendarComponent implements OnInit {
   //on refres button click event
   loaddata() {
     const me = this;
+    me.summary2();
     this.dpservice
       .getSalesCalendar(this.selectedcode, this.startdate)
       .toPromise()
@@ -142,6 +153,11 @@ export class SalescalendarComponent implements OnInit {
         me.loadchart1();
         this.loading = false;
       });
+  }
+  //netsales
+  finalNetSales() {
+    this.finlaNetSales = 0;
+    return this.finlaNetSales = ((this.cancelledInvoice + this.salesRej) - this.netSales);
   }
   //get top button total value
   loadchart1() {
@@ -162,16 +178,12 @@ export class SalescalendarComponent implements OnInit {
       salesReturn.forEach(element => {
         this.grossSales = element.grossSale;
       });
-
     });
-
-
     this.dpservice.getCancelInvoice(this.selectedcode, this.startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
         this.cancelledInvoice = element.cancelInvoice;
       });
-
     });
 
     this.dpservice.getSalesReturn(this.selectedcode, this.startdate).toPromise().then(res => {
@@ -180,6 +192,7 @@ export class SalescalendarComponent implements OnInit {
         this.salesRej = element.salesReturn
       });
     });
+
   }
   //on change option value
   selectedGrid(ev) {
@@ -237,36 +250,58 @@ export class SalescalendarComponent implements OnInit {
   }
   totalNetsales() {
     this.grand_netsales = 0;
-    this.summaryDetail.forEach(element => {
-      this.grand_netsales = this.grand_netsales + element.net_sale;
+    this.plantservice.splantlist.forEach(element => {
+      this.grand_netsales = this.grand_netsales + element.totalVal;
     });
+    return this.grand_netsales;
   }
-  summary() {
+  summary2() {
     const me = this;
     this.i = 1;
-    this.loading = true;
-    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-    this.summaryDetail = [];
-    this.plantservice.splantlist.forEach(plants => {
-      me.dpservice.getSales(plants.plantcode, this.startdate, 'NetSaleDetail')
-        .toPromise()
-        .then(res => {
-          const net_sales = res as Salesdetail[];
-          me.total_netsales = 0;
-          net_sales.forEach(element => {
-            me.total_netsales += element.netSale;
-          });
-          me.total_netsales =(me.total_netsales /100000);
-          me.summaryDetail.push({ plantname: plants.plantshortname, net_sale: me.total_netsales });
+    me.dpservice.getNetSaleSummary(this.startdate)
+      .toPromise()
+      .then(res => {
+        const result = res; //as Salesdetail[];
+        if (result) {
+          result.forEach(row => {
+            if (!me.summaryDetail2[row.plant]) {
+              me.summaryDetail2[row.plant] = [];
+            }
+            me.summaryDetail2[row.plant].push(row);
+            if (result.length == me.i) {
 
-          if (this.plantservice.splantlist.length == this.i) {
-            me.loading = false;
-            $('#summaryModal').modal('show');
-            me.totalNetsales();
-          }
-          this.i++;
-        });
-    });
+              me.plantservice.splantlist.forEach(plant => {
+                plant.totalVal = 0;
+                
+
+                if (me.summaryDetail2[plant.plantcode]) {
+                  me.netSalesTotal = 0;
+                  me.cancelInvTotal = 0;
+                  me.salesReturnTotal = 0;
+                  me.summaryDetail2[plant.plantcode].forEach(sum => {
+                    if (sum.mode == "netsale") {
+                      me.netSalesTotal = me.netSalesTotal + sum.netSale;
+                    }
+                    if (sum.mode == "salereturn") {
+                      me.salesReturnTotal = me.salesReturnTotal + sum.netSale;
+                    }
+                    if (sum.mode == "cancelinv") {
+                      me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
+                    }
+                  });
+                  plant.totalVal = ((me.cancelInvTotal + me.salesReturnTotal) - me.netSalesTotal);
+                  me.totalNetsales();
+                }
+              });
+            }
+            me.i = me.i + 1;
+          });
+          console.log("me.plantservice.splantlist", me.plantservice.splantlist);
+        }
+      });
+  }
+  summary() {
+    $('#summaryModal').modal('show');
   }
   //top btn click
   extraVal(val) {
