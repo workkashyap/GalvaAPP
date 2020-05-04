@@ -155,9 +155,9 @@ export class SalescalendarComponent implements OnInit {
       });
   }
   //netsales
-  finalNetSales() {
+  finalNetSale() {
     this.finlaNetSales = 0;
-    return this.finlaNetSales = ((this.cancelledInvoice + this.salesRej) - this.netSales);
+    return this.finlaNetSales = ( this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej)));
   }
   //get top button total value
   loadchart1() {
@@ -258,6 +258,10 @@ export class SalescalendarComponent implements OnInit {
   summary2() {
     const me = this;
     this.i = 1;
+    me.netSalesTotal = 0;
+    me.cancelInvTotal = 0;
+    me.salesReturnTotal = 0;
+    me.summaryDetail2 = [];
     me.dpservice.getNetSaleSummary(this.startdate)
       .toPromise()
       .then(res => {
@@ -272,7 +276,6 @@ export class SalescalendarComponent implements OnInit {
 
               me.plantservice.splantlist.forEach(plant => {
                 plant.totalVal = 0;
-                
 
                 if (me.summaryDetail2[plant.plantcode]) {
                   me.netSalesTotal = 0;
@@ -289,7 +292,7 @@ export class SalescalendarComponent implements OnInit {
                       me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
                     }
                   });
-                  plant.totalVal = ((me.cancelInvTotal + me.salesReturnTotal) - me.netSalesTotal);
+                  plant.totalVal = (me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal)));
                   me.totalNetsales();
                 }
               });
