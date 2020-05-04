@@ -34,4 +34,9 @@ export class CreateactionplanService {
   public deleteCreateactionplan(data) {
     return this.http.delete(this.rootUrl + '/newactionplans/' + data.id);
   }
+  public getRejectPer(plantcode, startdate, enddate): Observable<Createactionplan[]> {
+    return this.http.get<Createactionplan[]>(
+      this.rootUrl + "/DailySummaryReport/WeeklyRejection/" + plantcode + '/' + startdate + '/' + enddate
+    );
+  }
 }

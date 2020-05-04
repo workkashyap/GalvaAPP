@@ -76,8 +76,9 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <select pInputText [(ngModel)]="rowData.weeks" class="form-control" required>
-                                        <option value="week {{i+1}}" *ngFor="let week of totalWeeks; let i= index;">Week
+                                    <select pInputText [(ngModel)]="rowData.weeks" class="form-control"
+                                        (change)="getRejectPer($event.target.value,rowData)" required>
+                                        <option value="{{i+1}}" *ngFor="let week of totalWeeks; let i= index;">Week
                                             {{i+1}}</option>
                                     </select>
                                 </ng-template>
@@ -157,11 +158,12 @@
                         <td style="width:150px">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" [(ngModel)]="rowData.rejper" (change)="myValidation($event.target.value)"
-                                        class="form-control no-spin" min="0" max="100" [ngClass]="errorInput" required>
+                                    <input pInputText type="number" [(ngModel)]="rowData.rejper"
+                                        (change)="myValidation($event.target.value)" class="form-control no-spin"
+                                        min="0" max="100" [ngClass]="errorInput" required readonly>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData.rejper}}
+                                    {{rowData.rejper}} 
                                 </ng-template>
                             </p-cellEditor>
                         </td>
@@ -248,8 +250,8 @@
                                 class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
                             <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
                                 (click)="onRowDelete(rowData)"></button>
-                            <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check" [disabled]="errorInput!=''"
-                                class="ui-button-success" style="margin-right: .5em"
+                            <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check"
+                                [disabled]="errorInput!=''" class="ui-button-success" style="margin-right: .5em"
                                 (click)="onRowEditSave(rowData)"></button>
                             <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
                                 class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>

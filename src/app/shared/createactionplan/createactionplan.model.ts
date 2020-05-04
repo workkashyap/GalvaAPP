@@ -17,5 +17,7 @@ export class Createactionplan {
   currentDate: string;
   monthName: string;
   plantNo: string;
+  rejper:number;
+  value:number;
   edit: boolean=false;  
 }

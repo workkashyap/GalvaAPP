@@ -6,12 +6,14 @@ import { Createactionplan } from "../shared/createactionplan/createactionplan.mo
 import { PlantService } from '../shared/plant/plant.service';
 import { ToastrService } from 'ngx-toastr';
 import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
-import { NewTaskComponent } from '../task/new-task/new-task.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-createactionplan',
   templateUrl: './createactionplan.component.html',
-  styleUrls: ['./createactionplan.component.css']
+  styleUrls: ['./createactionplan.component.css'],
+  providers: [DatePipe]
+
 })
 export class CreateactionplanComponent implements OnInit {
   public currentUser: User;
@@ -28,11 +30,10 @@ export class CreateactionplanComponent implements OnInit {
   totalWeeks: any;
   constructor(
     private lservice: LoginService,
-    public toastr: ToastrService,
+    public toastr: ToastrService, public datePipe: DatePipe,
     public fservice: DownloadfileService, public plantservice: PlantService,
     public apservice: CreateactionplanService) {
     this.selectedtype = "1010";
-
 
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -41,7 +42,6 @@ export class CreateactionplanComponent implements OnInit {
   getWeeksInMonth(month, year) {
     console.log(month, year);
     console.log(new Date(year, month, 1));
-
     var weeks = [],
       firstDate = new Date(year, month, 1),
 
@@ -57,6 +57,7 @@ export class CreateactionplanComponent implements OnInit {
       if (end > numDays)
         end = numDays;
     }
+    console.log("weeks : ", weeks)
     return weeks;
   }
   errorInput: any = '';
@@ -123,6 +124,33 @@ export class CreateactionplanComponent implements OnInit {
     console.log(plantCode);
     this.refreshList();
   }
+  getRejectPer(val, rowData) {
+
+    const dateRange = this.totalWeeks[val - 1];
+
+    const month = this.monthNames.indexOf(this.monthname);
+
+    const startDate = new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.start;
+    const endDate = new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.end;
+
+    const startDate1 = this.datePipe.transform(startDate, "yyyy-MM-dd");
+    const endDate1 = this.datePipe.transform(endDate, "yyyy-MM-dd");
+
+    const me = this;
+    this.apservice
+      .getRejectPer(this.plantcode, startDate1, endDate1)
+      .toPromise()
+      .then(res => {
+        console.log("rejPer : ", res);
+        if (res && res.length > 0) {
+          rowData.rejper = res[0].rejper;
+        } else {
+          rowData.rejper = 0;
+        }
+        //me.allActionPlan = res as Createactionplan[];
+      });
+
+  }
   onRowEditInit(row: any) {
     this.cols[0].width = "90px";
     this.cols[1].width = "160px";
@@ -175,6 +203,7 @@ export class CreateactionplanComponent implements OnInit {
     row.responsibility = this.currentUser.username;
     row.department = this.department;
     //row.actualdateofcompletion = '';
+    row.week = "Week " + row.week;
     row.targetdateofcompletion = new Date(row.targetdateofcompletion);
     row.actualdateofcompletion = new Date(row.currentDate);
 
