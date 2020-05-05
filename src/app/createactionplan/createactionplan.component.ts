@@ -50,10 +50,12 @@ export class CreateactionplanComponent implements OnInit {
 
     var start = 1;
     var end = 7 - firstDate.getDay();
+    var i = 1;
     while (start <= numDays) {
-      weeks.push({ start: start, end: end });
+      weeks.push({ start: start, end: end, label: "week " + i });
       start = end + 1;
       end = end + 7;
+      i++;
       if (end > numDays)
         end = numDays;
     }
@@ -125,7 +127,6 @@ export class CreateactionplanComponent implements OnInit {
     this.refreshList();
   }
   getRejectPer(val, rowData) {
-
     const dateRange = this.totalWeeks[val - 1];
 
     const month = this.monthNames.indexOf(this.monthname);
@@ -197,15 +198,20 @@ export class CreateactionplanComponent implements OnInit {
       return false;
     }
     row.sHash = '';
-    row.currentDate = new Date();
+    row.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     row.monthName = this.monthname;
     row.plantNo = this.plantcode;
+    row.actionPlan =row.actionPlan;
+    row.materialDescription = row.materialDescription;
+    row.result = row.result;
+    row.materialCode = row.materialCode;
+
     row.responsibility = this.currentUser.username;
+    row.progresspercent = parseInt(row.progresspercent);
     row.department = this.department;
     //row.actualdateofcompletion = '';
-    row.week = "Week " + row.week;
-    row.targetdateofcompletion = new Date(row.targetdateofcompletion);
-    row.actualdateofcompletion = new Date(row.currentDate);
+    row.targetdateofcompletion = this.datePipe.transform(new Date(row.targetdateofcompletion), 'yyyy-MM-dd');
+    row.actualdateofcompletion = this.datePipe.transform(new Date(row.currentDate), 'yyyy-MM-dd');
 
     if (row.id) {
       console.log("Update", row);
@@ -296,12 +302,12 @@ export class CreateactionplanComponent implements OnInit {
       "actualdateofcompletion": "",
       "correctiveactiontaken": "",
       "result": "",
-      "progresspercent": '0',
+      "progresspercent": 0,
       "approvedstatus": "",
       "remarks2": "",
       "attachment": "",
       "approvalid": 14,
-      "ActionPlan": "",
+      "actionPlan": "",
       "edit": false
     }
   }

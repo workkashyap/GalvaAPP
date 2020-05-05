@@ -78,12 +78,12 @@
                                 <ng-template pTemplate="input">
                                     <select pInputText [(ngModel)]="rowData.weeks" class="form-control"
                                         (change)="getRejectPer($event.target.value,rowData)" required>
-                                        <option value="{{i+1}}" *ngFor="let week of totalWeeks; let i= index;">Week
-                                            {{i+1}}</option>
+                                        <option value="{{i+1}}" *ngFor="let week of totalWeeks; let i= index;">
+                                            {{week.label}}</option>
                                     </select>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData.weeks}}
+                                   week {{rowData.weeks}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
@@ -91,7 +91,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="text" [(ngModel)]="rowData.materialCode"
-                                        class="form-control" required>
+                                        class="form-control" required maxlength="20">
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.materialCode}}
@@ -163,7 +163,7 @@
                                         min="0" max="100" [ngClass]="errorInput" required readonly>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData.rejper}} 
+                                    {{rowData.rejper}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
@@ -205,7 +205,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <span for="foo" class="rangeOutput">{{rowData.progresspercent}}</span>
-                                    <input pInputText type="range" min="0" maxlength="100" style="width: 100%;"
+                                    <input pInputText type="range"  min="0" maxlength="100" style="width: 100%;"
                                         [(ngModel)]="rowData.progresspercent" required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
