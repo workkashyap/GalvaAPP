@@ -236,10 +236,10 @@
 
           </div>
           <div class="modal-body">
-            <div style="overflow-y: scroll; height: 350px;">
+            <div style="overflow-y: scroll; height: 550px;">
               <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-                [value]="dpservice.itemwiserejlist" [paginator]="false" [rows]="5" [responsive]="true">
+                [value]="dpservice.itemwiserejlist" [paginator]="false" [rows]="10" [responsive]="true">
 
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
@@ -256,7 +256,7 @@
                     </td>
                     <!--not for summary -->
                     <td style="width:140px;">
-                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
                    

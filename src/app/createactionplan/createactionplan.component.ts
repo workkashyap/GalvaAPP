@@ -7,6 +7,7 @@ import { PlantService } from '../shared/plant/plant.service';
 import { ToastrService } from 'ngx-toastr';
 import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
 import { DatePipe } from '@angular/common';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-createactionplan',
@@ -42,12 +43,12 @@ export class CreateactionplanComponent implements OnInit {
   getWeeksInMonth(month, year) {
     console.log(month, year);
     console.log(new Date(year, month, 1));
-    var weeks = [],
-      firstDate = new Date(year, month, 1),
+    // var weeks = [],
+    //  var firstDate = new Date(year, month, 1)
 
-      lastDate = new Date(year, month + 1, 0),
+    /*   lastDate = new Date(year, month + 1, 0),
       numDays = lastDate.getDate();
-
+ 
     var start = 1;
     var end = 7 - firstDate.getDay();
     var i = 1;
@@ -58,8 +59,63 @@ export class CreateactionplanComponent implements OnInit {
       i++;
       if (end > numDays)
         end = numDays;
+    }*/
+    /*
+    var clonedMoment = moment(firstDate), first, last;
+ 
+    // get week number for first day of month
+    first = clonedMoment.startOf('month').week();
+    // get week number for last day of month
+    last = clonedMoment.endOf('month').week();
+ 
+    // In case last week is in next year
+    if (first > last) {
+      last = first + last;
     }
-    console.log("weeks : ", weeks)
+    console.log("w",last - first + 1);
+    return last - first + 1;*/
+
+
+
+    var startDate = moment([year, month]);
+    var endDate = moment(startDate).endOf('month');
+
+    var dates = [];
+    var weeks = [];
+
+    var per_week = [];
+    var difference = endDate.diff(startDate, 'days');
+
+    per_week.push(startDate.toDate())
+    var index = 0;
+    var last_week = false;
+    while (startDate.add(1, 'days').diff(endDate) < 0) {
+      if (startDate.day() != 0) {
+        per_week.push(startDate.toDate())
+      }
+      else {
+        if ((startDate.clone().add(7, 'days').month() == (month))) {
+          weeks.push(per_week)
+          per_week = []
+          per_week.push(startDate.toDate())
+        }
+        else if (Math.abs(index - difference) > 0) {
+          if (!last_week) {
+            weeks.push(per_week);
+            per_week = [];
+          }
+          last_week = true;
+          per_week.push(startDate.toDate());
+        }
+      }
+      index += 1;
+      if ((last_week == true && Math.abs(index - difference) == 0) ||
+        (Math.abs(index - difference) == 0 && per_week.length == 1)) {
+        weeks.push(per_week)
+      }
+      dates.push(startDate.clone().toDate());
+    }
+    console.log(weeks);
     return weeks;
   }
   errorInput: any = '';
@@ -128,11 +184,11 @@ export class CreateactionplanComponent implements OnInit {
   }
   getRejectPer(val, rowData) {
     const dateRange = this.totalWeeks[val - 1];
-
+    console.log("dateRange", dateRange);
     const month = this.monthNames.indexOf(this.monthname);
 
-    const startDate = new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.start;
-    const endDate = new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.end;
+    const startDate = dateRange[0]; //new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.start;
+    const endDate = dateRange[dateRange.length - 1];  //new Date().getFullYear() + '-' + (parseInt(month) + 1) + '-' + dateRange.end;
 
     const startDate1 = this.datePipe.transform(startDate, "yyyy-MM-dd");
     const endDate1 = this.datePipe.transform(endDate, "yyyy-MM-dd");
@@ -201,7 +257,7 @@ export class CreateactionplanComponent implements OnInit {
     row.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     row.monthName = this.monthname;
     row.plantNo = this.plantcode;
-    row.actionPlan =row.actionPlan;
+    row.actionPlan = row.actionPlan;
     row.materialDescription = row.materialDescription;
     row.result = row.result;
     row.materialCode = row.materialCode;

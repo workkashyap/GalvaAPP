@@ -78,8 +78,8 @@
                                 <ng-template pTemplate="input">
                                     <select pInputText [(ngModel)]="rowData.weeks" class="form-control"
                                         (change)="getRejectPer($event.target.value,rowData)" required>
-                                        <option value="{{i+1}}" *ngFor="let week of totalWeeks; let i= index;">
-                                            {{week.label}}</option>
+                                        <option [value]="i+1" *ngFor="let week of totalWeeks; let i= index;">
+                                            week {{i+1}}</option>
                                     </select>
                                 </ng-template>
                                 <ng-template pTemplate="output">
