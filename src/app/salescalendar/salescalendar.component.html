@@ -190,8 +190,8 @@
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
                   <tr>
-                    <td colspan="2" style=" width:275px;">
-                      <div class="input-group mb-2 " style="width: 70%;">
+                    <td colspan="2" style=" width:210px;">
+                      <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
                           (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
                         <div class="input-group-append fix-height">
@@ -199,25 +199,29 @@
                         </div>
                       </div>
                     </td>
-                    <td colspan="16" style="width: 1600px;" *ngIf="modalType==1"></td>
-                    <td style="width:140px;" *ngIf="modalType==1">
+                    <td style="width:115px;">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+
+                    <td colspan="5" style="width: 545px;" *ngIf="modalType==1"></td>
+                    <td style="width:170px;" *ngIf="modalType==1">
                       <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
                         Total Bas. : {{ basicamtinr | number:'1.2-2'}} Lacs
                       </button>
                     </td>
-                    <td style=" width:140px;" *ngIf="modalType==1">
+                    <td style=" width:170px;" *ngIf="modalType==1">
                       <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">
                         Total Val. : {{ totalvalue | number:'1.2-2'}} Lacs
                       </button>
                     </td>
 
-                    <td colspan="6" style="width: 730px;" *ngIf="modalType==2 "></td>
+                    <td colspan="4" style="width: 645px;" *ngIf="modalType==2 "></td>
                     <td style="width:180px;" *ngIf="modalType==2">
                       <button class="btn btn-sm  text-dark bg-info mb-2" [ngClass]="totalSumofBg" style="float: right;">
                         {{totalSumofTitle}} : {{ totalSumofValue | number:'1.2-2'}} Lacs
                       </button>
                     </td>
-                    <td colspan="7" style="width: 900px;" *ngIf="modalType==2"></td>
 
                   </tr>
                   <!-- regular date section -->

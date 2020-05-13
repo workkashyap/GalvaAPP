@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-4">
             <h5 style="margin-top: 5px;">
-              OK Value Target grater than {{company_per}}
+              OK Value Target greater than {{company_per}}
               <!--Rejection Target Less than 15%*-->
             </h5>
           </div>
@@ -252,14 +252,14 @@
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
-                      </div> 
+                      </div>
                     </td>
                     <!--not for summary -->
                     <td style="width:140px;">
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
-                   
+
 
                     <!--not for reject% and summary click event -->
                     <td *ngIf="btnLabel!='6' && btnLabel!='7'" style=" width:140px;">

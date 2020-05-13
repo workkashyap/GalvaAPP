@@ -157,7 +157,7 @@ export class SalescalendarComponent implements OnInit {
   //netsales
   finalNetSale() {
     this.finlaNetSales = 0;
-    return this.finlaNetSales = ( this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej)));
+    return this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej)));
   }
   //get top button total value
   loadchart1() {
@@ -214,21 +214,21 @@ export class SalescalendarComponent implements OnInit {
 
     this.modalType = 1;
     this.cols = [
-      { field: 'plant', header: 'Plant' },
+      // { field: 'plant', header: 'Plant' },
       { field: 'plantName', header: 'Plant Name' },
       { field: 'invoiceNumber', header: 'Invoiceno' },
-      { field: 'accDocNo', header: 'Accdocno' },
+      // { field: 'accDocNo', header: 'Accdocno' },
       { field: 'billingDocDate', header: 'Billingdocdate' },
-      { field: 'materialType', header: 'Materialtype' },
-      { field: 'soType', header: 'Sotype' },
-      { field: 'soTypedesc', header: 'Sotypedesc' },
-      { field: 'billingDocTYPE', header: 'Billingdoctype' },
-      { field: 'billingtypedesc', header: 'Billingtypedesc' },
-      { field: 'divisionName', header: 'Devisionname' },
+      // { field: 'materialType', header: 'Materialtype' },
+      // { field: 'soType', header: 'Sotype' },
+      // { field: 'soTypedesc', header: 'Sotypedesc' },
+      // { field: 'billingDocTYPE', header: 'Billingdoctype' },
+      //{ field: 'billingtypedesc', header: 'Billingtypedesc' },
+      //   { field: 'divisionName', header: 'Devisionname' },
       { field: 'soldToParty', header: 'soldToParty' },
       { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      { field: 'payer', header: 'Payer' },
-      { field: 'payerName', header: 'Payername' },
+      // { field: 'payer', header: 'Payer' },
+      // { field: 'payerName', header: 'Payername' },
       { field: 'materialNumber', header: 'Materialnumber' },
       { field: 'materialDesc', header: 'Materialdesc' },
       { field: 'invoiceQty', header: 'Invoiceqty' },
@@ -313,14 +313,24 @@ export class SalescalendarComponent implements OnInit {
     this.totalvalue = 0;
     this.totalSumofValue = 0;
     this.cols = [
-      { field: 'plant', header: 'Plant' },
+      // { field: 'plant', header: 'Plant' },
       { field: 'plantName', header: 'Plant Name' },
-      { field: 'billingDocType', header: 'Billingdoctype' },
+      // { field: 'billingDocType', header: 'Billingdoctype' },
       { field: 'invoiceNumber', header: 'Invoiceno' },
-      { field: 'accdocno', header: 'Accdocno' },
+      //{ field: 'accdocno', header: 'Accdocno' },
       { field: 'billingDocDate', header: 'Billingdocdate' },
-      { field: 'materialType', header: 'Materialtype' },
-      { field: 'soType', header: 'Sotype' },];
+      // { field: 'materialType', header: 'Materialtype' },
+      //  { field: 'soType', header: 'Sotype' },
+    ];
+    this.cols.push(
+      //   { field: 'soTypedesc', header: 'Sotypedesc' },
+      { field: 'materialNumber', header: 'Materialnumber' },
+      { field: 'materialDesc', header: 'Materialdesc' },
+      { field: 'soldToParty', header: 'Soldtoparty' },
+      { field: 'soldToPartyName', header: 'Soldtopartyname' },
+      //  { field: 'payer', header: 'Payer' },
+      // { field: 'payerName', header: 'Payername' },
+    );
     if (val == "NetSaleDetail") {
       this.totalSumofTitle = "Tot. Net.";
       this.totalSumofBg = "bg-info";
@@ -349,15 +359,7 @@ export class SalescalendarComponent implements OnInit {
         { field: 'cancelInvoice', header: 'Cancel Inv.' },
       );
     }
-    this.cols.push(
-      { field: 'soTypedesc', header: 'Sotypedesc' },
-      { field: 'materialNumber', header: 'Materialnumber' },
-      { field: 'materialDesc', header: 'Materialdesc' },
-      { field: 'soldToParty', header: 'Soldtoparty' },
-      { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      { field: 'payer', header: 'Payer' },
-      { field: 'payerName', header: 'Payername' },
-    );
+
 
     this.dpservice.salesdetail = [];
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
