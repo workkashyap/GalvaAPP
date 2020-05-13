@@ -18,6 +18,7 @@ export class Createactionplan {
   monthName: string;
   plantNo: string;
   rejper:number;
+  rejPerBg:string;
   actionPlan:string;
   weeks:string;
   value:number;

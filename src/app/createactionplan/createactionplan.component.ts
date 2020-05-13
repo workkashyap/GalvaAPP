@@ -204,6 +204,7 @@ export class CreateactionplanComponent implements OnInit {
         } else {
           rowData.rejper = 0;
         }
+        this.myValidation(rowData.rejper, rowData)
         //me.allActionPlan = res as Createactionplan[];
       });
 
@@ -222,6 +223,8 @@ export class CreateactionplanComponent implements OnInit {
     row.targetdateofcompletion = this.formatDate(new Date(row.targetdateofcompletion));
     row.actualdateofcompletion = this.formatDate(new Date(row.actualdateofcompletion));
     console.log(row);
+
+    this.myValidation(row.rejper, row);
     this.clonedData[row.id] = { row };
   }
   formatDate(date) {
@@ -236,10 +239,16 @@ export class CreateactionplanComponent implements OnInit {
     var year = date.getFullYear();
     return year + '-' + month + '-' + day; //day + "-" + month + "-" + year;
   }
-  myValidation(val) {
+  myValidation(val, row) {
     console.log(val);
     this.errorInput = '';
-    if (val > 100) {
+    if (val < 15) {
+      row.rejPerBg = "greenBg";
+    } else if (val >= 15 && val < 20) {
+      row.rejPerBg = "orangeBg";
+    } else if (val >= 20) {
+      row.rejPerBg = "redBg";
+    } else if (val > 100) {
       this.errorInput = "errorInput";
       return;
     }

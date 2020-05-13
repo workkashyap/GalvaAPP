@@ -20,3 +20,15 @@ body .ui-table .ui-table-tbody > tr > td {
 .errorInput{
     border: 1px solid red;
 }
+.greenBg{
+    color: green;    border: 1px solid;
+
+}
+.orangeBg{
+    color: orange;    border: 1px solid;
+
+}  
+.redBg{
+    color: red;    border: 1px solid;
+
+}
