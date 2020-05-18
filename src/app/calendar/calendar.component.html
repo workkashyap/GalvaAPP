@@ -5,7 +5,7 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-5">
             <h5>Quality Calendar (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)
             </h5>
           </div>
@@ -15,11 +15,26 @@
               <!--Rejection Target Less than 15%*-->
             </h5>
           </div>
-          <div class="col-sm-4">
-            <ol class="breadcrumb float-sm-right">
+          <div class="col-sm-3">
+            <!--<ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Quality Calendar</li>
-            </ol>
+            </ol>-->
+            <div class="row">
+              <div class="col-md-10">
+                <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
+                  (change)="selectedGrid($event.target.value)" style="height: calc(2.20rem);">
+                  <!-- <option value="0">--Select--</option> -->
+                  <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                    {{ pl.plantshortname }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2" style="padding: unset !important;">
+                <button class="btn btn-primary btn-custom" (click)="loaddata()" style="margin:unset;"><i
+                    class="fa fa-refresh" aria-hidden="true"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -33,9 +48,8 @@
             <div class="card card-primary card-outline">
               <div class="card-header ">
                 <!--  card-tools -->
-                <div class="form-inline">
-
-                  <div *ngFor="let tot of this.dpservice.dailyreportsummary">
+                <div class="form-inline" *ngIf="this.dpservice.dailyreportsummary" style="margin: auto;">
+                  <div *ngFor="let tot of this.dpservice.dailyreportsummary" style="margin: auto;">
                     <div *ngIf="tot.itemtype==this.typename">
                       <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
                       <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Insp. Value =
@@ -59,31 +73,25 @@
                         <b>{{ tot.platingper }}</b></button>
                       <button class="btn btn-custom text-dark bg-danger">Moulding % =
                         <b>{{ tot.mouldingper }}</b></button>
+
+                      <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
+                        *ngIf="this.currentUser && this.currentUser.id==14">
+                        Action Plan</button>
+                      <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
+                        style="border-radius: 5px 0px 0px 5px">Previous</button>
+                      <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
+                        style="border-radius: 0px 5px 5px 0px;">Next</button>
                     </div>
                   </div>
-
+                </div>
+                <div class="form-inline" *ngIf="dpservice.dailyreportsummary && !dpservice.dailyreportsummary.length" style="margin: auto;">
                   <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
                     *ngIf="this.currentUser && this.currentUser.id==14">
                     Action Plan</button>
-                  <div class="btn-sm no-padding group-btn-c" role="group">
-                    <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
-                      style="border-radius: 5px 0px 0px 5px">Previous</button>
-                    <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
-                      style="border-radius: 0px 5px 5px 0px;">Next</button>
-                  </div>
-                  <div class="col">
-                    <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
-                      (change)="selectedGrid($event.target.value)" style="height: calc(2.20rem);">
-                      <!-- <option value="0">--Select--</option> -->
-                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                        {{ pl.plantshortname }}
-                      </option>
-                    </select>
-                    &nbsp;
-                    <button class="btn btn-primary btn-custom" (click)="loaddata()"><i class="fa fa-refresh"
-                        aria-hidden="true"></i></button>
-                  </div>
-
+                  <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
+                    style="border-radius: 5px 0px 0px 5px">Previous</button>
+                  <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
+                    style="border-radius: 0px 5px 5px 0px;">Next</button>
                 </div>
                 <!-- /.card-tools -->
               </div>
@@ -95,7 +103,8 @@
                 <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
                   [header]="options.header" [weekends]="true" [displayEventTime]="false"
                   [events]="dpservice.dailyprodlist" [editable]="true" [aspectRatio]="3.5" height="auto"
-                  (dateClick)="dateClick($event)" (eventClick)="eventClick($event)" class="my-calender"></full-calendar>
+                  (dateClick)="dateClick($event)" (eventClick)="eventClick($event)" class="my-calender">
+                </full-calendar>
                 <div class="table-responsive mailbox-messages">
 
                   <!-- /.table -->
