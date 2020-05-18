@@ -10,4 +10,9 @@ export class Holdnbuff {
   buffqty: number;
   holdqty: number;
   status: string;
+
+  move555:number;
+  menge:number;
+  itemcode:number;
+  itemdesc:string;
 }
