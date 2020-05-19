@@ -52,12 +52,24 @@ export class HolnbuffComponent implements OnInit {
   }
 
   ngOnInit() {
-    const me = this;
-
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
-    this.plantservice.getPlantData(this.currentUser.id);
-    this.DPservice.plantcode = "1010";
+    const me = this;
+    this.loading = true;
+
+    this.plantservice.getPlantData(this.currentUser.id).then(res => {
+      if (me.plantservice.plantlist) {
+
+        this.selectedtype = me.plantservice.plantlist[0].plantcode;
+        me.DPservice.plantcode = me.plantservice.plantlist[0].plantcode;
+        me.getData(me.plantservice.plantlist[0].plantcode);
+        me.loading = false;
+      } else {
+        me.selectedtype = "0";
+        me.DPservice.plantcode = '0';
+        me.loading = false;
+      }
+    });
     this.cols = [
       // { field: "id", header: "ID" },
       { field: "aufnr", header: "aufnr" },
@@ -65,7 +77,7 @@ export class HolnbuffComponent implements OnInit {
       { field: "charg", header: "Batch No." },
       //{ field: "werks", header: "werks" },
       //{ field: "bwart", header: "bwart" },
-     // { field: "createddate", header: "Created Date" },
+      // { field: "createddate", header: "Created Date" },
       //{ field: "shkzg", header: "shkzg" },
       { field: "itemcode", header: "Item Code" },
       { field: "itemdesc", header: "Item Desc." },
@@ -75,12 +87,14 @@ export class HolnbuffComponent implements OnInit {
       { field: "holdqty", header: "holdqty" },
       { field: "status", header: "status" }
     ];
+  }
+  getData(plantcode) {
+    const me = this;
 
     this.loading = true;
 
-    console.log("hi");
     this.hnbservice
-      .getholdnbuffalldetail("1010", me.Fromdate, me.Todate)
+      .getholdnbuffalldetail(plantcode, me.Fromdate, me.Todate)
       .toPromise()
       .then(res => {
         console.log("hi");
