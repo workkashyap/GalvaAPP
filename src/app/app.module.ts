@@ -54,9 +54,11 @@ import { NewJobwmComponent } from "./jobworkmaterial/new-jobwm/new-jobwm.compone
 import { CustomerComponent } from "./customer/customer.component";
 import { CustomerDetailComponent } from "./customer/customer-detail/customer-detail.component";
 import { NewCustomerComponent } from "./customer/new-customer/new-customer.component";
-import { HomeComponent } from './home/home.component';
-import { SalescalendarComponent } from './salescalendar/salescalendar.component';
-import { SalesDetailComponent } from './sales-detail/sales-detail.component';
+import { HomeComponent } from "./home/home.component";
+import { SalescalendarComponent } from "./salescalendar/salescalendar.component";
+import { SalesDetailComponent } from "./sales-detail/sales-detail.component";
+import { PurchaseComponent } from "./purchase/purchase.component";
+import { SalesReportDetailComponent } from './sales-report-detail/sales-report-detail.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,9 @@ import { SalesDetailComponent } from './sales-detail/sales-detail.component';
     NewCustomerComponent,
     HomeComponent,
     SalescalendarComponent,
-    SalesDetailComponent
+    SalesDetailComponent,
+    PurchaseComponent,
+    SalesReportDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,182 +123,189 @@ import { SalesDetailComponent } from './sales-detail/sales-detail.component';
       {
         path: "",
         component: HomeComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "login",
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: "home",
         component: NotificationComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "notification-detail",
         component: NotificationDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "task",
         component: TaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "task-detail",
         component: TaskDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "task-approve",
         component: ApprovalComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "pending-task",
         component: PendingtaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "pending-task-detail",
         component: PendingtaskdetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "open-task",
         component: OpentaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "opentask-detail",
         component: OpentaskDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "completed-task",
         component: CompletedtaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "completed-task-detail",
         component: CompletedTaskDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "new-task",
         component: NewTaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "calendar",
         component: CalendarComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "rejection",
         component: RejectionComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "rejection-detail",
         component: RejectionDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "rejection-main",
         component: RejectionMainComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "dashboard",
         component: ChartComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "dashboard1",
         component: DashboardComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "actionview",
         component: ActionplanComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "task-report",
         component: TaskReportComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "holdnbuff-report",
         component: HolnbuffComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "Top5RejDefwise-report",
         component: Top5RejDefectwiseComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "createActionPlan",
         component: CreateactionplanComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "jobWorkMaterial",
         component: JobworkmaterialComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "new-jobworkmaterial",
         component: NewJobwmComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "jobworkmaterial-detail",
         component: JobwmDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "Sales",
         component: SalesComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "Customer",
         component: CustomerComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "Customer-detail",
         component: CustomerDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "new-Customer",
         component: NewCustomerComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: "nhome",
         component: HomeComponent,
-        canActivate: [AuthGuard]
-      }, {
+        canActivate: [AuthGuard],
+      },
+      {
         path: "salescalendar",
         component: SalescalendarComponent,
-        canActivate: [AuthGuard]
-      }, {
+        canActivate: [AuthGuard],
+      },
+      {
         path: "salesdetail",
         component: SalesDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
-      { path: "**", redirectTo: "" }
+      {
+        path: "Purchase",
+        component: PurchaseComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),
 
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

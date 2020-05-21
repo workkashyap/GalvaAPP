@@ -1,0 +1,30 @@
+export class Purchase {
+  id: number;
+  GRNNoMIGO: number;
+  DateOfGRN: string;
+  EntryNoMIRO: number;
+  MIRODate: string;
+  PODocType: string;
+  PODocName: string;
+  PurchaseOrder: number;
+  BusinessPartnerGroup: string;
+  VendorCode: number;
+  VendorName: string;
+  VendorInvoiceNo: string;
+  VendorInvoiceDate: string;
+  GLCode: number;
+  GLName: string;
+  Narattion: string;
+  Material: string;
+  MaterialDescription: string;
+  UnitOfMeasurement: string;
+  MaterialQuantity: string;
+  MaterialRate: string;
+  MaterialValue: string;
+  TotalValue: string;
+  NetPayableToVendor: string;
+  CostCentre: string;
+  MaterialGroup: string;
+  MaterialType: string;
+  Cancellation: string;
+}
