@@ -4,6 +4,8 @@ export class Purchase {
   DateOfGRN: string;
   EntryNoMIRO: number;
   MIRODate: string;
+  ACDocumentNo: number;
+  ACDocumentDate: string;
   PODocType: string;
   PODocName: string;
   PurchaseOrder: number;
