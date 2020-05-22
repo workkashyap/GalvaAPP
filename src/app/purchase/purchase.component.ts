@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpHeaders } from "@angular/common/http";
 import {
@@ -19,6 +19,8 @@ import { environment } from "src/environments/environment";
 })
 export class PurchaseComponent implements OnInit {
   @ViewChild("file", { static: false }) file;
+  @ViewChild("btnUpload", { static: false }) btnUpload: ElementRef;
+  public plzWait: boolean = false;
   public progress: number;
   public message: string;
   readonly rootUrl = environment.apiUrl;
@@ -62,14 +64,20 @@ export class PurchaseComponent implements OnInit {
         { reportProgress: true, observe: "events" }
       )
       .subscribe((event) => {
-        if (event.type === HttpEventType.UploadProgress)
+        if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round((100 * event.loaded) / event.total);
-        else if (event.type === HttpEventType.Response) {
+          this.plzWait = true;
+          this.btnUpload.nativeElement.disabled = true;
+        } else if (event.type === HttpEventType.Response) {
           this.message = event.body.toString();
           if (this.message.toString() == "Records Uploaded SuccessFully") {
             this.toastr.success(this.message);
+            this.plzWait = false;
+            this.btnUpload.nativeElement.disabled = false;
           } else {
+            this.plzWait = false;
             this.toastr.info(this.message);
+            this.btnUpload.nativeElement.disabled = false;
           }
         }
       });
