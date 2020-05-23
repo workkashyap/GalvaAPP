@@ -1,25 +1,25 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Observable } from "rxjs";
-import { HttpHeaders } from "@angular/common/http";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 import {
   HttpClient,
   HttpRequest,
   HttpEventType,
   HttpResponse,
-} from "@angular/common/http";
-import { PurchaseService } from "../shared/purchase/purchase.service";
-import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
-import { environment } from "src/environments/environment";
+} from '@angular/common/http';
+import { PurchaseService } from '../shared/purchase/purchase.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-purchase",
-  templateUrl: "./purchase.component.html",
-  styleUrls: ["./purchase.component.css"],
+  selector: 'app-purchase',
+  templateUrl: './purchase.component.html',
+  styleUrls: ['./purchase.component.css'],
 })
 export class PurchaseComponent implements OnInit {
-  @ViewChild("file", { static: false }) file;
-  @ViewChild("btnUpload", { static: false }) btnUpload: ElementRef;
+  @ViewChild('file', { static: false }) file;
+  @ViewChild('btnUpload', { static: false }) btnUpload: ElementRef;
   public plzWait: boolean = false;
   public progress: number;
   public message: string;
@@ -58,10 +58,10 @@ export class PurchaseComponent implements OnInit {
     this.http
       .post(
         this.rootUrl +
-          "/FileUploadPurchase?fname=" +
+          '/FileUploadPurchase?fname=' +
           this.file.nativeElement.files[0].name,
         this.formData,
-        { reportProgress: true, observe: "events" }
+        { reportProgress: true, observe: 'events' }
       )
       .subscribe((event) => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -70,7 +70,7 @@ export class PurchaseComponent implements OnInit {
           this.btnUpload.nativeElement.disabled = true;
         } else if (event.type === HttpEventType.Response) {
           this.message = event.body.toString();
-          if (this.message.toString() == "Records Uploaded SuccessFully") {
+          if (this.message.toString() === 'Records Uploaded SuccessFully') {
             this.toastr.success(this.message);
             this.plzWait = false;
             this.btnUpload.nativeElement.disabled = false;
@@ -90,7 +90,7 @@ export class PurchaseComponent implements OnInit {
     this.file.nativeElement.value = null;
   }
   upload(files) {
-    this.message = "  ";
+    this.message = '  ';
     if (files.length === 0) return;
 
     //  const formData = new FormData();
