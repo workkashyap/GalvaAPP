@@ -65,6 +65,10 @@
                               <!-- && progress < 100 -->
                               <b> {{progress}}%</b>
                             </span>
+                            <span class="text-secondary text-sm" *ngIf="plzWait">
+                              <!-- && progress < 100 -->
+                              <b> Please Wait...</b>
+                            </span>
                           </div>
                         </div>
                         <div class=" row">
@@ -87,7 +91,7 @@
                             </span> -->
 
 
-                            <button class="btn btn-primary" (click)="uploadFile();">Upload</button>
+                            <button #btnUpload class="btn btn-primary" (click)="uploadFile();">Upload</button>
                           </div>
                           <div class="col-md-5 text-center"></div>
                         </div>

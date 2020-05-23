@@ -58,7 +58,10 @@ import { HomeComponent } from "./home/home.component";
 import { SalescalendarComponent } from "./salescalendar/salescalendar.component";
 import { SalesDetailComponent } from "./sales-detail/sales-detail.component";
 import { PurchaseComponent } from "./purchase/purchase.component";
+<<<<<<< HEAD
 // import { SalesReportDetailComponent } from './sales-report-detail/sales-report-detail.component';
+=======
+>>>>>>> a7d36b8f609d76dfa5ea52cfe5fbdb950295213d
 
 @NgModule({
   declarations: [
@@ -103,8 +106,7 @@ import { PurchaseComponent } from "./purchase/purchase.component";
     HomeComponent,
     SalescalendarComponent,
     SalesDetailComponent,
-    PurchaseComponent
-   // SalesReportDetailComponent,
+    PurchaseComponent,
   ],
   imports: [
     BrowserModule,
