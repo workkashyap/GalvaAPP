@@ -58,7 +58,7 @@ import { HomeComponent } from "./home/home.component";
 import { SalescalendarComponent } from "./salescalendar/salescalendar.component";
 import { SalesDetailComponent } from "./sales-detail/sales-detail.component";
 import { PurchaseComponent } from "./purchase/purchase.component";
-import { SalesReportDetailComponent } from './sales-report-detail/sales-report-detail.component';
+// import { SalesReportDetailComponent } from './sales-report-detail/sales-report-detail.component';
 
 @NgModule({
   declarations: [
@@ -103,8 +103,8 @@ import { SalesReportDetailComponent } from './sales-report-detail/sales-report-d
     HomeComponent,
     SalescalendarComponent,
     SalesDetailComponent,
-    PurchaseComponent,
-    SalesReportDetailComponent,
+    PurchaseComponent
+   // SalesReportDetailComponent,
   ],
   imports: [
     BrowserModule,
