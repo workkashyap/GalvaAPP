@@ -297,6 +297,7 @@ import { PurchaseComponent } from "./purchase/purchase.component";
         component: PurchaseComponent,
         canActivate: [AuthGuard],
       },
+      
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),

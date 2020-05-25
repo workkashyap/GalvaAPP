@@ -54,11 +54,11 @@ export class PurchaseComponent implements OnInit {
     //   // this.toastr.success(this.message);
     //   this.clearSelectedfile();
     // });
-
+    // FileUploadPurchase
     this.http
       .post(
         this.rootUrl +
-          '/FileUploadPurchase?fname=' +
+          '/PurchaseExport?fname=' +
           this.file.nativeElement.files[0].name,
         this.formData,
         { reportProgress: true, observe: 'events' }
