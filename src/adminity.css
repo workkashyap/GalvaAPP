@@ -33,9 +33,21 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 .navbar-light .navbar-nav .nav-link {
     color: #404e67;
 }
+
 .bg-info {
     border: unset; 
     background: linear-gradient(to right,#01a9ac,#01dbdf);
+}
+
+.bg-moulded {
+    border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#AFB42B,#DCE775);
+}
+.bg-capital {
+    border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#673AB7,#B39DDB);
 }
 .bg-success{
     border: unset; 
