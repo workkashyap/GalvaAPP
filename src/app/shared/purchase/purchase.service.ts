@@ -5,6 +5,7 @@ import { Purchasecalendar } from './purchasecalendar.model';
 import { Observable } from 'rxjs';
 import { Purchasesummary } from './purchasesummary.model';
 import { Purchasedetail } from './purchasedetail.model';
+import { Purchase } from './purchase.model';
 
 
 @Injectable({
@@ -14,6 +15,8 @@ export class PurchaseService {
   readonly rootUrl = environment.apiUrl;
   public purchasecalendar: Purchasecalendar[] = [];
   public purchasedetail: Purchasedetail[] = [];
+  public purchase: Purchase[] = [];
+  public purchaseLineDetail: Purchase[] = [];
 
 
   constructor(public http: HttpClient) { }
@@ -23,14 +26,14 @@ export class PurchaseService {
       this.rootUrl + '/purchasecalendars/getpurchasecalendar/' + id + '/' + date
     );
   }
-  
+
   /*purchase calendar */
   /*public getPurchaseCalendar(id, date): Observable<Dailyproduction[]> {
     return this.http.get<Dailyproduction[]>(
       this.rootUrl + '/purchasecalendars/getpurchasecalendar/' + id + '/' + date
     );
   }*/
-  
+
   public getPurchaseCaldetail(plantcode, date): Observable<Purchasedetail[]> {
     return this.http.get<Purchasedetail[]>(
       this.rootUrl +
@@ -46,7 +49,7 @@ export class PurchaseService {
       this.rootUrl + '/purchasecalendars/' + url + '/' + plantcode + '/' + date
     );
   }
-  
+
   //button click event
   public getPurchaseBtnClickEvent(url, plantcode, date): Observable<Purchasedetail[]> {
     return this.http.get<Purchasedetail[]>(
@@ -54,6 +57,19 @@ export class PurchaseService {
     );
   }
   /*end purchase calendar */
+  //purchase detail//
+
+  public getPurchaseDetail(plantcode, fromdate, todate): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchaseheaders/GetPurchaseHeader/' + plantcode + '/' + fromdate + '/' + todate
+    );
+  }
+  public getPurchaseLineDetail(id): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchaseheaders/GetPurchaseLine/' + id);
+  }
+
+  //end purchase detail//
 }
 
 
