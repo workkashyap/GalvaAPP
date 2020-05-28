@@ -1,0 +1,207 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="card-title-md">Purchase Detail</h3>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="row mt-3">
+                    <div class="col-md-2">
+                      <label>From</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel"
+                        [(ngModel)]="this.Fromdate" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                        [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row mt-3">
+                    <div class="col-md-2">
+                      <label>To</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="this.Todate"
+                        class="input-append date" dateFormat="yy-mm-dd" dataType="string" [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select class="custom-select mt-3" name="myselect" #mySelect="ngModel" [(ngModel)]="this.selectedPlant"
+                    (change)="selectedGrid($event.target.value)" style="width: 75%;">
+                    <option value="0">--Select Plant--</option>
+                    <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                      {{ pl.plantshortname }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary  mt-3" (click)="getPurchaseDetail()">View</button>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+      <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="dpservice.purchase"
+        [paginator]="true" [rows]="20" [resizableColumns]="true" (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="caption">
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="input-group col-sm-5 no-padding mb-2">
+                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                  (input)="loadper($event.target.value , dt)"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                <div class="input-group-append">
+                  <i class="fa fa-search input-group-text"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              <span *ngIf="col.field=='acDocumentDate' || col.field=='vendorInvoiceDate'  ">
+                {{rowData[col.field] | date :'dd-MM-y'}}
+              </span>
+              <span *ngIf="col.field !='acDocumentDate' && col.field!='vendorInvoiceDate' ">
+                {{rowData[col.field]}}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+    <!---->
+    <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Detail</h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{plant_name }}</h4>
+              </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 300px;">
+              <p-table #dtdefect [columns]="subcols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
+                [value]="dpservice.purchaseLineDetail" [paginator]="false" [rows]="5">
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <td colspan="2" style=" width:250px;">
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dtdefect.filterGlobal($event.target.value, 'contains')"
+                          class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width:115px;">
+                      <button type="button" label="EXCEL" (click)="dtdefect.exportCSV()"
+                        class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td colspan="6" style="width: 1000px;"></td>
+                    <td style="width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" [ngClass]="totalSumofBg" style="float: right;">
+                        Total : {{ materialValueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td style="width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" [ngClass]="totalSumofBg" style="float: right;">
+                        Total : {{ totalValueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td style="width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" [ngClass]="totalSumofBg" style="float: right;">
+                        Total : {{ netPayableToVendorSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td colspan="2" style="width: 250px;"></td>
+                  </tr>
+                  <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of columns">
+                      <span *ngIf="col.field=='acDocumentDate'">
+                        {{rowData[col.field] | date :'dd-MM-y'}}
+                      </span>
+                      <span *ngIf="col.field !='acDocumentDate'">
+                        {{rowData[col.field]}}
+                      </span>
+
+                    </td>
+
+                  </tr>
+                </ng-template>
+
+              </p-table>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+
+  </div>
+</div>

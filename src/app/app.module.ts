@@ -59,6 +59,7 @@ import { SalescalendarComponent } from "./salescalendar/salescalendar.component"
 import { SalesDetailComponent } from "./sales-detail/sales-detail.component";
 import { PurchaseComponent } from "./purchase/purchase.component";
 import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.component';
+import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-detail.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.c
     SalesDetailComponent,
     PurchaseComponent,
     PurchasecalendarComponent,
+    PurchaseDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -302,6 +304,11 @@ import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.c
       {
         path: "purchasecalendar",
         component: PurchasecalendarComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "purchasedetail",
+        component: PurchaseDetailComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },

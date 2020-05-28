@@ -1,19 +1,20 @@
 export class Purchase {
   id: number;
+  plant:number;
   GRNNoMIGO: number;
   DateOfGRN: string;
   EntryNoMIRO: number;
   MIRODate: string;
-  ACDocumentNo: number;
-  ACDocumentDate: string;
+  acDocumentNo: number;
+  acDocumentDate: string;
   PODocType: string;
-  PODocName: string;
-  PurchaseOrder: number;
+  poDocName: string;
+  purchaseOrder: number;
   BusinessPartnerGroup: string;
-  VendorCode: number;
+  vendorCode: number;
   VendorName: string;
-  VendorInvoiceNo: string;
-  VendorInvoiceDate: string;
+  vendorInvoiceNo: string;
+  vendorInvoiceDate: string;
   GLCode: number;
   GLName: string;
   Narattion: string;
@@ -22,11 +23,12 @@ export class Purchase {
   UnitOfMeasurement: string;
   MaterialQuantity: string;
   MaterialRate: string;
-  MaterialValue: string;
-  TotalValue: string;
-  NetPayableToVendor: string;
+  materialValue: number;
+  totalValue: number;
+  netPayableToVendor: number;
   CostCentre: string;
   MaterialGroup: string;
   MaterialType: string;
   Cancellation: string;
+  grouping:string;
 }

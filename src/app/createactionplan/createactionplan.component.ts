@@ -154,8 +154,9 @@ export class CreateactionplanComponent implements OnInit {
       { field: "edit", header: "Action", width: "100px" }
     ];
     this.loading = true;
+    // for user => this.currentUser.username
     this.apservice
-      .getActionPlan(this.monthname, this.plantcode, this.currentUser.username)
+      .getActionPlan(this.monthname, this.plantcode, 'hardik')
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];
@@ -165,7 +166,7 @@ export class CreateactionplanComponent implements OnInit {
   refreshList() {
     let me = this;
     this.apservice
-      .getActionPlan(this.monthname, this.plantcode, this.currentUser.username)
+      .getActionPlan(this.monthname, this.plantcode, 'hardik')
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];
@@ -271,7 +272,7 @@ export class CreateactionplanComponent implements OnInit {
     row.result = row.result;
     row.materialCode = row.materialCode;
 
-    row.responsibility = this.currentUser.username;
+    row.responsibility = 'hardik'; // this.currentUser.username;
     row.progresspercent = parseInt(row.progresspercent);
     row.department = this.department;
     //row.actualdateofcompletion = '';
