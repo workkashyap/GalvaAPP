@@ -140,9 +140,9 @@
               </button>-->
             </td>
             <td>
-              <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
-                Total% : {{ totalRejPer | number:'1.2-2'}} 
-              </button>-->
+              <button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+                {{ totalRejVal | number:'1.2-2'}}
+              </button>
             </td>
 
             <td>
@@ -196,7 +196,16 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Defects</h5>
+       
+        <div class="row col-md-11">
+          <div class="col-md-6">
+            <h3>Defects</h3>
+          </div>
+          <div class="col-md-5">
+            <h4>{{plant_name }}</h4>
+          </div>
+        </div>
+        
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -205,17 +214,40 @@
         <div style="overflow:scroll; ">
           <p-table #dtdefect [columns]="subcols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
             [responsive]="true" selectionMode="single" [style]="{'width':'100%'}" [value]="DPservice.itemtopdefectlist"
-            [paginator]="true" [rows]="5">
-            <ng-template pTemplate="caption">
+            [paginator]="true" [rows]="15">
+            <!--<ng-template pTemplate="caption">
               <div style="text-align: right">
                 <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
                 <input type="text" pInputText placeholder="Global Filter"
                   (input)="dtdefect.filterGlobal($event.target.value, 'contains')">
               </div>
-            </ng-template>
+            </ng-template>-->
             <ng-template pTemplate="header" let-columns>
               <tr>
-
+                <td>
+                  <div class="input-group">
+                    <input type="text" pInputText placeholder="Global Filter"
+                      (input)="dtdefect.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                    <div class="input-group-append fix-height">
+                      <i class="fa fa-search input-group-text"></i>
+                    </div>
+                  </div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button class="btn bg-warning " style="float: right;">
+                    Total : {{ this.totalQty() }}
+                  </button>
+                </td>
+                <td>
+                  <button class="btn bg-danger" style="float: right;">
+                    Total : {{ this.totalRejValue() | number:'1.2-2'}}
+                  </button>
+                </td>
+              </tr>
+              <tr>
                 <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px">
                   {{col.header}}
                   <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
@@ -228,7 +260,14 @@
               <tr [pSelectableRow]="rowData">
 
                 <td *ngFor="let col of columns">
-                  {{rowData[col.field]}}
+
+                  <span *ngIf="col.field=='inspectiondate'">
+                    {{rowData[col.field] | date :'dd-MM-y'}}
+                  </span>
+                  <span *ngIf="col.field !='inspectiondate'">
+                    {{rowData[col.field]}}
+                  </span>
+
                 </td>
 
               </tr>

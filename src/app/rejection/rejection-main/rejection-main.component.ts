@@ -67,6 +67,7 @@ export class RejectionMainComponent implements OnInit {
   selectedItemrej: ItemwiseRejDetail;
   selectedItemrejarray: ItemwiseRejDetail[] = [];
   filterItemrejarray: ItemwiseRejDetail[] = [];
+
   public totalRejValueSum: any;
   public totalQtySum: any;
   public plant_name: string;
@@ -131,15 +132,10 @@ export class RejectionMainComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.DPservice.itemwiserejdetaillist = res as ItemwiseRejDetail[];
-
         this.rejectpersum();
-
         this.loading = false;
       });
-
     this.rejectpersum();
-    this.rejectqtysum();
-    this.rejectvaluesum();
   }
 
   loadper(ev, dt) {
@@ -170,9 +166,6 @@ export class RejectionMainComponent implements OnInit {
       }
     }
     this.rejectpersum();
-    /* this.rejectpersum();
-     this.rejectqtysum();
-     this.rejectvaluesum();*/
   }
   refresh() { }
   ngOnInit() {
@@ -193,9 +186,10 @@ export class RejectionMainComponent implements OnInit {
       { field: "inspection_value", header: "Insp. Value" },
       { field: "okvalue", header: "Ok Value" },
       { field: "okqty", header: "Ok qty" },
-      
+
       { field: "reject_qty", header: "Reject qty" },
       { field: "rejper", header: "Rej %" },
+      { field: "reject_value", header: "Reject Value" },
 
       { field: "mouldingqty", header: "Moulding qty " },
       { field: "mouldingper", header: "Moulding %" },
@@ -272,22 +266,6 @@ export class RejectionMainComponent implements OnInit {
       });
     $("#basicExampleModal").modal("show");
   }
-  rejectqtysum() {
-    if (this.filterenable === true) {
-      this.totalRejQty = 0;
-      for (const rq of this.filterItemrejarray) {
-        const rejqty = rq.reject_qty;
-        this.totalRejQty += rejqty;
-      }
-    } else {
-      this.totalRejQty = 0;
-      for (const rq of this.DPservice.itemwiserejdetaillist) {
-        const rejqty = rq.reject_qty;
-        this.totalRejQty += rejqty;
-      }
-    }
-    return this.totalRejQty;
-  }
   rejectpersum() {
     this.totalinsValue = 0;
     this.totalokValue = 0;
@@ -311,6 +289,7 @@ export class RejectionMainComponent implements OnInit {
         const insqty = rq.inspection_qty;
         //
         this.totalRejQty += rejqty;
+        this.totalRejVal += rq.reject_value;
         this.totalinsQty += insqty;
         //
         this.totalokValue += rq.okvalue;
@@ -333,6 +312,7 @@ export class RejectionMainComponent implements OnInit {
         //
         this.totalRejQty += rejqty;
         this.totalinsQty += insqty;
+        this.totalRejVal += rq.reject_value;
         //
         this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
@@ -346,25 +326,8 @@ export class RejectionMainComponent implements OnInit {
 
       }
     }
-
-    this.totalRejPer = (this.totalRejQty / this.totalinsQty) * 100;
-    return this.totalRejPer;
-  }
-  rejectvaluesum() {
-    if (this.filterenable === true) {
-      this.totalRejVal = 0;
-      for (const rq of this.filterItemrejarray) {
-        const rejvalue = rq.reject_value;
-        this.totalRejVal += rejvalue;
-      }
-    } else {
-      this.totalRejVal = 0;
-      for (const rq of this.DPservice.itemwiserejdetaillist) {
-        const rejvalue = rq.reject_value;
-        this.totalRejVal += rejvalue;
-      }
-    }
-    return this.totalRejVal;
+    //this.totalRejPer = (this.totalRejQty / this.totalinsQty) * 100;
+    return;
   }
 
   totalQty() {

@@ -4,8 +4,8 @@ export class TopDefect {
     code: number;
     ordertype: number;
     defect: string;
-    totalqty: string;
-    rejvalue: string;
+    totalqty: number;
+    rejvalue: number;
     inspectiondate: string;
     
   }

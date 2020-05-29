@@ -66,6 +66,9 @@ export class RejectionDetailComponent implements OnInit {
   selectedItemrejarray: Itemwiserej[] = [];
   filterItemrejarray: Itemwiserej[] = [];
 
+  public plant_name: string;
+
+
   totalRejQty: number;
   totalRejPer: number;
   totalRejVal: number;
@@ -81,7 +84,8 @@ export class RejectionDetailComponent implements OnInit {
 
   totalPlantingQty: number = 0;
   totalPlantingPer: number = 0;
-
+  totalQtySum: number = 0;
+  totalRejValueSum: number = 0;
 
   iv: number;
   filterenable = false;
@@ -141,8 +145,6 @@ export class RejectionDetailComponent implements OnInit {
       });
 
     this.rejectpersum();
-    this.rejectqtysum();
-    this.rejectvaluesum();
   }
 
   loadper(ev, dt) {
@@ -163,8 +165,6 @@ export class RejectionDetailComponent implements OnInit {
       }
     }
     this.rejectpersum();
-    this.rejectqtysum();
-    this.rejectvaluesum();
   }
   refresh() {
 
@@ -181,6 +181,7 @@ export class RejectionDetailComponent implements OnInit {
     }
     this.DPservice.plantcode = '1010';
     this.plantservice.getPlantData(this.currentUser.id);
+    this.plant_name = "GDPL Vapi";
 
     this.cols = [
       // { field: 'id', header: 'ID' },
@@ -233,6 +234,8 @@ export class RejectionDetailComponent implements OnInit {
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;
+    this.selectedPlanName();
+
   }
   backtoRejection() {
     this.router.navigate(['./rejection']);
@@ -247,11 +250,11 @@ export class RejectionDetailComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant,
       this.selectedItemrej.item_type,
-     // this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
+      // this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
       //this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
       this.Fromdate,
       this.Todate,
-       this.selectedItemrej.itemcode)
+      this.selectedItemrej.itemcode)
       .toPromise()
       .then(res => {
         this.DPservice.itemtopdefectlist = res as TopDefect[];
@@ -260,24 +263,7 @@ export class RejectionDetailComponent implements OnInit {
     $('#basicExampleModal').modal('show');
 
   }
-  rejectqtysum() {
-    if (this.filterenable === true) {
-      this.totalRejQty = 0;
-      for (const rq of this.filterItemrejarray) {
-        const rejqty = rq.reject_qty;
-        this.totalRejQty += rejqty;
-      }
-    }
-    else {
 
-      this.totalRejQty = 0;
-      for (const rq of this.DPservice.itemwiserejlist) {
-        const rejqty = rq.reject_qty;
-        this.totalRejQty += rejqty;
-      }
-    }
-    return this.totalRejQty;
-  }
   rejectpersum() {
     this.totalinsValue = 0;
     this.totalokValue = 0;
@@ -289,6 +275,7 @@ export class RejectionDetailComponent implements OnInit {
     this.totalPlantingPer = 0;
     this.totalPlantingQty = 0;
 
+    this.totalRejVal = 0;
 
     if (this.filterenable === true) {
       this.totalRejQty = 0;
@@ -301,6 +288,8 @@ export class RejectionDetailComponent implements OnInit {
         //
         this.totalRejQty += rejqty;
         this.totalinsQty += insqty;
+        this.totalRejVal += rq.reject_value;
+
         //
         this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
@@ -325,6 +314,8 @@ export class RejectionDetailComponent implements OnInit {
         this.totalRejQty += rejqty;
         this.totalinsQty += insqty;
         //
+        this.totalRejVal += rq.reject_value;
+
         this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
         this.totalinsValue += rq.inspection_value;
@@ -336,26 +327,41 @@ export class RejectionDetailComponent implements OnInit {
         this.totalPlantingQty += rq.platingqty;
       }
     }
-
     //  this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
     return this.totalRejPer;
   }
-  rejectvaluesum() {
-    if (this.filterenable === true) {
-      this.totalRejVal = 0;
-      for (const rq of this.filterItemrejarray) {
-        const rejvalue = rq.reject_value;
-        this.totalRejVal += rejvalue;
-      }
-    }
-    else {
 
-      this.totalRejVal = 0;
-      for (const rq of this.DPservice.itemwiserejlist) {
-        const rejvalue = rq.reject_value;
-        this.totalRejVal += rejvalue;
+
+  totalQty() {
+    this.totalQtySum = 0;
+    if (this.DPservice && this.DPservice.itemtopdefectlist) {
+      for (const rq of this.DPservice.itemtopdefectlist) {
+        this.totalQtySum += rq.totalqty;
       }
     }
-    return this.totalRejVal;
+    return this.totalQtySum;
+  }
+  totalRejValue() {
+    this.totalRejValueSum = 0;
+    if (this.DPservice && this.DPservice.itemtopdefectlist) {
+      for (const rq of this.DPservice.itemtopdefectlist) {
+        this.totalRejValueSum += rq.rejvalue;
+      }
+    }
+    return this.totalRejValueSum;
+  }
+
+  
+
+  selectedPlanName() {
+    const me = this;
+    if (this.plantservice && this.plantservice.plantlist && me.selectedPlant) {
+      this.plantservice.plantlist.forEach(function (element, i) {
+        if (element.plantcode == me.selectedPlant) {
+          me.plant_name = element.plantshortname;
+        }
+      });
+    }
+    // return this.selected_plantname;
   }
 }

@@ -129,9 +129,9 @@ li.breadcrumb-item {
 
 @media (min-width: 1200px){
   .modal-xl {
-      max-width: 1240px;
-      margin: 1.25rem auto;
-  }
+    max-width: 1300px !important;
+    margin: 1.25rem auto;
+}
 
 }
 .mostly-customized-scrollbar::-webkit-scrollbar {

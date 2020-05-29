@@ -157,10 +157,10 @@
 
           </div>
           <div class="modal-body">
-            <div style="overflow-y: scroll; height: 350px;">
+            <div style="overflow-y: scroll; height: 450px;">
               <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-                [value]="dpservice.purchasedetail" [paginator]="false" [rows]="5" [responsive]="true">
+                [value]="dpservice.purchasedetail" [paginator]="false" [rows]="15" [responsive]="true">
 
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->

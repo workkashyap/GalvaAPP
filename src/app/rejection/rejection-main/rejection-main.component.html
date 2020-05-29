@@ -96,7 +96,7 @@
         selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
         [value]="DPservice.itemwiserejdetaillist" [paginator]="true" [rows]="20" [resizableColumns]="true"
         (onRowSelect)="onRowSelect($event)">
-      
+
         <ng-template pTemplate="header" let-columns>
           <tr>
             <td colspan="2">
@@ -112,38 +112,42 @@
             <td colspan="3"></td>
             <td>
               <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
-               {{ totalinsQty | number:'1.2-2'}}
+                {{ totalinsQty | number:'1.2-2'}}
               </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">
-               {{ totalinsValue | number:'1.2-2'}}
+                {{ totalinsValue | number:'1.2-2'}}
               </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-primary mb-2" style="float: right;">
-               {{ totalokValue | number:'1.2-2'}}
+                {{ totalokValue | number:'1.2-2'}}
               </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-dark mb-2" style="float: right;">
-               {{ totalokqtyValue | number:'1.2-2'}}
+                {{ totalokqtyValue | number:'1.2-2'}}
               </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-warning mb-2" style="float: right;">
-               {{ totalRejQty | number:'1.2-2'}}
+                {{ totalRejQty | number:'1.2-2'}}
               </button>
             </td>
             <td>
-             <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+              <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
                 Total% : {{ totalRejPer | number:'1.2-2'}} 
               </button>-->
             </td>
-
+            <td>
+              <button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+                {{ totalRejVal | number:'1.2-2'}}
+              </button>
+            </td>
             <td>
               <button class="btn btn-sm  text-dark bg-moulded mb-2" style="float: right;">
-               {{ totalMouldedQty | number:'1.2-2'}} 
+                {{ totalMouldedQty | number:'1.2-2'}}
               </button>
             </td>
             <td>
@@ -154,14 +158,14 @@
 
             <td>
               <button class="btn btn-sm  text-dark bg-capital mb-2" style="float: right;">
-               {{ totalPlantingQty | number:'1.2-2'}} 
+                {{ totalPlantingQty | number:'1.2-2'}}
               </button>
             </td>
 
             <td>
-             <!--<button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
+              <!--<button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
                 Total% : {{ totalPlantingPer | number:'1.2-2'}} 
-              </button>--> 
+              </button>-->
             </td>
 
           </tr>
@@ -197,7 +201,7 @@
       <div class="modal-header">
         <div class="row col-md-11">
           <div class="col-md-6">
-            <h5>Defects</h5>
+            <h3>Defects</h3>
           </div>
           <div class="col-md-5">
             <h4>{{plant_name }}</h4>
@@ -211,7 +215,7 @@
         <div style="overflow-y: scroll; height: 300px;">
           <p-table #dtdefect [columns]="subcols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
             [responsive]="true" selectionMode="single" [style]="{'width':'100%'}" [value]="DPservice.itemtopdefectlist"
-            [paginator]="false" [rows]="5">
+            [paginator]="false" [rows]="15">
             <ng-template pTemplate="caption">
               <!--<div style="text-align: right">
                 <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
