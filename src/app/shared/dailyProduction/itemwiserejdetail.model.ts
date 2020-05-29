@@ -16,5 +16,11 @@ export class ItemwiseRejDetail {
     rejper: number;
     // tslint:disable-next-line: variable-name
     reject_value: number;
+    okvalue:number;
+    okqty:number;
+    mouldingqty:number;
+    mouldingper:number;
+    platingper:number;
+    platingqty:number;
   }
   

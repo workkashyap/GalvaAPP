@@ -22,7 +22,7 @@
                 <div class="col-md-2 ">
                   <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
                     <i class="fa fa-file-excel-o"></i> Export</button>
-                    &nbsp;
+                  &nbsp;
                   <Button (click)="backtoRejection()" class="btn btn-primary btn-sm "> <i
                       class="fa fa-chevron-left"></i> Back</Button>
                 </div>
@@ -95,10 +95,11 @@
         selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
         [value]="DPservice.itemwiserejlist" [paginator]="true" [rows]="20" [resizableColumns]="true"
         (onRowSelect)="onRowSelect($event)">
-        <ng-template pTemplate="caption"> 
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="input-group col-sm-5 no-padding mb-2">
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <td colspan="2">
+              <div class="input-group  mb-2">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="loadper($event.target.value , dt)"
                   (input)="dt.filterGlobal($event.target.value, 'contains')">
@@ -106,34 +107,68 @@
                   <i class="fa fa-search input-group-text"></i>
                 </div>
               </div>
-            </div>
-            <!--<div class="h6 col-sm-2 p-1 text-dark bg-warning   text-align: center">
-              Total: {{ this.rejectqtysum() }}
-            </div>
-            <div class="h6 col-sm-1 p-1 text-dark bg-danger  text-align: center">
-              Total %: {{ this.rejectpersum() | number:'1.2-2'   }}
-            </div>
-            <div class="h6 col-sm-2 p-1 text-dark bg-info  text-align: center">
-              Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }}
-            </div>-->
-            <div class=" col-sm-2 custom-col-2 mb-2">
-              <div class="card text-dark bg-warning no-margin">
-                <div class="card-body set-padding">Total Qty: {{ this.rejectqtysum() }}</div>
-              </div>
-            </div>
-            <div class=" col-sm-2 custom-col-2 mb-2">
-              <div class="card  text-dark bg-danger no-margin">
-                <div class="card-body set-padding">Total %: {{ this.rejectpersum() | number:'1.2-2'   }}</div>
-              </div>
-            </div>
-            <div class=" col-sm-2 custom-col-2 mb-2">
-              <div class="card text-dark bg-info no-margin">
-                <div class="card-body set-padding" >Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }} </div>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
+            </td>
+            <td></td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
+                Total :<br> {{ totalinsQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">
+                Total :<br> {{ totalinsValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-primary mb-2" style="float: right;">
+                Total :<br> {{ totalokValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-dark mb-2" style="float: right;">
+                Total :<br> {{ totalokqtyValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-warning mb-2" style="float: right;">
+                Total :<br>{{ totalRejQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+                Total% : {{ totalRejPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
+            <td>
+              <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+                Total% : {{ totalRejPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
+
+            <td>
+              <button class="btn btn-sm  text-dark bg-moulded mb-2" style="float: right;">
+                Total :<br> {{ totalMouldedQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <!--<button class="btn btn-sm  text-dark bg-action-plan mb-2" style="float: right;">
+                Total% : {{ totalMouldedPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
+
+            <td>
+              <button class="btn btn-sm  text-dark bg-capital mb-2" style="float: right;">
+                Total :<br> {{ totalPlantingQty | number:'1.2-2'}}
+              </button>
+            </td>
+
+            <td>
+              <!--<button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
+                Total% : {{ totalPlantingPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
+
+          </tr>
           <tr>
 
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>

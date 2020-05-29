@@ -1,6 +1,6 @@
 export class Itemwiserej {
   id: number;
-  //  pstngdate: string;
+    pstngdate: string;
   plant: number;
   // tslint:disable-next-line: variable-name
   item_type: string;
@@ -22,4 +22,9 @@ export class Itemwiserej {
   buffingqty:number;
   okqty:number;
   okper:number;
+
+  mouldingqty:number;
+  mouldingper:number;
+  platingper:number;
+  platingqty:number;
 }

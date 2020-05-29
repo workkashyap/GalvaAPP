@@ -96,10 +96,11 @@
         selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
         [value]="DPservice.itemwiserejdetaillist" [paginator]="true" [rows]="20" [resizableColumns]="true"
         (onRowSelect)="onRowSelect($event)">
-        <ng-template pTemplate="caption">
-          <div class="row">
-            <div class="col-sm-7">
-              <div class="input-group col-sm-5 no-padding mb-2">
+      
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <td colspan="2">
+              <div class="input-group no-padding mb-2">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="loadper($event.target.value , dt)"
                   (input)="dt.filterGlobal($event.target.value, 'contains')">
@@ -107,41 +108,63 @@
                   <i class="fa fa-search input-group-text"></i>
                 </div>
               </div>
-            </div>
+            </td>
+            <td colspan="3"></td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">
+                Total :<br> {{ totalinsQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">
+                Total :<br> {{ totalinsValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-primary mb-2" style="float: right;">
+                Total :<br> {{ totalokValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-dark mb-2" style="float: right;">
+                Total :<br> {{ totalokqtyValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-warning mb-2" style="float: right;">
+                Total :<br> {{ totalRejQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+             <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
+                Total% : {{ totalRejPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
 
-            <!--<div class="h6 col-sm-2 p-1 text-dark bg-warning  card text-align: center">
-                    
-                </div>
-                <div class="h6 col-sm-1 p-1 text-dark bg-danger  card text-align: center">
-                  
-              </div>
-              <div class="h6 col-sm-2 p-1 text-dark bg-info card  text-align: center">
-                
-            </div>-->
-            <div class="col-md-5">
-              <div class="row">
-                <div class="col-sm-4 custom-col-2 mb-2" >
-                  <div class="card text-dark bg-warning no-margin">
-                    <div class="card-body set-padding">Total Qty: {{ this.rejectqtysum() }} </div>
-                  </div>
-                </div>
-                <div class="col-sm-4 custom-col-2 mb-2">
-                  <div class="card  text-dark bg-danger no-margin">
-                    <div class="card-body set-padding">Total Rej %: {{ this.rejectpersum() | number:'1.2-2'   }} 
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-4 custom-col-2 mb-2">
-                  <div class="card text-dark bg-info no-margin ">
-                    <div class="card-body set-padding">Total Val: {{ this.rejectvaluesum() | number:'1.2-2' }} 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
+            <td>
+              <button class="btn btn-sm  text-dark bg-moulded mb-2" style="float: right;">
+                Total :<br> {{ totalMouldedQty | number:'1.2-2'}} 
+              </button>
+            </td>
+            <td>
+              <!--<button class="btn btn-sm  text-dark bg-action-plan mb-2" style="float: right;">
+                Total% : {{ totalMouldedPer | number:'1.2-2'}} 
+              </button>-->
+            </td>
+
+            <td>
+              <button class="btn btn-sm  text-dark bg-capital mb-2" style="float: right;">
+                Total :<br> {{ totalPlantingQty | number:'1.2-2'}} 
+              </button>
+            </td>
+
+            <td>
+             <!--<button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
+                Total% : {{ totalPlantingPer | number:'1.2-2'}} 
+              </button>--> 
+            </td>
+
+          </tr>
           <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
               {{col.header}}
@@ -182,7 +205,7 @@
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button> 
+        </button>
       </div>
       <div class="modal-body">
         <div style="overflow-y: scroll; height: 300px;">
@@ -207,15 +230,15 @@
                 </div>
                 <div class="col-md-5">
                   <div class="row">
-                    <div class="col-sm-6 custom-col-2-n" >
+                    <div class="col-sm-6 custom-col-2-n">
                       <div class="card text-dark bg-warning no-margin">
                         <div class="card-body set-padding">Total Qty:
-                          {{ this.totalQty() }}  </div>
+                          {{ this.totalQty() }} </div>
                       </div>
                     </div>
                     <div class="col-sm-6 custom-col-2-n">
                       <div class="card  text-dark bg-danger no-margin">
-                        <div class="card-body set-padding">Total Rej.: {{ this.totalRejValue() | number:'1.2-2'}} 
+                        <div class="card-body set-padding">Total Rej.: {{ this.totalRejValue() | number:'1.2-2'}}
                         </div>
                       </div>
                     </div>

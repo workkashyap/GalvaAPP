@@ -49,6 +49,11 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#673AB7,#B39DDB);
 }
+.bg-planting-per {
+	border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#5D4037,#fe909d);
+}
 .bg-success{
     border: unset; 
     background: linear-gradient(to right,#0ac282,#0df3a3) !important;

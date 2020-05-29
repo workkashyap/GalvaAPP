@@ -65,11 +65,24 @@ export class RejectionDetailComponent implements OnInit {
   selectedItemrej: Itemwiserej;
   selectedItemrejarray: Itemwiserej[] = [];
   filterItemrejarray: Itemwiserej[] = [];
- 
+
   totalRejQty: number;
-  totalinsQty: number;
   totalRejPer: number;
   totalRejVal: number;
+
+  totalinsQty: number;
+  totalinsValue: number = 0;
+
+  totalokValue: number = 0;
+  totalokqtyValue: number = 0;
+
+  totalMouldedQty: number = 0;
+  totalMouldedPer: number = 0;
+
+  totalPlantingQty: number = 0;
+  totalPlantingPer: number = 0;
+
+
   iv: number;
   filterenable = false;
   constructor(
@@ -86,63 +99,62 @@ export class RejectionDetailComponent implements OnInit {
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.selectedtype ="zcrm";
+    this.selectedtype = "zcrm";
   }
   onselecttype(ev) {
-     this.selectedtype = ev;
+    this.selectedtype = ev;
   }
-//   exportExcel(dt) {
-//     console.log(dt.data);
-//     import('xlsx').then(xlsx => {
-//         const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
-//         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-//         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-//         this.saveAsExcelFile(excelBuffer, 'DetailComponents');
-//     });
-// }
-// saveAsExcelFile(buffer: any, fileName: string): void {
-//   import('file-saver').then(FileSaver => {
-//       const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-//       const EXCEL_EXTENSION = '.xlsx';
-//       const data: Blob = new Blob([buffer], {
-//           type: EXCEL_TYPE
-//       });
-//       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-//   });
-// }
+  //   exportExcel(dt) {
+  //     console.log(dt.data);
+  //     import('xlsx').then(xlsx => {
+  //         const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
+  //         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+  //         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+  //         this.saveAsExcelFile(excelBuffer, 'DetailComponents');
+  //     });
+  // }
+  // saveAsExcelFile(buffer: any, fileName: string): void {
+  //   import('file-saver').then(FileSaver => {
+  //       const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  //       const EXCEL_EXTENSION = '.xlsx';
+  //       const data: Blob = new Blob([buffer], {
+  //           type: EXCEL_TYPE
+  //       });
+  //       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  //   });
+  // }
   onviewDetail() {
     this.filterenable = false;
     this.loading = true;
+    this.DPservice.itemwiserejlist = [];
     if (this.selectedtype !== '') {
       this.selectedtype = this.selectedtype;
 
     } else {
       this.selectedtype = 'NULL';
     }
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, this.selectedtype , this.Fromdate, this.Todate)
-        .toPromise()
-        .then(res => {
-          this.DPservice.itemwiserejlist = res as Itemwiserej[];
-          this.loading = false;
-        });
- 
+    this.DPservice.getRejectdetail(this.DPservice.plantcode, this.selectedtype, this.Fromdate, this.Todate)
+      .toPromise()
+      .then(res => {
+        this.DPservice.itemwiserejlist = res as Itemwiserej[];
+        this.loading = false;
+      });
+
     this.rejectpersum();
     this.rejectqtysum();
     this.rejectvaluesum();
   }
-  
-  loadper(ev , dt) {
+
+  loadper(ev, dt) {
     this.filterenable = true;
     this.selectedItemrejarray = dt.value;
     this.iv = 0;
     this.filterItemrejarray = [];
     // console.log(this.selectedItemrejarray[0].id);
-    for (const c of this.selectedItemrejarray)
-    {
-      if (c.itemcode.toString().includes(ev.toString())  || c.itemname.toString().includes(ev.toString()) 
-      ||   c.item_type.toString().includes(ev.toString()
-      || c.plant.toString().includes(ev.toString()) ||  c.id.toString().includes(ev.toString())))
-      {
+    for (const c of this.selectedItemrejarray) {
+      if (c.itemcode.toString().includes(ev.toString()) || c.itemname.toString().includes(ev.toString())
+        || c.item_type.toString().includes(ev.toString()
+          || c.plant.toString().includes(ev.toString()) || c.id.toString().includes(ev.toString()))) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;
       }
@@ -155,30 +167,43 @@ export class RejectionDetailComponent implements OnInit {
     this.rejectvaluesum();
   }
   refresh() {
-    
+
   }
   ngOnInit() {
     if (!this.DPservice.date) {
-     console.log(this.DPservice.date); 
-     this.Fromdate = this.cDate;
-     this.Todate =  this.cDate;
+      console.log(this.DPservice.date);
+      this.Fromdate = this.cDate;
+      this.Todate = this.cDate;
     }
     else {
       this.Fromdate = this.DPservice.date.replace('T00:00:00', '');
-      this.Todate =  this.DPservice.date.replace('T00:00:00', '');
+      this.Todate = this.DPservice.date.replace('T00:00:00', '');
     }
+    this.DPservice.plantcode = '1010';
     this.plantservice.getPlantData(this.currentUser.id);
 
     this.cols = [
-     // { field: 'id', header: 'ID' },
-   //   { field: 'pstngdate', header: 'Posting Date' },
+      // { field: 'id', header: 'ID' },
+      //   { field: 'pstngdate', header: 'Posting Date' },
       { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
+
+      { field: "inspection_qty", header: "Insp. qty" },
+      { field: "inspection_value", header: "Insp. Value" },
+      { field: "okvalue", header: "Ok Value" },
+      { field: "okqty", header: "Ok qty" },
+
       { field: 'reject_qty', header: 'Reject qty' },
       { field: 'rejper', header: 'Rej %' },
       { field: 'reject_value', header: 'Reject Value' },
-  ];
+
+
+      { field: "mouldingqty", header: "Moulding qty " },
+      { field: "mouldingper", header: "Moulding %" },
+      { field: "platingqty", header: "Plating qty" },
+      { field: "platingper", header: "Plating %" },
+    ];
 
     this.subcols = [
       { field: 'id', header: 'ID' },
@@ -187,17 +212,18 @@ export class RejectionDetailComponent implements OnInit {
       { field: 'defect', header: 'Defect' },
       { field: 'totalqty', header: 'Total Qty' },
       { field: 'rejvalue', header: 'Reject Value' },
-  ];
+    ];
 
     this.loading = true;
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, 'NULL' , this.Fromdate, this.Todate)
-        .toPromise()
-        .then(res => {
-          this.DPservice.itemwiserejlist = res as Itemwiserej[];
-          this.loading = false;
-        });
+    this.DPservice.getRejectdetail(this.DPservice.plantcode, 'NULL', this.Fromdate, this.Todate)
+      .toPromise()
+      .then(res => {
+        this.DPservice.itemwiserejlist = res as Itemwiserej[];
+        this.rejectpersum();
+        this.loading = false;
+      });
     this.loading = true;
-        // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:max-line-length
     // this.DPservice.getRejectdefectdetail(this.DPservice.plantcode, 'CHROME' , this.Fromdate, this.Todate, '91000149')
     //       .toPromise()
     //       .then(res => {
@@ -216,82 +242,120 @@ export class RejectionDetailComponent implements OnInit {
   }
 
   onRowSelect(ev) {
-    // this.selectedItemrej = ev.data;
-    // this.loading = true;
-    // // tslint:disable-next-line:max-line-length
-    // this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant, this.selectedItemrej.item_type , this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.pstngdate.replace('T00:00:00', ''), this.selectedItemrej.itemcode)
-    //   .toPromise()
-    //   .then(res => {
-    //     this.DPservice.itemtopdefectlist = res as TopDefect[];
-    //     this.loading = false;
-    //   });
-    // $('#basicExampleModal').modal('show');
+    this.selectedItemrej = ev.data;
+    this.loading = true;
+    // tslint:disable-next-line:max-line-length
+    this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant,
+      this.selectedItemrej.item_type,
+     // this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
+      //this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
+      this.Fromdate,
+      this.Todate,
+       this.selectedItemrej.itemcode)
+      .toPromise()
+      .then(res => {
+        this.DPservice.itemtopdefectlist = res as TopDefect[];
+        this.loading = false;
+      });
+    $('#basicExampleModal').modal('show');
 
   }
   rejectqtysum() {
-      if (this.filterenable === true)
-      {
-          this.totalRejQty = 0;
-          for (const rq of this.filterItemrejarray) {
-          const rejqty =  rq.reject_qty;
-          this.totalRejQty +=  rejqty;
-        }
+    if (this.filterenable === true) {
+      this.totalRejQty = 0;
+      for (const rq of this.filterItemrejarray) {
+        const rejqty = rq.reject_qty;
+        this.totalRejQty += rejqty;
       }
-      else {
+    }
+    else {
 
-        this.totalRejQty = 0;
-        for (const rq of this.DPservice.itemwiserejlist) {
-        const rejqty =  rq.reject_qty;
-        this.totalRejQty +=  rejqty;
-        }
+      this.totalRejQty = 0;
+      for (const rq of this.DPservice.itemwiserejlist) {
+        const rejqty = rq.reject_qty;
+        this.totalRejQty += rejqty;
       }
-      return this.totalRejQty;
+    }
+    return this.totalRejQty;
   }
   rejectpersum() {
-    if (this.filterenable === true)
-    {
-        this.totalRejQty = 0;
-        this.totalinsQty = 0;
-        this.totalRejPer = 0;
-        for (const rq of this.filterItemrejarray) {
-          const rejqty =  rq.reject_qty;
-          const insqty = rq.inspection_qty;
-          this.totalRejQty +=  rejqty;
-          this.totalinsQty += insqty;
-        }
+    this.totalinsValue = 0;
+    this.totalokValue = 0;
+    this.totalokqtyValue = 0;
+
+    this.totalMouldedQty = 0;
+    this.totalMouldedPer = 0;
+
+    this.totalPlantingPer = 0;
+    this.totalPlantingQty = 0;
+
+
+    if (this.filterenable === true) {
+      this.totalRejQty = 0;
+      this.totalinsQty = 0;
+      this.totalRejPer = 0;
+      for (const rq of this.filterItemrejarray) {
+
+        const rejqty = rq.reject_qty;
+        const insqty = rq.inspection_qty;
+        //
+        this.totalRejQty += rejqty;
+        this.totalinsQty += insqty;
+        //
+        this.totalokValue += rq.okvalue;
+        this.totalokqtyValue += rq.okqty;
+        this.totalinsValue += rq.inspection_value;
+
+        this.totalMouldedQty += rq.mouldingqty;
+        this.totalMouldedPer += rq.mouldingper;
+
+        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingQty += rq.platingqty;
+
+      }
     }
     else {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
       this.totalRejPer = 0;
       for (const rq of this.DPservice.itemwiserejlist) {
-          const rejqty =  rq.reject_qty;
-          const insqty = rq.inspection_qty;
-          this.totalRejQty +=  rejqty;
-          this.totalinsQty += insqty;
-        }
+        const rejqty = rq.reject_qty;
+        const insqty = rq.inspection_qty;
+        //
+        this.totalRejQty += rejqty;
+        this.totalinsQty += insqty;
+        //
+        this.totalokValue += rq.okvalue;
+        this.totalokqtyValue += rq.okqty;
+        this.totalinsValue += rq.inspection_value;
+
+        this.totalMouldedQty += rq.mouldingqty;
+        this.totalMouldedPer += rq.mouldingper;
+
+        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingQty += rq.platingqty;
+      }
     }
-  
-    this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
+
+    //  this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
     return this.totalRejPer;
-}
-rejectvaluesum() {
-  if (this.filterenable === true)
-  {
+  }
+  rejectvaluesum() {
+    if (this.filterenable === true) {
       this.totalRejVal = 0;
       for (const rq of this.filterItemrejarray) {
-        const rejvalue =  rq.reject_value;
-        this.totalRejVal +=  rejvalue;
+        const rejvalue = rq.reject_value;
+        this.totalRejVal += rejvalue;
+      }
     }
-  }
-  else {
+    else {
 
-    this.totalRejVal = 0;
-    for (const rq of this.DPservice.itemwiserejlist) {
-        const rejvalue =  rq.reject_value;
-        this.totalRejVal +=  rejvalue;
+      this.totalRejVal = 0;
+      for (const rq of this.DPservice.itemwiserejlist) {
+        const rejvalue = rq.reject_value;
+        this.totalRejVal += rejvalue;
+      }
     }
+    return this.totalRejVal;
   }
-  return this.totalRejVal;
-}
 }

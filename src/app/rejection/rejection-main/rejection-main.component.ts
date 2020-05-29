@@ -70,12 +70,25 @@ export class RejectionMainComponent implements OnInit {
   public totalRejValueSum: any;
   public totalQtySum: any;
   public plant_name: string;
-  totalRejQty: number;
-  totalinsQty: number;
-  totalRejPer: number;
-  totalRejVal: number;
+
+  totalRejQty: number = 0;
+  totalRejPer: number = 0;
+  totalRejVal: number = 0;
+
+  totalinsQty: number = 0;
+  totalinsValue: number = 0;
+
+  totalokValue: number = 0;
+  totalokqtyValue: number = 0;
+
+  totalMouldedQty: number = 0;
+  totalMouldedPer: number = 0;
+
+  totalPlantingQty: number = 0;
+  totalPlantingPer: number = 0;
+
   iv: number;
-  filterenable = false;
+  filterenable: boolean = false;
   constructor(
     public acservice: ActionplanService,
     private toastr: ToastrService,
@@ -97,6 +110,8 @@ export class RejectionMainComponent implements OnInit {
   }
 
   onviewDetail() {
+
+
     this.filterenable = false;
     this.loading = true;
     if (this.selectedtype !== "") {
@@ -104,6 +119,9 @@ export class RejectionMainComponent implements OnInit {
     } else {
       this.selectedtype = "NULL";
     }
+
+    this.DPservice.itemwiserejdetaillist = []
+
     this.DPservice.getRejectmaindetail(
       this.selectedPlant,
       this.selectedtype,
@@ -113,6 +131,9 @@ export class RejectionMainComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.DPservice.itemwiserejdetaillist = res as ItemwiseRejDetail[];
+
+        this.rejectpersum();
+
         this.loading = false;
       });
 
@@ -126,6 +147,7 @@ export class RejectionMainComponent implements OnInit {
     this.selectedItemrejarray = dt.value;
     this.iv = 0;
     this.filterItemrejarray = [];
+
     // console.log(this.selectedItemrejarray[0].id);
     for (const c of this.selectedItemrejarray) {
       if (
@@ -136,21 +158,23 @@ export class RejectionMainComponent implements OnInit {
           .toString()
           .includes(
             ev.toString() ||
-              c.plant.toString().includes(ev.toString()) ||
-              c.id.toString().includes(ev.toString())
+            c.plant.toString().includes(ev.toString()) ||
+            c.id.toString().includes(ev.toString())
           )
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
+
         this.iv += 1;
       } else {
         this.iv += 1;
       }
     }
     this.rejectpersum();
-    this.rejectqtysum();
-    this.rejectvaluesum();
+    /* this.rejectpersum();
+     this.rejectqtysum();
+     this.rejectvaluesum();*/
   }
-  refresh() {}
+  refresh() { }
   ngOnInit() {
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
@@ -161,13 +185,22 @@ export class RejectionMainComponent implements OnInit {
     this.cols = [
       //  { field: 'id', header: 'ID' },
       { field: "pstngdate", header: "Posting Date" },
-      { field: "insplot", header: "insplot" },
+      { field: "insplot", header: "Insplot" },
       { field: "item_type", header: "Type" },
       { field: "itemcode", header: "Code" },
       { field: "itemname", header: "Name" },
+      { field: "inspection_qty", header: "Insp. qty" },
+      { field: "inspection_value", header: "Insp. Value" },
+      { field: "okvalue", header: "Ok Value" },
+      { field: "okqty", header: "Ok qty" },
+      
       { field: "reject_qty", header: "Reject qty" },
       { field: "rejper", header: "Rej %" },
-      { field: "reject_value", header: "Reject Value" }
+
+      { field: "mouldingqty", header: "Moulding qty " },
+      { field: "mouldingper", header: "Moulding %" },
+      { field: "platingqty", header: "Plating qty" },
+      { field: "platingper", header: "Plating %" },
     ];
 
     this.subcols = [
@@ -189,6 +222,8 @@ export class RejectionMainComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.DPservice.itemwiserejdetaillist = res as ItemwiseRejDetail[];
+        this.rejectpersum();
+
         this.loading = false;
       });
     this.loading = true;
@@ -203,6 +238,7 @@ export class RejectionMainComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.DPservice.itemtopdefectlist = res as TopDefect[];
+
         this.loading = false;
       });
   }
@@ -253,15 +289,39 @@ export class RejectionMainComponent implements OnInit {
     return this.totalRejQty;
   }
   rejectpersum() {
-    if (this.filterenable === true) {
+    this.totalinsValue = 0;
+    this.totalokValue = 0;
+    this.totalokqtyValue = 0;
+
+    this.totalMouldedQty = 0;
+    this.totalMouldedPer = 0;
+
+    this.totalPlantingPer = 0;
+    this.totalPlantingQty = 0;
+
+    if (this.filterenable == true) {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
       this.totalRejPer = 0;
+      console.log("filterenable", this.filterenable);
+      console.log("filterItemrejarray : ", this.filterItemrejarray);
       for (const rq of this.filterItemrejarray) {
+
         const rejqty = rq.reject_qty;
         const insqty = rq.inspection_qty;
+        //
         this.totalRejQty += rejqty;
         this.totalinsQty += insqty;
+        //
+        this.totalokValue += rq.okvalue;
+        this.totalokqtyValue += rq.okqty;
+        this.totalinsValue += rq.inspection_value;
+
+        this.totalMouldedQty += rq.mouldingqty;
+        this.totalMouldedPer += rq.mouldingper;
+
+        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingQty += rq.platingqty;
       }
     } else {
       this.totalRejQty = 0;
@@ -270,8 +330,20 @@ export class RejectionMainComponent implements OnInit {
       for (const rq of this.DPservice.itemwiserejdetaillist) {
         const rejqty = rq.reject_qty;
         const insqty = rq.inspection_qty;
+        //
         this.totalRejQty += rejqty;
         this.totalinsQty += insqty;
+        //
+        this.totalokValue += rq.okvalue;
+        this.totalokqtyValue += rq.okqty;
+        this.totalinsValue += rq.inspection_value;
+
+        this.totalMouldedQty += rq.mouldingqty;
+        this.totalMouldedPer += rq.mouldingper;
+
+        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingQty += rq.platingqty;
+
       }
     }
 
@@ -317,7 +389,7 @@ export class RejectionMainComponent implements OnInit {
   selectedPlanName() {
     const me = this;
     if (this.plantservice && this.plantservice.plantlist && me.selectedPlant) {
-      this.plantservice.plantlist.forEach(function(element, i) {
+      this.plantservice.plantlist.forEach(function (element, i) {
         if (element.plantcode == me.selectedPlant) {
           me.plant_name = element.plantshortname;
         }
