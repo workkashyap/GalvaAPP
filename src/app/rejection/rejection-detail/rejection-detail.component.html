@@ -151,9 +151,9 @@
               </button>
             </td>
             <td>
-              <!--<button class="btn btn-sm  text-dark bg-action-plan mb-2" style="float: right;">
-                Total% : {{ totalMouldedPer | number:'1.2-2'}} 
-              </button>-->
+              <button class="btn btn-sm  text-dark bg-action-plan mb-2" style="float: right;">
+                {{ totalMouldedVal | number:'1.2-2'}}
+              </button>
             </td>
 
             <td>
@@ -163,9 +163,9 @@
             </td>
 
             <td>
-              <!--<button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
-                Total% : {{ totalPlantingPer | number:'1.2-2'}} 
-              </button>-->
+              <button class="btn btn-sm  text-dark bg-planting-per mb-2" style="float: right;">
+                {{ totalPlantingVal | number:'1.2-2'}}
+              </button>
             </td>
 
           </tr>
@@ -196,7 +196,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-       
+
         <div class="row col-md-11">
           <div class="col-md-6">
             <h3>Defects</h3>
@@ -205,7 +205,7 @@
             <h4>{{plant_name }}</h4>
           </div>
         </div>
-        
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -235,7 +235,6 @@
                 </td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td>
                   <button class="btn bg-warning " style="float: right;">
                     Total : {{ this.totalQty() }}
@@ -260,14 +259,7 @@
               <tr [pSelectableRow]="rowData">
 
                 <td *ngFor="let col of columns">
-
-                  <span *ngIf="col.field=='inspectiondate'">
-                    {{rowData[col.field] | date :'dd-MM-y'}}
-                  </span>
-                  <span *ngIf="col.field !='inspectiondate'">
                     {{rowData[col.field]}}
-                  </span>
-
                 </td>
 
               </tr>

@@ -84,9 +84,12 @@ export class RejectionMainComponent implements OnInit {
 
   totalMouldedQty: number = 0;
   totalMouldedPer: number = 0;
+  totalMouldedVal: number = 0;
 
   totalPlantingQty: number = 0;
   totalPlantingPer: number = 0;
+
+  totalPlantingVal: number = 0;
 
   iv: number;
   filterenable: boolean = false;
@@ -192,9 +195,9 @@ export class RejectionMainComponent implements OnInit {
       { field: "reject_value", header: "Reject Value" },
 
       { field: "mouldingqty", header: "Moulding qty " },
-      { field: "mouldingper", header: "Moulding %" },
+      { field: "moulding_value", header: "Moulding Val" },
       { field: "platingqty", header: "Plating qty" },
-      { field: "platingper", header: "Plating %" },
+      { field: "plating_value", header: "Plating val" },
     ];
 
     this.subcols = [
@@ -277,6 +280,9 @@ export class RejectionMainComponent implements OnInit {
     this.totalPlantingPer = 0;
     this.totalPlantingQty = 0;
 
+    this.totalMouldedVal = 0;
+    this.totalPlantingVal = 0;
+
     if (this.filterenable == true) {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
@@ -298,9 +304,12 @@ export class RejectionMainComponent implements OnInit {
 
         this.totalMouldedQty += rq.mouldingqty;
         this.totalMouldedPer += rq.mouldingper;
-
-        this.totalPlantingPer += rq.mouldingper;
+        
+        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
+        
+        this.totalMouldedVal += rq.moulding_value;
+        this.totalPlantingVal += rq.plating_value;
       }
     } else {
       this.totalRejQty = 0;
@@ -321,8 +330,12 @@ export class RejectionMainComponent implements OnInit {
         this.totalMouldedQty += rq.mouldingqty;
         this.totalMouldedPer += rq.mouldingper;
 
-        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
+
+        
+        this.totalMouldedVal += rq.moulding_value;
+        this.totalPlantingVal += rq.plating_value;
 
       }
     }

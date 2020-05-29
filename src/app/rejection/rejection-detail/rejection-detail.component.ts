@@ -81,9 +81,12 @@ export class RejectionDetailComponent implements OnInit {
 
   totalMouldedQty: number = 0;
   totalMouldedPer: number = 0;
+  totalMouldedVal: number = 0;
 
   totalPlantingQty: number = 0;
   totalPlantingPer: number = 0;
+  totalPlantingVal: number = 0;
+
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
 
@@ -199,16 +202,15 @@ export class RejectionDetailComponent implements OnInit {
       { field: 'rejper', header: 'Rej %' },
       { field: 'reject_value', header: 'Reject Value' },
 
-
       { field: "mouldingqty", header: "Moulding qty " },
-      { field: "mouldingper", header: "Moulding %" },
+      { field: "moulding_value", header: "Moulding Val" },
       { field: "platingqty", header: "Plating qty" },
-      { field: "platingper", header: "Plating %" },
+      { field: "plating_value", header: "Plating Val" },
     ];
 
     this.subcols = [
       { field: 'id', header: 'ID' },
-      { field: 'inspectiondate', header: 'Date' },
+     // { field: 'inspectiondate', header: 'Date' },
       { field: 'ordertype', header: 'Type' },
       { field: 'defect', header: 'Defect' },
       { field: 'totalqty', header: 'Total Qty' },
@@ -247,8 +249,10 @@ export class RejectionDetailComponent implements OnInit {
   onRowSelect(ev) {
     this.selectedItemrej = ev.data;
     this.loading = true;
+    
+    this.DPservice.itemtopdefectlist = [];
     // tslint:disable-next-line:max-line-length
-    this.DPservice.getRejectdefectdetail(this.selectedItemrej.plant,
+    this.DPservice.getRejectdefectdetail2(this.selectedItemrej.plant,
       this.selectedItemrej.item_type,
       // this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
       //this.selectedItemrej.pstngdate.replace('T00:00:00', ''),
@@ -277,6 +281,9 @@ export class RejectionDetailComponent implements OnInit {
 
     this.totalRejVal = 0;
 
+    this.totalMouldedVal = 0;
+    this.totalPlantingVal = 0;
+
     if (this.filterenable === true) {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
@@ -298,8 +305,12 @@ export class RejectionDetailComponent implements OnInit {
         this.totalMouldedQty += rq.mouldingqty;
         this.totalMouldedPer += rq.mouldingper;
 
-        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
+
+        this.totalMouldedVal += rq.moulding_value;
+        this.totalPlantingVal += rq.plating_value;
+
 
       }
     }
@@ -323,8 +334,12 @@ export class RejectionDetailComponent implements OnInit {
         this.totalMouldedQty += rq.mouldingqty;
         this.totalMouldedPer += rq.mouldingper;
 
-        this.totalPlantingPer += rq.mouldingper;
+        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
+
+        
+        this.totalMouldedVal += rq.moulding_value;
+        this.totalPlantingVal += rq.plating_value;
       }
     }
     //  this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
@@ -351,7 +366,7 @@ export class RejectionDetailComponent implements OnInit {
     return this.totalRejValueSum;
   }
 
-  
+
 
   selectedPlanName() {
     const me = this;

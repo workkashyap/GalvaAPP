@@ -22,5 +22,8 @@ export class ItemwiseRejDetail {
     mouldingper:number;
     platingper:number;
     platingqty:number;
+
+    moulding_value:number;
+    plating_value:number;
   }
   

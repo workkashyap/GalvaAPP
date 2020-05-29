@@ -138,6 +138,28 @@ export class DailyproductionService {
       code
     );
   }
+  
+
+  public getRejectdefectdetail2(
+    plantcode,
+    type,
+    fromdate,
+    todate,
+    code
+  ): Observable<TopDefect[]> {
+    return this.http.get<TopDefect[]>(
+      this.rootUrl +
+      '/TopDefectscodevalue/getalldefectssum/' +
+      plantcode +
+      '/' +
+      type +
+      '/' +
+      fromdate +
+      '/' +
+      todate 
+     
+    );
+  }
 
   public getprochart(plantcode, type, month): Observable<DailyReportDisplay[]> {
     return this.http.get<DailyReportDisplay[]>(
