@@ -148,3 +148,27 @@ li.breadcrumb-item {
   flex: 0 0 19.966667%;
   max-width: 19.966667%;
 }
+a.tip {
+  text-decoration: none
+}
+a.tip:hover {
+  cursor: help;
+  position: relative
+}
+a.tip span {
+  display: none
+}
+a.tip:hover span {
+  border: 1px dotted black;
+  background-color: black;
+  color: white;
+  padding: 5px 4px 5px 5px;
+  display: block;
+  z-index: 100;
+  left: 0px;
+  margin: 10px;
+  width: 200px;
+  position: absolute;
+  top: 10px;
+  text-decoration: none;
+}

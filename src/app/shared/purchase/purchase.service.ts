@@ -70,6 +70,14 @@ export class PurchaseService {
   }
 
   //end purchase detail//
+  //purchase summary
+  
+  
+  public getNetPurchaseSummary(date): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchasecalendars/getpurchaseSummary/' + date);
+  }
+  //end purchase summary
 }
 
 

@@ -42,6 +42,8 @@
                 <div class="form-inline">
                   <div style="margin: auto;">
                     <div style="float: left;">
+                      <button class="btn btn-custom text-dark bg-summary" (click)="summary()">Summary
+                      </button>
                       <button class="btn btn-custom text-dark bg-info"
                         (click)="extraVal('getpurchasecalendarsum')">Total
                         Purchase =
@@ -219,4 +221,114 @@
       </div>
     </div>
 
+    <!--Summary Modal -->
+    <div class="modal fade bd-example-modal-xl" id="summaryModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Purchase Summary
+                  <span *ngIf="monthName">({{ monthName | date :'MMM'}})</span>
+                </h5>
+              </div>
+
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xl-2 custom-xl-2 col-md-6" *ngFor="let summaryinfo of plantservice.splantlist">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="row align-items-center">
+                      <div class="col-8">
+                        <h4 class="text-danger-1 f-w-600" [ngClass]="{'text-success': summaryinfo.totalVal >= 0 }">
+                          {{summaryinfo.totalVal  | number:'1.2-2'}}</h4>
+                        <h6 class="text-muted m-b-0">Lacs</h6>
+                      </div>
+                      <div class="col-4 text-right">
+                        <i class="feather fa fa-bar-chart f-28"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer bg-danger-1 " [ngClass]="{'bg-success':summaryinfo.totalVal >= 0 }">
+                    <div class="row align-items-center">
+                      <div class="col-9">
+                        <a class="text-white m-b-0 tip">{{ summaryinfo.plantshortname}}
+
+                          <span class="tooltiptext">
+                            Abs : {{summaryinfo.abs}}<br>
+                            Chemicals : {{summaryinfo.chemicals}}<br>
+                            Moulded : {{summaryinfo.moulded}}<br>
+                            Packing : {{summaryinfo.packing}}<br>
+                            Capital : {{summaryinfo.capital}}<br>
+                            Spares : {{summaryinfo.spares}}<br>
+                            Transport : {{summaryinfo.transport}}<br>
+                            Consumable : {{summaryinfo.consumable}}<br>
+                          </span>
+                        </a>
+                      </div>
+                      <div class="col-3 text-right">
+                        <i class="feather icon-trending-up text-white f-16"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-md-12">
+                <div class="card">
+                  <div class="card-block text-center">
+                    <h3>Total Purchase : <b class="text-danger-1"
+                        [ngClass]="{'text-success': grandPurchaseValue >= 0 }">{{ grandPurchaseValue  | number:'1.2-2' }}</b>
+                      Lacs</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn btn-custom text-dark bg-success">
+                Chemicals = <b>{{ companyChemicals | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-primary" style="width: auto;">
+                ABS = <b>{{ companyAbs | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-dark" style="width: auto;">
+                Packing = <b>{{ companyPacking | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-danger" style="width: auto;">
+                Spares = <b>{{ companySpares | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-warning" style="width: auto;">
+                Consumable = <b>{{ companyConsumable | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-action-plan" style="width: auto;">
+                Transport = <b>{{ companyTransport | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-moulded" style="width: auto;">
+                Moulded = <b>{{ companyMisc_purchase | number:'1.2-2' }}</b> Lacs
+              </button>
+
+              <button class="btn btn-custom text-dark bg-capital" style="width: auto;">
+                Capital = <b>{{ companyCapital | number:'1.2-2' }}</b> Lacs
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /.content-wrapper -->

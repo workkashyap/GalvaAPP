@@ -32,6 +32,9 @@ export class PurchasecalendarComponent implements OnInit {
   public lDate: Date;
   cols: any[];
 
+  summaryDetail: any = [];
+  summaryDetail2: any = [];
+
   public dailyprodlist: Dailyproduction[] = [];
   public salessummary: Salessummary[] = [];
   selectedItemrej: Salesdetail;
@@ -62,6 +65,21 @@ export class PurchasecalendarComponent implements OnInit {
   chemicals: number = 0;
   misc_purchase: number = 0;
   tpurchase: number = 0;
+
+  //
+  i: number = 0;
+  companyAbs: number = 0
+  companyCapital: number = 0
+  companyConsumable: number = 0
+  companyPacking: number = 0
+  companySpares: number = 0
+  companyTransport: number = 0
+  companyChemicals: number = 0
+  companyTotalpurchase: number = 0
+  companyMisc_purchase: number = 0
+
+  grandPurchaseValue: number = 0
+
   constructor(
     public plantservice: PlantService,
     public dpservice: PurchaseService, //DailyproductionService,
@@ -104,6 +122,7 @@ export class PurchasecalendarComponent implements OnInit {
         me.plantservice.splantlist = res as Plant[];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
         me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
+        me.selectedPlanName();
         me.loading = false;
         if (res) {
           me.dpservice
@@ -113,6 +132,7 @@ export class PurchasecalendarComponent implements OnInit {
               me.dpservice.purchasecalendar = res as Purchasecalendar[];
               me.loading = false;
               me.loadchart1();
+              me.summary2();
             });
         }
       });
@@ -145,6 +165,7 @@ export class PurchasecalendarComponent implements OnInit {
       .then(res => {
         me.dpservice.purchasecalendar = res as Purchasecalendar[];
         me.loadchart1();
+        me.summary2();
         this.loading = false;
       });
   }
@@ -353,6 +374,116 @@ export class PurchasecalendarComponent implements OnInit {
       });
 
   }
+
+  summary() {
+    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
+    $('#summaryModal').modal('show');
+  }
+  summary2() {
+    const me = this;
+    this.i = 1;
+    me.companyAbs = 0;
+    me.companyCapital = 0;
+    me.companyChemicals = 0;
+    me.companyConsumable = 0;
+
+    me.companyPacking = 0;
+    me.companySpares = 0;
+    me.companyTransport = 0;
+    me.companyChemicals = 0;
+    me.companyMisc_purchase = 0;
+    me.companyTotalpurchase = 0;
+    me.summaryDetail2 = [];
+
+    me.dpservice.getNetPurchaseSummary(this.startdate)
+      .toPromise()
+      .then(res => {
+        const result = res; //as Salesdetail[];
+        if (result) {
+          result.forEach(row => {
+            if (!me.summaryDetail2[row.plant]) {
+              me.summaryDetail2[row.plant] = [];
+            }
+            me.summaryDetail2[row.plant].push(row);
+            if (result.length == me.i) {
+
+              me.plantservice.splantlist.forEach(plant => {
+                plant.totalVal = 0;
+
+                if (me.summaryDetail2[plant.plantcode]) {
+
+                  /*  me.companyAbs = 0;
+                    me.companyCapital = 0;
+                    me.companyChemicals = 0;
+                    me.companyConsumable = 0;
+  
+                    me.companyPacking = 0;
+                    me.companySpares = 0;
+                    me.companyTransport = 0;
+                    me.companyChemicals = 0;
+                    me.companyMisc_purchase = 0;
+                    me.companyTotalpurchase = 0;*/
+
+
+                  me.summaryDetail2[plant.plantcode].forEach(sum => {
+                    if (sum.mode == "totalpurchase") {
+                      plant.totalVal = sum.totalPurchase;
+                    }
+                    if (sum.mode == "abs") {
+                      plant.abs = sum.totalPurchase;
+                      me.companyAbs += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Chemical") {
+                      plant.chemicals = sum.totalPurchase;
+                      me.companyChemicals += sum.totalPurchase;
+                    }
+
+                    if (sum.mode == "Moulded") {
+                      plant.moulded = sum.totalPurchase;
+                      me.companyMisc_purchase += sum.totalPurchase;
+                    }
+
+                    if (sum.mode == "Packing") {
+                      plant.packing = sum.totalPurchase;
+                      me.companyPacking += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Capital") {
+                      plant.capital = sum.totalPurchase;
+                      me.companyCapital += sum.totalPurchase;
+                    }
+
+                    if (sum.mode == "Spares") {
+                      plant.spares = sum.totalPurchase;
+                      me.companySpares += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Transport") {
+                      plant.transport = sum.totalPurchase;
+                      me.companyTransport += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Consumable") {
+                      plant.consumable = sum.totalPurchase;
+                      me.companyConsumable += sum.totalPurchase;
+                    }
+
+                  });
+                  // plant.totalVal = me.companyConsumable + me.companyTransport + me.companySpares + me.companyCapital + me.companyPacking +
+                  me.totalPurchase();
+                }
+              });
+            }
+            me.i = me.i + 1;
+          });
+          console.log("me.plantservice.splantlist", me.plantservice.splantlist);
+        }
+      });
+  }
+  totalPurchase() {
+    this.grandPurchaseValue = 0;
+    this.plantservice.splantlist.forEach(element => {
+      this.grandPurchaseValue += element.totalVal;
+    });
+    return this.grandPurchaseValue;
+  }
   //sum
   getSumForCalEvent() {
 
@@ -375,6 +506,18 @@ export class PurchasecalendarComponent implements OnInit {
     const me = this;
     if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
       this.plantservice.splantlist.forEach(function (element, i) {
+
+        if (!element.totalVal) {
+          element.totalVal = 0;
+          element.abs = 0;
+          element.chemicals = 0;
+          element.moulded = 0;
+          element.packing = 0;
+          element.capital = 0;
+          element.spares = 0;
+          element.transport = 0;
+          element.consumable = 0;
+        }
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
         }
