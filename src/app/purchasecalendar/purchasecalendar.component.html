@@ -50,7 +50,7 @@
                         <b>{{ tpurchase  | number:'1.2-2'}}</b>
                         Lacs</button>
 
-                      <button class="btn btn-custom text-dark bg-success"
+                      <button class="btn btn-custom text-dark bg-chemical"
                         (click)="extraVal('purchasegroupchemicalsum')">Chemicals =
                         <b>{{ chemicals | number:'1.2-2' }}</b>
                         Lacs</button>
@@ -246,7 +246,7 @@
                   <div class="card-block">
                     <div class="row align-items-center">
                       <div class="col-8">
-                        <h4 class="text-danger-1 f-w-600" [ngClass]="{'text-success': summaryinfo.totalVal >= 0 }">
+                        <h4 class="text-danger-1 f-w-600" [ngClass]="{'text-company-text': summaryinfo.totalVal >= 0 }">
                           {{summaryinfo.totalVal  | number:'1.2-2'}}</h4>
                         <h6 class="text-muted m-b-0">Lacs</h6>
                       </div>
@@ -255,7 +255,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer bg-danger-1 " [ngClass]="{'bg-success':summaryinfo.totalVal >= 0 }">
+                  <div class="card-footer bg-danger-1 " [ngClass]="{'bg-company-name':summaryinfo.totalVal >= 0 }">
                     <div class="row align-items-center">
                       <div class="col-9">
                         <a class="text-white m-b-0 tip">{{ summaryinfo.plantshortname}}
@@ -292,37 +292,39 @@
               </div>
             </div>
             <div class="row">
-              <button class="btn btn-custom text-dark bg-success">
-                Chemicals = <b>{{ companyChemicals | number:'1.2-2' }}</b> Lacs
-              </button>
+              <div style="margin: auto;">
+                <button class="btn btn-custom text-dark bg-chemical">
+                  Chemicals = <b>{{ companyChemicals | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-primary" style="width: auto;">
-                ABS = <b>{{ companyAbs | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-primary" style="width: auto;">
+                  ABS = <b>{{ companyAbs | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-dark" style="width: auto;">
-                Packing = <b>{{ companyPacking | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-dark" style="width: auto;">
+                  Packing = <b>{{ companyPacking | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-danger" style="width: auto;">
-                Spares = <b>{{ companySpares | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-danger" style="width: auto;">
+                  Spares = <b>{{ companySpares | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-warning" style="width: auto;">
-                Consumable = <b>{{ companyConsumable | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-warning" style="width: auto;">
+                  Consumable = <b>{{ companyConsumable | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-action-plan" style="width: auto;">
-                Transport = <b>{{ companyTransport | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-action-plan" style="width: auto;">
+                  Transport = <b>{{ companyTransport | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-moulded" style="width: auto;">
-                Moulded = <b>{{ companyMisc_purchase | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-moulded" style="width: auto;">
+                  Moulded = <b>{{ companyMisc_purchase | number:'1.2-2' }}</b> Lacs
+                </button>
 
-              <button class="btn btn-custom text-dark bg-capital" style="width: auto;">
-                Capital = <b>{{ companyCapital | number:'1.2-2' }}</b> Lacs
-              </button>
+                <button class="btn btn-custom text-dark bg-capital" style="width: auto;">
+                  Capital = <b>{{ companyCapital | number:'1.2-2' }}</b> Lacs
+                </button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">

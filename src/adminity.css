@@ -49,6 +49,16 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#673AB7,#B39DDB);
 }
+.bg-company-name{
+	border: unset;
+    color: white !important;
+	background: linear-gradient(to right,#FF9800,#FFC107) !important;
+}
+.bg-chemical {
+	border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#2196F3,#00BCD4);
+}
 .bg-planting-per {
 	border: unset;
     color: white !important;
@@ -79,6 +89,10 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 }
 .text-success {
     color: #0ac282;
+}
+
+.text-company-text {
+    color:  #FF9800 !important;
 }
 .text-danger-1{
 	color: #fe5d70;
