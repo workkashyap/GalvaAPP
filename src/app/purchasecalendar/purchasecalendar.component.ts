@@ -53,6 +53,11 @@ export class PurchasecalendarComponent implements OnInit {
   public startdate: string;
   public rejectdata: any;
   public loading = false;
+
+  public loadingSummary = false;
+
+  filterenable: boolean = false;
+
   public currentUser: User;
 
   //
@@ -65,7 +70,9 @@ export class PurchasecalendarComponent implements OnInit {
   chemicals: number = 0;
   misc_purchase: number = 0;
   tpurchase: number = 0;
-
+  selectedItemrejarray: any[];
+  filterItemrejarray: any[];
+  iv: number = 0;
   //
   i: number = 0;
   companyAbs: number = 0
@@ -131,8 +138,9 @@ export class PurchasecalendarComponent implements OnInit {
             .then(res => {
               me.dpservice.purchasecalendar = res as Purchasecalendar[];
               me.loading = false;
-              me.loadchart1();
+              me.selectedPlanName();
               me.summary2();
+              me.loadchart1();
             });
         }
       });
@@ -164,8 +172,9 @@ export class PurchasecalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         me.dpservice.purchasecalendar = res as Purchasecalendar[];
-        me.loadchart1();
+        me.selectedPlanName();
         me.summary2();
+        me.loadchart1();
         this.loading = false;
       });
   }
@@ -258,6 +267,8 @@ export class PurchasecalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         me.dpservice.purchasecalendar = res as Purchasecalendar[];
+        me.selectedPlanName();
+        me.summary2();
         me.loadchart1();
         this.loading = false;
       });
@@ -288,6 +299,31 @@ export class PurchasecalendarComponent implements OnInit {
         this.loading = false;
       });
   }
+
+  loadmdata(ev, dt) {
+    this.filterenable = true;
+    this.selectedItemrejarray = dt.value;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of this.selectedItemrejarray) {
+      if (
+        c.plantShortName.toString().includes(ev.toString()) ||
+        c.acDocumentDate.toString().includes(ev.toString()) ||
+        c.group.toString().includes(ev.toString()) ||
+        c.vendorName.toString().includes(ev.toString()) ||
+        c.narattion.toString().includes(ev.toString()) ||
+        c.totalPurchase.toString().includes(ev.toString())
+      ) {
+        this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      } else {
+        this.iv += 1;
+      }
+    }
+    this.getSumForCalEvent();
+  }
+
   //top btn click
   extraVal(val) {
 
@@ -380,6 +416,7 @@ export class PurchasecalendarComponent implements OnInit {
     $('#summaryModal').modal('show');
   }
   summary2() {
+    this.loadingSummary = true;
     const me = this;
     this.i = 1;
     me.companyAbs = 0;
@@ -394,6 +431,7 @@ export class PurchasecalendarComponent implements OnInit {
     me.companyMisc_purchase = 0;
     me.companyTotalpurchase = 0;
     me.summaryDetail2 = [];
+    this.grandPurchaseValue = 0;
 
     me.dpservice.getNetPurchaseSummary(this.startdate)
       .toPromise()
@@ -473,7 +511,6 @@ export class PurchasecalendarComponent implements OnInit {
             }
             me.i = me.i + 1;
           });
-          console.log("me.plantservice.splantlist", me.plantservice.splantlist);
         }
       });
   }
@@ -482,12 +519,22 @@ export class PurchasecalendarComponent implements OnInit {
     this.plantservice.splantlist.forEach(element => {
       this.grandPurchaseValue += element.totalVal;
     });
+    this.loadingSummary = false;
+
     return this.grandPurchaseValue;
   }
   //sum
   getSumForCalEvent() {
 
     this.totalSumofValue = 0;
+    console.log("hi");
+    if (this.filterenable === true) {
+      for (const rq of this.filterItemrejarray) {
+        this.totalSumofValue = (this.totalSumofValue + rq.totalPurchase);
+      }
+      return;
+    }
+    console.log("hi-2");
     for (const sd of this.dpservice.purchasedetail) {
       this.totalSumofValue = (this.totalSumofValue + sd.totalPurchase);
     }
@@ -507,17 +554,16 @@ export class PurchasecalendarComponent implements OnInit {
     if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
       this.plantservice.splantlist.forEach(function (element, i) {
 
-        if (!element.totalVal) {
-          element.totalVal = 0;
-          element.abs = 0;
-          element.chemicals = 0;
-          element.moulded = 0;
-          element.packing = 0;
-          element.capital = 0;
-          element.spares = 0;
-          element.transport = 0;
-          element.consumable = 0;
-        }
+        element.totalVal = 0;
+        element.abs = 0;
+        element.chemicals = 0;
+        element.moulded = 0;
+        element.packing = 0;
+        element.capital = 0;
+        element.spares = 0;
+        element.transport = 0;
+        element.consumable = 0;
+
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
         }

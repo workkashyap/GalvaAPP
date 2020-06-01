@@ -170,7 +170,8 @@
                     <td colspan="2" style=" width:210px;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
-                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                          (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          (input)="loadmdata($event.target.value , dt)" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
@@ -240,6 +241,8 @@
             </button>
           </div>
           <div class="modal-body">
+            <ngx-loading [show]="loadingSummary" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
             <div class="row">
               <div class="col-xl-2 custom-xl-2 col-md-6" *ngFor="let summaryinfo of plantservice.splantlist">
                 <div class="card">
