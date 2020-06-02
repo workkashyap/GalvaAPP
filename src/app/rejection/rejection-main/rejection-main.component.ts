@@ -29,6 +29,7 @@ import { ItemwiseRejDetail } from "src/app/shared/dailyProduction/itemwiserejdet
         position: sticky;
         background: blue;
         color: white;
+        font-size:10px;
         top: 0px;
         z-index: 1;
       }
@@ -186,16 +187,16 @@ export class RejectionMainComponent implements OnInit {
       { field: "itemcode", header: "Code" },
       { field: "itemname", header: "Name" },
       { field: "inspection_qty", header: "Insp. qty" },
-      { field: "inspection_value", header: "Insp. Value" },
+      { field: "inspection_value", header: "Insp. value" },
       { field: "okvalue", header: "Ok Value" },
       { field: "okqty", header: "Ok qty" },
 
       { field: "reject_qty", header: "Reject qty" },
       { field: "rejper", header: "Rej %" },
-      { field: "reject_value", header: "Reject Value" },
+      { field: "reject_value", header: "Reject val" },
 
-      { field: "mouldingqty", header: "Moulding qty " },
-      { field: "moulding_value", header: "Moulding Val" },
+      { field: "mouldingqty", header: "Moulding qty" },
+      { field: "moulding_value", header: "Moulding val" },
       { field: "platingqty", header: "Plating qty" },
       { field: "plating_value", header: "Plating val" },
     ];

@@ -74,8 +74,7 @@
                       <button class="btn btn-custom text-dark bg-danger">Moulding % =
                         <b>{{ tot.mouldingper }}</b></button>
 
-                      <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
-                        *ngIf="this.currentUser && this.currentUser.id==14">
+                      <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
                         Action Plan</button>
                       <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
                         style="border-radius: 5px 0px 0px 5px">Previous</button>
@@ -84,9 +83,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-inline" *ngIf="dpservice.dailyreportsummary && !dpservice.dailyreportsummary.length" style="margin: auto;">
-                  <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()"
-                    *ngIf="this.currentUser && this.currentUser.id==14">
+                <div class="form-inline" *ngIf="dpservice.dailyreportsummary && !dpservice.dailyreportsummary.length"
+                  style="margin: auto;">
+                  <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
                     Action Plan</button>
                   <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
                     style="border-radius: 5px 0px 0px 5px">Previous</button>
@@ -182,9 +181,9 @@
                           </select>
                         </ng-template>
                         <ng-template pTemplate="output">
-                          <span class="badge badge-info" *ngIf="rowData[col.field]==0">Pending</span>
-                          <span class="badge badge-success" *ngIf="rowData[col.field]==1">Approved</span>
-                          <span class="badge badge-danger" *ngIf="rowData[col.field]==2">Rejected</span>
+                          <span class="badge badge-info" *ngIf="rowData[col.field]=='0'">Pending</span>
+                          <span class="badge badge-success" *ngIf="rowData[col.field]=='1'">Approved</span>
+                          <span class="badge badge-danger" *ngIf="rowData[col.field]=='2'">Rejected</span>
                         </ng-template>
                       </p-cellEditor>
                       <!--End Status-->
@@ -202,11 +201,22 @@
 
                         <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
                           class="ui-button-success" style="margin-right: .5em"
-                          (click)="onRowEditSave(rowData)"></button>
+                          (click)="onRowEditSave(rowData,'')"></button>
                         <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
                           class="ui-button-danger"></button>
                       </div>
                       <!--End Buttons-->
+                      <!-- --status-- -->
+                      <div *ngIf="col.field=='edit_status' && this.currentUser && this.currentUser.id==14">
+                        <button class="btn btn-success" (click)="onRowEditSave(rowData,'1')">
+                          Approve
+                        </button>&nbsp;
+
+                        <button class="btn btn-danger" (click)="onRowEditSave(rowData,'2')">
+                          Reject
+                        </button>
+                      </div>
+                      <!-- --status-- -->
                     </td>
                   </tr>
                 </ng-template>

@@ -15,6 +15,7 @@ import { UserService } from 'src/app/shared/user/user.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Itemwiserej } from 'src/app/shared/dailyProduction/itemwiserej.model';
 import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
+import { Plant } from '../../shared/plant/plant.model';
 
 @Component({
   selector: 'app-rejection-detail',
@@ -27,6 +28,7 @@ import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
     position: sticky;
     background: blue;
     color: white;
+    font-size:10px;
     top: 0px;
     z-index: 1;
   }
@@ -144,10 +146,10 @@ export class RejectionDetailComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.DPservice.itemwiserejlist = res as Itemwiserej[];
+        this.rejectpersum();
         this.loading = false;
       });
 
-    this.rejectpersum();
   }
 
   loadper(ev, dt) {
@@ -173,8 +175,8 @@ export class RejectionDetailComponent implements OnInit {
 
   }
   ngOnInit() {
+    let me = this;
     if (!this.DPservice.date) {
-      console.log(this.DPservice.date);
       this.Fromdate = this.cDate;
       this.Todate = this.cDate;
     }
@@ -182,9 +184,7 @@ export class RejectionDetailComponent implements OnInit {
       this.Fromdate = this.DPservice.date.replace('T00:00:00', '');
       this.Todate = this.DPservice.date.replace('T00:00:00', '');
     }
-    this.DPservice.plantcode = '1010';
-    this.plantservice.getPlantData(this.currentUser.id);
-    this.plant_name = "GDPL Vapi";
+
 
     this.cols = [
       // { field: 'id', header: 'ID' },
@@ -210,22 +210,33 @@ export class RejectionDetailComponent implements OnInit {
 
     this.subcols = [
       { field: 'id', header: 'ID' },
-     // { field: 'inspectiondate', header: 'Date' },
+      // { field: 'inspectiondate', header: 'Date' },
       { field: 'ordertype', header: 'Type' },
       { field: 'defect', header: 'Defect' },
       { field: 'totalqty', header: 'Total Qty' },
       { field: 'rejvalue', header: 'Reject Value' },
     ];
-
     this.loading = true;
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, 'NULL', this.Fromdate, this.Todate)
+    //  this.plantservice.getPlantData(this.currentUser.id);
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
-        this.DPservice.itemwiserejlist = res as Itemwiserej[];
-        this.rejectpersum();
-        this.loading = false;
+        me.plantservice.plantlist = res as Plant[];
+        me.DPservice.plantcode = me.plantservice.plantlist[0].plantcode;
+        me.plant_name = me.plantservice.plantlist[0].plantshortname;
+
+        me.DPservice.getRejectdetail(me.DPservice.plantcode, 'NULL', me.Fromdate, me.Todate)
+          .toPromise()
+          .then(res => {
+            me.DPservice.itemwiserejlist = res as Itemwiserej[];
+            me.rejectpersum();
+            me.loading = false;
+          });
+
       });
-    this.loading = true;
+
+
     // tslint:disable-next-line:max-line-length
     // this.DPservice.getRejectdefectdetail(this.DPservice.plantcode, 'CHROME' , this.Fromdate, this.Todate, '91000149')
     //       .toPromise()
@@ -249,7 +260,7 @@ export class RejectionDetailComponent implements OnInit {
   onRowSelect(ev) {
     this.selectedItemrej = ev.data;
     this.loading = true;
-    
+
     this.DPservice.itemtopdefectlist = [];
     // tslint:disable-next-line:max-line-length
     this.DPservice.getRejectdefectdetail2(this.selectedItemrej.plant,
@@ -337,7 +348,7 @@ export class RejectionDetailComponent implements OnInit {
         this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
 
-        
+
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
       }

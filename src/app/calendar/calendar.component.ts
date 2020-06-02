@@ -138,9 +138,14 @@ export class CalendarComponent implements OnInit {
       { field: "approvedstatus", header: "Approved status", width: "100px" },
       { field: "responsibility", header: "Responsibility", width: "100px" },
       { field: "remarks2", header: " Remark 2", width: "140px" },
-      { field: "attachment", header: "Attachment", width: "140px" },
-      { field: "edit", header: "Action", width: "100px" }
+      { field: "attachment", header: "Attachment", width: "140px" }
     ];
+    if (this.currentUser && this.currentUser.id == 14) {
+      this.allActionPlanCol.push(
+        { field: "edit", header: "Action", width: "100px" },
+        { field: "edit_status", header: "Change Status", width: "200px" }
+      );
+    }
 
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     var date = new Date();
@@ -214,7 +219,7 @@ export class CalendarComponent implements OnInit {
     this.loading = true;
     this.noRecord = '';
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-    const monthName = this.datePipe.transform(this.monthName, 'MMM');
+    const monthName = this.datePipe.transform(this.monthName, 'MMMM');
     this.apservice
       .getActionPlanReport(monthName, this.selectedcode)
       .toPromise()
@@ -234,7 +239,7 @@ export class CalendarComponent implements OnInit {
     let me = this;
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
     this.noRecord = '';
-    const monthName = this.datePipe.transform(this.monthName, 'MMM');
+    const monthName = this.datePipe.transform(this.monthName, 'MMMM');
 
     this.apservice
       .getActionPlanReport(monthName, this.selectedcode)
@@ -243,10 +248,13 @@ export class CalendarComponent implements OnInit {
         me.allActionPlan = res as Createactionplan[];
       });
   }
-  onRowEditSave(row: any) {
+  onRowEditSave(row: any, approvedstatus: any) {
     const me = this;
     row.currentDate = new Date();
     if (row.id) {
+      if (approvedstatus) {
+        row.approvedstatus = approvedstatus;
+      }
       this.apservice.updateCreateactionplan(row).subscribe(
         res => {
           me.toastr.success('Updated Successfully', 'Save ActionPlan');
@@ -279,7 +287,7 @@ export class CalendarComponent implements OnInit {
       });
   }
   eventClick(model) {
-    this.dpservice.itemwiserejlist =[];this.filterItemrejarray = [];
+    this.dpservice.itemwiserejlist = []; this.filterItemrejarray = [];
     this.colspanAmount = 2;
     this.cols = [
       { field: 'item_type', header: 'Type' },
@@ -364,7 +372,7 @@ export class CalendarComponent implements OnInit {
   }
   extraVal(val) {
     this.colspanAmount = 2;
-    this.dpservice.itemwiserejlist =[];
+    this.dpservice.itemwiserejlist = [];
     this.filterItemrejarray = [];
     this.cols = [
       { field: 'item_type', header: 'Type' },
