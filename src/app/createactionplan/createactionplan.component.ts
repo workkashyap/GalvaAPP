@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: 'app-createactionplan',
@@ -132,7 +133,8 @@ export class CreateactionplanComponent implements OnInit {
     this.totalWeeks = this.getWeeksInMonth(this.date.getMonth(), new Date().getFullYear());
 
     this.monthname = this.monthNames[this.date.getMonth()];
-    this.plantservice.getPlantData(this.currentUser.id);
+    /// this.plantservice.getPlantData(this.currentUser.id);
+
     this.cols = [
       // { field: "id", header: "ID" },
       //  { field: "sHash", header: "S#", width: "50px" },
@@ -154,14 +156,27 @@ export class CreateactionplanComponent implements OnInit {
       { field: "edit", header: "Action", width: "100px" }
     ];
     this.loading = true;
-    // for user => this.currentUser.username
-    this.apservice
-      .getActionPlan(this.monthname, this.plantcode, 'hardik')
+
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
-        me.allActionPlan = res as Createactionplan[];
-        me.loading = false;
+        me.plantservice.plantlist = res as Plant[];
+        console.log("splantlist", me.plantservice.plantlist);
+        me.plantcode = me.plantservice.plantlist[0].plantcode;
+
+        this.apservice
+          .getActionPlan(this.monthname, me.plantcode, 'hardik')
+          .toPromise()
+          .then(res => {
+            me.allActionPlan = res as Createactionplan[];
+            me.loading = false;
+          });
+
       });
+
+    // for user => this.currentUser.username
+
   }
   refreshList() {
     let me = this;
