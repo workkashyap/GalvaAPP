@@ -138,7 +138,7 @@ export class DailyproductionService {
       code
     );
   }
-  
+
 
   public getRejectdefectdetail2(
     plantcode,
@@ -156,8 +156,8 @@ export class DailyproductionService {
       '/' +
       fromdate +
       '/' +
-      todate 
-     
+      todate
+
     );
   }
 
@@ -297,6 +297,14 @@ export class DailyproductionService {
       date
     );
   }
+  //sales detail
+  public getSalesDetail(plantcode, from_date, to_date): Observable<Salesdetail[]> {
+    return this.http.get<Salesdetail[]>(
+      this.rootUrl +
+      '/sales/getsales/' + plantcode + '/NULL/' + from_date + '/' + to_date
+    );
+  }
+  //sales detail
 
   public getNetSale(plantcode, date): Observable<Salessummary[]> {
     return this.http.get<Salessummary[]>(

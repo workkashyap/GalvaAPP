@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DailyproductionService } from 'src/app/shared/dailyProduction/dailyproduction.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Salesdetail } from '../shared/dailyProduction/salesdetail.model';
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: 'app-sales-detail',
@@ -20,10 +21,13 @@ import { Salesdetail } from '../shared/dailyProduction/salesdetail.model';
     position: sticky;
     background: blue;
     color: white;
+    font-size:9px;
     top: 0px;
     z-index: 1;
   }
-
+  body .ui-table .ui-table-tbody > tr > td {
+    font-size: 9px;
+  }
   :host ::ng-deep .ui-table-resizable > .ui-table-wrapper {
     overflow-x: initial !important;
   }
@@ -63,7 +67,7 @@ export class SalesDetailComponent implements OnInit {
   filterItemrejarray: Salesdetail[] = [];
   iv: number;
   filterenable = false;
-  
+
   constructor(
     public acservice: ActionplanService,
     private lservice: LoginService,
@@ -74,59 +78,103 @@ export class SalesDetailComponent implements OnInit {
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.selectedtype = "NetSaleDetail";
-    this.plantcode = 1010;
+    this.selectedtype = '0';
   }
-  onselecttype(ev) {
-    this.selectedtype = ev;
-  }
-  loadData() {
 
-    this.totalSumofValue = 0;
+  ngOnInit() {
+    let me = this;
+    if (!this.dpservice.date) {
+      console.log(this.dpservice.date);
+      this.Fromdate = this.cDate;
+      this.Todate = this.cDate;
+    }
+    else {
+      this.Fromdate = this.dpservice.date.replace('T00:00:00', '');
+      this.Todate = this.dpservice.date.replace('T00:00:00', '');
+    }
+
     this.cols = [
-      { field: 'plant', header: 'Plant' },
       { field: 'plantName', header: 'Plant Name' },
-      { field: 'billingDocType', header: 'Billingdoctype' },
+      { field: 'billingDocTYPE', header: 'Billingdoctype' },
       { field: 'invoiceNumber', header: 'Invoiceno' },
-      { field: 'accdocno', header: 'Accdocno' },
+      { field: 'accDocNo', header: 'Accdocno' },
       { field: 'billingDocDate', header: 'Billingdocdate' },
       { field: 'materialType', header: 'Materialtype' },
       { field: 'soType', header: 'Sotype' },
       { field: 'soTypedesc', header: 'Sotypedesc' },
-      { field: 'materialNumber', header: 'Materialnumber' },
+      { field: 'materialNumber', header: 'Material No.' },
       { field: 'materialDesc', header: 'Materialdesc' },
       { field: 'soldToParty', header: 'Soldtoparty' },
       { field: 'soldToPartyName', header: 'Soldtopartyname' },
       { field: 'payer', header: 'Payer' },
       { field: 'payerName', header: 'Payername' },
+      { field: 'basicAmtINR', header: 'BasicAmtINR' },
+
     ];
-    if (this.selectedtype == "NetSaleDetail") {
-      this.totalSumofTitle = "Tot. Net.";
-      this.totalSumofBg = "bg-info";
-      this.cols.push({ field: 'netSale', header: 'Net Sale' });
-      
-    } else if (this.selectedtype == "GrosSaleDetail") {
-      this.totalSumofTitle = "Tot. Gross";
-      this.totalSumofBg = "bg-success";
-      this.cols.push({ field: 'grossSale', header: 'Gross Sale' });
-
-    } else if (this.selectedtype == "salesReturnDetail") {
-      this.totalSumofTitle = "Tot. Return";
-      this.totalSumofBg = "bg-danger";
-      this.cols.push({ field: 'salesReturn', header: 'Sales Return' });
-
-    } else if (this.selectedtype == "cancelinvoicedetail") {
-      this.totalSumofBg = "bg-warning";
-      this.totalSumofTitle = "Tot. Cancel";
-      this.cols.push({ field: 'cancelInvoice', header: 'Cancel Inv.' });
-    }
-
-    this.dpservice.salesdetail = [];
-    this.loading = true;
-    this.dpservice.getSales(this.plantcode, this.Fromdate, this.selectedtype)
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
-        this.dpservice.salesdetail = res as Salesdetail[];
+        me.plantservice.plantlist = res as Plant[];
+        me.plantcode = me.plantservice.plantlist[0].plantcode;
+        this.loadData();
+      });
+  }
+  onselecttype(ev) {
+    this.selectedtype = ev;
+  }
+  loadData() {
+    let me = this;
+    this.totalSumofValue = 0;
+
+    this.dpservice.salesdetail = [];
+
+    this.loading = true;
+    this.dpservice.getSalesDetail(this.plantcode, this.Fromdate, this.Todate)
+      .toPromise()
+      .then(res => {
+        const salesdetail = res as Salesdetail[];
+        salesdetail.forEach(sales_detail => {
+          console.log("billingDocTYPE : ", sales_detail.billingDocTYPE);
+          if (this.selectedtype == "salesReturn") {
+            if (sales_detail.billingDocTYPE == "ZRET") {
+              console.log("salesReturn");
+              this.dpservice.salesdetail.push(sales_detail);
+            } else if (sales_detail.billingDocTYPE == "ZCR") {
+              console.log("salesReturn");
+              this.dpservice.salesdetail.push(sales_detail);
+            }
+            else if (sales_detail.billingDocTYPE == "G2") {
+              console.log("salesReturn");
+              this.dpservice.salesdetail.push(sales_detail);
+            }
+          } else if (this.selectedtype == "netSales") {
+
+            if (sales_detail.billingDocTYPE == "ZDOM") {
+              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+            } else if (sales_detail.billingDocTYPE == "ZJOB") {
+              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+            } else if (sales_detail.billingDocTYPE == "ZRAW") {
+              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+
+            } else if (sales_detail.billingDocTYPE == "S2") {
+              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+
+            } else if (sales_detail.billingDocTYPE == "ZDR") {
+              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+            }
+
+          } else if (this.selectedtype == "cancelInvoice") {
+            if (sales_detail.billingDocTYPE == "S1") {
+              console.log("cancelInvoice");
+              this.dpservice.salesdetail.push(sales_detail);
+            }
+          } else if (this.selectedtype == "0") {
+            this.dpservice.salesdetail = res as Salesdetail[];
+          }
+        });
+        //this.dpservice.salesdetail = res as Salesdetail[];
+        console.log("dpservice.salesdetail : ", this.dpservice.salesdetail);
         this.sumgetsale(this.selectedtype);
         this.loading = false;
       });
@@ -154,47 +202,16 @@ export class SalesDetailComponent implements OnInit {
     this.totalSumofValue = 0;
     if (this.filterenable == true) {
       for (const sd of this.filterItemrejarray) {
-        if (val == "NetSaleDetail") {
-          this.totalSumofValue = (this.totalSumofValue + sd.netSale);
-        } else if (val == "GrosSaleDetail") {
-          this.totalSumofValue = (this.totalSumofValue + sd.grossSale);
-        } else if (val == "salesReturnDetail") {
-          this.totalSumofValue = (this.totalSumofValue + sd.salesReturn);
-        } else if (val == "cancelinvoicedetail") {
-          this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
-        }
+        this.totalSumofValue = (this.totalSumofValue + sd.basicAmtINR);
       }
-      this.totalSumofValue = (this.totalSumofValue / 100000);
+      // this.totalSumofValue = (this.totalSumofValue / 100000);
       return;
     }
     for (const sd of this.dpservice.salesdetail) {
-      if (val == "NetSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.netSale);
-      } else if (val == "GrosSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.grossSale);
-      } else if (val == "salesReturnDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn);
-      } else if (val == "cancelinvoicedetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
-      }
+      this.totalSumofValue = (this.totalSumofValue + sd.basicAmtINR);
     }
-    this.totalSumofValue = (this.totalSumofValue / 100000);
+    // this.totalSumofValue = (this.totalSumofValue / 100000);
     return;
-  }
-  ngOnInit() {
-    if (!this.dpservice.date) {
-      console.log(this.dpservice.date);
-      this.Fromdate = this.cDate;
-      this.Todate = this.cDate;
-    }
-    else {
-      this.Fromdate = this.dpservice.date.replace('T00:00:00', '');
-      this.Todate = this.dpservice.date.replace('T00:00:00', '');
-    }
-    this.plantservice.getPlantData(this.currentUser.id);
-
-    this.loadData()
-
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;

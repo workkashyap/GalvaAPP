@@ -12,6 +12,12 @@
 .set-padding{
     padding: 10px 5px;
 } 
+.card-header {
+    padding: 0.2rem 1.25rem;
+}
+.card-body {
+    padding: 0px 1.25rem 0.2rem 1.25rem;
+}
 @media only screen and (max-width: 600px) {
     .custom-col-2 {
         /*flex: 2 0 28.6667%;

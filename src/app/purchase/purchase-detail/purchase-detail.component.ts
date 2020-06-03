@@ -24,6 +24,7 @@ import { Purchase } from 'src/app/shared/purchase/purchase.model';
         position: sticky;
         background: blue;
         color: white;
+        font-size:10px;
         top: 0px;
         z-index: 1;
       }

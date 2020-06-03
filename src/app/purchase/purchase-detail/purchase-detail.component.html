@@ -3,12 +3,6 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-
-      </div><!-- /.container-fluid -->
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -17,14 +11,14 @@
             <div class="card-header">
               <div class="row">
                 <div class="col-md-12">
-                  <h3 class="card-title-md">Purchase Detail</h3>
+                  <h5 class="card-title-md">Purchase Detail</h5>
                 </div>
               </div>
             </div>
             <div class="card-body">
               <div class="row">
                 <div class="col-md-3">
-                  <div class="row mt-3">
+                  <div class="row mt-2">
                     <div class="col-md-2">
                       <label>From</label>
                     </div>
@@ -37,7 +31,7 @@
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="row mt-3">
+                  <div class="row mt-2">
                     <div class="col-md-2">
                       <label>To</label>
                     </div>
@@ -49,7 +43,7 @@
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <select class="custom-select mt-3" name="myselect" #mySelect="ngModel" [(ngModel)]="this.selectedPlant"
+                  <select class="custom-select mt-2" name="myselect" #mySelect="ngModel" [(ngModel)]="this.selectedPlant"
                     (change)="selectedGrid($event.target.value)" style="width: 75%;">
                     <option value="0">--Select Plant--</option>
                     <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
@@ -58,7 +52,7 @@
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <button class="btn btn-primary  mt-3" (click)="getPurchaseDetail()">View</button>
+                  <button class="btn btn-primary mt-2" (click)="getPurchaseDetail()">View</button>
                 </div>
               </div>
             </div>
@@ -97,10 +91,10 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" class="ui-resizable-column">
-              <span *ngIf="col.field=='acDocumentDate' || col.field=='vendorInvoiceDate'  ">
+              <span *ngIf="col.field=='acDocumentDate' || col.field=='vendorInvoiceDate'" style="font-size: 10px;">
                 {{rowData[col.field] | date :'dd-MM-y'}}
               </span>
-              <span *ngIf="col.field !='acDocumentDate' && col.field!='vendorInvoiceDate' ">
+              <span *ngIf="col.field !='acDocumentDate' && col.field!='vendorInvoiceDate'" style="font-size: 10px;">
                 {{rowData[col.field]}}
               </span>
             </td>
