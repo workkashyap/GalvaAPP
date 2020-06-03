@@ -64,6 +64,11 @@ export class PurchaseService {
       this.rootUrl + '/purchaseheaders/GetPurchaseHeader/' + plantcode + '/' + fromdate + '/' + todate
     );
   }
+  public getPurchaseDetailTotal(plantcode, fromdate, todate): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchaseheaders/purchasegrouptotal/' + plantcode + '/' + fromdate + '/' + todate
+    );
+  }
   public getPurchaseLineDetail(id): Observable<Purchase[]> {
     return this.http.get<Purchase[]>(
       this.rootUrl + '/purchaseheaders/GetPurchaseLine/' + id);
@@ -71,8 +76,8 @@ export class PurchaseService {
 
   //end purchase detail//
   //purchase summary
-  
-  
+
+
   public getNetPurchaseSummary(date): Observable<Purchase[]> {
     return this.http.get<Purchase[]>(
       this.rootUrl + '/purchasecalendars/getpurchaseSummary/' + date);

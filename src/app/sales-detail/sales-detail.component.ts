@@ -78,7 +78,7 @@ export class SalesDetailComponent implements OnInit {
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.selectedtype = '0';
+    this.selectedtype = 'netSales';
   }
 
   ngOnInit() {
@@ -100,14 +100,15 @@ export class SalesDetailComponent implements OnInit {
       { field: 'accDocNo', header: 'Accdocno' },
       { field: 'billingDocDate', header: 'Billingdocdate' },
       { field: 'materialType', header: 'Materialtype' },
-      { field: 'soType', header: 'Sotype' },
-      { field: 'soTypedesc', header: 'Sotypedesc' },
+      
       { field: 'materialNumber', header: 'Material No.' },
       { field: 'materialDesc', header: 'Materialdesc' },
       { field: 'soldToParty', header: 'Soldtoparty' },
       { field: 'soldToPartyName', header: 'Soldtopartyname' },
       { field: 'payer', header: 'Payer' },
       { field: 'payerName', header: 'Payername' },
+      { field: 'soType', header: 'Sotype' },
+      { field: 'soTypedesc', header: 'Sotypedesc' },
       { field: 'basicAmtINR', header: 'BasicAmtINR' },
 
     ];

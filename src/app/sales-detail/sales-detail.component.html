@@ -62,8 +62,8 @@
                       <select class="custom-select" name="typeSelect" #typeSelect="ngModel" [(ngModel)]="selectedtype"
                         (change)="onselecttype($event.target.value)">
                         <option value="0">Select Sales</option>
-                        <option value="salesReturn">Sales Return</option>
                         <option value="netSales">Net Sales</option>
+                        <option value="salesReturn">Sales Return</option>
                         <option value="cancelInvoice">Can. Invoice </option>
                       </select>
                     </div>
@@ -99,9 +99,12 @@
                 </div>
               </div>
             </td>
-            <td colspan="7"></td>
+            <td colspan="5"></td>
             <td style="width: 140px;"></td>
-            <td colspan="2"></td>
+            <td></td>
+            <td style="width: 140px;"></td>
+            <td></td>
+            <td style="width: 140px;"></td>
             <td colspan="3" style="text-align: right;">
               <button class="btn btn-info">
                 Total : {{ this.totalSumofValue  | number:'1.2-2' }}
@@ -120,10 +123,10 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" class="ui-resizable-column">
-              <span *ngIf="col.field=='billingDocDate'" style="font-size: 8px;">
+              <span *ngIf="col.field=='billingDocDate'" style="font-size: 10px;">
                 {{rowData[col.field] | date :'dd-MM-y'}}
               </span>
-              <span *ngIf="col.field!='billingDocDate'" style="font-size: 8px;">
+              <span *ngIf="col.field!='billingDocDate'" style="font-size: 10px;">
                 {{rowData[col.field]}}
               </span>
             </td>

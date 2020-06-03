@@ -73,6 +73,7 @@ export class PurchaseDetailComponent implements OnInit {
   iv: number;
   filterenable = false;
 
+  totalPurchase: number = 0;
 
   netPayableToVendorSum: number = 0;
   totalValueSum: number = 0;
@@ -150,12 +151,22 @@ export class PurchaseDetailComponent implements OnInit {
     this.filterenable = false;
     me.loading = true;
     me.dpservice.purchase = [];
+    this.totalPurchase = 0;
     this.dpservice
       .getPurchaseDetail(me.selectedPlant, me.Fromdate, me.Todate)
       .toPromise()
       .then(res => {
         me.dpservice.purchase = res as Purchase[];
         me.loading = false;
+      });
+    this.dpservice
+      .getPurchaseDetailTotal(me.selectedPlant, me.Fromdate, me.Todate)
+      .toPromise()
+      .then(res => {
+        const total_purchase = res as Purchase[];
+        total_purchase.forEach(total_purc => {
+          me.totalPurchase = total_purc.totalPurchase;
+        });
       });
   }
   selectedGrid(ev) {
