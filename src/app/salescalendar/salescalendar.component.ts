@@ -10,9 +10,12 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../shared/login/login.service';
 import { User } from '../shared/login/User.model';
 import { Salesdetail } from '../shared/dailyProduction/salesdetail.model';
+import { Purchasesummary } from '../shared/purchase/purchasesummary.model';
 
 import { Plant } from '../shared/plant/plant.model';
 import { Salessummary } from '../shared/dailyProduction/salessummary.model';
+import { Purchasedetail } from '../shared/purchase/purchasedetail.model';
+import { PurchaseService } from '../shared/purchase/purchase.service';
 @Component({
   selector: 'app-salescalendar',
   templateUrl: './salescalendar.component.html',
@@ -21,6 +24,7 @@ import { Salessummary } from '../shared/dailyProduction/salessummary.model';
 })
 export class SalescalendarComponent implements OnInit {
   finlaNetSales: number = 0;
+  purchaseMoulded: number = 0;
   netSales: number = 0;
   salesRej: number = 0;
   grossSales: number = 0;
@@ -67,6 +71,7 @@ export class SalescalendarComponent implements OnInit {
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
     public toastr: ToastrService,
+    public dpservicePurchase: PurchaseService,
     public datePipe: DatePipe, public apservice: CreateactionplanService,
     public lservice: LoginService,
   ) {
@@ -157,7 +162,7 @@ export class SalescalendarComponent implements OnInit {
   //netsales
   finalNetSale() {
     this.finlaNetSales = 0;
-    return this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej)));
+    return this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
   }
   //get top button total value
   loadchart1() {
@@ -190,6 +195,14 @@ export class SalescalendarComponent implements OnInit {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
         this.salesRej = element.salesReturn
+      });
+    });
+    //Moulded value
+    this.purchaseMoulded = 0;
+    this.dpservice.getPurchaseBtnInfo(this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.purchaseMoulded = element.totalPurchase
       });
     });
 
@@ -359,7 +372,33 @@ export class SalescalendarComponent implements OnInit {
         { field: 'cancelInvoice', header: 'Cancel Inv.' },
       );
     }
+    else if (val == "purchasegroupmouldedsum") {
+      this.totalSumofTitle = "Tot. Moulded";
+      this.totalSumofBg = "bg-moulded";
+      this.cols = [
+        { field: 'plantShortName', header: 'Plant Name' },
+        { field: 'acDocumentDate', header: 'AC Document Date' },
+        { field: 'group', header: 'Group' },
+        { field: 'vendorName', header: 'Vendor Name' },
+        { field: 'narattion', header: 'Narattion' },
+        { field: 'totalPurchase', header: 'Moulded' },
+      ];
 
+      this.dpservicePurchase.purchasedetail = [];
+      this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
+      $('#basicExampleModalforpurchase').modal('show');
+      this.loading = true;
+
+      this.dpservicePurchase.getPurchaseBtnClickEvent(val, this.selectedcode, this.startdate)
+        .toPromise()
+        .then(res => {
+          this.dpservicePurchase.purchasedetail = res as Purchasedetail[];
+          this.getSumForButtonEvent();
+          this.loading = false;
+        });
+
+      return;
+    }
 
     this.dpservice.salesdetail = [];
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
@@ -376,6 +415,13 @@ export class SalescalendarComponent implements OnInit {
 
   }
   //sum
+  getSumForButtonEvent() {
+    this.totalSumofValue = 0;
+    for (const sd of this.dpservicePurchase.purchasedetail) {
+      this.totalSumofValue = (this.totalSumofValue + sd.totalPurchase);
+    }
+    return;
+  }
   sumgetsale(val) {
     this.basicamtinr = 0;
     this.totalvalue = 0;

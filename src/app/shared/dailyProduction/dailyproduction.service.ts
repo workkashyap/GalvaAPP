@@ -17,6 +17,7 @@ import { Top5rejectiondefectwise } from './top5rejectiondefectwise.model';
 
 import { Salessummary } from './salessummary.model'
 import { Salesdetail } from './salesdetail.model';
+import { Purchasesummary } from '../purchase/purchasesummary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -328,6 +329,11 @@ export class DailyproductionService {
     );
   }
 
+  public getPurchaseBtnInfo(plantcode, date): Observable<Purchasesummary[]> {
+    return this.http.get<Purchasesummary[]>(
+      this.rootUrl + '/purchasecalendars/purchasegroupmoulded/' + plantcode + '/' + date
+    );
+  }
 
   public getNetSaleSummary(date): Observable<Salessummary[]> {
     return this.http.get<Salessummary[]>(

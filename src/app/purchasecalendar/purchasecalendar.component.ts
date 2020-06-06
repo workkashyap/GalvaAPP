@@ -248,14 +248,14 @@ export class PurchasecalendarComponent implements OnInit {
         this.chemicals = element.totalPurchase
       });
     });
-    //Moulded value
+    /*Moulded value
     this.misc_purchase = 0;
     this.dpservice.getPurchaseBtnInfo('purchasegroupmoulded', this.selectedcode, this.startdate).toPromise().then(res => {
       const row = res as Purchasesummary[];
       row.forEach(element => {
         this.misc_purchase = element.totalPurchase
       });
-    });
+    });*/
   }
   //on change option value
   selectedGrid(ev) {

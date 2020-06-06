@@ -45,6 +45,12 @@
                     Cancelled Invoice =
                     <b>{{ cancelledInvoice| number:'1.2-2' }}</b>
                     Lacs</button>
+                  <button class="btn btn-custom text-dark bg-moulded" (click)="extraVal('purchasegroupmouldedsum')"
+                    style="width: auto;">
+                    Moulded =
+                    <b>{{ purchaseMoulded | number:'1.2-2' }}</b>
+                    Lacs</button>
+
                   <div class="btn-sm no-padding group-btn-c" role="group">
                     <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
                       style="border-radius: 5px 0px 0px 5px">Previous</button>
@@ -243,6 +249,90 @@
                         {{rowData[col.field]  | date :'dd MMM, y'}}
                       </span>
                       <span *ngIf="col.field!='billingDocDate' ">
+                        {{rowData[col.field]}}</span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-xl" id="basicExampleModalforpurchase" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Sales Summary
+                  <span *ngIf="!monthName">({{selected_eventdate | date :'dd MMM, y'}})</span>
+                  <span *ngIf="monthName">({{monthName | date :'MMM'}})</span> </h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
+              </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 450px;">
+              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
+                [value]="dpservicePurchase.purchasedetail" [paginator]="false" [rows]="15" [responsive]="true">
+
+                <ng-template pTemplate="header" let-columns>
+                  <!-- header button section -->
+                  <tr>
+                    <td colspan="2" style=" width:210px;">
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dt2.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width:115px;">
+                      <button type="button" label="EXCEL" (click)="dt2.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td colspan="2" style="width: 645px;"></td>
+                    <td style="width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" [ngClass]="totalSumofBg" style="float: right;">
+                        Total : {{ totalSumofValue | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+
+                  </tr>
+                  <!-- regular date section -->
+
+                  <tr class="tbl-tr">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of columns">
+                      <span *ngIf="col.field=='acDocumentDate'">
+                        {{rowData[col.field]  | date :'dd MMM, y'}}
+                      </span>
+                      <span *ngIf="col.field!='acDocumentDate' ">
                         {{rowData[col.field]}}</span>
                     </td>
                   </tr>
