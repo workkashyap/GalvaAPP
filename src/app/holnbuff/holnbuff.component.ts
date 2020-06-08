@@ -128,9 +128,9 @@ export class HolnbuffComponent implements OnInit {
       if (
         c.itemcode.toString().includes(ev.toString()) ||
         c.itemdesc.toString().includes(ev.toString()) ||
-        c.createddate.toString().includes(ev.toString()) ||
-        c.move555.toString().includes(ev.toString()) ||
-        c.menge.toString().includes(ev.toString())
+        c.budat.toString().includes(ev.toString()) ||
+        c.aufnr.toString().includes(ev.toString()) ||
+        c.charg.toString().includes(ev.toString())
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;
@@ -175,7 +175,7 @@ export class HolnbuffComponent implements OnInit {
   move555Total() {
     this.move555Sum = 0;
 
-    if (this.filterenable === true) {
+    if (this.filterenable == true) {
       for (const rq of this.filterItemrejarray) {
         this.move555Sum += rq.move555;
       }
@@ -188,7 +188,7 @@ export class HolnbuffComponent implements OnInit {
   }
   move343Total() {
     this.move343Sum = 0;
-    if (this.filterenable === true) {
+    if (this.filterenable == true) {
       for (const rq of this.filterItemrejarray) {
         this.move343Sum += rq.menge;
       }
@@ -202,10 +202,9 @@ export class HolnbuffComponent implements OnInit {
   }
   buffqtyTotle() {
     this.buffqtySum = 0;
-
-    if (this.filterenable === true) {
+    if (this.filterenable == true) {
       for (const rq of this.filterItemrejarray) {
-        this.buffqtySum += rq.menge;
+        this.buffqtySum += rq.buffqty;
       }
       return this.buffqtySum;
     }
@@ -216,6 +215,14 @@ export class HolnbuffComponent implements OnInit {
   }
   holdqtyTotal() {
     this.holdqtySum = 0;
+
+    if (this.filterenable == true) {
+      for (const rq of this.filterItemrejarray) {
+        this.holdqtySum += rq.holdqty;
+      }
+      return this.holdqtySum;
+    }
+
     for (const rq of this.hnbservice.holdnbufflist) {
       this.holdqtySum += rq.holdqty;
     }

@@ -44,6 +44,27 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#AFB42B,#DCE775);
 }
+
+.bg-mach-fail {
+    border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#08aeff,#a1c8dc)
+}
+
+
+.bg-tool-def {
+    border: unset;
+    color: white !important;
+    background:linear-gradient(to right,#a914f5,#CE93D8);
+}
+
+
+.bg-other {
+    border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#ad315a,#755c65);
+}
+
 .bg-capital {
     border: unset;
     color: white !important;

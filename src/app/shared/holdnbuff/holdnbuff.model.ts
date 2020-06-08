@@ -13,6 +13,6 @@ export class Holdnbuff {
 
   move555:number;
   menge:number;
-  itemcode:number;
+  itemcode:string;
   itemdesc:string;
 }

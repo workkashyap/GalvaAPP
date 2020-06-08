@@ -9,11 +9,30 @@
             <h5>Sales Calendar
             </h5>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Sales Calendar</li>
-            </ol>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-4">
+            <div class="row" style="text-align: center;">
+              <div class="col-md-6">
+                <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
+                  (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
+                  <!-- <option value="0">--Select--</option> -->
+                  <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                    {{ pl.plantshortname }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4" style="padding: unset !important;">
+                <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
+                  style="border-radius: 5px 0px 0px 5px">Previous</button>
+                <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
+                  style="border-radius: 0px 5px 5px 0px;">Next</button>
+              </div>
+              <div class="col-md-2" style="padding: unset !important;">
+                <button class="btn btn-primary " (click)="loaddata()" style="padding: 2px 10px 3px 10px;"><i
+                    class="fa fa-refresh" aria-hidden="true"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -28,48 +47,31 @@
               <div class="card-header ">
                 <!--  card-tools -->
                 <div class="form-inline">
-                  <button class="btn btn-custom text-dark bg-summary" (click)="summary()">Summary</button>
+                  <div style="margin: auto;">
+                    <button class="btn btn-custom text-dark bg-summary" (click)="summary()">Summary</button>
 
-                  <button class="btn btn-custom text-dark bg-info" (click)="extraVal('NetSaleDetail')">Net Sales =
-                    <b>{{ this.finalNetSale() | number:'1.2-2'}}</b>
-                    Lacs</button>
-                  <!-- <button class="btn btn-custom text-dark bg-success" (click)="extraVal('GrosSaleDetail')">Gross Sales =
+                    <button class="btn btn-custom text-dark bg-info" (click)="extraVal('NetSaleDetail')">Net Sales =
+                      <b>{{ this.finalNetSale() | number:'1.2-2'}}</b>
+                      Lacs</button>
+                    <!-- <button class="btn btn-custom text-dark bg-success" (click)="extraVal('GrosSaleDetail')">Gross Sales =
                     <b>{{ grossSales | number:'1.2-2' }}</b>
                     Lacs</button>-->
-                  <button class="btn btn-custom text-dark bg-danger" (click)="extraVal('salesReturnDetail')">Sales Rej
-                    =
-                    <b>{{ salesRej| number:'1.2-2' }}</b>
-                    Lacs</button>
-                  <button class="btn btn-custom text-dark bg-warning" (click)="extraVal('cancelinvoicedetail')"
-                    style="width: auto;">
-                    Cancelled Invoice =
-                    <b>{{ cancelledInvoice| number:'1.2-2' }}</b>
-                    Lacs</button>
-                  <button class="btn btn-custom text-dark bg-moulded" (click)="extraVal('purchasegroupmouldedsum')"
-                    style="width: auto;">
-                    Moulded =
-                    <b>{{ purchaseMoulded | number:'1.2-2' }}</b>
-                    Lacs</button>
+                    <button class="btn btn-custom text-dark bg-danger" (click)="extraVal('salesReturnDetail')">Sales Rej
+                      =
+                      <b>{{ salesRej| number:'1.2-2' }}</b>
+                      Lacs</button>
+                    <button class="btn btn-custom text-dark bg-warning" (click)="extraVal('cancelinvoicedetail')"
+                      style="width: auto;">
+                      Cancelled Invoice =
+                      <b>{{ cancelledInvoice| number:'1.2-2' }}</b>
+                      Lacs</button>
+                    <button class="btn btn-custom text-dark bg-moulded" (click)="extraVal('purchasegroupmouldedsum')"
+                      style="width: auto;">
+                      Moulded =
+                      <b>{{ purchaseMoulded | number:'1.2-2' }}</b>
+                      Lacs</button>
 
-                  <div class="btn-sm no-padding group-btn-c" role="group">
-                    <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
-                      style="border-radius: 5px 0px 0px 5px">Previous</button>
-                    <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
-                      style="border-radius: 0px 5px 5px 0px;">Next</button>
                   </div>
-                  <div class="col">
-                    <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
-                      (change)="selectedGrid($event.target.value)" style="height: calc(2.20rem);">
-                      <!-- <option value="0">--Select--</option> -->
-                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                        {{ pl.plantshortname }}
-                      </option>
-                    </select>
-                    &nbsp;
-                    <button class="btn btn-primary btn-custom" (click)="loaddata()" style="width: auto;"><i
-                        class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-
                 </div>
                 <!-- /.card-tools -->
               </div>
@@ -286,8 +288,8 @@
           </div>
           <div class="modal-body">
             <div style="overflow-y: scroll; height: 450px;">
-              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
-                selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
+              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                [responsive]="true" selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
                 [value]="dpservicePurchase.purchasedetail" [paginator]="false" [rows]="15" [responsive]="true">
 
                 <ng-template pTemplate="header" let-columns>
