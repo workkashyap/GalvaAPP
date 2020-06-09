@@ -19,7 +19,7 @@ import { Plant } from '../shared/plant/plant.model';
 })
 export class CreateactionplanComponent implements OnInit {
   public currentUser: User;
-  department: any = 'Plating';
+  department: any = 'Quality';
   cols: any[];
   public selectedtype: string;
   public loading = false;

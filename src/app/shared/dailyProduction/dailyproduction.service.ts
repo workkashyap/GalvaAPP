@@ -150,15 +150,7 @@ export class DailyproductionService {
   ): Observable<TopDefect[]> {
     return this.http.get<TopDefect[]>(
       this.rootUrl +
-      '/TopDefectscodevalue/getalldefectssum/' +
-      plantcode +
-      '/' +
-      type +
-      '/' +
-      fromdate +
-      '/' +
-      todate
-
+      '/TopDefectscodevalue/getalldefectssum/' + plantcode + '/' + type + '/' + fromdate + '/' + todate + '/' + code
     );
   }
 
