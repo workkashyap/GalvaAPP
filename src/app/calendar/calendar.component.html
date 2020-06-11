@@ -55,41 +55,45 @@
               <div class="card-header ">
                 <!--  card-tools -->
                 <div class="form-inline" *ngIf="this.dpservice.dailyreportsummary" style="margin: auto;">
-                  <div *ngFor="let tot of this.dpservice.dailyreportsummary" style="margin: auto;">
-                    <div *ngIf="tot.itemtype==this.typename">
-                      <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
-                      <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Insp. Value =
-                        <b>{{ tot.producevalue }}</b>
-                        Lacs</button>
-                      <button class="btn btn-custom text-dark bg-success" (click)="extraVal(2)">Ok Value =
-                        <b>{{ tot.okvalue }} Lacs &nbsp;&nbsp; Ok % {{tot.okper }}</b>
-                      </button>
-                      <button class="btn btn-custom text-dark bg-primary" (click)="extraVal(3)">Hold Value =
-                        <b>{{ tot.holdvalue }}</b>
-                        Lacs</button>
-                      <button class="btn btn-custom text-dark bg-dark" (click)="extraVal(4)">Buff. Value =
-                        <b>{{ tot.buffingvalue }}</b>
-                        Lacs</button>
-                      <button class="btn btn-custom text-dark bg-danger" (click)="extraVal(5)">Rej. Value =
-                        <b>{{ tot.rejectvalue }}</b>
-                        Lacs</button>
-                      <button class="btn btn-custom text-dark bg-warning" (click)="extraVal(6)">Reject % =
-                        <b>{{ tot.rejper }}</b></button>
-                      <button class="btn btn-custom text-dark bg-danger">Plating % =
-                        <b>{{ tot.platingper }}</b></button>
-                      <button class="btn btn-custom text-dark bg-danger">Moulding % =
-                        <b>{{ tot.mouldingper }}</b></button>
+                  <div *ngFor="let tot of this.dpservice.dailyreportsummary" style="text-align: center;">
+                    <div *ngIf="tot.itemtype==this.typename" class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
+                        <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Insp. Value =
+                          <b>{{ tot.producevalue }}</b>
+                          Lacs</button>
+                        <button class="btn btn-custom text-dark bg-success" (click)="extraVal(2)">Ok Value =
+                          <b>{{ tot.okvalue }} Lacs &nbsp;&nbsp; Ok % {{tot.okper }}</b>
+                        </button>
+                        <button class="btn btn-custom text-dark bg-primary" (click)="extraVal(3)">Hold Value =
+                          <b>{{ tot.holdvalue }}</b>
+                          Lacs</button>
+                        <button class="btn btn-custom text-dark bg-dark" (click)="extraVal(4)">Buff. Value =
+                          <b>{{ tot.buffingvalue }}</b>
+                          Lacs</button>
+                        <button class="btn btn-custom text-dark bg-danger" (click)="extraVal(5)">Rej. Value =
+                          <b>{{ tot.rejectvalue }}</b>
+                          Lacs</button>
+                        <button class="btn btn-custom text-dark bg-warning" (click)="extraVal(6)">Reject % =
+                          <b>{{ tot.rejper }}</b></button>
+                      </div>
+                      <div class="col-md-12">
+                        <button class="btn btn-custom text-dark bg-danger">Plating % =
+                          <b>{{ tot.platingper }}</b></button>
+                        <button class="btn btn-custom text-dark bg-danger">Moulding % =
+                          <b>{{ tot.mouldingper }}</b></button>
 
 
-                      <button class="btn btn-custom text-dark bg-mach-fail">Mach. Fail =
-                        <b>{{ tot.mechfailvalue |  number:'1.2-2' }}</b></button>
-                      <button class="btn btn-custom text-dark bg-tool-def">Tool Def. =
-                        <b>{{ tot.tooldefvalue |  number:'1.2-2' }}</b></button>
-                      <button class="btn btn-custom text-dark bg-other">Others =
-                        <b> {{ tot.othersvalue |  number:'1.2-2' }}</b></button>
+                        <button class="btn btn-custom text-dark bg-mach-fail">Mach. Fail =
+                          <b>{{ tot.mechfailvalue |  number:'1.2-2' }}</b></button>
+                        <button class="btn btn-custom text-dark bg-tool-def">Tool Def. =
+                          <b>{{ tot.tooldefvalue |  number:'1.2-2' }}</b></button>
+                        <button class="btn btn-custom text-dark bg-other">Others =
+                          <b> {{ tot.othersvalue |  number:'1.2-2' }}</b></button>
 
-                      <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
-                        Action Plan</button>
+                        <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
+                          Action Plan</button>
+                      </div>
 
                     </div>
                   </div>
@@ -140,302 +144,296 @@
               <div class="col-md-6">
                 <h5>Action Plan
                   <span *ngIf="monthName">({{monthName| date :'MMM'}})</span> </h5>
-                    </div>
-                    <div class="col-md-5">
-                      <h4>{{selected_plantname }}</h4>
-                    </div>
-                  </div>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div style="overflow-y: scroll; height: 350px;" class="">
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
+              </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 350px;" class="">
 
-                    <p-table #dtt [value]="allActionPlan" dataKey="id" editMode="row" [paginator]="true" [rows]="20"
-                      [resizableColumns]="true" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
-                      [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
-                      class="mostly-customized-scrollbar" *ngIf="!noRecord">
-                      <ng-template pTemplate="header">
-                        <tr>
-                          <th class="tbl-th" *ngFor="let col of allActionPlanCol" [width]="col.width">{{col.header}}
-                          </th>
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
-                        <tr [pEditableRow]="rowData">
-                          <td *ngFor="let col of allActionPlanCol" [hidden]="!allActionPlan && !allActionPlan.length">
-                            <span
-                              *ngIf="col.field=='targetdateofcompletion' || col.field=='actualdateofcompletion'">{{rowData[col.field]  | date :'dd MMM, y'}}</span>
-                            <span
-                              *ngIf="col.field!='progresspercent' && col.field!='attachment' &&  col.field!='approvedstatus' && col.field!='targetdateofcompletion' && col.field!='actualdateofcompletion'">{{rowData[col.field]}}</span>
-                            <!--progress bar-->
-                            <span *ngIf="col.field=='progresspercent'">{{rowData[col.field]}}</span>
-                            <div class="progress progress-sm" *ngIf="col.field=='progresspercent'">
-                              <div class="progress-bar bg-green" role="progressbar"
-                                attr.aria-valuenow="{{rowData.progresspercent}}" aria-volumemin="0" aria-volumemax="100"
-                                [style.width.%]="rowData.progresspercent">
-                              </div>
-                            </div>
-                            <!--end progress bar-->
+              <p-table #dtt [value]="allActionPlan" dataKey="id" editMode="row" [paginator]="true" [rows]="20"
+                [resizableColumns]="true" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" class="mostly-customized-scrollbar" *ngIf="!noRecord">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="tbl-th" *ngFor="let col of allActionPlanCol" [width]="col.width">{{col.header}}
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="rowData">
+                    <td *ngFor="let col of allActionPlanCol" [hidden]="!allActionPlan && !allActionPlan.length">
+                      <span
+                        *ngIf="col.field=='targetdateofcompletion' || col.field=='actualdateofcompletion'">{{rowData[col.field]  | date :'dd MMM, y'}}</span>
+                      <span
+                        *ngIf="col.field!='progresspercent' && col.field!='attachment' &&  col.field!='approvedstatus' && col.field!='targetdateofcompletion' && col.field!='actualdateofcompletion'">{{rowData[col.field]}}</span>
+                      <!--progress bar-->
+                      <span *ngIf="col.field=='progresspercent'">{{rowData[col.field]}}</span>
+                      <div class="progress progress-sm" *ngIf="col.field=='progresspercent'">
+                        <div class="progress-bar bg-green" role="progressbar"
+                          attr.aria-valuenow="{{rowData.progresspercent}}" aria-volumemin="0" aria-volumemax="100"
+                          [style.width.%]="rowData.progresspercent">
+                        </div>
+                      </div>
+                      <!--end progress bar-->
 
-                            <!--Status-->
-                            <p-cellEditor *ngIf="col.field=='approvedstatus'">
-                              <ng-template pTemplate="input">
-                                <select name="approvedstatus" [(ngModel)]="rowData.approvedstatus"
-                                  class="form-control status">
-                                  <option value="0">Pending</option>
-                                  <option value="1">Aprrove</option>
-                                  <option value="2">Reject</option>
-                                </select>
-                              </ng-template>
-                              <ng-template pTemplate="output">
-                                <span class="badge badge-info" *ngIf="rowData[col.field]=='0'">Pending</span>
-                                <span class="badge badge-success" *ngIf="rowData[col.field]=='1'">Approved</span>
-                                <span class="badge badge-danger" *ngIf="rowData[col.field]=='2'">Rejected</span>
-                              </ng-template>
-                            </p-cellEditor>
-                            <!--End Status-->
+                      <!--Status-->
+                      <p-cellEditor *ngIf="col.field=='approvedstatus'">
+                        <ng-template pTemplate="input">
+                          <select name="approvedstatus" [(ngModel)]="rowData.approvedstatus"
+                            class="form-control status">
+                            <option value="0">Pending</option>
+                            <option value="1">Aprrove</option>
+                            <option value="2">Reject</option>
+                          </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <span class="badge badge-info" *ngIf="rowData[col.field]=='0'">Pending</span>
+                          <span class="badge badge-success" *ngIf="rowData[col.field]=='1'">Approved</span>
+                          <span class="badge badge-danger" *ngIf="rowData[col.field]=='2'">Rejected</span>
+                        </ng-template>
+                      </p-cellEditor>
+                      <!--End Status-->
 
-                            <!--Attachment-->
-                            <app-filedownload [Filename]="rowData.attachment"
-                              *ngIf="col.field=='attachment' && rowData.attachment"></app-filedownload>
-                            <span *ngIf="col.field=='attachment' && !rowData.attachment"> No attachment found</span>
-                            <!--End Attachment-->
+                      <!--Attachment-->
+                      <app-filedownload [Filename]="rowData.attachment"
+                        *ngIf="col.field=='attachment' && rowData.attachment"></app-filedownload>
+                      <span *ngIf="col.field=='attachment' && !rowData.attachment"> No attachment found</span>
+                      <!--End Attachment-->
 
-                            <!--Buttons-->
-                            <div *ngIf="col.field=='edit'">
-                              <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
-                                class="ui-button-info"></button>&nbsp;
+                      <!--Buttons-->
+                      <div *ngIf="col.field=='edit'">
+                        <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                          class="ui-button-info"></button>&nbsp;
 
-                              <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
-                                class="ui-button-success" style="margin-right: .5em"
-                                (click)="onRowEditSave(rowData,'')"></button>
-                              <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
-                                class="ui-button-danger"></button>
-                            </div>
-                            <!--End Buttons-->
-                            <!-- --status-- -->
-                            <div *ngIf="col.field=='edit_status' && this.currentUser && this.currentUser.id==14">
-                              <button class="btn btn-success" (click)="onRowEditSave(rowData,'1')">
-                                Approve
-                              </button>&nbsp;
+                        <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                          class="ui-button-success" style="margin-right: .5em"
+                          (click)="onRowEditSave(rowData,'')"></button>
+                        <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                          class="ui-button-danger"></button>
+                      </div>
+                      <!--End Buttons-->
+                      <!-- --status-- -->
+                      <div *ngIf="col.field=='edit_status' && this.currentUser && this.currentUser.id==14">
+                        <button class="btn btn-success" (click)="onRowEditSave(rowData,'1')">
+                          Approve
+                        </button>&nbsp;
 
-                              <button class="btn btn-danger" (click)="onRowEditSave(rowData,'2')">
-                                Reject
-                              </button>
-                            </div>
-                            <!-- --status-- -->
-                          </td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                    <div *ngIf="noRecord" style="text-align: center;">
-                      <h2>{{noRecord}}</h2>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+                        <button class="btn btn-danger" (click)="onRowEditSave(rowData,'2')">
+                          Reject
+                        </button>
+                      </div>
+                      <!-- --status-- -->
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <div *ngIf="noRecord" style="text-align: center;">
+                <h2>{{noRecord}}</h2>
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-          <!-- Modal -->
-          <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <div class="row col-md-11">
-                    <div class="col-md-6">
-                      <h5>Rejection Summary
-                        <span *ngIf="!monthName">({{selected_eventdate | date :'dd MMM, y'}})</span>
-                        <span *ngIf="monthName">({{monthName | date :'MMM'}})</span> </h5>
-                    </div>
-                    <div class="col-md-5">
-                      <h4>{{selected_plantname }}</h4>
-                    </div>
-                  </div>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-
-                </div>
-                <div class="modal-body">
-                  <div style="overflow-y: scroll; height: 550px;">
-                    <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
-                      [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
-                      [(selection)]="selectedItemrej" [value]="dpservice.itemwiserejlist" [paginator]="false"
-                      [rows]="10" [responsive]="true">
-
-                      <ng-template pTemplate="header" let-columns>
-                        <!-- header button section -->
-                        <tr *ngIf="btnLabel">
-                          <td colspan="2" style="width:15%;">
-                            <div class="input-group mb-2 ">
-                              <input type="text" pInputText placeholder="Global Filter"
-                                (input)="loadper($event.target.value , dt)"
-                                (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                class="form-control fix-height">
-                              <div class="input-group-append fix-height">
-                                <i class="fa fa-search input-group-text"></i>
-                              </div>
-                            </div>
-                          </td>
-                          <!--not for summary -->
-                          <td style="width:140px;">
-                            <button type="button" label="EXCEL" (click)="dt.exportCSV()"
-                              class="btn btn-success btn-sm mb-2">
-                              <i class="fa fa-file-excel-o"></i> Export</button>
-                          </td>
-
-
-                          <!--not for reject% and summary click event -->
-                          <td *ngIf="btnLabel!='6' && btnLabel!='7'" style=" width:140px;">
-                            <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
-                              style="float: right;">Insp.
-                              Qty: {{ inspectionQtysum | number:'1.2-2'}}
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
-                              style="float: right;">Ok
-                              Qty: {{ okQtySum | number:'1.2-2'}}
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
-                              style="float: right;">Hold Qty: {{ holdQtySum | number:'1.2-2'}}
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
-                              style="float: right;">Buff.
-                              Qty: {{ buffingQtySum | number:'1.2-2'}}
-                            </button>
-
-                            <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
-                              style="float: right;">Reject Qty: {{ rejectQtysum  | number:'1.2-2'  }}
-                            </button>
-
-                          </td>
-                          <!--not for reject% and summary click event -->
-
-                          <!--not for summary click event -->
-                          <td style="width:140px;" *ngIf="btnLabel!='7'">
-                            <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
-                              style="float: right;">Total
-                              Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
-                              style="float: right;">Ok
-                              Value: {{ okvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
-                              style="float: right;">Hold Value: {{ holdvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-
-                            <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
-                              style="float: right;">Buff.
-                              Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-
-                            <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
-                              style="float: right;">Total Reject: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
-
-                            <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
-                              style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
-                          </td>
-                          <!--not for summary click event -->
-
-                          <!--only for summary -->
-                          <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                            <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">Total
-                              Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
-                            </button>
-                          </td>
-                          <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                            <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok
-                              Val.: {{ okvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-                          </td>
-                          <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                            <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok %:
-                              {{ okperSum | number:'1.2-2'}}
-                            </button>
-                          </td>
-                          <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                            <button class="btn btn-sm text-dark bg-danger mb-2" style="float: right;">Total Reject:
-                              {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
-                          </td>
-                          <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                            <button class="btn btn-sm text-dark bg-warning mb-2" style="float: right;">Reject %:
-                              {{ rejperPerSum2 | number:'1.1-2'  }} </button>
-                          </td>
-                          <!--end for summary -->
-                        </tr>
-                        <!-- regular date section -->
-                        <tr *ngIf="!btnLabel">
-                          <td colspan="3" style=" width:275px;">
-                            <div class="input-group mb-2">
-                              <input type="text" pInputText placeholder="Global Filter"
-                                (input)="loadper($event.target.value , dt)"
-                                (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                class="form-control fix-height">
-                              <div class="input-group-append fix-height">
-                                <i class="fa fa-search input-group-text"></i>
-                              </div>
-                            </div>
-                          </td>
-                          <td style=" width:140px;"> </td>
-                          <td style=" width:140px;"> </td>
-                          <td style=" width:140px;">
-                            <button class="btn text-dark bg-danger btn-custom-td">
-                              Total Reject: {{ rejectvsum  | number:'1.2-2'  }} Lacs </button>
-                          </td>
-                          <td style=" width:140px;">
-                            <button class="btn  text-dark bg-info btn-custom-td">
-                              Total Insp.: {{ inspectionvsum  | number:'1.2-2'}} Lacs
-                            </button>
-                          </td>
-                          <td style=" width:140px;">
-                            <button class="btn text-dark bg-primary btn-custom-td">
-                              Hold Value: {{ holdvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-                          </td>
-                          <td style=" width:140px;">
-                            <button class="btn text-dark bg-dark btn-custom-td">
-                              Buff. Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
-                            </button>
-                          </td>
-                        </tr>
-                        <tr class="tbl-tr">
-                          <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px"
-                            class="tbl-th">
-                            {{col.header}}
-                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                              ariaLabelDesc="Activate to sort in descending order"
-                              ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                          </th>
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-rowData let-columns="columns">
-                        <tr [pSelectableRow]="rowData">
-
-                          <td *ngFor="let col of columns">
-                            {{rowData[col.field]}}
-                          </td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Rejection Summary
+                  <span *ngIf="!monthName">({{selected_eventdate | date :'dd MMM, y'}})</span>
+                  <span *ngIf="monthName">({{monthName | date :'MMM'}})</span> </h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
               </div>
             </div>
-          </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
 
-          <!-- /.content-wrapper -->
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 550px;">
+              <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
+                [value]="dpservice.itemwiserejlist" [paginator]="false" [rows]="10" [responsive]="true">
+
+                <ng-template pTemplate="header" let-columns>
+                  <!-- header button section -->
+                  <tr *ngIf="btnLabel">
+                    <td colspan="2" style="width:15%;">
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="loadper($event.target.value , dt)"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <!--not for summary -->
+                    <td style="width:140px;">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+
+
+                    <!--not for reject% and summary click event -->
+                    <td *ngIf="btnLabel!='6' && btnLabel!='7'" style=" width:140px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
+                        style="float: right;">Insp.
+                        Qty: {{ inspectionQtysum | number:'1.2-2'}}
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
+                        style="float: right;">Ok
+                        Qty: {{ okQtySum | number:'1.2-2'}}
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
+                        style="float: right;">Hold Qty: {{ holdQtySum | number:'1.2-2'}}
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
+                        style="float: right;">Buff.
+                        Qty: {{ buffingQtySum | number:'1.2-2'}}
+                      </button>
+
+                      <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
+                        style="float: right;">Reject Qty: {{ rejectQtysum  | number:'1.2-2'  }}
+                      </button>
+
+                    </td>
+                    <!--not for reject% and summary click event -->
+
+                    <!--not for summary click event -->
+                    <td style="width:140px;" *ngIf="btnLabel!='7'">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
+                        style="float: right;">Total
+                        Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
+                        style="float: right;">Ok
+                        Value: {{ okvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-primary mb-2" *ngIf="btnLabel=='3'"
+                        style="float: right;">Hold Value: {{ holdvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+
+                      <button class="btn btn-sm  text-dark bg-dark mb-2" *ngIf="btnLabel=='4'"
+                        style="float: right;">Buff.
+                        Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+
+                      <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
+                        style="float: right;">Total Reject: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
+
+                      <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
+                        style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
+                    </td>
+                    <!--not for summary click event -->
+
+                    <!--only for summary -->
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">Total
+                        Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok
+                        Val.: {{ okvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok %:
+                        {{ okperSum | number:'1.2-2'}}
+                      </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm text-dark bg-danger mb-2" style="float: right;">Total Reject:
+                        {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
+                    </td>
+                    <td *ngIf="btnLabel=='7'" style=" width:180px;">
+                      <button class="btn btn-sm text-dark bg-warning mb-2" style="float: right;">Reject %:
+                        {{ rejperPerSum2 | number:'1.1-2'  }} </button>
+                    </td>
+                    <!--end for summary -->
+                  </tr>
+                  <!-- regular date section -->
+                  <tr *ngIf="!btnLabel">
+                    <td colspan="3" style=" width:275px;">
+                      <div class="input-group mb-2">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="loadper($event.target.value , dt)"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style=" width:140px;"> </td>
+                    <td style=" width:140px;"> </td>
+                    <td style=" width:140px;">
+                      <button class="btn text-dark bg-danger btn-custom-td">
+                        Total Reject: {{ rejectvsum  | number:'1.2-2'  }} Lacs </button>
+                    </td>
+                    <td style=" width:140px;">
+                      <button class="btn  text-dark bg-info btn-custom-td">
+                        Total Insp.: {{ inspectionvsum  | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td style=" width:140px;">
+                      <button class="btn text-dark bg-primary btn-custom-td">
+                        Hold Value: {{ holdvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                    <td style=" width:140px;">
+                      <button class="btn text-dark bg-dark btn-custom-td">
+                        Buff. Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="tbl-tr">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of columns">
+                      {{rowData[col.field]}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /.content-wrapper -->

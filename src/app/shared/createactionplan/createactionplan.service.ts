@@ -22,7 +22,7 @@ export class CreateactionplanService {
   //create action plan
   public getActionPlan(monthname, plantcode, currentUser): Observable<Createactionplan[]> {
     return this.http.get<Createactionplan[]>(
-      this.rootUrl + "/newactionplans/Getnewactionplan/" + monthname + '/' + plantcode + '/' + currentUser
+      this.rootUrl + "/newactionplans/Getnewactionplan/" + monthname + '/' + plantcode
     );
   }
   public insertCreateactionplan(data) {

@@ -9,7 +9,7 @@ import { DownloadfileService } from 'src/app/shared/Downloadfile.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import { Plant } from '../shared/plant/plant.model';
-
+import { UserService } from '../shared/user/user.service';
 @Component({
   selector: 'app-createactionplan',
   templateUrl: './createactionplan.component.html',
@@ -19,7 +19,9 @@ import { Plant } from '../shared/plant/plant.model';
 })
 export class CreateactionplanComponent implements OnInit {
   public currentUser: User;
-  department: any = 'Quality';
+  department: any = 'Plating';
+  mode: any = 'Quality';
+
   cols: any[];
   public selectedtype: string;
   public loading = false;
@@ -32,52 +34,20 @@ export class CreateactionplanComponent implements OnInit {
   totalWeeks: any;
   constructor(
     private lservice: LoginService,
+    public service: UserService,
     public toastr: ToastrService, public datePipe: DatePipe,
     public fservice: DownloadfileService, public plantservice: PlantService,
     public apservice: CreateactionplanService) {
     this.selectedtype = "1010";
 
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+    console.log(" this.lservice.currentUser : ", this.lservice.currentUser);
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    this.service.getuserbyid(this.currentUser.id);
+
     //console.log("currentUser : ", this.currentUser.username);
   }
   getWeeksInMonth(month, year) {
-    console.log(month, year);
-    console.log(new Date(year, month, 1));
-    // var weeks = [],
-    //  var firstDate = new Date(year, month, 1)
-
-    /*   lastDate = new Date(year, month + 1, 0),
-      numDays = lastDate.getDate();
- 
-    var start = 1;
-    var end = 7 - firstDate.getDay();
-    var i = 1;
-    while (start <= numDays) {
-      weeks.push({ start: start, end: end, label: "week " + i });
-      start = end + 1;
-      end = end + 7;
-      i++;
-      if (end > numDays)
-        end = numDays;
-    }*/
-    /*
-    var clonedMoment = moment(firstDate), first, last;
- 
-    // get week number for first day of month
-    first = clonedMoment.startOf('month').week();
-    // get week number for last day of month
-    last = clonedMoment.endOf('month').week();
- 
-    // In case last week is in next year
-    if (first > last) {
-      last = first + last;
-    }
-    console.log("w",last - first + 1);
-    return last - first + 1;*/
-
-
-
     var startDate = moment([year, month]);
     var endDate = moment(startDate).endOf('month');
 
@@ -136,23 +106,24 @@ export class CreateactionplanComponent implements OnInit {
     /// this.plantservice.getPlantData(this.currentUser.id);
 
     this.cols = [
-      // { field: "id", header: "ID" },
-      //  { field: "sHash", header: "S#", width: "50px" },
-      { field: "weeks", header: "Weeks", width: "80px" },
-      { field: "materialCode", header: "Code", width: "80px" },
-      { field: "materialDescription", header: "Description", width: "80px" },
-      //{ field: "project", header: "Project", width: "80px" },
-      //{ field: "responsibility", header: "Responsibility", width: "90px" },
-      { field: "targetdateofcompletion", header: "Target date", width: "80px" },
-      { field: "actionPlan", header: "ActionPlan", width: "80px" },
+      { field: "weeks", header: "Weeks", width: "75px" },
+      { field: "materialCode", header: "Code", width: "75px" },
+      { field: "materialDescription", header: "Description", width: "150px" },
+      { field: "rejvalue", header: "Rej. Val.", width: "100px" },
+      { field: "defect1", header: "Defect 1", width: "100px" },
+      { field: "defectval1", header: "Defect Val. 1", width: "100px" },
+      { field: "defect2", header: "Defect 2", width: "100px" },
+      { field: "defectval2", header: "Defect Val. 2", width: "100px" },
+      { field: "defect3", header: "Defect 3", width: "100px" },
+      { field: "defectval3", header: "Defect Val. 3", width: "100px" },
+      { field: "responsibility", header: "Responsibility", width: "100px" },
+      { field: "targetdateofcompletion", header: "Target date", width: "140px" },
+      { field: "actionPlan", header: "ActionPlan", width: "160px" },
       { field: "rejper", header: "Reject %", width: "80px" },
-      // { field: "actualdateofcompletion", header: "Actual date of completion", width: "80px" },
-      // { field: "correctiveactiontaken", header: "Corrective action taken", width: "80px" },
       { field: "result", header: "Result", width: "80px" },
-      { field: "progresspercent", header: "Progress", width: "80px" },
-      { field: "approvedstatus", header: "Approved status", width: "80px" },
-      // { field: "remarks2", header: " Remark 2", width: "80px" },
-      { field: "attachment", header: "Attachment", width: "80px" },
+      { field: "progresspercent", header: "Progress", width: "100px" },
+      { field: "approvedstatus", header: "Status", width: "80px" },
+      { field: "attachment", header: "Attachment", width: "240px" },
       { field: "edit", header: "Action", width: "100px" }
     ];
     this.loading = true;
@@ -226,16 +197,27 @@ export class CreateactionplanComponent implements OnInit {
 
   }
   onRowEditInit(row: any) {
-    this.cols[0].width = "90px";
-    this.cols[1].width = "160px";
-    this.cols[2].width = "160px";
-    this.cols[3].width = "120px";
-    this.cols[4].width = "140px";
-    this.cols[5].width = "120px";
-    this.cols[6].width = "120px";
-    this.cols[7].width = "120px";
-    this.cols[8].width = "120px";
-    this.cols[9].width = "240px";
+  
+    this.cols[0].width = "75px";
+    this.cols[1].width = "75px";
+    this.cols[2].width = "150px";
+    this.cols[3].width = "75px";
+    this.cols[4].width = "75px";
+    this.cols[5].width = "90px";
+    this.cols[6].width = "75px";
+    this.cols[7].width = "90px";
+    this.cols[8].width = "75px";
+    this.cols[9].width = "90px";
+    this.cols[10].width = "100px";
+    this.cols[11].width = "127px";
+    this.cols[12].width = "160px";
+    this.cols[13].width = "75px";
+    this.cols[14].width = "75px";
+    this.cols[15].width = "100px";
+    this.cols[16].width = "65px";
+    this.cols[17].width = "240px";
+    this.cols[18].width = "100px";
+
     row.targetdateofcompletion = this.formatDate(new Date(row.targetdateofcompletion));
     row.actualdateofcompletion = this.formatDate(new Date(row.actualdateofcompletion));
     console.log(row);
@@ -287,9 +269,10 @@ export class CreateactionplanComponent implements OnInit {
     row.result = row.result;
     row.materialCode = row.materialCode;
 
-    row.responsibility = 'hardik'; // this.currentUser.username;
+    //row.responsibility = 'hardik'; // this.currentUser.username;
     row.progresspercent = parseInt(row.progresspercent);
     row.department = this.department;
+    row.mode = this.mode;
     //row.actualdateofcompletion = '';
     row.targetdateofcompletion = this.datePipe.transform(new Date(row.targetdateofcompletion), 'yyyy-MM-dd');
     row.actualdateofcompletion = this.datePipe.transform(new Date(row.currentDate), 'yyyy-MM-dd');
@@ -331,20 +314,26 @@ export class CreateactionplanComponent implements OnInit {
       });
   }
   resetColumnWidth() {
-    this.cols[0].width = "80px";
-    this.cols[1].width = "80px";
-    this.cols[2].width = "80px";
-    //  this.cols[3].width = "80px";
-    this.cols[3].width = "80px";
-    this.cols[4].width = "90px";
-    //  this.cols[6].width = "80px";
-    // this.cols[7].width = "80px";
-    this.cols[5].width = "80px";
-    this.cols[6].width = "80px";
-    this.cols[7].width = "80px";
-    this.cols[8].width = "120px";
-    this.cols[9].width = "240px";
-
+   
+    this.cols[0].width = "75px";
+    this.cols[1].width = "75px";
+    this.cols[2].width = "150px";
+    this.cols[3].width = "75px";
+    this.cols[4].width = "75px";
+    this.cols[5].width = "90px";
+    this.cols[6].width = "75px";
+    this.cols[7].width = "90px";
+    this.cols[8].width = "75px";
+    this.cols[9].width = "90px";
+    this.cols[10].width = "100px";
+    this.cols[11].width = "127px";
+    this.cols[12].width = "160px";
+    this.cols[13].width = "75px";
+    this.cols[14].width = "75px";
+    this.cols[15].width = "100px";
+    this.cols[16].width = "65px";
+    this.cols[17].width = "240px";
+    this.cols[18].width = "100px";
   }
 
   onRowEditCancel(row: any, index: number) {
@@ -356,19 +345,25 @@ export class CreateactionplanComponent implements OnInit {
     this.resetColumnWidth();
   }
   newRow() {
-    this.cols[0].width = "160px";
-    this.cols[1].width = "120px";
-    this.cols[2].width = "160px";
-    // this.cols[3].width = "120px";
-    this.cols[3].width = "140px";
-    this.cols[4].width = "140px";
-    //this.cols[6].width = "140px";
-    //this.cols[7].width = "200px";
-    this.cols[5].width = "120px";
-    this.cols[6].width = "100px";
-    this.cols[7].width = "140px";
-    this.cols[8].width = "120px";
-    this.cols[9].width = "240px";
+    this.cols[0].width = "75px";
+    this.cols[1].width = "75px";
+    this.cols[2].width = "150px";
+    this.cols[3].width = "75px";
+    this.cols[4].width = "75px";
+    this.cols[5].width = "90px";
+    this.cols[6].width = "75px";
+    this.cols[7].width = "90px";
+    this.cols[8].width = "75px";
+    this.cols[9].width = "90px";
+    this.cols[10].width = "100px";
+    this.cols[11].width = "127px";
+    this.cols[12].width = "160px";
+    this.cols[13].width = "75px";
+    this.cols[14].width = "75px";
+    this.cols[15].width = "100px";
+    this.cols[16].width = "65px";
+    this.cols[17].width = "240px";
+    this.cols[18].width = "100px";
     return {
       "id": 0,
       "sHash": "",
@@ -376,6 +371,13 @@ export class CreateactionplanComponent implements OnInit {
       "department": "",
       "materialCode": "",
       "materialDescription": "",
+      "rejvalue": "",
+      "defect1": "",
+      "defectval1": "",
+      "defect2": "",
+      "defectval2": "",
+      "defect3": "",
+      "defectval3": "",
       "rejper": "",
       "project": "",
       "responsibility": "",

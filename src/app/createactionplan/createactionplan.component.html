@@ -26,8 +26,7 @@
                     <button pButton type="button" icon="pi pi-plus" class="ui-button-info" pAddRow [table]="dt"
                         [newRow]="newRow()"></button>
                 </div>
-
-                <div class="col-sm-3 mb-2">
+                <div class="col-sm-2 mb-2">
                     <select class=" custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
                         #Monthname='ngModel' [(ngModel)]='monthname'>
                         <option value="Jan">Jan</option>
@@ -44,7 +43,8 @@
                         <option value="Dec">Dec</option>
                     </select>
                 </div>
-                <div class="col-sm-3 mb-2">
+                <div class="col-sm-1 mb-2"></div>
+                <div class="col-sm-2 mb-2">
                     <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.plantcode"
                         (change)="selectedGrid($event.target.value)">
                         <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
@@ -52,8 +52,18 @@
                         </option>
                     </select>
                 </div>
-                <div class="col-sm-3 mb-2">
+                <div class="col-sm-1 mb-2"></div>
+                <div class="col-sm-2 mb-2">
                     <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department"
+                        (change)="selectedGrid($event.target.value)">
+                        <option value="Plating">Plating</option>
+                        <option value="Moulding">Moulding</option>
+                    </select>
+                </div>
+                <div class="col-sm-1 mb-2"></div>
+
+                <div class="col-sm-2 mb-2">
+                    <select class="custom-select" name="mode2" #mode2="ngModel" [(ngModel)]="mode"
                         (change)="selectedGrid($event.target.value)">
                         <option value="Quality">Quality</option>
                         <option value="Top Management">Top Management</option>
@@ -111,29 +121,103 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <!-- <td>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="rowData.project" class="form-control"
-                                        required>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    {{rowData.project}}
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>-->
-                        <!--
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="rowData.responsibility"
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.rejvalue"
                                         class="form-control" required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{rowData.responsibility}}
+                                    {{rowData.rejvalue}}
                                 </ng-template>
                             </p-cellEditor>
-                        </td>-->
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect1"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defect1}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval1"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defectval1}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect2"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defect2}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval2"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defectval2}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect3"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defect3}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval3"
+                                        class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.defectval3}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+
+                                    <select pInputText type="text" [(ngModel)]="rowData.responsibility"
+                                        class="form-control" required>
+                                        <option [value]="user.id" *ngFor="let user of service.userlist">
+                                            {{user.username}}
+                                        </option>
+                                    </select>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngFor="let usr of service.userlist">
+                                        <span *ngIf="usr.id==rowData.responsibility">{{usr.username}}</span>
+                                    </span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
                         <td style="width:150px">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">

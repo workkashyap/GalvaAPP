@@ -60,6 +60,7 @@ import { SalesDetailComponent } from "./sales-detail/sales-detail.component";
 import { PurchaseComponent } from "./purchase/purchase.component";
 import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.component';
 import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-detail.component';
+import { PpccalendarComponent } from './ppccalendar/ppccalendar.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-det
     SalesDetailComponent,
     PurchaseComponent,
     PurchasecalendarComponent,
-    PurchaseDetailComponent
+    PurchaseDetailComponent,
+    PpccalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -311,6 +313,11 @@ import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-det
         component: PurchaseDetailComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: "ppccalendar",
+        component: PpccalendarComponent,
+        canActivate: [AuthGuard],
+      },
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),
@@ -320,4 +327,4 @@ import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-det
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,6 +1,6 @@
 .form-control{
     padding: 3px;
-    font-size: 11px;
+    font-size: 10px;
 }
 li.breadcrumb-item{
     font-size: 0.8rem;
@@ -31,4 +31,10 @@ body .ui-table .ui-table-tbody > tr > td {
 .redBg{
     color: red;    border: 1px solid;
 
+}
+p-celleditor {
+    font-size: 9.9px;
+}
+.tbl-th {
+    font-size: 10px;
 }
