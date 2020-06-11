@@ -61,6 +61,7 @@ import { PurchaseComponent } from "./purchase/purchase.component";
 import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.component';
 import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-detail.component';
 import { PpcComponent } from './ppc/ppc.component';
+import { PpccalendarComponent } from './ppccalendar/ppccalendar.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { PpcComponent } from './ppc/ppc.component';
     PurchaseComponent,
     PurchasecalendarComponent,
     PurchaseDetailComponent,
-    PpcComponent
+    PpcComponent,
+    PpccalendarComponent
 
   ],
   imports: [
@@ -317,6 +319,11 @@ import { PpcComponent } from './ppc/ppc.component';
       {
         path: "ppcimport",
         component: PpcComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "ppccalendar",
+        component: PpccalendarComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },
