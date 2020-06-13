@@ -55,7 +55,7 @@
                 <div class="col-sm-1 mb-2"></div>
                 <div class="col-sm-2 mb-2">
                     <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department"
-                        (change)="selectedGrid($event.target.value)">
+                        (change)="selectedGrid1()">
                         <option value="Plating">Plating</option>
                         <option value="Moulding">Moulding</option>
                     </select>
@@ -64,11 +64,11 @@
 
                 <div class="col-sm-2 mb-2">
                     <select class="custom-select" name="mode2" #mode2="ngModel" [(ngModel)]="mode"
-                        (change)="selectedGrid($event.target.value)">
+                        (change)="selectedGrid1()">
                         <option value="Quality">Quality</option>
-                        <option value="Top Management">Top Management</option>
-                        <option value="General Improvement">General Improvement</option>
-                        <option value="Customer Rej Review">Customer Rej Review</option>
+                        <option value="Top">Top Management</option>
+                        <option value="General">General Improvement</option>
+                        <option value="Customer">Customer Rej Review</option>
                     </select>
                 </div>
             </div>
@@ -124,8 +124,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.rejvalue"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.rejvalue" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.rejvalue}}
@@ -135,8 +135,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect1"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defect1" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defect1}}
@@ -146,8 +146,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval1"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defectval1" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defectval1}}
@@ -157,8 +157,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect2"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defect2" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defect2}}
@@ -168,8 +168,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval2"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defectval2" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defectval2}}
@@ -179,8 +179,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defect3"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defect3" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defect3}}
@@ -191,8 +191,8 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="number" min="0" [(ngModel)]="rowData.defectval3"
-                                        class="form-control" required>
+                                    <input pInputText type="text" [(ngModel)]="rowData.defectval3" class="form-control"
+                                        required>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{rowData.defectval3}}

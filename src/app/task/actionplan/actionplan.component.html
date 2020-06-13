@@ -6,140 +6,122 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-11">
             <h1>Action View</h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Action Report</li>
-            </ol>
+          <div class="col-sm-1" style="text-align: center;">
+            <button (click)="dt.exportCSV()" class="btn btn-success btn-sm  mt-2">
+              <i class="fa fa-file-excel-o"></i> Export</button>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
+
     <section class="content">
-
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-md-10">
-              <h3 class="card-title">Action Plan Weekly</h3>
-            </div>
-            <div class="col-md-2">
-              <select class="custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.selectedPlant"
-                (change)="selectedGrid($event.target.value)">
-                <option value="0">--Select Plant--</option>
-                <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
-                  {{ pl.plantshortname }}
-                </option>
-              </select>
+      <div class="row">
+        <div class="col-sm-3 mb-2 ">
+          <div class="input-group mb-1 custome-gs">
+            <input type="text" class="form-control" pInputText placeholder="Global Filter"
+              (input)="loadper($event.target.value , dt)" (input)="dt.filterGlobal($event.target.value, 'contains')">
+            <div class="input-group-append">
+              <i class="fa fa-search input-group-text"></i>
             </div>
           </div>
-          <div class="card-tools" hidden>
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
-              title="Collapse">
-              <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
-          </div>
         </div>
-        <div class="card-body p-0">
-          <table class="table table-striped projects">
-            <thead>
-              <tr>
-                <th style="width: 1%">
-                  #
-                </th>
-                <th style="width: 15%">
-                  Action Date
-                </th>
-                <th style="width: 15%">
-                  Rejection Week
-                </th>
-                <th style="width: 15%">
-                  Action Progress %
-                </th>
-                <th style="width: 10%">
-                  Rejection %
-                </th>
-                <th style="width: 15%">
-                  Responsible
-                </th>
-                <th style="width: 15%">
-                  Plant Name
-                </th>
-                <th>
-                  Action Progress
-                </th>
-                <th style="width: 20%">
-                  Attachment
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ac of service.actionviewlist">
-                <td>#</td>
-                <td>
-                  <a>
-                    {{ this.ac.actiondate | date: 'dd/MM/yyyy' }}
-                  </a>
-                  <br />
-                  <small>
-                    Created {{ this.ac.createddate | date: 'dd/MM/yyyy' }}
-                  </small>
-                </td>
-                <td>
-                  {{ this.ac.startdate | date: 'dd/MM/yyyy' }} To {{ this.ac.enddate | date: 'dd/MM/yyyy' }}
-                </td>
-                <td class="project_progress">
-                  <div class="progress progress-sm">
-                    <div class="progress-bar bg-green" role="progressbar" attr.aria-valuenow="{{this.ac.progress}}"
-                      aria-volumemin="0" aria-volumemax="100" [style.width.%]="this.ac.progress">
-                    </div>
-                  </div>
-                  <small>
-                    Progress {{ this.ac.progress }}% completed
-                  </small>
-                </td>
-                <td>
-                  <span class="badge badge-danger"> {{ this.ac.rejectper }}% </span>
-                </td>
-                <td>
-                  {{ this.getusername(this.ac.loginid) }}
-                </td>
-                <td>
-                  {{ this.getplantname(this.ac.plantcode) }}
-                </td>
-                <td class="project-state" *ngIf="this.ac.progress >=0 && this.ac.progress <= 25 ">
-                  <span class="badge badge-danger">Not Started</span>
-                </td>
-                <td class="project-state" *ngIf="this.ac.progress >=25 && this.ac.progress <= 50 ">
-                  <span class="badge badge-warning">Pending</span>
-                </td>
-                <td class="project-state" *ngIf="this.ac.progress >=50 && this.ac.progress <= 95 ">
-                  <span class="badge badge-warning">Progress</span>
-                </td>
-                <td class="project-state" *ngIf="this.ac.progress >=95 && this.ac.progress <= 100 ">
-                  <span class="badge badge-success">Completed</span>
-                </td>
-                <td *ngIf="this.ac.attachment != null">
-                  <app-filedownload [Filename]="this.ac.attachment"></app-filedownload>
-                </td>
-                <td *ngIf="this.ac.attachment == null">
-                  No attachment found
-                </td>
-              </tr>
 
-            </tbody>
-          </table>
+        <div class="col-sm-2 mb-2">
+          <select class=" custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
+            #Monthname='ngModel' [(ngModel)]='monthname'>
+            <option value="Jan">Jan</option>
+            <option value="Feb">Feb</option>
+            <option value="Mar">Mar</option>
+            <option value="Apr">Apr</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="Aug">Aug</option>
+            <option value="Sept">Sept</option>
+            <option value="Oct">Oct</option>
+            <option value="Nov">Nov</option>
+            <option value="Dec">Dec</option>
+          </select>
         </div>
-        <!-- /.card-body -->
+        <div class="col-sm-2 mb-2">
+          <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="this.selectedPlant"
+            (change)="selectedGrid($event.target.value)">
+            <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+              {{ pl.plantshortname }}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-2 mb-2">
+          <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department">
+            <option value="Plating">Plating</option>
+            <option value="Moulding">Moulding</option>
+          </select>
+        </div>
+        <div class="col-sm-2 mb-2">
+          <select class="custom-select" name="mode2" #mode2="ngModel" [(ngModel)]="mode">
+            <option value="Quality">Quality</option>
+            <option value="Top">Top Management</option>
+            <option value="General">General Improvement</option>
+            <option value="Customer">Customer Rej Review</option>
+          </select>
+        </div>
+       
       </div>
-      <!-- /.card -->
+      <!--<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+      -->
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+
+      <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="allActionPlan"
+        [paginator]="true" [rows]="20" [resizableColumns]="true">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of cols" class="ui-resizable-column">
+              <span *ngIf="col.field=='targetdateofcompletion'" style="font-size: 10px;">
+                {{rowData[col.field] | date :'dd-MM-y'}}
+              </span>
+              <div *ngIf="col.field=='approvedstatus'">
+                <span class="badge badge-info" *ngIf="rowData[col.field]==0 ">Pending</span>
+                <span class="badge badge-success" *ngIf="rowData[col.field]==1 ">Approved</span>
+                <span class="badge badge-danger" *ngIf="rowData[col.field]==2 ">Rejected</span>
+              </div>
+              <span
+                *ngIf="col.field!='targetdateofcompletion' && col.field!='attachment' && col.field!='approvedstatus' && col.field!='progresspercent'"
+                style="font-size: 10px;">
+                {{rowData[col.field]}}
+              </span>
+              <div *ngIf="col.field=='attachment'">
+                <app-filedownload *ngIf="rowData[col.field]!='' && rowData[col.field] != null"
+                  [Filename]="rowData[col.field] ">
+                </app-filedownload>
+                <b *ngIf="rowData[col.field]=='' || rowData[col.field] == null">---</b>
+              </div>
+              <span *ngIf="col.field=='progresspercent'" style="font-size: 10px;">
+                {{rowData[col.field]}}
+              </span>
+              <div class="progress progress-sm" *ngIf="col.field=='progresspercent'">
+                <div class="progress-bar bg-green" role="progressbar" attr.aria-valuenow="{{rowData[col.field]}}"
+                  aria-volumemin="0" aria-volumemax="100" [style.width.%]="rowData[col.field]">
+                </div>
+              </div>
+
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
 
     </section>
     <!-- /.content -->

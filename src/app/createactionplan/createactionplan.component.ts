@@ -169,6 +169,9 @@ export class CreateactionplanComponent implements OnInit {
     console.log(plantCode);
     this.refreshList();
   }
+  selectedGrid1() {
+
+  }
   getRejectPer(val, rowData) {
     const dateRange = this.totalWeeks[val - 1];
     console.log("dateRange", dateRange);
@@ -197,7 +200,7 @@ export class CreateactionplanComponent implements OnInit {
 
   }
   onRowEditInit(row: any) {
-  
+
     this.cols[0].width = "75px";
     this.cols[1].width = "75px";
     this.cols[2].width = "150px";
@@ -314,7 +317,7 @@ export class CreateactionplanComponent implements OnInit {
       });
   }
   resetColumnWidth() {
-   
+
     this.cols[0].width = "75px";
     this.cols[1].width = "75px";
     this.cols[2].width = "150px";
