@@ -84,7 +84,7 @@ export class ActionplanComponent implements OnInit {
     let me = this;
     me.loading = true;
 
-    this.apservice.getActionPlan(this.monthname, me.selectedPlant, 'hardik')
+    this.apservice.getActionPlan(this.monthname, me.selectedPlant, this.mode, this.department)
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];

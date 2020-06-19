@@ -20,9 +20,9 @@ export class CreateactionplanService {
     );
   }
   //create action plan
-  public getActionPlan(monthname, plantcode, currentUser): Observable<Createactionplan[]> {
+  public getActionPlan(monthname, plantcode, mode, dept): Observable<Createactionplan[]> {
     return this.http.get<Createactionplan[]>(
-      this.rootUrl + "/newactionplans/Getnewactionplan/" + monthname + '/' + plantcode
+      this.rootUrl + "/newactionplans/Getnewactionplan/" + monthname + '/' + plantcode + '/' + mode + '/' + dept
     );
   }
   public insertCreateactionplan(data) {

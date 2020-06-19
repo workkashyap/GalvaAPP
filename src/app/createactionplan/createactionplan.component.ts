@@ -137,7 +137,7 @@ export class CreateactionplanComponent implements OnInit {
         me.plantcode = me.plantservice.plantlist[0].plantcode;
 
         this.apservice
-          .getActionPlan(this.monthname, me.plantcode, 'hardik')
+          .getActionPlan(this.monthname, me.plantcode, this.mode, this.department)
           .toPromise()
           .then(res => {
             me.allActionPlan = res as Createactionplan[];
@@ -152,7 +152,7 @@ export class CreateactionplanComponent implements OnInit {
   refreshList() {
     let me = this;
     this.apservice
-      .getActionPlan(this.monthname, this.plantcode, 'hardik')
+      .getActionPlan(this.monthname, this.plantcode, this.mode, this.department)
       .toPromise()
       .then(res => {
         me.allActionPlan = res as Createactionplan[];
@@ -169,7 +169,24 @@ export class CreateactionplanComponent implements OnInit {
     console.log(plantCode);
     this.refreshList();
   }
-  selectedGrid1() {
+  selectedept() {
+    let me = this;
+    this.apservice
+      .getActionPlan(this.monthname, this.plantcode, this.mode, this.department)
+      .toPromise()
+      .then(res => {
+        me.allActionPlan = res as Createactionplan[];
+      });
+
+  }
+  selectedmode() {
+    let me = this;
+    this.apservice
+      .getActionPlan(this.monthname, this.plantcode, this.mode, this.department)
+      .toPromise()
+      .then(res => {
+        me.allActionPlan = res as Createactionplan[];
+      });
 
   }
   getRejectPer(val, rowData) {

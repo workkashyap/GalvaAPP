@@ -23,7 +23,7 @@ import { PurchaseService } from '../shared/purchase/purchase.service';
   providers: [DatePipe]
 })
 export class PpccalendarComponent implements OnInit {
-  scheduledValue: number = 5.68;
+  scheduledValue: number = 568.00;
   dispatchValue: number = 36.07;
   complianceValue: number = 21;
 
