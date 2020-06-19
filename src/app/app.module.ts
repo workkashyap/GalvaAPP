@@ -62,6 +62,10 @@ import { PurchasecalendarComponent } from './purchasecalendar/purchasecalendar.c
 import { PurchaseDetailComponent } from './purchase/purchase-detail/purchase-detail.component';
 import { PpcComponent } from './ppc/ppc.component';
 import { PpccalendarComponent } from './ppccalendar/ppccalendar.component';
+import { RolesComponent } from './roles/roles.component';
+import { RolepagesComponent } from './roles/rolepages/rolepages.component';
+import { RoletopagesComponent } from './roles/roletopages/roletopages.component';
+import { RoletouserComponent } from './roles/roletouser/roletouser.component';
 
 @NgModule({
   declarations: [
@@ -110,8 +114,11 @@ import { PpccalendarComponent } from './ppccalendar/ppccalendar.component';
     PurchasecalendarComponent,
     PurchaseDetailComponent,
     PpcComponent,
-    PpccalendarComponent
-
+    PpccalendarComponent,
+    RolesComponent,
+    RolepagesComponent,
+    RoletopagesComponent,
+    RoletouserComponent
   ],
   imports: [
     BrowserModule,
@@ -326,6 +333,27 @@ import { PpccalendarComponent } from './ppccalendar/ppccalendar.component';
         component: PpccalendarComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: "roles",
+        component: RolesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "rolepages",
+        component: RolepagesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "roletopages",
+        component: RoletopagesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "roletouser",
+        component: RoletouserComponent,
+        canActivate: [AuthGuard],
+      },
+
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),

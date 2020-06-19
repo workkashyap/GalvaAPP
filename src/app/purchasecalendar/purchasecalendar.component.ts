@@ -61,6 +61,10 @@ export class PurchasecalendarComponent implements OnInit {
   public currentUser: User;
 
   //
+  utility: number = 0;
+  service: number = 0;
+  jig: number = 0;
+
   abs: number = 0;
   capital: number = 0;
   consumable: number = 0;
@@ -248,6 +252,7 @@ export class PurchasecalendarComponent implements OnInit {
         this.chemicals = element.totalPurchase
       });
     });
+
     /*Moulded value
     this.misc_purchase = 0;
     this.dpservice.getPurchaseBtnInfo('purchasegroupmoulded', this.selectedcode, this.startdate).toPromise().then(res => {
@@ -256,6 +261,33 @@ export class PurchasecalendarComponent implements OnInit {
         this.misc_purchase = element.totalPurchase
       });
     });*/
+
+    //UTILITY value
+    this.utility = 0;
+    this.dpservice.getPurchaseBtnInfo('purchasegrouputility', this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.utility = element.totalPurchase
+      });
+    });
+
+    //service value
+    this.service = 0;
+    this.dpservice.getPurchaseBtnInfo('purchasegroupservice', this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.service = element.totalPurchase
+      });
+    });
+
+    //jig value
+    this.jig = 0;
+    this.dpservice.getPurchaseBtnInfo('purchasegroupjig', this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.jig = element.totalPurchase
+      });
+    });
   }
   //on change option value
   selectedGrid(ev) {
@@ -392,6 +424,20 @@ export class PurchasecalendarComponent implements OnInit {
       this.totalSumofBg = "bg-moulded";
       this.cols.push(
         { field: 'totalPurchase', header: 'Moulded' },
+      );
+    }
+    else if (val == "purchasegroupservicesum") {
+      this.totalSumofTitle = "Tot. Service";
+      this.totalSumofBg = "bg-service";
+      this.cols.push(
+        { field: 'totalPurchase', header: 'Service' },
+      );
+    }
+    else if (val == "purchasegrouputilitysum") {
+      this.totalSumofTitle = "Tot. Utility";
+      this.totalSumofBg = "bg-Utility";
+      this.cols.push(
+        { field: 'totalPurchase', header: 'Utility' },
       );
     }
 

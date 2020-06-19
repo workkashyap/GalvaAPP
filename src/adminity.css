@@ -58,7 +58,6 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     background:linear-gradient(to right,#a914f5,#CE93D8);
 }
 
-
 .bg-other {
     border: unset;
     color: white !important;
@@ -70,6 +69,25 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#673AB7,#B39DDB);
 }
+
+.bg-utility {
+    border: unset;
+    color: white !important;
+    background:linear-gradient(to right,#6b3e2d,#BCAAA4)
+}
+
+.bg-service {
+    border: unset;
+	color: white !important;
+	background: linear-gradient(to right,#8BC34A,#CDDC39 );
+}
+
+.bg-jig {
+    border: unset;
+    color: white !important;
+    background:linear-gradient(to right,#FF5722,#FFAB91);
+}
+
 .bg-company-name{
 	border: unset;
     color: white !important;
