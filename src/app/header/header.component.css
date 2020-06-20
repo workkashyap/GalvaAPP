@@ -15,3 +15,14 @@
     text-decoration: underline;
     transform: rotate(-90deg);
 } 
+.nav-logo{
+    background-color: #0129CD;
+    opacity: 0.7;
+    overflow-x: hidden;   
+    width: 200px;
+    text-align: center;
+}
+.navbar-light {
+    padding: unset;
+    
+}

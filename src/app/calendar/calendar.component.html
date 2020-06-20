@@ -78,18 +78,27 @@
                           <b>{{ tot.rejper }}</b></button>
                       </div>
                       <div class="col-md-12">
-                        <button class="btn btn-custom text-dark bg-danger">Plating % =
-                          <b>{{ tot.platingper }}</b></button>
-                        <button class="btn btn-custom text-dark bg-danger">Moulding % =
-                          <b>{{ tot.mouldingper }}</b></button>
+                        <button class="btn btn-custom text-dark bg-danger">
+                          Plating Val. = <b>{{ tot.platingvalue  |  number:'1.2-2' }}</b> Lacs
+                          Plating % = <b>{{ tot.platingper  |  number:'1.2-2' }}</b>
+                        </button>
+                        <button class="btn btn-custom text-dark bg-danger">
+                          Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs
+                          Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
+                        </button>
 
-
-                        <button class="btn btn-custom text-dark bg-mach-fail">Mach. Fail =
-                          <b>{{ tot.mechfailvalue |  number:'1.2-2' }}</b></button>
-                        <button class="btn btn-custom text-dark bg-tool-def">Tool Def. =
-                          <b>{{ tot.tooldefvalue |  number:'1.2-2' }}</b></button>
-                        <button class="btn btn-custom text-dark bg-other">Others =
-                          <b> {{ tot.othersvalue |  number:'1.2-2' }}</b></button>
+                        <button class="btn btn-custom text-dark bg-mach-fail">
+                          Mach. Fail Val. = <b>{{ tot.mechfailvalue  |  number:'1.2-2' }}</b> Lacs
+                          Mach. Fail % = <b>{{ tot.mechfailper |  number:'1.2-2' }}</b>
+                        </button>
+                        <button class="btn btn-custom text-dark bg-tool-def">
+                          Tool Def Val. = <b>{{ tot.tooldefvalue  |  number:'1.2-2' }}</b> Lacs
+                          Tool Def % = <b>{{ tot.tooldefper |  number:'1.2-2' }}</b>
+                        </button>
+                        <button class="btn btn-custom text-dark bg-other">
+                          Others Val. = <b>{{ tot.othersvalue  |  number:'1.2-2' }}</b> Lacs
+                          Others % = <b> {{ tot.othersper |  number:'1.2-2' }}</b>
+                        </button>
 
                         <button class="btn btn-custom text-dark bg-action-plan" (click)="actionPlanReport()">
                           Action Plan</button>
@@ -168,6 +177,29 @@
                 <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
                   <tr [pEditableRow]="rowData">
                     <td *ngFor="let col of allActionPlanCol" [hidden]="!allActionPlan && !allActionPlan.length">
+                      <!--Buttons-->
+                      <div *ngIf="col.field=='edit'">
+                        <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                          class="ui-button-info"></button>&nbsp;
+
+                        <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                          class="ui-button-success" style="margin-right: .5em"
+                          (click)="onRowEditSave(rowData,'')"></button>
+                        <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                          class="ui-button-danger"></button>
+                      </div>
+                      <!--End Buttons-->
+                      <!-- --status-- -->
+                      <div *ngIf="col.field=='edit_status' && this.currentUser && this.currentUser.id==14">
+                        <button class="btn btn-success" (click)="onRowEditSave(rowData,'1')">
+                          Approve
+                        </button>&nbsp;
+
+                        <button class="btn btn-danger" (click)="onRowEditSave(rowData,'2')">
+                          Reject
+                        </button>
+                      </div>
+                      <!-- --status-- -->
                       <span
                         *ngIf="col.field=='targetdateofcompletion' || col.field=='actualdateofcompletion'">{{rowData[col.field]  | date :'dd MMM, y'}}</span>
                       <span
@@ -206,29 +238,7 @@
                       <span *ngIf="col.field=='attachment' && !rowData.attachment"> No attachment found</span>
                       <!--End Attachment-->
 
-                      <!--Buttons-->
-                      <div *ngIf="col.field=='edit'">
-                        <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
-                          class="ui-button-info"></button>&nbsp;
 
-                        <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
-                          class="ui-button-success" style="margin-right: .5em"
-                          (click)="onRowEditSave(rowData,'')"></button>
-                        <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
-                          class="ui-button-danger"></button>
-                      </div>
-                      <!--End Buttons-->
-                      <!-- --status-- -->
-                      <div *ngIf="col.field=='edit_status' && this.currentUser && this.currentUser.id==14">
-                        <button class="btn btn-success" (click)="onRowEditSave(rowData,'1')">
-                          Approve
-                        </button>&nbsp;
-
-                        <button class="btn btn-danger" (click)="onRowEditSave(rowData,'2')">
-                          Reject
-                        </button>
-                      </div>
-                      <!-- --status-- -->
                     </td>
                   </tr>
                 </ng-template>

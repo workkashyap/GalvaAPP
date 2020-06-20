@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-11">
-            <h1>Action View</h1>
+            <h3>Action Plan Report</h3>
           </div>
           <div class="col-sm-1" style="text-align: center;">
             <button (click)="dt.exportCSV()" class="btn btn-success btn-sm  mt-2">
@@ -57,33 +57,41 @@
           </select>
         </div>
         <div class="col-sm-2 mb-2">
-          <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department">
+          <select class="custom-select" name="mySelect2" #mySelect2="ngModel" [(ngModel)]="department"
+            (change)="selectedDepartment($event.target.value)">
             <option value="Plating">Plating</option>
             <option value="Moulding">Moulding</option>
           </select>
         </div>
         <div class="col-sm-2 mb-2">
-          <select class="custom-select" name="mode2" #mode2="ngModel" [(ngModel)]="mode">
+          <select class="custom-select" name="mode2" #mode2="ngModel" [(ngModel)]="mode"
+            (change)="selectedMode($event.target.value)">
             <option value="Quality">Quality</option>
             <option value="Top">Top Management</option>
             <option value="General">General Improvement</option>
             <option value="Customer">Customer Rej Review</option>
           </select>
         </div>
-       
+
       </div>
       <!--<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
       -->
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
 
-      <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+      <p-table #dt [columns]="cols"
+        [style]="{'text-align': 'center', 'font-size': '0.7em', 'transform':'rotateX(180deg)'}" [responsive]="true"
         selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="allActionPlan"
-        [paginator]="true" [rows]="20" [resizableColumns]="true">
+        [paginator]="true" [rows]="20" [resizableColumns]="true" class="ptable">
 
         <ng-template pTemplate="header">
           <tr>
-            <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+            <th class="tbl-th" [pSortableColumn]="col.field" pResizableColumn *ngFor="let col of cols"
+              [width]="col.width">{{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
           </tr>
         </ng-template>
 

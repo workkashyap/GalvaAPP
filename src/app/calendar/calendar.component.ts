@@ -121,8 +121,15 @@ export class CalendarComponent implements OnInit {
       { field: 'holdvalue', header: 'Hold Value' },
       { field: 'buffingvalue', header: 'Buff. Value' }
     ];
+    this.allActionPlanCol = [];
+    if (this.currentUser && this.currentUser.id == 14) {
+      this.allActionPlanCol.push(
+        { field: "edit", header: "Action", width: "100px" },
+        { field: "edit_status", header: "Change Status", width: "200px" }
+      );
+    }
 
-    this.allActionPlanCol = [
+    this.allActionPlanCol.push(
       // { field: "id", header: "ID" },
       //  { field: "sHash", header: "S#", width: "50px" },
       { field: "department", header: "Department", width: "160px" },
@@ -139,14 +146,8 @@ export class CalendarComponent implements OnInit {
       { field: "responsibility", header: "Responsibility", width: "100px" },
       { field: "remarks2", header: " Remark 2", width: "140px" },
       { field: "attachment", header: "Attachment", width: "140px" }
-    ];
-    if (this.currentUser && this.currentUser.id == 14) {
-      this.allActionPlanCol.push(
-        { field: "edit", header: "Action", width: "100px" },
-        { field: "edit_status", header: "Change Status", width: "200px" }
-      );
-    }
-
+    );
+    
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     var date = new Date();
 

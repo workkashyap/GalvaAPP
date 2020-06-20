@@ -16,12 +16,12 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     background: #f6f7fb !important;
 }
 .badge-round {
-    border-radius: 50% !important;
+	border-radius: 50% !important;
     padding: 4px;
     width: 19px;
-    right: 7px;
+    right: 60px;
     position: absolute;
-    top: 4px;
+    top: 7px;
 }
 .logo-section{
     background-color: #0129CD;
@@ -498,3 +498,66 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 .bg-simple-c-blue {
     background: #01a9ac;
 }
+.loggedin-user{
+	height: auto;
+	float: left;
+    width: 1.5rem;
+    margin: 2px 0px 0px 0px;
+}
+.custom-padding {
+    padding: 0px 10px 0px 15px !important;
+}
+.custom-padding > .user-name {
+    float: left;
+    margin: 8px 7px 0px 7px;
+    color: #007ad9;
+    font-size: 13px;
+}
+
+@media only screen and (max-width: 600px) {
+	.custom-padding {
+		padding:10px 10px 5px 15px !important
+	}
+	
+	.badge-round {
+		border-radius: 50% !important;
+		padding: 4px;
+		width: 19px;
+		left: 23px;
+		position: absolute;
+		bottom: 54px;
+		top: unset;
+		right: unset;
+	}
+}
+  
+@media (min-width: 768px){
+	.custom-padding {
+		padding:10px 10px 5px 15px !important
+	}
+	
+	.badge-round {
+		border-radius: 50% !important;
+		padding: 4px;
+		width: 19px;
+		left: 23px;
+		position: absolute;
+		bottom: 54px;
+		top: unset;
+		right: unset;
+	}
+}
+
+@media (min-width: 1200px){
+
+	.badge-round {
+		border-radius: 50% !important;
+		padding: 4px;
+		width: 19px;
+		right: 80px;
+		position: absolute;
+		top: 15px;
+		bottom: unset;
+		left: unset;
+	}
+  }

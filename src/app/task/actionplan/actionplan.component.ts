@@ -11,7 +11,61 @@ import { Createactionplan } from "../../shared/createactionplan/createactionplan
 @Component({
   selector: 'app-actionplan',
   templateUrl: './actionplan.component.html',
-  styleUrls: ['./actionplan.component.css']
+  styleUrls: ['./actionplan.component.css'],
+  styles: [
+    `
+      :host ::ng-deep .ui-table .ui-table-thead > tr > th {
+        position: -webkit-sticky;
+        position: sticky;
+        background: blue;
+        color: white;
+        font-size:10px;
+        top: 0px;
+        z-index: 1;
+      }
+    
+     
+    
+      :host ::ng-deep .ui-table-resizable .ui-resizable-column {
+        position: sticky !important;
+      }
+    
+      @media screen and (max-width: 64em) {
+        :host ::ng-deep .ui-table .ui-table-thead > tr > th {
+          top: 0px;
+        }
+      }
+      
+      :host ::ng-deep .ui-table-resizable > .ui-table-wrapper > table{
+        transform:rotateX(180deg);
+        -ms-transform:rotateX(180deg); /* IE 9 */
+        -webkit-transform:rotateX(180deg);
+      }
+      :host ::ng-deep .ui-table-resizable > p-paginator > div {
+        transform: rotateX(180deg);
+        -ms-transform: rotateX(180deg);
+        -webkit-transform: rotateX(180deg);
+      }
+      :host ::ng-deep ::-webkit-scrollbar {
+        width: 10px;
+      }
+      /* Track */
+      :host ::ng-deep ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+       
+      /* Handle */
+      :host ::ng-deep ::-webkit-scrollbar-thumb {
+        background: #c1c1c1; 
+      }
+      
+      /* Handle on hover */
+      :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+        background: #c1c1c1; 
+      }
+    `
+  ]
+
 })
 export class ActionplanComponent implements OnInit {
   selectedPlant: any;
@@ -115,6 +169,15 @@ export class ActionplanComponent implements OnInit {
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;
+    this.getData();
+  }
+  
+  selectedMode(ev) {
+    this.mode = ev;
+    this.getData();
+  }
+  selectedDepartment(ev) {
+    this.department = ev;
     this.getData();
   }
   ///

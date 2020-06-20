@@ -1,0 +1,9 @@
+
+.ptable{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+}
+.ui-table table {
+    transform: rotateX(180deg);
+}

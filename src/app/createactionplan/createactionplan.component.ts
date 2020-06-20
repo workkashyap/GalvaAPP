@@ -14,9 +14,40 @@ import { UserService } from '../shared/user/user.service';
   selector: 'app-createactionplan',
   templateUrl: './createactionplan.component.html',
   styleUrls: ['./createactionplan.component.css'],
-  providers: [DatePipe]
-
+  providers: [DatePipe],
+  styles: [
+    `
+      :host ::ng-deep .ui-table-resizable > .ui-table-wrapper > table{
+        transform:rotateX(180deg);
+        -ms-transform:rotateX(180deg); /* IE 9 */
+        -webkit-transform:rotateX(180deg);
+      }
+      :host ::ng-deep .ui-table-resizable > p-paginator > div {
+        transform: rotateX(180deg);
+        -ms-transform: rotateX(180deg);
+        -webkit-transform: rotateX(180deg);
+      }
+      :host ::ng-deep ::-webkit-scrollbar {
+        width: 10px;
+      }
+      /* Track */
+      :host ::ng-deep ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+       
+      /* Handle */
+      :host ::ng-deep ::-webkit-scrollbar-thumb {
+        background: #c1c1c1; 
+      }
+      
+      /* Handle on hover */
+      :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+        background: #c1c1c1; 
+      }
+    `
+  ]
 })
+
 export class CreateactionplanComponent implements OnInit {
   public currentUser: User;
   department: any = 'Plating';
@@ -106,6 +137,7 @@ export class CreateactionplanComponent implements OnInit {
     /// this.plantservice.getPlantData(this.currentUser.id);
 
     this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
       { field: "weeks", header: "Weeks", width: "75px" },
       { field: "materialCode", header: "Code", width: "75px" },
       { field: "materialDescription", header: "Description", width: "150px" },
@@ -124,7 +156,6 @@ export class CreateactionplanComponent implements OnInit {
       { field: "progresspercent", header: "Progress", width: "100px" },
       { field: "approvedstatus", header: "Status", width: "80px" },
       { field: "attachment", header: "Attachment", width: "240px" },
-      { field: "edit", header: "Action", width: "100px" }
     ];
     this.loading = true;
 
@@ -218,25 +249,27 @@ export class CreateactionplanComponent implements OnInit {
   }
   onRowEditInit(row: any) {
 
-    this.cols[0].width = "75px";
-    this.cols[1].width = "75px";
-    this.cols[2].width = "150px";
-    this.cols[3].width = "75px";
-    this.cols[4].width = "75px";
-    this.cols[5].width = "90px";
-    this.cols[6].width = "75px";
-    this.cols[7].width = "90px";
-    this.cols[8].width = "75px";
-    this.cols[9].width = "90px";
-    this.cols[10].width = "100px";
-    this.cols[11].width = "127px";
-    this.cols[12].width = "160px";
-    this.cols[13].width = "75px";
-    this.cols[14].width = "75px";
-    this.cols[15].width = "100px";
-    this.cols[16].width = "65px";
-    this.cols[17].width = "240px";
-    this.cols[18].width = "100px";
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: "weeks", header: "Weeks", width: "75px" },
+      { field: "materialCode", header: "Code", width: "75px" },
+      { field: "materialDescription", header: "Description", width: "150px" },
+      { field: "rejvalue", header: "Rej. Val.", width: "100px" },
+      { field: "defect1", header: "Defect 1", width: "100px" },
+      { field: "defectval1", header: "Defect Val. 1", width: "100px" },
+      { field: "defect2", header: "Defect 2", width: "100px" },
+      { field: "defectval2", header: "Defect Val. 2", width: "100px" },
+      { field: "defect3", header: "Defect 3", width: "100px" },
+      { field: "defectval3", header: "Defect Val. 3", width: "100px" },
+      { field: "responsibility", header: "Responsibility", width: "100px" },
+      { field: "targetdateofcompletion", header: "Target date", width: "140px" },
+      { field: "actionPlan", header: "ActionPlan", width: "160px" },
+      { field: "rejper", header: "Reject %", width: "80px" },
+      { field: "result", header: "Result", width: "80px" },
+      { field: "progresspercent", header: "Progress", width: "100px" },
+      { field: "approvedstatus", header: "Status", width: "80px" },
+      { field: "attachment", header: "Attachment", width: "240px" },
+    ];
 
     row.targetdateofcompletion = this.formatDate(new Date(row.targetdateofcompletion));
     row.actualdateofcompletion = this.formatDate(new Date(row.actualdateofcompletion));
@@ -335,25 +368,27 @@ export class CreateactionplanComponent implements OnInit {
   }
   resetColumnWidth() {
 
-    this.cols[0].width = "75px";
-    this.cols[1].width = "75px";
-    this.cols[2].width = "150px";
-    this.cols[3].width = "75px";
-    this.cols[4].width = "75px";
-    this.cols[5].width = "90px";
-    this.cols[6].width = "75px";
-    this.cols[7].width = "90px";
-    this.cols[8].width = "75px";
-    this.cols[9].width = "90px";
-    this.cols[10].width = "100px";
-    this.cols[11].width = "127px";
-    this.cols[12].width = "160px";
-    this.cols[13].width = "75px";
-    this.cols[14].width = "75px";
-    this.cols[15].width = "100px";
-    this.cols[16].width = "65px";
-    this.cols[17].width = "240px";
-    this.cols[18].width = "100px";
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: "weeks", header: "Weeks", width: "75px" },
+      { field: "materialCode", header: "Code", width: "75px" },
+      { field: "materialDescription", header: "Description", width: "150px" },
+      { field: "rejvalue", header: "Rej. Val.", width: "100px" },
+      { field: "defect1", header: "Defect 1", width: "100px" },
+      { field: "defectval1", header: "Defect Val. 1", width: "100px" },
+      { field: "defect2", header: "Defect 2", width: "100px" },
+      { field: "defectval2", header: "Defect Val. 2", width: "100px" },
+      { field: "defect3", header: "Defect 3", width: "100px" },
+      { field: "defectval3", header: "Defect Val. 3", width: "100px" },
+      { field: "responsibility", header: "Responsibility", width: "100px" },
+      { field: "targetdateofcompletion", header: "Target date", width: "140px" },
+      { field: "actionPlan", header: "ActionPlan", width: "160px" },
+      { field: "rejper", header: "Reject %", width: "80px" },
+      { field: "result", header: "Result", width: "80px" },
+      { field: "progresspercent", header: "Progress", width: "100px" },
+      { field: "approvedstatus", header: "Status", width: "80px" },
+      { field: "attachment", header: "Attachment", width: "240px" },
+    ];
   }
 
   onRowEditCancel(row: any, index: number) {
@@ -365,25 +400,27 @@ export class CreateactionplanComponent implements OnInit {
     this.resetColumnWidth();
   }
   newRow() {
-    this.cols[0].width = "75px";
-    this.cols[1].width = "75px";
-    this.cols[2].width = "150px";
-    this.cols[3].width = "75px";
-    this.cols[4].width = "75px";
-    this.cols[5].width = "90px";
-    this.cols[6].width = "75px";
-    this.cols[7].width = "90px";
-    this.cols[8].width = "75px";
-    this.cols[9].width = "90px";
-    this.cols[10].width = "100px";
-    this.cols[11].width = "127px";
-    this.cols[12].width = "160px";
-    this.cols[13].width = "75px";
-    this.cols[14].width = "75px";
-    this.cols[15].width = "100px";
-    this.cols[16].width = "65px";
-    this.cols[17].width = "240px";
-    this.cols[18].width = "100px";
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: "weeks", header: "Weeks", width: "75px" },
+      { field: "materialCode", header: "Code", width: "75px" },
+      { field: "materialDescription", header: "Description", width: "150px" },
+      { field: "rejvalue", header: "Rej. Val.", width: "100px" },
+      { field: "defect1", header: "Defect 1", width: "100px" },
+      { field: "defectval1", header: "Defect Val. 1", width: "100px" },
+      { field: "defect2", header: "Defect 2", width: "100px" },
+      { field: "defectval2", header: "Defect Val. 2", width: "100px" },
+      { field: "defect3", header: "Defect 3", width: "100px" },
+      { field: "defectval3", header: "Defect Val. 3", width: "100px" },
+      { field: "responsibility", header: "Responsibility", width: "100px" },
+      { field: "targetdateofcompletion", header: "Target date", width: "140px" },
+      { field: "actionPlan", header: "ActionPlan", width: "160px" },
+      { field: "rejper", header: "Reject %", width: "80px" },
+      { field: "result", header: "Result", width: "80px" },
+      { field: "progresspercent", header: "Progress", width: "100px" },
+      { field: "approvedstatus", header: "Status", width: "80px" },
+      { field: "attachment", header: "Attachment", width: "240px" },
+    ];
     return {
       "id": 0,
       "sHash": "",
