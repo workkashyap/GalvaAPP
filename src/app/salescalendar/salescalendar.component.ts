@@ -462,7 +462,7 @@ export class SalescalendarComponent implements OnInit {
         } else if (me.selectedcode == '1040') {
           me.company_val = 800;
         } else if (me.selectedcode == '1050') {
-          me.company_val = 200;
+          me.company_val = 300;
         }
       });
     }
