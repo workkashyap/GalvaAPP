@@ -14,8 +14,8 @@ import { Purchasesummary } from '../shared/purchase/purchasesummary.model';
 
 import { Plant } from '../shared/plant/plant.model';
 import { Salessummary } from '../shared/dailyProduction/salessummary.model';
-import { Purchasedetail } from '../shared/purchase/purchasedetail.model';
-import { PurchaseService } from '../shared/purchase/purchase.service';
+import { Ppc } from '../shared/ppc/ppc.model';
+import { PpcService } from '../shared/ppc/ppc.service';
 @Component({
   selector: 'app-ppccalendar',
   templateUrl: './ppccalendar.component.html',
@@ -23,61 +23,51 @@ import { PurchaseService } from '../shared/purchase/purchase.service';
   providers: [DatePipe]
 })
 export class PpccalendarComponent implements OnInit {
-  scheduledValue: number = 568.00;
-  dispatchValue: number = 36.07;
-  complianceValue: number = 21;
 
-  finlaNetSales: number = 0;
-  purchaseMoulded: number = 0;
-  netSales: number = 0;
-  salesRej: number = 0;
-  grossSales: number = 0;
-  cancelledInvoice: number = 0;
-  totalSumofValue: number = 0;
-  totalSumofTitle: string = '';
-  totalSumofBg: string = '';
-  basicamtinr: number = 0;
-  totalvalue: number = 0;
-  modalType: number = 0;
   public sDate: Date;
   public lDate: Date;
-  public dailyprodlist: Dailyproduction[] = [];
-  public salessummary: Salessummary[] = [];
-  total_netsales: number = 0;
-  grand_netsales: number = 0;
-  i: number;
-  cols: any[];
-  selectedItemrej: Salesdetail;
+  public date: any;
+
+  public startdate: any;
 
   public selectedcode: string;
   public selected_plantname: string;
-  public selected_eventdate: any;
 
-  monthName: any;
-  calendarPlugins = [dayGridPlugin];
-  @ViewChild('calendar', { static: false })
-  calendarComponent: FullCalendarComponent;
-  calendarApi: any;
-  options: any;
+  monthname: any;
   monthNames: any;
-  public startdate: string;
-  public rejectdata: any;
+  lastDate: any;
+
   public loading = false;
   public currentUser: User;
-  summaryDetail: any = [];
-  summaryDetail2: any = [];
+  compliancePer: number = 0;
 
-  cancelInvTotal: number = 0;
-  salesReturnTotal: number = 0;
-  netSalesTotal: number = 0;
+  firstcolumn: any;
+  secondcolumn: any;
+  thirdcolumn: any;
 
+  allrecord: number = 0;
+
+
+  length1: number = 0;
+  length2: number = 0;
+  length3: number = 0;
+
+  length4: number = 0;
+  length5: number = 0;
+  length6: number = 0;
+
+  length7: number = 0;
+  length8: number = 0;
+  length9: number = 0;
+
+  summaryModalData: any;
+  cols: any;
   constructor(
     public plantservice: PlantService,
-    public dpservice: DailyproductionService,
     public toastr: ToastrService,
-    public dpservicePurchase: PurchaseService,
-    public datePipe: DatePipe, public apservice: CreateactionplanService,
+    public datePipe: DatePipe,
     public lservice: LoginService,
+    public ppcService: PpcService,
   ) {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
@@ -86,25 +76,24 @@ export class PpccalendarComponent implements OnInit {
   }
   ngOnInit() {
     const me = this;
-    this.options = {
-      editable: true,
-      aspectRatio: 3.5,
-      header: {
-        left: '',
-        center: 'title',
-        right: ''//'dayGridMonth,dayGridWeek',
-
-      },
-      contentHeight: '500px',
-
-      plugins: [dayGridPlugin],
-    };
+    this.date = new Date();
 
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     var date = new Date();
+    this.monthname = this.monthNames[this.date.getMonth()];
 
     this.sDate = new Date(date.getFullYear(), date.getMonth(), 1);
     this.lDate = new Date(me.sDate.getFullYear(), me.sDate.getMonth() + 1, 0);
+
+
+    var d = new Date();
+    const m = this.monthNames.indexOf(me.monthname, 0) //d.getMonth(); //current month
+    console.log(m + 1);
+    const y = d.getFullYear(); //current year
+    console.log(new Date(y, m + 1, 0));
+    this.lastDate = this.datePipe.transform(new Date(y, m + 1, 0), 'dd');
+
+
     //this.loading = true;
     //get plant
     this.plantservice
@@ -118,330 +107,174 @@ export class PpccalendarComponent implements OnInit {
         me.loading = false;
 
         if (res) {
-          //  me.summary2();
-
-          /* me.dpservice
-             .getSalesCalendar(me.selectedcode, me.startdate)
-             .toPromise()
-             .then(res => {
-               me.dpservice.dailyprodlist = res as Dailyproduction[];
-               me.loading = false;
-               me.loadchart1();
-             });*/
+          //call function ;
+          this.loaddata();
         }
       });
+
+
+    this.cols = [
+      { field: 'orderno', header: 'Order No.' },
+      { field: 'custno', header: 'Cust no.' },
+      { field: 'itemcode', header: 'Item code' },
+      { field: 'itemname', header: 'Item Name' },
+      { field: 'price', header: 'Price' },
+      { field: 'schqty', header: 'Schqty' },
+      { field: 'schvalue', header: 'Schvalue' },
+      { field: 'budat', header: 'Billdate' },
+      { field: 'dispatchqty', header: 'Dispatchqty' },
+      { field: 'dispatchval', header: 'Dispatchval' },
+      { field: 'comp', header: 'Compliance %' },
+    ];
   }
 
-  Next() {
-    this.calendarApi = this.calendarComponent.getApi();
-    this.calendarApi.next();
-    this.sDate = this.calendarApi.getDate();
-    this.startdate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
-    this.lDate = new Date(this.sDate.getFullYear(), this.sDate.getMonth() + 1, 0);
-  }
-  Previous() {
-    this.calendarApi = this.calendarComponent.getApi();
-    this.calendarApi.prev();
-    this.sDate = this.calendarApi.getDate();
-    this.startdate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
-    this.lDate = new Date(this.sDate.getFullYear(), this.sDate.getMonth() + 1, 0);
+
+  summary(data) {
+    this.summaryModalData = [];
+    this.summaryModalData = data;
+    $('#summaryModal').modal('show');
   }
 
-  dateClick(model) {
-    console.log(model.date);
+  calPer(val1, val2) {
+    const val3 = 0;
+    //console.log("val1:", val1);
+    //console.log("val2:", val2);
+    if (val1 > 0 && val2 > 0) {
+      return (val1 *100)/ val2;
+    }
+    return val3;
   }
   //on refres button click event
   loaddata() {
-    /* const me = this;
-     me.summary2();
-     this.dpservice
-       .getSalesCalendar(this.selectedcode, this.startdate)
-       .toPromise()
-       .then(res => {
-         this.dpservice.dailyprodlist = res as Dailyproduction[];
-         me.loadchart1();
-         this.loading = false;
-       });*/
-  }
-  //get top button total value
-  loadchart1() {
-    this.netSales = 0;
-    this.grossSales = 0;
-    this.cancelledInvoice = 0;
-    this.salesRej = 0;
-    this.dpservice.getNetSale(this.selectedcode, this.startdate).toPromise().then(res => {
-      const salesReturn = res as Salessummary[];
-      salesReturn.forEach(element => {
-        this.netSales = element.netsale;
+    const me = this;
+    this.loading = true;
+
+    this.ppcService
+      .getCompliancePer(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        const data = res as Ppc[];
+        data.forEach(row => {
+          this.compliancePer = row.comp;
+        });
+        this.loading = false;
       });
 
-    });
+    me.allrecord = 0
+    this.ppcService
+      .ppctotalrec(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        const data = res as Ppc[];
+        me.allrecord = data.length;
+        console.log("allrecord : ", me.allrecord)
+      });
 
-    this.dpservice.getGrossSale(this.selectedcode, this.startdate).toPromise().then(res => {
-      const salesReturn = res as Salessummary[];
-      salesReturn.forEach(element => {
-        this.grossSales = element.grossSale;
-      });
-    });
-    this.dpservice.getCancelInvoice(this.selectedcode, this.startdate).toPromise().then(res => {
-      const salesReturn = res as Salessummary[];
-      salesReturn.forEach(element => {
-        this.cancelledInvoice = element.cancelInvoice;
-      });
-    });
+    me.firstcolumn = [];
+    this.ppcService
+      .getColumn1(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        me.firstcolumn = [];
+        me.firstcolumn[0] = res as Ppc[];
+        me.length1 = me.firstcolumn[0].length;
+        this.ppcService
+          .getColumn2(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.firstcolumn[1] = res as Ppc[];
+            me.length2 = me.firstcolumn[1].length;
 
-    this.dpservice.getSalesReturn(this.selectedcode, this.startdate).toPromise().then(res => {
-      const salesReturn = res as Salessummary[];
-      salesReturn.forEach(element => {
-        this.salesRej = element.salesReturn
+          });
+        this.ppcService
+          .getColumn3(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.firstcolumn[2] = res as Ppc[];
+            me.length3 = me.firstcolumn[2].length;
+
+          });
       });
-    });
-    //Moulded value
-    this.purchaseMoulded = 0;
-    this.dpservice.getPurchaseBtnInfo(this.selectedcode, this.startdate).toPromise().then(res => {
-      const row = res as Purchasesummary[];
-      row.forEach(element => {
-        this.purchaseMoulded = element.totalPurchase
+
+    me.secondcolumn = [];
+    this.ppcService
+      .getColumn4(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        me.secondcolumn = [];
+        me.secondcolumn[0] = res as Ppc[];
+        me.length4 = me.secondcolumn[0].length;
+        this.ppcService
+          .getColumn5(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.secondcolumn[1] = res as Ppc[];
+            me.length5 = me.secondcolumn[1].length;
+
+          });
+        this.ppcService
+          .getColumn6(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.secondcolumn[2] = res as Ppc[];
+            me.length6 = me.secondcolumn[2].length;
+
+          });
       });
-    });
+
+
+    me.thirdcolumn = [];
+    this.ppcService
+      .getColumn7(this.selectedcode, this.startdate)
+      .toPromise()
+      .then(res => {
+        me.thirdcolumn = [];
+        me.thirdcolumn[0] = res as Ppc[];
+        me.length7 = me.thirdcolumn[0].length;
+        this.ppcService
+          .getColumn8(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.thirdcolumn[1] = res as Ppc[];
+            me.length8 = me.thirdcolumn[1].length;
+
+          });
+        this.ppcService
+          .getColumn9(this.selectedcode, this.startdate)
+          .toPromise()
+          .then(res => {
+            me.thirdcolumn[2] = res as Ppc[];
+            me.length9 = me.thirdcolumn[2].length;
+
+          });
+      });
+
 
   }
   //on change option value
   selectedGrid(ev) {
     this.selectedcode = ev;
-    /* const me = this;
-     this.selectedPlanName();
-     this.dpservice
-       .getSalesCalendar(ev, this.startdate)
-       .toPromise()
-       .then(res => {
-         this.dpservice.dailyprodlist = res as Dailyproduction[];
-         me.loadchart1();
-         this.loading = false;
-       });*/
-
+    console.log("company : ", ev);
+    this.loaddata();
   }
-  //calendar event click
-  eventClick(model) {
+  selectedMonth(ev) {
+    console.log("month : ", ev)
 
-    this.modalType = 1;
-    this.cols = [
-      // { field: 'plant', header: 'Plant' },
-      { field: 'plantName', header: 'Plant Name' },
-      { field: 'invoiceNumber', header: 'Invoiceno' },
-      // { field: 'accDocNo', header: 'Accdocno' },
-      { field: 'billingDocDate', header: 'Billingdocdate' },
-      // { field: 'materialType', header: 'Materialtype' },
-      // { field: 'soType', header: 'Sotype' },
-      // { field: 'soTypedesc', header: 'Sotypedesc' },
-      // { field: 'billingDocTYPE', header: 'Billingdoctype' },
-      //{ field: 'billingtypedesc', header: 'Billingtypedesc' },
-      //   { field: 'divisionName', header: 'Devisionname' },
-      { field: 'soldToParty', header: 'soldToParty' },
-      { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      // { field: 'payer', header: 'Payer' },
-      // { field: 'payerName', header: 'Payername' },
-      { field: 'materialNumber', header: 'Materialnumber' },
-      { field: 'materialDesc', header: 'Materialdesc' },
-      { field: 'invoiceQty', header: 'Invoiceqty' },
-      { field: 'basicAmtINR', header: 'Basicamtinr' },
-      { field: 'totalvalue', header: 'Totalvalue' },
-    ];
-    this.dpservice.salesdetail = [];
-    this.monthName = '';
-    $('#basicExampleModal').modal('show');
-    this.selected_eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
-    this.loading = true;
-    this.dpservice.getSaleCaldetail(this.selectedcode, this.selected_eventdate)
-      .toPromise()
-      .then(res => {
-        this.dpservice.salesdetail = res as Salesdetail[];
-        this.sumgetsale(false);
-        this.loading = false;
-      });
-  }
-  totalNetsales() {
-    this.grand_netsales = 0;
-    this.plantservice.splantlist.forEach(element => {
-      this.grand_netsales = this.grand_netsales + element.totalVal;
-    });
-    return this.grand_netsales;
-  }
-  summary2() {
-    const me = this;
-    this.i = 1;
-    me.netSalesTotal = 0;
-    me.cancelInvTotal = 0;
-    me.salesReturnTotal = 0;
-    me.summaryDetail2 = [];
-    me.dpservice.getNetSaleSummary(this.startdate)
-      .toPromise()
-      .then(res => {
-        const result = res; //as Salesdetail[];
-        if (result) {
-          result.forEach(row => {
-            if (!me.summaryDetail2[row.plant]) {
-              me.summaryDetail2[row.plant] = [];
-            }
-            me.summaryDetail2[row.plant].push(row);
-            if (result.length == me.i) {
+    this.lastDate = '';
+    // co a = fruits.indexOf("Apple", 4);
+    var d = new Date();
+    const m = this.monthNames.indexOf(ev, 0) //d.getMonth(); //current month
+    console.log(m + 1);
+    const y = d.getFullYear(); //current year
+    console.log(new Date(y, m + 1, 0));
+    this.lastDate = this.datePipe.transform(new Date(y, m + 1, 0), 'dd');
 
-              me.plantservice.splantlist.forEach(plant => {
-                plant.totalVal = 0;
+    this.startdate = this.datePipe.transform(new Date(y, m, 1), 'yyyy-MM-dd');
+    console.log("startdate : ", this.startdate);
 
-                if (me.summaryDetail2[plant.plantcode]) {
-                  me.netSalesTotal = 0;
-                  me.cancelInvTotal = 0;
-                  me.salesReturnTotal = 0;
-                  me.summaryDetail2[plant.plantcode].forEach(sum => {
-                    if (sum.mode == "netsale") {
-                      me.netSalesTotal = me.netSalesTotal + sum.netSale;
-                    }
-                    if (sum.mode == "salereturn") {
-                      me.salesReturnTotal = me.salesReturnTotal + sum.netSale;
-                    }
-                    if (sum.mode == "cancelinv") {
-                      me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
-                    }
-                  });
-                  plant.totalVal = (me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal)));
-                  me.totalNetsales();
-                }
-              });
-            }
-            me.i = me.i + 1;
-          });
-          console.log("me.plantservice.splantlist", me.plantservice.splantlist);
-        }
-      });
-  }
-  summary() {
-    $('#summaryModal').modal('show');
-  }
-  //top btn click
-  extraVal(val) {
-    this.modalType = 2;
-    this.basicamtinr = 0;
-    this.totalvalue = 0;
-    this.totalSumofValue = 0;
-    this.cols = [
-      // { field: 'plant', header: 'Plant' },
-      { field: 'plantName', header: 'Plant Name' },
-      // { field: 'billingDocType', header: 'Billingdoctype' },
-      { field: 'invoiceNumber', header: 'Invoiceno' },
-      //{ field: 'accdocno', header: 'Accdocno' },
-      { field: 'billingDocDate', header: 'Billingdocdate' },
-      // { field: 'materialType', header: 'Materialtype' },
-      //  { field: 'soType', header: 'Sotype' },
-    ];
-    this.cols.push(
-      //   { field: 'soTypedesc', header: 'Sotypedesc' },
-      { field: 'materialNumber', header: 'Materialnumber' },
-      { field: 'materialDesc', header: 'Materialdesc' },
-      { field: 'soldToParty', header: 'Soldtoparty' },
-      { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      //  { field: 'payer', header: 'Payer' },
-      // { field: 'payerName', header: 'Payername' },
-    );
-    if (val == "NetSaleDetail") {
-      this.totalSumofTitle = "Tot. Net.";
-      this.totalSumofBg = "bg-info";
-      this.cols.push(
-        { field: 'netSale', header: 'Net Sale' },
-      );
-    } else if (val == "GrosSaleDetail") {
-      this.totalSumofTitle = "Tot. Gross";
-      this.totalSumofBg = "bg-success";
 
-      this.cols.push(
-        { field: 'grossSale', header: 'Gross Sale' },
-      );
-    } else if (val == "salesReturnDetail") {
+    this.loaddata();
 
-      this.totalSumofTitle = "Tot. Return";
-      this.totalSumofBg = "bg-danger";
-
-      this.cols.push(
-        { field: 'salesReturn', header: 'Sales Return' },
-      );
-    } else if (val == "cancelinvoicedetail") {
-      this.totalSumofBg = "bg-warning";
-      this.totalSumofTitle = "Tot. Cancel";
-      this.cols.push(
-        { field: 'cancelInvoice', header: 'Cancel Inv.' },
-      );
-    }
-    else if (val == "purchasegroupmouldedsum") {
-      this.totalSumofTitle = "Tot. Moulded";
-      this.totalSumofBg = "bg-moulded";
-      this.cols = [
-        { field: 'plantShortName', header: 'Plant Name' },
-        { field: 'acDocumentDate', header: 'AC Document Date' },
-        { field: 'group', header: 'Group' },
-        { field: 'vendorName', header: 'Vendor Name' },
-        { field: 'narattion', header: 'Narattion' },
-        { field: 'totalPurchase', header: 'Moulded' },
-      ];
-
-      this.dpservicePurchase.purchasedetail = [];
-      this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-      $('#basicExampleModalforpurchase').modal('show');
-      this.loading = true;
-
-      this.dpservicePurchase.getPurchaseBtnClickEvent(val, this.selectedcode, this.startdate)
-        .toPromise()
-        .then(res => {
-          this.dpservicePurchase.purchasedetail = res as Purchasedetail[];
-          this.getSumForButtonEvent();
-          this.loading = false;
-        });
-
-      return;
-    }
-
-    this.dpservice.salesdetail = [];
-    this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
-    $('#basicExampleModal').modal('show');
-    this.loading = true;
-
-    this.dpservice.getSales(this.selectedcode, this.startdate, val)
-      .toPromise()
-      .then(res => {
-        this.dpservice.salesdetail = res as Salesdetail[];
-        this.sumgetsale(val);
-        this.loading = false;
-      });
-
-  }
-  //sum
-  getSumForButtonEvent() {
-    this.totalSumofValue = 0;
-    for (const sd of this.dpservicePurchase.purchasedetail) {
-      this.totalSumofValue = (this.totalSumofValue + sd.totalPurchase);
-    }
-    return;
-  }
-  sumgetsale(val) {
-    this.basicamtinr = 0;
-    this.totalvalue = 0;
-    this.totalSumofValue = 0;
-    for (const sd of this.dpservice.salesdetail) {
-      this.basicamtinr = this.basicamtinr + sd.basicAmtINR;
-      this.totalvalue = this.totalvalue + sd.totalvalue;
-      if (val == "NetSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.netSale);
-      } else if (val == "GrosSaleDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.grossSale);
-      } else if (val == "salesReturnDetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.salesReturn);
-      } else if (val == "cancelinvoicedetail") {
-        this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
-      }
-    }
-    this.totalSumofValue = (this.totalSumofValue / 100000);
-    this.basicamtinr = (this.basicamtinr / 100000);
-    this.totalvalue = (this.totalvalue / 100000);
-    return;
   }
   //selected plant 
   selectedPlanName() {
