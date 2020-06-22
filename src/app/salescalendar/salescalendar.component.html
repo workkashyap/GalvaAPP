@@ -5,11 +5,13 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <h5>Sales Calendar
             </h5>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-4">
+            <h6 *ngIf="company_val>0" style="text-align: center;">
+              Target Sales - Rs. {{company_val | number:'1.2-2'}} Lacs</h6>
           </div>
           <div class="col-sm-4">
             <div class="row" style="text-align: center;">
@@ -70,6 +72,12 @@
                       Moulded =
                       <b>{{ purchaseMoulded | number:'1.2-2' }}</b>
                       Lacs</button>
+                      &nbsp;&nbsp;
+                    <button class="btn btn-custom text-dark bg-compliance" (click)="extraVal('purchasegroupmouldedsum')"
+                      style="width: auto;" *ngIf="company_val>0">
+                      Compliance % =
+                      <b>{{ compliance | number:'1.2-2' }}</b>
+                      </button>
 
                   </div>
                 </div>

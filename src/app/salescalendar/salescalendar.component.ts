@@ -23,9 +23,11 @@ import { PurchaseService } from '../shared/purchase/purchase.service';
   providers: [DatePipe]
 })
 export class SalescalendarComponent implements OnInit {
+  company_val: number = 0;
   finlaNetSales: number = 0;
   purchaseMoulded: number = 0;
   netSales: number = 0;
+  compliance: number = 0;
   salesRej: number = 0;
   grossSales: number = 0;
   cancelledInvoice: number = 0;
@@ -112,7 +114,7 @@ export class SalescalendarComponent implements OnInit {
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
         me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
         me.loading = false;
-
+        me.selectedPlanName();
         if (res) {
           me.summary2();
 
@@ -162,7 +164,9 @@ export class SalescalendarComponent implements OnInit {
   //netsales
   finalNetSale() {
     this.finlaNetSales = 0;
-    return this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
+    this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
+    this.compliance = (this.finlaNetSales/this.company_val*100);
+    return this.finlaNetSales ;
   }
   //get top button total value
   loadchart1() {
@@ -447,10 +451,18 @@ export class SalescalendarComponent implements OnInit {
   //selected plant 
   selectedPlanName() {
     const me = this;
+    me.company_val = 0;
     if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
       this.plantservice.splantlist.forEach(function (element, i) {
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
+        }
+        if (me.selectedcode == '1010') {
+          me.company_val = 400;
+        } else if (me.selectedcode == '1040') {
+          me.company_val = 800;
+        } else if (me.selectedcode == '1050') {
+          me.company_val = 200;
         }
       });
     }

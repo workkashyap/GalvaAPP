@@ -72,7 +72,6 @@
             <option value="Customer">Customer Rej Review</option>
           </select>
         </div>
-
       </div>
       <!--<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
       -->
@@ -106,8 +105,11 @@
                 <span class="badge badge-success" *ngIf="rowData[col.field]==1 ">Approved</span>
                 <span class="badge badge-danger" *ngIf="rowData[col.field]==2 ">Rejected</span>
               </div>
+              <div *ngIf="col.field=='responsibility'">
+                {{this.responsibility(rowData[col.field])}}
+              </div>
               <span
-                *ngIf="col.field!='targetdateofcompletion' && col.field!='attachment' && col.field!='approvedstatus' && col.field!='progresspercent'"
+                *ngIf="col.field!='responsibility' && col.field!='targetdateofcompletion' && col.field!='attachment' && col.field!='approvedstatus' && col.field!='progresspercent'"
                 style="font-size: 10px;">
                 {{rowData[col.field]}}
               </span>

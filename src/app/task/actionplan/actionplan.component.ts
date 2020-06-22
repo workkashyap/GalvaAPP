@@ -75,10 +75,11 @@ export class ActionplanComponent implements OnInit {
   public monthNames: any;
   monthname: any;
   allActionPlan: any;
+  selectedUser:any;
   public date: any;
   cols: any[];
   selectedItemrej: Createactionplan;
-
+  username :any= '';
   selectedItemrejarray: Createactionplan[] = [];
   filterItemrejarray: Createactionplan[] = [];
   iv: number;
@@ -89,7 +90,9 @@ export class ActionplanComponent implements OnInit {
     public apservice: CreateactionplanService, public lservice: LoginService, public uservice: UserService, public plantservice: PlantService,
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-
+    this.uservice.getuserbyid(this.currentUser.id).then((res:any)=>{
+      this.selectedUser = this.uservice.userlist[0].id;
+    });
   }
 
   ngOnInit() {
@@ -134,6 +137,17 @@ export class ActionplanComponent implements OnInit {
 
       });
   }
+  responsibility(id) {
+    this.username = '';
+    console.log("id",id);
+    console.log("this.uservice.userlist ",this.uservice.userlist);
+    this.uservice.userlist.forEach(element => {
+      if (element.id == id) {
+        this.username = element.username;
+      }
+    });
+    return this.username;
+  }
   getData() {
     let me = this;
     me.loading = true;
@@ -171,7 +185,7 @@ export class ActionplanComponent implements OnInit {
     this.selectedPlant = ev;
     this.getData();
   }
-  
+
   selectedMode(ev) {
     this.mode = ev;
     this.getData();
