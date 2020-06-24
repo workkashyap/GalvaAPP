@@ -11,6 +11,7 @@ import { User } from '../shared/login/User.model';
 import { PlantService } from '../shared/plant/plant.service';
 import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
 import { Salessummary } from '../shared/dailyProduction/salessummary.model';
+import { Purchasesummary } from '../shared/purchase/purchasesummary.model';
 
 @Component({
   selector: "app-home",
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
   monthNames: any;
   monthNames2: any;
   inspectionqtySum: number;
-  inspectionvalueSum: number=0;
+  inspectionvalueSum: number = 0;
   okqtySum: number = 0;
   okvalueSum: number = 0;
   rejectqtySum: number = 0;
@@ -56,9 +57,11 @@ export class HomeComponent implements OnInit {
   salesRej: number = 0;
   grossSales: number = 0;
   cancelledInvoice: number = 0;
+  purchaseMoulded: number = 0;
+  finlaNetSales: number = 0;
   constructor(
     public service: HomeService, public lservice: LoginService, public plantservice: PlantService,
-    public dpservice: DailyproductionService,public datePipe:DatePipe
+    public dpservice: DailyproductionService, public datePipe: DatePipe
 
   ) {
     this.monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -86,7 +89,13 @@ export class HomeComponent implements OnInit {
 
     this.loadchart1();
     this.saleSummary();
-
+  }
+  
+  //netsales
+  finalNetSale() {
+    this.finlaNetSales = 0;
+    this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
+    return this.finlaNetSales;
   }
   saleSummary() {
     this.netSales = 0;
@@ -94,15 +103,15 @@ export class HomeComponent implements OnInit {
     this.cancelledInvoice = 0;
     this.salesRej = 0;
     const date = new Date();
-    const startdate  =  this.datePipe.transform(date, 'yyyy-MM-dd');
+    const startdate = this.datePipe.transform(date, 'yyyy-MM-dd');
     //const startdate = new Date().getFullYear() + '-' + new Date().getMonth() + '-01';
     console.log("startdate : ", startdate);
     this.dpservice.getNetSale(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
-        this.netSales = element.netsale;
+        this.netSales =  element.netsale; 
       });
-    });
+    }); 
 
     this.dpservice.getGrossSale(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
@@ -112,7 +121,7 @@ export class HomeComponent implements OnInit {
     });
 
 
-    this.dpservice.getCancelInvoice(this.plantcode,startdate).toPromise().then(res => {
+    this.dpservice.getCancelInvoice(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
         this.cancelledInvoice = element.cancelInvoice;
@@ -125,7 +134,17 @@ export class HomeComponent implements OnInit {
         this.salesRej = element.salesReturn
       });
     });
+
+    //Moulded value
+    this.purchaseMoulded = 0;
+    this.dpservice.getPurchaseBtnInfo(this.plantcode, startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.purchaseMoulded = element.totalPurchase
+      });
+    });
   }
+
   getselectedtype(ev) {
     this.typename = ev;
     if (this.myChart) this.myChart.destroy();
@@ -138,7 +157,6 @@ export class HomeComponent implements OnInit {
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
-
     this.saleSummary();
   }
   loadchart1() {
@@ -154,14 +172,16 @@ export class HomeComponent implements OnInit {
 
     const month = new Date().getMonth();
     const monthName = this.monthNames2[month];
-
-    this.dpservice.getprochartsummary(this.plantcode, 'M', monthName);
+    this.dpservice.dailyreportsummary = [];
+    this.dpservice.getprochartsummary(this.plantcode, 'M', monthName).then((res: any) => {
+      me.sumAllData();
+    });
 
     this.service.getData(this.plantcode, this.startdate, this.enddate)
       .toPromise()
       .then(res => {
         me.selectedchart = res as Home[];
-        me.sumAllData();
+
 
         for (const xx of me.selectedchart) {
 
@@ -280,7 +300,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   sumAllData() {
 
     this.inspectionqtySum = 0;
@@ -294,27 +313,34 @@ export class HomeComponent implements OnInit {
     this.holdQtySum = 0;
     this.buffingvalueSum = 0;
     this.buffingQtySum = 0;
+
+
     console.log(this.buffingvalueSum);
 
     for (const rq of this.dpservice.dailyreportsummary) {
-      console.log(rq);
-      this.rejectvalueSum += rq.rejectvalue;
-      this.rejectqtySum += rq.rejectqty;
+      console.log("typename : ", this.typename);
+      console.log("rq.itemtype : ", rq.itemtype);
 
-      this.inspectionvalueSum += rq.producevalue;
-      this.inspectionqtySum += rq.inspection_qty;
+      if (this.typename == rq.itemtype) {
+        console.log(rq);
+        this.rejectvalueSum += rq.rejectvalue;
+        this.rejectqtySum += rq.rejectqty;
 
-      this.holdvalueSum = this.holdvalueSum + rq.holdvalue;
+        this.inspectionvalueSum += rq.producevalue;
+        this.inspectionqtySum += rq.inspection_qty;
 
-      this.holdQtySum += rq.holdqty;
+        this.holdvalueSum = this.holdvalueSum + rq.holdvalue;
 
-      this.buffingvalueSum = this.buffingvalueSum + rq.buffingvalue;
-      this.buffingQtySum += rq.buffingqty;
+        this.holdQtySum += rq.holdqty;
 
-      this.okvalueSum += rq.okvalue;
-      this.okqtySum += rq.okqty;
+        this.buffingvalueSum = this.buffingvalueSum + rq.buffingvalue;
+        this.buffingQtySum += rq.buffingqty;
 
-      this.rejperSum += rq.rejper;
+        this.okvalueSum += rq.okvalue;
+        this.okqtySum += rq.okqty;
+
+        this.rejperSum += rq.rejper;
+      }
     }
     // this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
   }

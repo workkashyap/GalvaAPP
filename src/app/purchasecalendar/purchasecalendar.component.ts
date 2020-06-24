@@ -89,6 +89,10 @@ export class PurchasecalendarComponent implements OnInit {
   companyTotalpurchase: number = 0
   companyMisc_purchase: number = 0
 
+  companyUtility: number = 0;
+  companyServices: number = 0;
+  companyJig: number = 0;
+
   grandPurchaseValue: number = 0
 
   constructor(
@@ -470,6 +474,11 @@ export class PurchasecalendarComponent implements OnInit {
     me.companyChemicals = 0;
     me.companyConsumable = 0;
 
+    me.companyUtility = 0;
+    me.companyServices = 0;
+    me.companyJig = 0;
+
+
     me.companyPacking = 0;
     me.companySpares = 0;
     me.companyTransport = 0;
@@ -495,19 +504,6 @@ export class PurchasecalendarComponent implements OnInit {
                 plant.totalVal = 0;
 
                 if (me.summaryDetail2[plant.plantcode]) {
-
-                  /*  me.companyAbs = 0;
-                    me.companyCapital = 0;
-                    me.companyChemicals = 0;
-                    me.companyConsumable = 0;
-  
-                    me.companyPacking = 0;
-                    me.companySpares = 0;
-                    me.companyTransport = 0;
-                    me.companyChemicals = 0;
-                    me.companyMisc_purchase = 0;
-                    me.companyTotalpurchase = 0;*/
-
 
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "totalpurchase") {
@@ -547,6 +543,19 @@ export class PurchasecalendarComponent implements OnInit {
                     if (sum.mode == "Consumable") {
                       plant.consumable = sum.totalPurchase;
                       me.companyConsumable += sum.totalPurchase;
+                    }
+
+                    if (sum.mode == "Service") {
+                      plant.service = sum.totalPurchase;
+                      me.companyServices += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Jig") {
+                      plant.jig = sum.totalPurchase;
+                      me.companyJig += sum.totalPurchase;
+                    }
+                    if (sum.mode == "Utility") {
+                      plant.utility = sum.totalPurchase;
+                      me.companyUtility += sum.totalPurchase;
                     }
 
                   });
@@ -609,6 +618,10 @@ export class PurchasecalendarComponent implements OnInit {
         element.spares = 0;
         element.transport = 0;
         element.consumable = 0;
+
+        element.jig = 0;
+        element.utility = 0;
+        element.service = 0;
 
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;

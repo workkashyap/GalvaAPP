@@ -166,12 +166,15 @@
                 <div class="card user-widget-card bg-info">
                   <div class="card-block">
                     <i class="feather fa fa-pie-chart	bg-simple-c-blue card1-icon"></i>
-                    <h4>{{netSales | number:'1.2-2' }} Lacs</h4>
+                    <!--<h4>{{netSales | number:'1.2-2' }} Lacs</h4>-->
+                    <h4>{{finalNetSale() | number:'1.2-2' }} Lacs</h4>
+
                     <p>Net Sales</p>
                     <a href="/salescalendar" class="more-info"> {{monthname}} Month</a>
                   </div>
                 </div>
-              </div><!--
+              </div>
+              <!--
               <div class="col-md-6 col-xl-6">
                 <div class="card user-widget-card bg-success">
                   <div class="card-block">

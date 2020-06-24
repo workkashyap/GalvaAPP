@@ -329,6 +329,7 @@ export class CalendarComponent implements OnInit {
   loadchart1() {
     const month = new Date(this.startdate).getMonth();
     const monthName = this.monthNames[month];
+    this.dpservice.dailyreportsummary = [];
     this.dpservice.getprochartsummary(this.selectedcode, "M", monthName);
   }
 

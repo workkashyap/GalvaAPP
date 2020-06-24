@@ -162,12 +162,19 @@ export class SalescalendarComponent implements OnInit {
       });
   }
   //netsales
-  finalNetSale() {
+  finalNetSale(i) {
     this.finlaNetSales = 0;
+    this.compliance = 0;
+
     this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
-    this.compliance = (this.finlaNetSales/this.company_val*100);
-    return this.finlaNetSales ;
+
+    this.compliance = ((this.finlaNetSales / this.company_val) * 100);
+    if (i == 'compliance') {
+      return this.compliance;
+    }
+    return this.finlaNetSales;
   }
+
   //get top button total value
   loadchart1() {
     this.netSales = 0;
@@ -232,17 +239,17 @@ export class SalescalendarComponent implements OnInit {
     this.modalType = 1;
     this.cols = [
       // { field: 'plant', header: 'Plant' },
-      { field: 'plantName', header: 'Plant Name' },
-      { field: 'invoiceNumber', header: 'Invoiceno' },
+      // { field: 'plantName', header: 'Plant Name' },
+      // { field: 'invoiceNumber', header: 'Invoiceno' },
       // { field: 'accDocNo', header: 'Accdocno' },
-      { field: 'billingDocDate', header: 'Billingdocdate' },
+      //{ field: 'billingDocDate', header: 'Billingdocdate' },
       // { field: 'materialType', header: 'Materialtype' },
       // { field: 'soType', header: 'Sotype' },
       // { field: 'soTypedesc', header: 'Sotypedesc' },
       // { field: 'billingDocTYPE', header: 'Billingdoctype' },
       //{ field: 'billingtypedesc', header: 'Billingtypedesc' },
       //   { field: 'divisionName', header: 'Devisionname' },
-      { field: 'soldToParty', header: 'soldToParty' },
+      // { field: 'soldToParty', header: 'soldToParty' },
       { field: 'soldToPartyName', header: 'Soldtopartyname' },
       // { field: 'payer', header: 'Payer' },
       // { field: 'payerName', header: 'Payername' },
@@ -250,7 +257,7 @@ export class SalescalendarComponent implements OnInit {
       { field: 'materialDesc', header: 'Materialdesc' },
       { field: 'invoiceQty', header: 'Invoiceqty' },
       { field: 'basicAmtINR', header: 'Basicamtinr' },
-      { field: 'totalvalue', header: 'Totalvalue' },
+      //{ field: 'totalvalue', header: 'Totalvalue' },
     ];
     this.dpservice.salesdetail = [];
     this.monthName = '';
@@ -294,18 +301,26 @@ export class SalescalendarComponent implements OnInit {
               me.plantservice.splantlist.forEach(plant => {
                 plant.totalVal = 0;
 
+                plant.cancelInv = 0;
+                plant.salesReturn = 0;
+                plant.netSale = 0;
+
+
                 if (me.summaryDetail2[plant.plantcode]) {
                   me.netSalesTotal = 0;
                   me.cancelInvTotal = 0;
                   me.salesReturnTotal = 0;
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "netsale") {
+                      plant.netSale = plant.netSale + sum.netSale;
                       me.netSalesTotal = me.netSalesTotal + sum.netSale;
                     }
                     if (sum.mode == "salereturn") {
+                      plant.salesReturn = plant.salesReturn + sum.netSale;
                       me.salesReturnTotal = me.salesReturnTotal + sum.netSale;
                     }
                     if (sum.mode == "cancelinv") {
+                      plant.cancelInv = plant.cancelInv + sum.netSale;
                       me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
                     }
                   });
@@ -451,9 +466,10 @@ export class SalescalendarComponent implements OnInit {
   //selected plant 
   selectedPlanName() {
     const me = this;
-    me.company_val = 0;
+    this.company_val = 0;
     if (this.plantservice && this.plantservice.splantlist && me.selectedcode) {
       this.plantservice.splantlist.forEach(function (element, i) {
+
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
         }
@@ -464,6 +480,7 @@ export class SalescalendarComponent implements OnInit {
         } else if (me.selectedcode == '1050') {
           me.company_val = 300;
         }
+
       });
     }
     // return this.selected_plantname;

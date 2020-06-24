@@ -90,7 +90,7 @@
                         Transport =
                         <b>{{ transport | number:'1.2-2' }}</b>
                         Lacs</button>
- 
+
                       <!--<button class="btn btn-custom text-dark bg-moulded" (click)="extraVal('purchasegroupmouldedsum')"
                         style="width: auto;">
                         Moulded =
@@ -284,6 +284,9 @@
                             Spares : {{summaryinfo.spares}}<br>
                             Transport : {{summaryinfo.transport}}<br>
                             Consumable : {{summaryinfo.consumable}}<br>
+                            Utility : {{summaryinfo.utility}}<br>
+                            Service : {{summaryinfo.service}}<br>
+                            Jig : {{summaryinfo.jig}}<br>
                           </span>
                         </a>
                       </div>
@@ -338,6 +341,18 @@
 
                 <button class="btn btn-custom text-dark bg-capital" style="width: auto;">
                   Capital = <b>{{ companyCapital | number:'1.2-2' }}</b> Lacs
+                </button>
+
+                <button class="btn btn-custom text-dark bg-utility" style="width: auto;">
+                  Utility = <b>{{ companyUtility | number:'1.2-2' }}</b> Lacs
+                </button>
+
+                <button class="btn btn-custom text-dark bg-service" style="width: auto;">
+                  Service = <b>{{ companyServices | number:'1.2-2' }}</b> Lacs
+                </button>
+
+                <button class="btn btn-custom text-dark bg-jig" style="width: auto;">
+                  Jig = <b>{{ companyJig | number:'1.2-2' }}</b> Lacs
                 </button>
               </div>
             </div>
