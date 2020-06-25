@@ -12,3 +12,6 @@
 p-celleditor {
     font-size: 9.9px;
 }
+.text-danger{
+    color: red !important;
+}

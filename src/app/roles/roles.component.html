@@ -24,7 +24,7 @@
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
       <p-table #dt [value]="allRoles" dataKey="id" editMode="row" class="ptable"
         [style]="{'text-align': 'center', 'font-size': '0.7em','width':'40%','margin':'auto'}" [paginator]="true"
-        [rows]="20" [resizableColumns]="true">
+        [rows]="10" [resizableColumns]="true">
         <ng-template pTemplate="header">
           <tr>
             <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>

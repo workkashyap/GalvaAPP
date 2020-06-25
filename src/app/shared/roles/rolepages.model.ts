@@ -9,5 +9,7 @@ export class Rolepages {
   pageid: number;
   userid: number;
 
+  username:string;
+
   edit: boolean = false;
 }

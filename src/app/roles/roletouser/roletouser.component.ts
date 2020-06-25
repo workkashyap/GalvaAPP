@@ -27,6 +27,10 @@ export class RoletouserComponent implements OnInit {
   allRoleAssigned: any;
   roles: any;
   users: any;
+  role_id: any;
+  save_rolepage: any;
+  i: number = 0;
+  is_checked: boolean = false;
   constructor(
     public datePipe: DatePipe,
     public service: UserService,
@@ -38,6 +42,9 @@ export class RoletouserComponent implements OnInit {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.service.getuserbyid(this.currentUser.id);
 
+    this.save_rolepage = {
+      id: 0, userid: 0, roleid: 0
+    }
   }
 
   errorInput: any = '';
@@ -46,12 +53,10 @@ export class RoletouserComponent implements OnInit {
   ngOnInit() {
 
     this.cols = [
-      { field: "userid", header: "User", width: "75px" },
-      { field: "roleid", header: "Role", width: "75px" },
-
-      { field: "edit", header: "Action", width: "100px" }
+      { field: "selected", header: "-", width: "15px" },
+      { field: "roleid", header: "User", width: "75px" },
     ];
-    this.getData();
+    //this.getData();
     this.getUsers();
     this.getRoles();
 
@@ -59,12 +64,66 @@ export class RoletouserComponent implements OnInit {
   getUsers() {
     let me = this;
     this.rolesService
-      .getAllPages()
+      .getAllusers()
       .toPromise()
       .then(res => {
         me.users = res as Rolepages[];
       });
   }
+
+  checkPage(id, row) {
+    const me = this;
+    this.is_checked = false;
+    if (this.allRoleAssigned) {
+      for (this.i = 0; this.i < this.allRoleAssigned.length; this.i++) {
+        if (me.allRoleAssigned[me.i].userid == id) {
+          row.myid = me.allRoleAssigned[me.i].id;
+          me.is_checked = true;
+          break;
+        }
+      }
+    }
+    return this.is_checked;
+  }
+
+  saveData(ev, row) {
+    const me = this;
+    if (ev.target.checked) {
+
+      this.save_rolepage.id = 0;
+      this.save_rolepage.roleid = parseInt(me.role_id);
+      this.save_rolepage.userid = parseInt(row.id);
+
+      console.log("save:", this.save_rolepage);
+
+      this.rolesService.insertUserRole(me.save_rolepage).subscribe(
+        res => {
+          me.toastr.success('Submitted Successfully', 'Save Role To User');
+          console.log('Saved successfully');
+          me.getData();
+          me.resetColumnWidth();
+        },
+        err => {
+          console.log(err);
+        });
+    } else {
+      console.log("row : ", row);
+      //save this.completed_days = 0;
+      if (row.myid) {
+        this.rolesService.deleteUserRole(row.myid).subscribe(
+          res => {
+            this.toastr.success('Deleted Successfully', 'Save Role To User');
+
+            me.getData();
+            me.resetColumnWidth();
+          },
+          err => {
+            console.log(err);
+          });
+      }
+    }
+  }
+
   getRoles() {
     let me = this;
     this.rolesService
@@ -72,14 +131,19 @@ export class RoletouserComponent implements OnInit {
       .toPromise()
       .then(res => {
         me.roles = res as Roles[];
+        me.role_id = me.roles[0].id;
+        me.getData();
       });
   }
-
+  rolepage() {
+    this.getData();
+  }
   getData() {
     let me = this;
     me.loading = true;
+    me.allRoleAssigned = [];
     this.rolesService
-      .getAllUserRole()
+      .getpagesbyuser(me.role_id)
       .toPromise()
       .then(res => {
         me.allRoleAssigned = res as Rolepages[];
@@ -88,7 +152,7 @@ export class RoletouserComponent implements OnInit {
       });
   }
   onRowEditInit(row: any) {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
     this.clonedData[row.id] = { row };
   }
@@ -135,7 +199,7 @@ export class RoletouserComponent implements OnInit {
       });
   }
   resetColumnWidth() {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
   }
 
@@ -148,7 +212,7 @@ export class RoletouserComponent implements OnInit {
     this.resetColumnWidth();
   }
   newRow() {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
 
     return {

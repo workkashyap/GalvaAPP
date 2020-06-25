@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row">
 
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <h5>Role Pages</h5>
           </div>
 
@@ -20,10 +20,24 @@
               </div>
             </div>
           </div>
+          <div class="col-sm-2 mb">
+
+            <select class="form-control" *ngIf="parentPages" name="parentid" #parentid1 [(ngModel)]="parentid"
+              (change)="pagesByParent($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
+              <option *ngFor="let pl of parentPages" value="{{pl.id}}">
+                {{ pl.name }}
+              </option>
+            </select>
+
+          </div>
 
           <div class="col-sm-1 text-center">
-            <button pButton type="button" icon="pi pi-plus" class="ui-button-info" pAddRow [table]="dt"
-              [newRow]="newRow()"></button>
+            <button type="button" class="btn btn-success btn-sm " (click)="addParentPageModel()">
+              <i class="fa fa-plus"></i>
+            </button>
+            &nbsp;
+
+
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -33,13 +47,18 @@
     <section class="content">
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table #dt [columns]="cols" dataKey="id" editMode="row" class="ptable" [style]="{'text-align': 'center', 'font-size': '0.7em','width':'80%','margin':'auto'}" [responsive]="true"
-        selectionMode="single" [(selection)]="selectedItemrej" [value]="allRolepages"
-        [paginator]="true" [rows]="20" [resizableColumns]="true">
+      <p-table #dt [columns]="cols" dataKey="id" editMode="row" class="ptable"
+        [style]="{'text-align': 'center', 'font-size': '0.7em','width':'80%','margin':'auto'}" [responsive]="true"
+        selectionMode="single" [(selection)]="selectedItemrej" [value]="allRolepages" [paginator]="true" [rows]="10"
+        [resizableColumns]="true">
 
         <ng-template pTemplate="header">
           <tr>
             <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+            <th class="tbl-th" width="15px">
+              <button pButton type="button" icon="pi pi-plus" class="ui-button-info btn-sm" pAddRow [table]="dt"
+                [newRow]="newRow()"></button>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
@@ -76,18 +95,8 @@
               </p-cellEditor>
             </td>
 
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="number" min="0" [(ngModel)]="rowData.parentid" class="form-control" required>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ rowData.parentid }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
 
-            <td style="text-align:center">
+            <td style="text-align:center" colspan="2">
               <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info"
                 (click)="onRowEditInit(rowData)"></button>&nbsp;
               <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
@@ -110,3 +119,57 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+<!--add parent page modal -->
+<div class="modal fade" id="addParentPageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row col-md-11">
+          <div class="col-md-6">
+            <h5>New Page
+            </h5>
+          </div>
+
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ngx-loading [show]="loadingSummary" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+        <form>
+          <div class="row">
+
+            <div class="form-group col-md-12">
+              <label for="exampleInputPname">Page Name</label>
+              <input type="email" class="form-control" name="name" #name1 [(ngModel)]="newPage.name"
+                id="exampleInputPname" placeholder="Page name">
+              <small class="form-text text-muted text-danger" *ngIf="!newPage.name && newPage.submit">This is
+                required</small>
+
+            </div>
+            <div class="form-group col-md-12">
+              <label for="exampleInputDescription">Description</label>
+              <textarea class="form-control" name="description" #description1 id="exampleInputDescription"
+                [(ngModel)]="newPage.description" placeholder="Description"></textarea>
+
+            </div>
+            <div class="form-group col-md-12">
+              <label for="exampleInputUrl">Url</label>
+              <input type="text" class="form-control" name="url" #url1 id="exampleInputUrl" [(ngModel)]="newPage.url"
+                placeholder="Url">
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary" (click)="saveNewPage()">Submit</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

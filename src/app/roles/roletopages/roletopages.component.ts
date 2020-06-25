@@ -26,6 +26,10 @@ export class RoletopagesComponent implements OnInit {
   allRoleAssigned: any;
   roles: any;
   pages: any;
+  role_id: any;
+  i: number = 0;
+  is_checked: boolean = false;
+  save_rolepage: any;
   constructor(
     public datePipe: DatePipe,
     public lservice: LoginService,
@@ -34,6 +38,9 @@ export class RoletopagesComponent implements OnInit {
 
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+    this.save_rolepage = {
+      id: 0, pageid: 0, roleid: 0
+    }
   }
 
   errorInput: any = '';
@@ -42,12 +49,13 @@ export class RoletopagesComponent implements OnInit {
   ngOnInit() {
 
     this.cols = [
-      { field: "roleid", header: "Role", width: "75px" },
+      { field: "selected", header: "-", width: "15px" },
       { field: "pageid", header: "Page", width: "75px" },
+      //   { field: "pageid", header: "Page", width: "75px" },
 
-      { field: "edit", header: "Action", width: "100px" }
+      //  { field: "edit", header: "Action", width: "100px" }
     ];
-    this.getData();
+    // this.getData();
     this.getPages();
     this.getRoles();
 
@@ -69,14 +77,17 @@ export class RoletopagesComponent implements OnInit {
       .toPromise()
       .then(res => {
         me.roles = res as Roles[];
+        me.role_id = me.roles[0].id;
+        me.getData();
       });
   }
 
   getData() {
     let me = this;
     me.loading = true;
+    me.allRoleAssigned = [];
     this.rolesService
-      .getAllRolePages()
+      .getpagesbyrole(me.role_id)
       .toPromise()
       .then(res => {
         me.allRoleAssigned = res as Rolepages[];
@@ -84,16 +95,69 @@ export class RoletopagesComponent implements OnInit {
 
       });
   }
+  checkPage(id, row) {
+    const me = this;
+    this.is_checked = false;
+    if (this.allRoleAssigned) {
+      for (this.i = 0; this.i < this.allRoleAssigned.length; this.i++) {
+        if (me.allRoleAssigned[me.i].pageid == id) {
+          row.myid = me.allRoleAssigned[me.i].id;
+          me.is_checked = true;
+          break;
+        }
+      }
+    }
+    return this.is_checked;
+  }
   onRowEditInit(row: any) {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
     this.clonedData[row.id] = { row };
   }
+  saveData(ev, row) {
+    const me = this;
+    if (ev.target.checked) {
+      this.save_rolepage.id = 0;
+      this.save_rolepage.roleid = parseInt(me.role_id);
+      this.save_rolepage.pageid = parseInt(row.id);
+      //console.log("save:", this.save_rolepage);
 
+      this.rolesService.insertRolePage(me.save_rolepage).subscribe(
+        res => {
+          me.toastr.success('Submitted Successfully', 'Save Page Role');
+          console.log('Saved successfully');
+
+          me.getData();
+          me.resetColumnWidth();
+        },
+        err => {
+          console.log(err);
+        });
+    } else {
+      //console.log("row : ", row);
+      //save this.completed_days = 0;
+      if (row.myid) {
+        this.rolesService.deleteRolePage(row.myid).subscribe(
+          res => {
+            this.toastr.success('Deleted Successfully', 'Save Page Role');
+            me.getData();
+            me.resetColumnWidth();
+          },
+          err => {
+            console.log(err);
+          });
+      }
+    }
+
+
+  }
+  rolepage() {
+    this.getData();
+  }
   onRowEditSave(row: any) {
     const me = this;
     //row.id = 0;
-    row.roleid = parseInt(row.roleid);
+    row.roleid = parseInt(this.role_id);
     row.pageid = parseInt(row.pageid);
     if (row.id) {
       console.log("Update", row);
@@ -132,7 +196,7 @@ export class RoletopagesComponent implements OnInit {
       });
   }
   resetColumnWidth() {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
   }
 
@@ -145,14 +209,12 @@ export class RoletopagesComponent implements OnInit {
     this.resetColumnWidth();
   }
   newRow() {
-    this.cols[0].width = "75px";
+    this.cols[0].width = "15px";
     this.cols[1].width = "75px";
 
     return {
       "id": 0,
-      "roleid": 0,
-      "pageid": 0,
-      "edit": false
+      "name": 0,
     }
   }
 }

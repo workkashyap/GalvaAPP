@@ -60,16 +60,16 @@ export class RolepagesService {
   public updateRolePage(data) {
     return this.http.put(this.rootUrl + '/rolespages/' + data.id, data);
   }
-  public deleteRolePage(data) {
-    return this.http.delete(this.rootUrl + '/rolespages/' + data.id);
+  public deleteRolePage(id) {
+    return this.http.delete(this.rootUrl + '/rolespages/' + id);
   }
   /*-------------role pages end------------3*/
 
-  
+
   /*-------------user role------------4*/
   public getAllUserRole(): Observable<Rolepages[]> {
     return this.http.get<Rolepages[]>(
-      this.rootUrl + "/userroles"
+      this.rootUrl + "/pages/getuserroles"
     );
   }
   public insertUserRole(data) {
@@ -78,11 +78,38 @@ export class RolepagesService {
   public updateUserRole(data) {
     return this.http.put(this.rootUrl + '/userroles/' + data.id, data);
   }
-  public deleteUserRole(data) {
-    return this.http.delete(this.rootUrl + '/userroles/' + data.id);
+  public deleteUserRole(id) {
+    return this.http.delete(this.rootUrl + '/userroles/' + id);
   }
   /*-------------user role end------------4*/
 
 
 
+
+  public getParentPages() {
+    return this.http.get(this.rootUrl + '/pages/getparentpages/');
+  }
+  public saveParentPages(data) {
+    return this.http.post(this.rootUrl + '/pages/getparentpages', data);
+  }
+
+  public getPagesByParentID(id) {
+    return this.http.get(this.rootUrl + '/pages/getpagesbyparent/' + id);
+  }
+
+  //Role To Pages
+  public getpagesbyrole(id) {
+    return this.http.get(this.rootUrl + '/pages/getpagesbyrole/' + id);
+  }
+
+  //Role To User
+  public getpagesbyuser(id) {
+    return this.http.get(this.rootUrl + '/pages/getpagesbyuser/' + id);
+  }
+
+  public getAllusers(): Observable<Rolepages[]> {
+    return this.http.get<Rolepages[]>(
+      this.rootUrl + "/users"
+    );
+  }
 }

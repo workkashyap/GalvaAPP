@@ -23,6 +23,9 @@ export class RolepagesComponent implements OnInit {
   is_submit: boolean = false;
   cols: any[];
   allRolepages: any;
+  parentPages: any;
+  parentid: any;
+  newPage: any = [];
   constructor(
     public datePipe: DatePipe,
     public lservice: LoginService,
@@ -31,6 +34,9 @@ export class RolepagesComponent implements OnInit {
 
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+    this.newPage = {
+      id: 0, name: '', description: '', url: '', parentid: 0, submit: false
+    }
   }
 
   errorInput: any = '';
@@ -42,19 +48,58 @@ export class RolepagesComponent implements OnInit {
       { field: "name", header: "Name", width: "75px" },
       { field: "description", header: "Description", width: "175px" },
       { field: "url", header: "Url", width: "75px" },
-      { field: "parentid", header: "Page", width: "75px" },
-
-      { field: "edit", header: "Action", width: "100px" }
+      //{ field: "parentid", header: "Page", width: "75px" },
+      { field: "edit", header: "Action", width: "40px" }
     ];
-    this.getData();
+    this.getParentPages();
   }
+  addParentPageModel() {
+    $('#addParentPageModal').modal('show');
+  }
+  saveNewPage() {
+    this.newPage.submit = true;
+    if (!this.newPage.name) {
+      return;
+    }
+    let me = this;
 
+    console.log("Insert", this.newPage);
+    this.rolesService.insertPage(this.newPage).subscribe(
+      res => {
+        me.toastr.success('Submitted Successfully', 'Save Page');
+        console.log('Saved successfully');
+        this.getParentPages();
+        $('#addParentPageModal').modal('hide');
+        me.newPage = {
+          id: 0, name: '', description: '', url: '', parentid: 0, submit: false
+        }
+      },
+      err => {
+        console.log(err);
+        $('#addParentPageModal').modal('hide');
+
+      });
+
+  }
+  getParentPages() {
+    let me = this;
+    me.loading = true;
+    this.rolesService
+      .getParentPages()
+      .toPromise()
+      .then(res => {
+        me.parentPages = res as Rolepages[];
+        me.loading = false;
+        me.parentid = me.parentPages[0].id;
+        me.getData();
+      });
+  }
 
   getData() {
     let me = this;
     me.loading = true;
     this.rolesService
-      .getAllPages()
+      .getPagesByParentID(me.parentid)
       .toPromise()
       .then(res => {
         me.allRolepages = res as Rolepages[];
@@ -62,19 +107,20 @@ export class RolepagesComponent implements OnInit {
 
       });
   }
-
+  pagesByParent(ev) {
+    this.getData();
+  }
   onRowEditInit(row: any) {
     this.cols[0].width = "75px";
     this.cols[1].width = "175px";
     this.cols[2].width = "75px";
-    this.cols[3].width = "75px";
+    this.cols[3].width = "40px";
     this.clonedData[row.id] = { row };
   }
 
   onRowEditSave(row: any) {
     const me = this;
     //row.id = 0;
-
     if (row.id) {
       console.log("Update", row);
       this.rolesService.updatePage(row).subscribe(
@@ -88,6 +134,8 @@ export class RolepagesComponent implements OnInit {
         });
     } else {
       console.log("Insert", row);
+      row.parentid = parseInt(this.parentid);
+
       this.rolesService.insertPage(row).subscribe(
         res => {
           me.toastr.success('Submitted Successfully', 'Save Page');
@@ -115,7 +163,7 @@ export class RolepagesComponent implements OnInit {
     this.cols[0].width = "75px";
     this.cols[1].width = "175px";
     this.cols[2].width = "75px";
-    this.cols[3].width = "75px";
+    this.cols[3].width = "40px";
   }
 
   onRowEditCancel(row: any, index: number) {
@@ -130,7 +178,7 @@ export class RolepagesComponent implements OnInit {
     this.cols[0].width = "75px";
     this.cols[1].width = "175px";
     this.cols[2].width = "75px";
-    this.cols[3].width = "75px";
+    this.cols[3].width = "40px";
 
     return {
       "id": 0,
