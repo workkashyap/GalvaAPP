@@ -29,11 +29,13 @@ export class HeaderComponent implements OnInit {
     public iservice: InboxService,
     public pageservice: PagesService,
     private route: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.authenticationService.currentUser.subscribe(
       x => (this.currentUser = x)
     );
+   
+
   }
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class HeaderComponent implements OnInit {
       this.service.getPendingApprovals();
       this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     }
+    console.log("currentUser.id : ", this.currentUser.id)
     this.pageservice.getPagesDetail(this.currentUser.id);
   }
 

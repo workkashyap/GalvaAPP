@@ -27,7 +27,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link pt-4 custom-padding" routerLink="./home">
+          <a class="nav-link pt-4 custom-padding" routerLink="./nhome">
             <img src="../../assets/img/user1.png" class="img-circle loggedin-user elevation-2 " alt="User Image" />
             <span class="d-block font-weight-bold user-name">{{ this.currentUser.username }}</span></a>
         </li>
@@ -37,7 +37,7 @@
             <span class="badge badge-danger navbar-badge bg-c-pink badge-round">{{service.allpendinglist.length}}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-header">5 Notifications</span>
+            <span class="dropdown-header">{{service.allpendinglist.length}} Notifications</span>
             <div class="dropdown-divider"></div>
         <li class="nav-item dropdown" *ngFor="
          let task of service.allpendinglist| paginate: { itemsPerPage: 5, currentPage: cpage }">

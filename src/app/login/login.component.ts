@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
 
     if (this.service.currentUserValue) {
       this.router.navigate(['/']);
+    }
   }
-   }
 
   ngOnInit() {
     this.resetForm();
@@ -46,17 +46,19 @@ export class LoginComponent implements OnInit {
   OnSubmit(form: NgForm) {
     this.loading = true;
     this.service.login()
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.loading = false;
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.error = error;
-                    this.toastr.error('Invalid User or Password', this.error);
-                    this.loading = false;
-                });
-    }   
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.loading = false;
+          //this.router.navigate([this.returnUrl]);
+
+          window.location.href = '/nhome';
+        },
+        error => {
+          this.error = error;
+          this.toastr.error('Invalid User or Password', this.error);
+          this.loading = false;
+        });
   }
+}
 

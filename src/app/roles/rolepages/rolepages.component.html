@@ -5,111 +5,148 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row">
-
+        <div class="row mb-2 ml-1">
           <div class="col-sm-6">
-            <h5>Role Pages</h5>
-          </div>
-
-          <div class="col-sm-3 mb">
-            <div class="input-group mb-1 custome-gs">
-              <input type="text" class="form-control" pInputText placeholder="Global Filter"
-                (input)="dt.filterGlobal($event.target.value, 'contains')">
-              <div class="input-group-append">
-                <i class="fa fa-search input-group-text"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2 mb">
-
-            <select class="form-control" *ngIf="parentPages" name="parentid" #parentid1 [(ngModel)]="parentid"
-              (change)="pagesByParent($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
-              <option *ngFor="let pl of parentPages" value="{{pl.id}}">
-                {{ pl.name }}
-              </option>
-            </select>
 
           </div>
-
-          <div class="col-sm-1 text-center">
-            <button type="button" class="btn btn-success btn-sm " (click)="addParentPageModel()">
-              <i class="fa fa-plus"></i>
-            </button>
-            &nbsp;
-
-
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/nhome">Home</a></li>
+              <li class="breadcrumb-item active">Role Pages</li>
+            </ol>
           </div>
+          <!-- /.col -->
         </div>
       </div><!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table #dt [columns]="cols" dataKey="id" editMode="row" class="ptable"
-        [style]="{'text-align': 'center', 'font-size': '0.7em','width':'80%','margin':'auto'}" [responsive]="true"
-        selectionMode="single" [(selection)]="selectedItemrej" [value]="allRolepages" [paginator]="true" [rows]="10"
-        [resizableColumns]="true">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- /.card -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                  <!-- general form elements -->
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <div class="row">
 
-        <ng-template pTemplate="header">
-          <tr>
-            <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
-            <th class="tbl-th" width="15px">
-              <button pButton type="button" icon="pi pi-plus" class="ui-button-info btn-sm" pAddRow [table]="dt"
-                [newRow]="newRow()"></button>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="rowData">
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="rowData.name" class="form-control" required>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{rowData.name}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <textarea pInputText type="text" [(ngModel)]="rowData.description" class="form-control" required
-                    rows="2"></textarea>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{rowData.description}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="rel" [(ngModel)]="rowData.url" class="form-control" required>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{rowData.url}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
+                        <div class="col-sm-6">
+                          <h3 class="card-title-md">Role Pages</h3>
+                        </div>
+
+                        <div class="col-sm-3 mb">
+                          <div class="input-group mb-1 custome-gs">
+                            <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                              (input)="dt.filterGlobal($event.target.value, 'contains')">
+                            <div class="input-group-append">
+                              <i class="fa fa-search input-group-text"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-2 mb">
+
+                          <select class="form-control" *ngIf="parentPages" name="parentid" #parentid1
+                            [(ngModel)]="parentid" (change)="pagesByParent($event.target.value)">
+                            <option *ngFor="let pl of parentPages" value="{{pl.id}}">
+                              {{ pl.name }}
+                            </option>
+                          </select>
+
+                        </div>
+
+                        <div class="col-sm-1 text-center">
+                          <button type="button" class="btn btn-success btn-sm " (click)="addParentPageModel()">
+                            <i class="fa fa-plus"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+                      <p-table #dt [columns]="cols" dataKey="id" editMode="row" class="ptable"
+                        [style]="{'text-align': 'center', 'font-size': '0.7em','width':'100%','margin':'auto'}"
+                        [responsive]="true" selectionMode="single" [(selection)]="selectedItemrej"
+                        [value]="allRolepages" [paginator]="true" [rows]="10" [resizableColumns]="true">
+
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+                            <th class="tbl-th" width="15px">
+                              <button pButton type="button" icon="pi pi-plus" class="ui-button-info btn-sm" pAddRow
+                                [table]="dt" [newRow]="newRow()"></button>
+                            </th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                          <tr [pEditableRow]="rowData">
+                            <td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <input pInputText type="text" [(ngModel)]="rowData.name" class="form-control"
+                                    required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{rowData.name}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
+                            <td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <textarea pInputText type="text" [(ngModel)]="rowData.description"
+                                    class="form-control" required rows="2"></textarea>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{rowData.description}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
+                            <td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <input pInputText type="rel" [(ngModel)]="rowData.url" class="form-control" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{rowData.url}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
 
 
-            <td style="text-align:center" colspan="2">
-              <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info"
-                (click)="onRowEditInit(rowData)"></button>&nbsp;
-              <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
-                (click)="onRowDelete(rowData)"></button>
-              <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check"
-                [disabled]="errorInput!=''" class="ui-button-success" style="margin-right: .5em"
-                (click)="onRowEditSave(rowData)"></button>
-              <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
-                class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+                            <td style="text-align:center" colspan="2">
+                              <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                                class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&nbsp;
+                              <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
+                                (click)="onRowDelete(rowData)"></button>
+                              <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check"
+                                [disabled]="errorInput!=''" class="ui-button-success" style="margin-right: .5em"
+                                (click)="onRowEditSave(rowData)"></button>
+                              <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                                class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+
 
     </section>
     <!-- /.content -->
@@ -138,7 +175,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+        <ngx-loading [show]="loadingSummary" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
         <form>
           <div class="row">
 
@@ -156,12 +193,6 @@
                 [(ngModel)]="newPage.description" placeholder="Description"></textarea>
 
             </div>
-            <div class="form-group col-md-12">
-              <label for="exampleInputUrl">Url</label>
-              <input type="text" class="form-control" name="url" #url1 id="exampleInputUrl" [(ngModel)]="newPage.url"
-                placeholder="Url">
-            </div>
-
           </div>
         </form>
       </div>

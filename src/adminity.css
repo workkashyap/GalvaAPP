@@ -15,14 +15,6 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 .content-wrapper,.content-wrapper .content-header {
     background: #f6f7fb !important;
 }
-.badge-round {
-	border-radius: 50% !important;
-    padding: 4px;
-    width: 19px;
-    right: 60px;
-    position: absolute;
-    top: 7px;
-}
 .logo-section{
     background-color: #0129CD;
     opacity: 0.7;
@@ -507,18 +499,30 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 	height: auto;
 	float: left;
     width: 1.5rem;
-    margin: 2px 0px 0px 0px;
 }
 .custom-padding {
     padding: 0px 10px 0px 15px !important;
 }
 .custom-padding > .user-name {
     float: left;
-    margin: 8px 7px 0px 7px;
+    margin:1px 0px 0px 7px;
     color: #007ad9;
-    font-size: 13px;
+    font-size: 12px;
 }
 
+.badge-round {
+	border-radius: 50% !important;
+    padding: 4px;
+    width: 19px;
+    right: 33px;
+    position: absolute;
+    top: 4px;
+    bottom: unset;
+    left: unset;
+}
+.mr-auto {
+    font-size: 14px;
+}
 @media only screen and (max-width: 600px) {
 	.custom-padding {
 		padding:10px 10px 5px 15px !important
@@ -528,9 +532,9 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 		border-radius: 50% !important;
 		padding: 4px;
 		width: 19px;
-		left: 23px;
+		left: 21px;
 		position: absolute;
-		bottom: 54px;
+		bottom: 50px;
 		top: unset;
 		right: unset;
 	}
@@ -545,9 +549,9 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 		border-radius: 50% !important;
 		padding: 4px;
 		width: 19px;
-		left: 23px;
+		left: 21px;
 		position: absolute;
-		bottom: 54px;
+		bottom: 50px;
 		top: unset;
 		right: unset;
 	}
@@ -555,13 +559,18 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 
 @media (min-width: 1200px){
 
+	.mr-auto{
+		left: auto !important;
+	  right: 0px;
+	  position: absolute;
+	}
 	.badge-round {
 		border-radius: 50% !important;
 		padding: 4px;
 		width: 19px;
-		right: 80px;
+		right: 33px;
 		position: absolute;
-		top: 15px;
+		top: 4px;
 		bottom: unset;
 		left: unset;
 	}

@@ -68,7 +68,7 @@ export class SalescalendarComponent implements OnInit {
   cancelInvTotal: number = 0;
   salesReturnTotal: number = 0;
   netSalesTotal: number = 0;
-
+  mouldedTotal: number = 0;
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -304,12 +304,13 @@ export class SalescalendarComponent implements OnInit {
                 plant.cancelInv = 0;
                 plant.salesReturn = 0;
                 plant.netSale = 0;
-
+                plant.moulded = 0;
 
                 if (me.summaryDetail2[plant.plantcode]) {
                   me.netSalesTotal = 0;
                   me.cancelInvTotal = 0;
                   me.salesReturnTotal = 0;
+                  me.mouldedTotal = 0
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "netsale") {
                       plant.netSale = plant.netSale + sum.netSale;
@@ -323,8 +324,12 @@ export class SalescalendarComponent implements OnInit {
                       plant.cancelInv = plant.cancelInv + sum.netSale;
                       me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
                     }
+                    if (sum.mode == "Moulded") {
+                      plant.moulded = plant.moulded + sum.netSale;
+                      me.mouldedTotal = me.mouldedTotal + sum.netSale;
+                    }
                   });
-                  plant.totalVal = (me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal)));
+                  plant.totalVal = (me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
                   me.totalNetsales();
                 }
               });
