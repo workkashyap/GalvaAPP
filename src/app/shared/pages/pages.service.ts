@@ -11,9 +11,9 @@ export class PagesService {
   public pagelist: Pages[] = [];
   constructor(public http: HttpClient) {}
 
-  public getPagesDetail(): any {
+  public getPagesDetail(userid): any {
     return this.http
-      .get(this.rootUrl + "/pages")
+      .get(this.rootUrl + "/pages/getpages/" + userid)
       .toPromise()
       .then(res => {
         this.pagelist = res as Pages[];

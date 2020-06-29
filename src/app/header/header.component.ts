@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   public days: number;
   public cDate: string;
   public loading = false;
+  cpage: any;
 
   constructor(
     private authenticationService: LoginService,
@@ -49,7 +50,7 @@ export class HeaderComponent implements OnInit {
       this.service.getPendingApprovals();
       this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     }
-    this.pageservice.getPagesDetail();
+    this.pageservice.getPagesDetail(this.currentUser.id);
   }
 
   logout() {
