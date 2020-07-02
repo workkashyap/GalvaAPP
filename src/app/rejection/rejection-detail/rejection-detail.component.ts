@@ -71,11 +71,11 @@ export class RejectionDetailComponent implements OnInit {
   public plant_name: string;
 
 
-  totalRejQty: number;
-  totalRejPer: number;
-  totalRejVal: number;
+  totalRejQty: number = 0;
+  totalRejPer: number = 0;
+  totalRejVal: number = 0;
 
-  totalinsQty: number;
+  totalinsQty: number = 0;
   totalinsValue: number = 0;
 
   totalokValue: number = 0;
