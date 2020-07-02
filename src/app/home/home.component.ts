@@ -12,6 +12,7 @@ import { PlantService } from '../shared/plant/plant.service';
 import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
 import { Salessummary } from '../shared/dailyProduction/salessummary.model';
 import { Purchasesummary } from '../shared/purchase/purchasesummary.model';
+import { PagesService } from '../shared/pages/pages.service';
 
 @Component({
   selector: "app-home",
@@ -52,6 +53,7 @@ export class HomeComponent implements OnInit {
   buffingQtySum: number = 0;
   monthname: any;
   public salessummary: Salessummary[] = [];
+  redirectLogin: boolean = true;
 
   netSales: number = 0;
   salesRej: number = 0;
@@ -61,7 +63,8 @@ export class HomeComponent implements OnInit {
   finlaNetSales: number = 0;
   constructor(
     public service: HomeService, public lservice: LoginService, public plantservice: PlantService,
-    public dpservice: DailyproductionService, public datePipe: DatePipe
+    public pageservice: PagesService,
+    public dpservice: DailyproductionService, public datePipe: DatePipe,
 
   ) {
     this.monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -87,10 +90,28 @@ export class HomeComponent implements OnInit {
     Chart.pluginService.register(namedChartAnnotation);
     this.plantservice.getPlantData(this.currentUser.id);
 
+
+
+    this.pageservice.getPagesDetail(this.currentUser.id).then((res: any) => {
+      //const data = res as Pages[];
+      //console.log("pages : ", data)
+      this.pageservice.pagelist.forEach(element => {
+        if (element.id == 1) {
+          this.redirectLogin = false;
+          return;
+        }
+      });
+      if (this.redirectLogin) {
+        
+        //window.location.href = '/welcome';
+        //  this.route.navigate(['/welcome'])
+      }
+    });
+
     this.loadchart1();
     this.saleSummary();
   }
-  
+
   //netsales
   finalNetSale() {
     this.finlaNetSales = 0;
@@ -109,9 +130,9 @@ export class HomeComponent implements OnInit {
     this.dpservice.getNetSale(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];
       salesReturn.forEach(element => {
-        this.netSales =  element.netsale; 
+        this.netSales = element.netsale;
       });
-    }); 
+    });
 
     this.dpservice.getGrossSale(this.plantcode, startdate).toPromise().then(res => {
       const salesReturn = res as Salessummary[];

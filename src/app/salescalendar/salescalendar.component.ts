@@ -250,13 +250,13 @@ export class SalescalendarComponent implements OnInit {
       //{ field: 'billingtypedesc', header: 'Billingtypedesc' },
       //   { field: 'divisionName', header: 'Devisionname' },
       // { field: 'soldToParty', header: 'soldToParty' },
-      { field: 'soldToPartyName', header: 'Soldtopartyname' },
+      { field: 'soldToPartyName', header: 'Party name' },
       // { field: 'payer', header: 'Payer' },
       // { field: 'payerName', header: 'Payername' },
-      { field: 'materialNumber', header: 'Materialnumber' },
-      { field: 'materialDesc', header: 'Materialdesc' },
-      { field: 'invoiceQty', header: 'Invoiceqty' },
-      { field: 'basicAmtINR', header: 'Basicamtinr' },
+      { field: 'materialNumber', header: 'Code' },
+      { field: 'materialDesc', header: 'Description' },
+      { field: 'invoiceQty', header: 'Qty' },
+      { field: 'basicAmtINR', header: 'Amount' },
       //{ field: 'totalvalue', header: 'Totalvalue' },
     ];
     this.dpservice.salesdetail = [];
@@ -464,7 +464,7 @@ export class SalescalendarComponent implements OnInit {
       }
     }
     this.totalSumofValue = (this.totalSumofValue / 100000);
-    this.basicamtinr = (this.basicamtinr / 100000);
+    //   this.basicamtinr = (this.basicamtinr / 100000);
     this.totalvalue = (this.totalvalue / 100000);
     return;
   }

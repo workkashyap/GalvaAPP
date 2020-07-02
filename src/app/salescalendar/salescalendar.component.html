@@ -55,9 +55,10 @@
                     <button class="btn btn-custom text-dark bg-info" (click)="extraVal('NetSaleDetail')">Net Sales =
                       <b>{{ this.finalNetSale('finlaNetSales') | number:'1.2-2'}}</b>
                       Lacs</button>
-                    <!-- <button class="btn btn-custom text-dark bg-success" (click)="extraVal('GrosSaleDetail')">Gross Sales =
-                    <b>{{ grossSales | number:'1.2-2' }}</b>
-                    Lacs</button>-->
+                    <button class="btn btn-custom text-dark bg-success" (click)="extraVal('GrosSaleDetail')">Gross Sales
+                      =
+                      <b>{{ grossSales | number:'1.2-2' }}</b>
+                      Lacs</button>
                     <button class="btn btn-custom text-dark bg-danger" (click)="extraVal('salesReturnDetail')">Sales Rej
                       =
                       <b>{{ salesRej| number:'1.2-2' }}</b>
@@ -154,7 +155,7 @@
                             Cancel Inv. : {{summaryinfo.cancelInv}}<br>
                             Moulded : {{summaryinfo.moulded}}<br>
 
-                            
+
                           </span>
                         </a>
                       </div>
