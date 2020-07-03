@@ -80,6 +80,17 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     background:linear-gradient(to right,#FF5722,#FFAB91);
 }
 
+.bg-hr {
+    border: unset;
+    color: white !important;
+    background:linear-gradient(to right,#E91E63,#FFAB91);
+}
+
+.bg-tool {
+    border: unset;
+    color: white !important;
+    background:linear-gradient(to right,#F9A81D,#FFEB3B);
+}
 .bg-company-name{
 	border: unset;
     color: white !important;

@@ -114,6 +114,13 @@
                       <button class="btn btn-custom text-dark bg-jig" style="width: auto;">
                         Jig = <b>{{ jig | number:'1.2-2' }}</b> Lacs</button>
 
+
+                      <button class="btn btn-custom text-dark bg-hr" style="width: auto;"  (click)="extraVal('purchasegrouphrsum')">
+                        HR = <b>{{ hr | number:'1.2-2' }}</b> Lacs</button>
+
+                      <button class="btn btn-custom text-dark bg-tool" style="width: auto;"  (click)="extraVal('purchasegrouptoolsum')">
+                        Tool = <b>{{ tool | number:'1.2-2' }}</b> Lacs</button>
+
                     </div>
 
                   </div>
@@ -287,6 +294,8 @@
                             Utility : {{summaryinfo.utility}}<br>
                             Service : {{summaryinfo.service}}<br>
                             Jig : {{summaryinfo.jig}}<br>
+                            HR : {{summaryinfo.hr}}<br>
+                            TOOL : {{summaryinfo.tool}}<br>
                           </span>
                         </a>
                       </div>

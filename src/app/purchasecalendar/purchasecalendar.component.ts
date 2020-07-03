@@ -64,6 +64,9 @@ export class PurchasecalendarComponent implements OnInit {
   utility: number = 0;
   service: number = 0;
   jig: number = 0;
+  hr: number = 0;
+  tool: number = 0;
+
 
   abs: number = 0;
   capital: number = 0;
@@ -92,6 +95,9 @@ export class PurchasecalendarComponent implements OnInit {
   companyUtility: number = 0;
   companyServices: number = 0;
   companyJig: number = 0;
+
+  companyHr: number = 0;
+  companyTool: number = 0;
 
   grandPurchaseValue: number = 0
 
@@ -292,7 +298,26 @@ export class PurchasecalendarComponent implements OnInit {
         this.jig = element.totalPurchase
       });
     });
+
+    //hr value
+    this.hr = 0;
+    this.dpservice.getPurchaseBtnInfo('purchasegrouphr', this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.hr = element.totalPurchase
+      });
+    });
+
+    //tool value
+    this.hr = 0;
+    this.dpservice.getPurchaseBtnInfo('purchasegrouptool', this.selectedcode, this.startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.tool = element.totalPurchase
+      });
+    });
   }
+
   //on change option value
   selectedGrid(ev) {
     this.selectedcode = ev;
@@ -444,6 +469,20 @@ export class PurchasecalendarComponent implements OnInit {
         { field: 'totalPurchase', header: 'Utility' },
       );
     }
+    else if (val == "purchasegrouphrsum") {
+      this.totalSumofTitle = "Tot. HR";
+      this.totalSumofBg = "bg-hr";
+      this.cols.push(
+        { field: 'totalPurchase', header: 'HR' },
+      );
+    }
+    else if (val == "purchasegrouptoolsum") {
+      this.totalSumofTitle = "Tot. Tool";
+      this.totalSumofBg = "bg-tool";
+      this.cols.push(
+        { field: 'totalPurchase', header: 'Tool' },
+      );
+    }
 
 
     this.dpservice.purchasedetail = [];
@@ -477,6 +516,10 @@ export class PurchasecalendarComponent implements OnInit {
     me.companyUtility = 0;
     me.companyServices = 0;
     me.companyJig = 0;
+
+    me.companyHr = 0;
+    me.companyTool = 0;
+
 
 
     me.companyPacking = 0;
@@ -557,6 +600,18 @@ export class PurchasecalendarComponent implements OnInit {
                       plant.utility = sum.totalPurchase;
                       me.companyUtility += sum.totalPurchase;
                     }
+                    if (sum.mode == "Utility") {
+                      plant.utility = sum.totalPurchase;
+                      me.companyUtility += sum.totalPurchase;
+                    }
+                    if (sum.mode == "TOOL") {
+                      plant.tool = sum.totalPurchase;
+                      me.companyTool += sum.totalPurchase;
+                    }
+                    if (sum.mode == "HR") {
+                      plant.hr = sum.totalPurchase;
+                      me.companyHr += sum.totalPurchase;
+                    }
 
                   });
                   // plant.totalVal = me.companyConsumable + me.companyTransport + me.companySpares + me.companyCapital + me.companyPacking +
@@ -622,6 +677,9 @@ export class PurchasecalendarComponent implements OnInit {
         element.jig = 0;
         element.utility = 0;
         element.service = 0;
+        element.hr = 0;
+        element.tool = 0;
+
 
         if (element.plantcode == me.selectedcode) {
           me.selected_plantname = element.plantshortname;
