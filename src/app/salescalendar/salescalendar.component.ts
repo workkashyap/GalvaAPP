@@ -168,7 +168,7 @@ export class SalescalendarComponent implements OnInit {
 
     this.finlaNetSales = (this.netSales - (Math.abs(this.cancelledInvoice) + Math.abs(this.salesRej) + Math.abs(this.purchaseMoulded)));
 
-    this.compliance = ((this.finlaNetSales / this.company_val) * 100);
+    this.compliance = ((this.grossSales / this.company_val) * 100);
     if (i == 'compliance') {
       return this.compliance;
     }
@@ -377,12 +377,12 @@ export class SalescalendarComponent implements OnInit {
     } else if (val == "GrosSaleDetail") {
       this.totalSumofTitle = "Tot. Gross";
       this.totalSumofBg = "bg-success";
-
+      val = "NetSaleDetail";
       this.cols.push(
-        { field: 'grossSale', header: 'Gross Sale' },
+        { field: 'netSale', header: 'Gross Sale' },
       );
     } else if (val == "salesReturnDetail") {
-
+    
       this.totalSumofTitle = "Tot. Return";
       this.totalSumofBg = "bg-danger";
 
