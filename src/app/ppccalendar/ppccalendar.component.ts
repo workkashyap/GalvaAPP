@@ -120,7 +120,7 @@ export class PpccalendarComponent implements OnInit {
 
 
   }
-  summary2(data) {
+  summary2() {
     this.summaryModalData = [];
     this.modaltype = 2;
     $('#summaryModal').modal('show');
