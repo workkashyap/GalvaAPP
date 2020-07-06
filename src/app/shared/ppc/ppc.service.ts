@@ -39,7 +39,7 @@ export class PpcService {
     );
   }
   public getColumn3(company, date): Observable<Ppc[]> {
-      return this.http.get<Ppc[]>(
+    return this.http.get<Ppc[]>(
       this.rootUrl + '/PPCimports/ppc1TO10below3/' + company + '/' + date
     );
   }
@@ -82,4 +82,9 @@ export class PpcService {
   }
 
 
+  public getPPCCalsummary(company, date): Observable<Ppc[]> {
+    return this.http.get<Ppc[]>(
+      this.rootUrl + '/PPCimports/ppctotalrec/' + company + '/' + date
+    );
+  }
 }
