@@ -62,6 +62,7 @@ export class PpccalendarComponent implements OnInit {
 
   summaryModalData: any;
   cols: any;
+  modaltype: number = 1;
   constructor(
     public plantservice: PlantService,
     public toastr: ToastrService,
@@ -96,23 +97,69 @@ export class PpccalendarComponent implements OnInit {
 
     //this.loading = true;
     //get plant
-    this.plantservice
-      .sgetPlantData(me.currentUser.id)
+    /* this.plantservice
+       .sgetPlantData(me.currentUser.id)
+       .toPromise()
+       .then(res => {
+         me.plantservice.splantlist = res as Plant[];
+         console.log("splantlist", me.plantservice.splantlist);
+         me.selectedcode = me.plantservice.splantlist[0].plantcode;
+         me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
+         me.loading = false;
+ 
+         if (res) {
+           //call function ;
+           this.loaddata();
+         }
+       });
+ 
+ */
+    me.selectedcode = '1010';
+    me.selected_plantname = 'Gdpl Vapi';
+    this.loaddata();
+
+
+  }
+  summary2(data) {
+    this.summaryModalData = [];
+    this.modaltype = 2;
+    $('#summaryModal').modal('show');
+    const me = this;
+    this.cols = [
+      { field: 'orderno', header: 'Order No.' },
+      { field: 'custno', header: 'Cust no.' },
+      { field: 'itemcode', header: 'Item code' },
+      { field: 'itemname', header: 'Item Name' },
+      { field: 'price', header: 'Price' },
+      { field: 'schqty', header: 'Schqty' },
+      { field: 'schvalue', header: 'Schvalue' },
+      { field: 'budat', header: 'Billdate' },
+      { field: 'dispatchqty', header: 'Dispatchqty' },
+      { field: 'dispatchval', header: 'Dispatchval' },
+      { field: 'comp', header: 'Compliance %' },
+
+      { field: 'otype', header: 'Type' },
+      { field: 'stock', header: 'Stock' },
+      { field: 'transit', header: 'Transit' },
+
+    ];
+
+    this.loading = true;
+    this.summaryModalData = [];
+    this.ppcService
+      .getPPCCalsummary(this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
-        me.plantservice.splantlist = res as Plant[];
-        console.log("splantlist", me.plantservice.splantlist);
-        me.selectedcode = me.plantservice.splantlist[0].plantcode;
-        me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
-        me.loading = false;
+        this.summaryModalData = res as Ppc[];
 
-        if (res) {
-          //call function ;
-          this.loaddata();
-        }
+        this.loading = false;
       });
+  }
 
+  summary(data) {
+    this.modaltype = 1;
 
+    this.summaryModalData = [];
     this.cols = [
       { field: 'orderno', header: 'Order No.' },
       { field: 'custno', header: 'Cust no.' },
@@ -126,11 +173,7 @@ export class PpccalendarComponent implements OnInit {
       { field: 'dispatchval', header: 'Dispatchval' },
       { field: 'comp', header: 'Compliance %' },
     ];
-  }
 
-
-  summary(data) {
-    this.summaryModalData = [];
     this.summaryModalData = data;
     $('#summaryModal').modal('show');
   }
@@ -140,7 +183,7 @@ export class PpccalendarComponent implements OnInit {
     //console.log("val1:", val1);
     //console.log("val2:", val2);
     if (val1 > 0 && val2 > 0) {
-      return (val1 *100)/ val2;
+      return (val1 * 100) / val2;
     }
     return val3;
   }

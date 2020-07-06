@@ -82,4 +82,10 @@ export class PpcService {
   }
 
 
+  public getPPCCalsummary(company, date): Observable<Ppc[]> {
+    return this.http.get<Ppc[]>(
+      this.rootUrl + '/PPCimports/ppctotalrec/' + company + '/' + date
+    );
+  }
+
 }

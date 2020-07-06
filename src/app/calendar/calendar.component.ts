@@ -59,6 +59,7 @@ export class CalendarComponent implements OnInit {
   selectedItemrejarray: Itemwiserej[] = [];
   filterItemrejarray: Itemwiserej[] = [];
   iv: number;
+  rejper: number = 0;
 
   public inspectionvsum: any;
   public inspectionQtysum: any;
@@ -147,7 +148,7 @@ export class CalendarComponent implements OnInit {
       { field: "remarks2", header: " Remark 2", width: "140px" },
       { field: "attachment", header: "Attachment", width: "140px" }
     );
-    
+
     this.startdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     var date = new Date();
 
@@ -327,10 +328,17 @@ export class CalendarComponent implements OnInit {
       });
   }
   loadchart1() {
+    this.rejper = 0;
     const month = new Date(this.startdate).getMonth();
     const monthName = this.monthNames[month];
     this.dpservice.dailyreportsummary = [];
-    this.dpservice.getprochartsummary(this.selectedcode, "M", monthName);
+    this.dpservice.getprochartsummary(this.selectedcode, "M", monthName).then((res: any) => {
+      this.dpservice.dailyreportsummary.forEach(drsummary => {
+        if (drsummary.itemtype == this.typename) {
+          this.rejper = drsummary.rejper;
+        }
+      });
+    });
   }
 
   selectedGrid(ev) {
@@ -482,7 +490,7 @@ export class CalendarComponent implements OnInit {
         this.rejperPerSum += rq.rejper;
       }
       this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
-      this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
+      this.rejperPerSum2 = this.rejper;//(this.rejperPerSum / this.dpservice.itemwiserejlist.length)
       return;
     }
 
@@ -506,7 +514,7 @@ export class CalendarComponent implements OnInit {
       this.rejperPerSum += rq.rejper;
     }
     this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
-    this.rejperPerSum2 = (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
+    this.rejperPerSum2 = this.rejper; //(this.rejperPerSum / this.dpservice.itemwiserejlist.length)
   }
   /*rejectvaluesum() {
     this.rejectvsum = 0;

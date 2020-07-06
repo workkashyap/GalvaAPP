@@ -213,7 +213,7 @@ export class RejectionMainComponent implements OnInit {
     this.loading = true;
     this.DPservice.getRejectmaindetail(
       this.DPservice.plantcode,
-      "NULL",
+      this.selectedtype,
       this.Fromdate,
       this.Todate
     )
@@ -284,20 +284,19 @@ export class RejectionMainComponent implements OnInit {
     this.totalMouldedVal = 0;
     this.totalPlantingVal = 0;
 
+    this.totalRejQty = 0;
+    this.totalinsQty = 0;
+    this.totalRejPer = 0;
     if (this.filterenable == true) {
-      this.totalRejQty = 0;
-      this.totalinsQty = 0;
-      this.totalRejPer = 0;
+
       console.log("filterenable", this.filterenable);
       console.log("filterItemrejarray : ", this.filterItemrejarray);
       for (const rq of this.filterItemrejarray) {
 
-        const rejqty = rq.reject_qty;
-        const insqty = rq.inspection_qty;
         //
-        this.totalRejQty += rejqty;
+        this.totalRejQty += rq.reject_qty;
         this.totalRejVal += rq.reject_value;
-        this.totalinsQty += insqty;
+        this.totalinsQty += rq.inspection_qty;;
         //
         this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
@@ -305,23 +304,19 @@ export class RejectionMainComponent implements OnInit {
 
         this.totalMouldedQty += rq.mouldingqty;
         this.totalMouldedPer += rq.mouldingper;
-        
+
         this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
-        
+
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
       }
     } else {
-      this.totalRejQty = 0;
-      this.totalinsQty = 0;
-      this.totalRejPer = 0;
+
       for (const rq of this.DPservice.itemwiserejdetaillist) {
-        const rejqty = rq.reject_qty;
-        const insqty = rq.inspection_qty;
         //
-        this.totalRejQty += rejqty;
-        this.totalinsQty += insqty;
+        this.totalRejQty += rq.reject_qty;
+        this.totalinsQty += rq.inspection_qty;
         this.totalRejVal += rq.reject_value;
         //
         this.totalokValue += rq.okvalue;
@@ -334,7 +329,7 @@ export class RejectionMainComponent implements OnInit {
         this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
 
-        
+
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
 

@@ -51,9 +51,12 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-md-3">
-                  <button class="btn btn-primary mt-2" (click)="getPurchaseDetail()">View</button>
+                <div class="col-md-1" style="text-align: center;">
+                  <button class="btn btn-primary btn-sm mt-2" (click)="getPurchaseDetail()">View</button>
                 </div>
+                <div class="col-md-1">
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mt-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button></div>
               </div>
             </div>
             <!-- </form> -->
