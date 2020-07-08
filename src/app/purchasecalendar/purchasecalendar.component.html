@@ -84,7 +84,7 @@
                         Consumable =
                         <b>{{ consumable | number:'1.2-2' }}</b>
                         Lacs</button>
-
+                      <br>
                       <button class="btn btn-custom text-dark bg-action-plan"
                         (click)="extraVal('purchasegrouptransportsum')" style="width: auto;">
                         Transport =
@@ -115,10 +115,12 @@
                         Jig = <b>{{ jig | number:'1.2-2' }}</b> Lacs</button>
 
 
-                      <button class="btn btn-custom text-dark bg-hr" style="width: auto;"  (click)="extraVal('purchasegrouphrsum')">
+                      <button class="btn btn-custom text-dark bg-hr" style="width: auto;"
+                        (click)="extraVal('purchasegrouphrsum')">
                         HR = <b>{{ hr | number:'1.2-2' }}</b> Lacs</button>
 
-                      <button class="btn btn-custom text-dark bg-tool" style="width: auto;"  (click)="extraVal('purchasegrouptoolsum')">
+                      <button class="btn btn-custom text-dark bg-tool" style="width: auto;"
+                        (click)="extraVal('purchasegrouptoolsum')">
                         Tool = <b>{{ tool | number:'1.2-2' }}</b> Lacs</button>
 
                     </div>
@@ -362,6 +364,13 @@
 
                 <button class="btn btn-custom text-dark bg-jig" style="width: auto;">
                   Jig = <b>{{ companyJig | number:'1.2-2' }}</b> Lacs
+                </button>
+
+                <button class="btn btn-custom text-dark bg-jig" style="width: auto;">
+                  HR = <b>{{ companyHr | number:'1.2-2' }}</b> Lacs
+                </button>
+                <button class="btn btn-custom text-dark bg-jig" style="width: auto;">
+                  Tool = <b>{{ companyTool | number:'1.2-2' }}</b> Lacs
                 </button>
               </div>
             </div>

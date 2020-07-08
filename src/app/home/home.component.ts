@@ -13,6 +13,7 @@ import { Itemwiserej } from '../shared/dailyProduction/itemwiserej.model';
 import { Salessummary } from '../shared/dailyProduction/salessummary.model';
 import { Purchasesummary } from '../shared/purchase/purchasesummary.model';
 import { PagesService } from '../shared/pages/pages.service';
+import { PurchaseService } from '../shared/purchase/purchase.service';
 
 @Component({
   selector: "app-home",
@@ -61,9 +62,12 @@ export class HomeComponent implements OnInit {
   cancelledInvoice: number = 0;
   purchaseMoulded: number = 0;
   finlaNetSales: number = 0;
+  tpurchase: number = 0;
+
   constructor(
     public service: HomeService, public lservice: LoginService, public plantservice: PlantService,
     public pageservice: PagesService,
+    public purchaseService: PurchaseService,
     public dpservice: DailyproductionService, public datePipe: DatePipe,
 
   ) {
@@ -102,7 +106,7 @@ export class HomeComponent implements OnInit {
         }
       });
       if (this.redirectLogin) {
-        
+
         //window.location.href = '/welcome';
         //  this.route.navigate(['/welcome'])
       }
@@ -162,6 +166,14 @@ export class HomeComponent implements OnInit {
       const row = res as Purchasesummary[];
       row.forEach(element => {
         this.purchaseMoulded = element.totalPurchase
+      });
+    });
+
+    this.tpurchase = 0;
+    this.purchaseService.getPurchaseBtnInfo('purchasegrouptotal', this.plantcode, startdate).toPromise().then(res => {
+      const row = res as Purchasesummary[];
+      row.forEach(element => {
+        this.tpurchase = element.totalPurchase
       });
     });
   }

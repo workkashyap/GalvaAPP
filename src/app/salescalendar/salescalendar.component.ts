@@ -349,6 +349,7 @@ export class SalescalendarComponent implements OnInit {
     this.basicamtinr = 0;
     this.totalvalue = 0;
     this.totalSumofValue = 0;
+    const temp = val;
     this.cols = [
       // { field: 'plant', header: 'Plant' },
       { field: 'plantName', header: 'Plant Name' },
@@ -377,12 +378,14 @@ export class SalescalendarComponent implements OnInit {
     } else if (val == "GrosSaleDetail") {
       this.totalSumofTitle = "Tot. Gross";
       this.totalSumofBg = "bg-success";
+     
       val = "NetSaleDetail";
+     
       this.cols.push(
         { field: 'netSale', header: 'Gross Sale' },
       );
     } else if (val == "salesReturnDetail") {
-    
+
       this.totalSumofTitle = "Tot. Return";
       this.totalSumofBg = "bg-danger";
 
@@ -433,7 +436,7 @@ export class SalescalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.dpservice.salesdetail = res as Salesdetail[];
-        this.sumgetsale(val);
+        this.sumgetsale(temp);
         this.loading = false;
       });
 
@@ -463,9 +466,16 @@ export class SalescalendarComponent implements OnInit {
         this.totalSumofValue = (this.totalSumofValue + sd.cancelInvoice);
       }
     }
+
     this.totalSumofValue = (this.totalSumofValue / 100000);
     //   this.basicamtinr = (this.basicamtinr / 100000);
     this.totalvalue = (this.totalvalue / 100000);
+
+    if (val == "NetSaleDetail") {
+      this.totalSumofValue = this.finlaNetSales;
+    } else if (val == "GrosSaleDetail") {
+      this.totalSumofValue = this.netSales;
+    }
     return;
   }
   //selected plant 

@@ -155,7 +155,9 @@ export class PpccalendarComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  customNumber(value) {
+    return parseInt(value, 10) //convert to int
+  }
   summary(data) {
     this.modaltype = 1;
 

@@ -535,7 +535,7 @@ export class PurchasecalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         const result = res; //as Salesdetail[];
-        if (result) {
+        if (result && result.length) {
           result.forEach(row => {
             if (!me.summaryDetail2[row.plant]) {
               me.summaryDetail2[row.plant] = [];
@@ -621,6 +621,9 @@ export class PurchasecalendarComponent implements OnInit {
             }
             me.i = me.i + 1;
           });
+        } else {
+
+          me.loadingSummary = false;
         }
       });
   }

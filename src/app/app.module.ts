@@ -66,6 +66,7 @@ import { RolesComponent } from './roles/roles.component';
 import { RolepagesComponent } from './roles/rolepages/rolepages.component';
 import { RoletopagesComponent } from './roles/roletopages/roletopages.component';
 import { RoletouserComponent } from './roles/roletouser/roletouser.component';
+import { CompanytouserComponent } from './roles/compannytouser/companytouser.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { RoletouserComponent } from './roles/roletouser/roletouser.component';
     RolesComponent,
     RolepagesComponent,
     RoletopagesComponent,
-    RoletouserComponent
+    RoletouserComponent,
+    CompanytouserComponent
   ],
   imports: [
     BrowserModule,
@@ -353,7 +355,12 @@ import { RoletouserComponent } from './roles/roletouser/roletouser.component';
         component: RoletouserComponent,
         canActivate: [AuthGuard],
       },
-
+      {
+        path: "companytouser",
+        component: CompanytouserComponent,
+        canActivate: [AuthGuard],
+      }
+      ,
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),

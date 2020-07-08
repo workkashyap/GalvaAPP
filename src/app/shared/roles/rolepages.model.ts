@@ -10,6 +10,7 @@ export class Rolepages {
   userid: number;
 
   username:string;
-
+  plantcode:string;
+  plantshortname:string;
   edit: boolean = false;
 }

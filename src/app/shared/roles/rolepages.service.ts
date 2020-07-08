@@ -112,4 +112,22 @@ export class RolepagesService {
       this.rootUrl + "/users"
     );
   }
+
+  /* */
+  public getAllCompany(): Observable<Roles[]> {
+    return this.http.get<Roles[]>(
+      this.rootUrl + "/plants"
+    );
+  }
+  //Company To User
+  public getcompanybyuser(id) {
+    return this.http.get(this.rootUrl + '/galvaplants');
+  }
+  public insertUserCompany(data) {
+    return this.http.post(this.rootUrl + '/usersettings',data);
+  }
+  
+  public deleteUserCompany(id) {
+    return this.http.delete(this.rootUrl + '/usersettings/' + id);
+  }
 }
