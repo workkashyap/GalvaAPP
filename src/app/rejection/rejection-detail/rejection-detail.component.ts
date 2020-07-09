@@ -189,22 +189,21 @@ export class RejectionDetailComponent implements OnInit {
     this.cols = [
       // { field: 'id', header: 'ID' },
       //   { field: 'pstngdate', header: 'Posting Date' },
-      { field: 'item_type', header: 'Type' },
+     // { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
 
       { field: "inspection_qty", header: "Insp. qty" },
+      { field: "okqty", header: "Ok qty" },
+      { field: 'reject_qty', header: 'Reject qty' },
+      { field: "mouldingqty", header: "Moulding qty " },
+      { field: "platingqty", header: "Plating qty" },
+
       { field: "inspection_value", header: "Insp. Value" },
       { field: "okvalue", header: "Ok Value" },
-      { field: "okqty", header: "Ok qty" },
-
-      { field: 'reject_qty', header: 'Reject qty' },
-      { field: 'rejper', header: 'Rej %' },
       { field: 'reject_value', header: 'Reject Value' },
-
-      { field: "mouldingqty", header: "Moulding qty " },
+      { field: 'rejper', header: 'Rej %' },
       { field: "moulding_value", header: "Moulding Val" },
-      { field: "platingqty", header: "Plating qty" },
       { field: "plating_value", header: "Plating Val" },
     ];
 

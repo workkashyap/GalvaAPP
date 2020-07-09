@@ -95,7 +95,7 @@
 
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <td colspan="2">
+            <td colspan="2" style="width: 230px;">
               <div class="input-group custome-gs mb-2">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="loadper($event.target.value , dt)"
@@ -105,30 +105,52 @@
                 </div>
               </div>
             </td>
-            <td style="width: 125px;"></td>
             <td>
-              <button class="btn btn-sm  text-dark bg-info  custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm  text-dark bg-info  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalinsQty | number:'1.2-2'}}
               </button>
             </td>
             <td>
-              <button class="btn btn-sm  text-dark bg-success  custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalinsValue | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-primary  custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalokValue | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-dark  custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm  text-dark bg-dark  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalokqtyValue | number:'1.2-2'}}
               </button>
             </td>
             <td>
-              <button class="btn btn-sm  text-dark bg-warning  custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm  text-dark bg-warning  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalRejQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-moulded custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalMouldedQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-capital custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalPlantingQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-success  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalinsValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-primary  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalokValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm  text-dark bg-danger custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalRejVal | number:'1.2-2'}}
               </button>
             </td>
             <td>
@@ -137,37 +159,19 @@
               </button>-->
             </td>
             <td>
-              <button class="btn btn-sm  text-dark bg-danger custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalRejVal | number:'1.2-2'}}
-              </button>
-            </td>
-
-            <td>
-              <button class="btn btn-sm  text-dark bg-moulded custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalMouldedQty | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-action-plan custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm  text-dark bg-action-plan custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalMouldedVal | number:'1.2-2'}}
               </button>
             </td>
-
             <td>
-              <button class="btn btn-sm  text-dark bg-capital custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalPlantingQty | number:'1.2-2'}}
-              </button>
-            </td>
-
-            <td>
-              <button class="btn btn-sm  text-dark bg-planting-per custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm  text-dark bg-planting-per custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalPlantingVal | number:'1.2-2'}}
               </button>
             </td>
-
           </tr>
           <tr>
-
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
               {{col.header}}
               <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
