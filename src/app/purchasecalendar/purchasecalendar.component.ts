@@ -530,7 +530,7 @@ export class PurchasecalendarComponent implements OnInit {
     me.companyTotalpurchase = 0;
     me.summaryDetail2 = [];
     this.grandPurchaseValue = 0;
-
+    console.clear();
     me.dpservice.getNetPurchaseSummary(this.startdate)
       .toPromise()
       .then(res => {
@@ -547,6 +547,7 @@ export class PurchasecalendarComponent implements OnInit {
                 plant.totalVal = 0;
 
                 if (me.summaryDetail2[plant.plantcode]) {
+                  //console.log("plantcode: ", plant.plantcode);
 
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "totalpurchase") {
@@ -592,7 +593,8 @@ export class PurchasecalendarComponent implements OnInit {
                       plant.service = sum.totalPurchase;
                       me.companyServices += sum.totalPurchase;
                     }
-                    if (sum.mode == "Jig") {
+                    if (sum.mode == "JIG") {
+                      // console.log("Jig : ", sum.totalPurchase);
                       plant.jig = sum.totalPurchase;
                       me.companyJig += sum.totalPurchase;
                     }
@@ -600,15 +602,15 @@ export class PurchasecalendarComponent implements OnInit {
                       plant.utility = sum.totalPurchase;
                       me.companyUtility += sum.totalPurchase;
                     }
-                    if (sum.mode == "Utility") {
-                      plant.utility = sum.totalPurchase;
-                      me.companyUtility += sum.totalPurchase;
-                    }
+
                     if (sum.mode == "TOOL") {
+                      //  console.log("TOOL : ", sum.totalPurchase);
+
                       plant.tool = sum.totalPurchase;
                       me.companyTool += sum.totalPurchase;
                     }
                     if (sum.mode == "HR") {
+                      //console.log("hr : ", sum.totalPurchase);
                       plant.hr = sum.totalPurchase;
                       me.companyHr += sum.totalPurchase;
                     }
