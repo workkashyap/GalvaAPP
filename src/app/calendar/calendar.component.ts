@@ -112,7 +112,7 @@ export class CalendarComponent implements OnInit {
     this.cols = [
       //{ field: 'id', header: 'ID' },
       //{ field: 'pstngdate', header: 'Posting Date' },
-      { field: 'item_type', header: 'Type' },
+      //{ field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
       { field: 'reject_qty', header: 'Reject qty' },
@@ -292,7 +292,7 @@ export class CalendarComponent implements OnInit {
     this.dpservice.itemwiserejlist = []; this.filterItemrejarray = [];
     this.colspanAmount = 2;
     this.cols = [
-      { field: 'item_type', header: 'Type' },
+      //{ field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
       { field: 'reject_qty', header: 'Reject qty' },
@@ -385,7 +385,7 @@ export class CalendarComponent implements OnInit {
     this.dpservice.itemwiserejlist = [];
     this.filterItemrejarray = [];
     this.cols = [
-      { field: 'item_type', header: 'Type' },
+      //{ field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
       /*{ field: 'reject_qty', header: 'Reject qty' },

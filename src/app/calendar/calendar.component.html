@@ -285,7 +285,7 @@
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
                   <tr *ngIf="btnLabel">
-                    <td colspan="2" style="width:15%;">
+                    <td  style="width:15%;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
                           (input)="loadper($event.target.value , dt)"
@@ -387,7 +387,7 @@
                   </tr>
                   <!-- regular date section -->
                   <tr *ngIf="!btnLabel">
-                    <td colspan="3" style=" width:275px;">
+                    <td colspan="2" style=" width:275px;">
                       <div class="input-group mb-2">
                         <input type="text" pInputText placeholder="Global Filter"
                           (input)="loadper($event.target.value , dt)"

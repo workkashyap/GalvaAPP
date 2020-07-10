@@ -309,7 +309,7 @@ export class PurchasecalendarComponent implements OnInit {
     });
 
     //tool value
-    this.hr = 0;
+    this.tool = 0;
     this.dpservice.getPurchaseBtnInfo('purchasegrouptool', this.selectedcode, this.startdate).toPromise().then(res => {
       const row = res as Purchasesummary[];
       row.forEach(element => {
