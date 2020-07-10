@@ -126,28 +126,23 @@ export class PpccalendarComponent implements OnInit {
     $('#summaryModal').modal('show');
     const me = this;
     this.cols = [
-      { field: 'orderno', header: 'Order No.' },
-      { field: 'custno', header: 'Cust no.' },
-      { field: 'itemcode', header: 'Item code' },
-      { field: 'itemname', header: 'Item Name' },
-      { field: 'price', header: 'Price' },
-      { field: 'schqty', header: 'Schqty' },
-      { field: 'schvalue', header: 'Schvalue' },
-      { field: 'budat', header: 'Billdate' },
-      { field: 'dispatchqty', header: 'Dispatchqty' },
-      { field: 'dispatchval', header: 'Dispatchval' },
-      { field: 'comp', header: 'Compliance %' },
-
-      { field: 'otype', header: 'Type' },
-      { field: 'stock', header: 'Stock' },
-      { field: 'transit', header: 'Transit' },
-
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemname', header: 'Material Description' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG at Zaroli / Vapi Godown' },
+      { field: 'totaltransit', header: 'In Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune godown' },
+      { field: 'fgmouldstock', header: 'Moulded parts stck' },
+      { field: 'mouldpartreq', header: 'Moulded parts requirnment' },
+      { field: 'platingpartreq', header: 'Plating parts requirnment' },
     ];
 
     this.loading = true;
     this.summaryModalData = [];
     this.ppcService
-      .getPPCCalsummary(this.selectedcode, this.startdate)
+      .getPPCCalsummary(this.startdate)
       .toPromise()
       .then(res => {
         this.summaryModalData = res as Ppc[];
@@ -163,17 +158,19 @@ export class PpccalendarComponent implements OnInit {
 
     this.summaryModalData = [];
     this.cols = [
-      { field: 'orderno', header: 'Order No.' },
-      { field: 'custno', header: 'Cust no.' },
-      { field: 'itemcode', header: 'Item code' },
-      { field: 'itemname', header: 'Item Name' },
-      { field: 'price', header: 'Price' },
-      { field: 'schqty', header: 'Schqty' },
-      { field: 'schvalue', header: 'Schvalue' },
-      { field: 'budat', header: 'Billdate' },
-      { field: 'dispatchqty', header: 'Dispatchqty' },
-      { field: 'dispatchval', header: 'Dispatchval' },
-      { field: 'comp', header: 'Compliance %' },
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemname', header: 'Material Description' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG at Zaroli / Vapi Godown' },
+      { field: 'totaltransit', header: 'In Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune godown' },
+      { field: 'fgmouldstock', header: 'Moulded parts stck' },
+      { field: 'mouldpartreq', header: 'Moulded parts requirnment' },
+      { field: 'platingpartreq', header: 'Plating parts requirnment' },
+      { field: 'comp', header: 'Complience %' },
+
     ];
 
     this.summaryModalData = data;
