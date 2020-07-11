@@ -67,6 +67,7 @@ import { RolepagesComponent } from './roles/rolepages/rolepages.component';
 import { RoletopagesComponent } from './roles/roletopages/roletopages.component';
 import { RoletouserComponent } from './roles/roletouser/roletouser.component';
 import { CompanytouserComponent } from './roles/compannytouser/companytouser.component';
+import { PpcdetailComponent } from './ppccalendar/ppcdetail/ppcdetail.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { CompanytouserComponent } from './roles/compannytouser/companytouser.com
     RolepagesComponent,
     RoletopagesComponent,
     RoletouserComponent,
-    CompanytouserComponent
+    CompanytouserComponent,
+    PpcdetailComponent
   ],
   imports: [
     BrowserModule,
@@ -359,8 +361,12 @@ import { CompanytouserComponent } from './roles/compannytouser/companytouser.com
         path: "companytouser",
         component: CompanytouserComponent,
         canActivate: [AuthGuard],
-      }
-      ,
+      },
+      {
+        path: "ppcdetail",
+        component: PpcdetailComponent,
+        canActivate: [AuthGuard],
+      },
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),
