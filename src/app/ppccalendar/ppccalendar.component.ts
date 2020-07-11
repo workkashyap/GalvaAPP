@@ -127,16 +127,16 @@ export class PpccalendarComponent implements OnInit {
     const me = this;
     this.cols = [
       { field: 'name', header: 'Customer Name' },
-      { field: 'itemname', header: 'Material Description' },
+      { field: 'itemname', header: 'Material' },
       { field: 'schqty', header: 'Schedule Current' },
       { field: 'dispatchqty', header: 'Dispatch' },
       { field: 'balance', header: 'Balance' },
-      { field: 'fgVZ', header: 'FG at Zaroli / Vapi Godown' },
-      { field: 'totaltransit', header: 'In Transit' },
-      { field: 'fgother', header: 'FG at chennai / ap / pune godown' },
-      { field: 'fgmouldstock', header: 'Moulded parts stck' },
-      { field: 'mouldpartreq', header: 'Moulded parts requirnment' },
-      { field: 'platingpartreq', header: 'Plating parts requirnment' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
     ];
 
     this.loading = true;
@@ -159,16 +159,16 @@ export class PpccalendarComponent implements OnInit {
     this.summaryModalData = [];
     this.cols = [
       { field: 'name', header: 'Customer Name' },
-      { field: 'itemname', header: 'Material Description' },
+      { field: 'itemname', header: 'Material' },
       { field: 'schqty', header: 'Schedule Current' },
       { field: 'dispatchqty', header: 'Dispatch' },
       { field: 'balance', header: 'Balance' },
-      { field: 'fgVZ', header: 'FG at Zaroli / Vapi Godown' },
-      { field: 'totaltransit', header: 'In Transit' },
-      { field: 'fgother', header: 'FG at chennai / ap / pune godown' },
-      { field: 'fgmouldstock', header: 'Moulded parts stck' },
-      { field: 'mouldpartreq', header: 'Moulded parts requirnment' },
-      { field: 'platingpartreq', header: 'Plating parts requirnment' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
       { field: 'comp', header: 'Complience %' },
 
     ];
