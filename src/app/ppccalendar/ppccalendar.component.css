@@ -135,3 +135,10 @@ li.breadcrumb-item {
   flex: 0 0 19.966667%;
   max-width: 19.966667%;
 }
+td.removepd {
+  padding: unset !important;
+}
+.myCompbtn{
+  width: 100%;
+  border-radius: unset;
+}

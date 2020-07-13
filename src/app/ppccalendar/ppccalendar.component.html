@@ -81,7 +81,7 @@
             <div class="card-body">
               <div class="row">
 
-                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[0])">
+                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[0],10,20,30)">
                   <div class="card bg-danger update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -107,7 +107,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[1])">
+                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[1],34,35,36)">
                   <div class="card bg-yellow update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -130,7 +130,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[2])">
+                <div class="col-xl-12 col-md-6" (click)="summary(firstcolumn[2],50,75,100)">
                   <div class="card bg-success update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -175,7 +175,7 @@
             <div class="card-body">
               <div class="row">
 
-                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[0])">
+                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[0],20,40,60)">
                   <div class="card bg-danger update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -199,7 +199,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[1])">
+                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[1],62,64,65)">
                   <div class="card bg-yellow update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -222,7 +222,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[2])">
+                <div class="col-xl-12 col-md-6" (click)="summary(secondcolumn[2],75,90,100)">
                   <div class="card bg-success update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -266,7 +266,7 @@
 
             <div class="card-body">
               <div class="row">
-                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[0])">
+                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[0],30,60,90)">
                   <div class="card bg-danger update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -290,7 +290,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[1])">
+                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[1],93,96,98)">
                   <div class="card bg-yellow update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -314,7 +314,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[2])">
+                <div class="col-xl-12 col-md-6" (click)="summary(thirdcolumn[2],98,99,100)">
                   <div class="card bg-success update-card">
                     <div class="card-block">
                       <div class="row align-items-end">
@@ -403,15 +403,24 @@
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr [pSelectableRow]="rowData">
 
-                    <td *ngFor="let col of columns">
+                    <td *ngFor="let col of columns" [ngClass]="bgClass">
                       <span *ngIf="col.field=='budat'">
                         {{rowData[col.field]  | date :'dd MMM, y'}}
                       </span>
                       <span *ngIf="col.field=='itemcode'">
                         {{ this.customNumber(rowData[col.field]) }}
                       </span>
-                      <span *ngIf="col.field!='budat' && col.field!='itemcode'">
+                      <span *ngIf="col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
                         {{rowData[col.field]}}</span>
+
+                      <span *ngIf="col.field=='comp'">
+                        <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
+                          {{rowData[col.field]}}</button>
+                        <button class="btn btn-warning myCompbtn" *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
+                          {{rowData[col.field]}}</button>
+                        <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
+                          {{rowData[col.field]}}</button>
+                      </span>
                     </td>
                   </tr>
                 </ng-template>

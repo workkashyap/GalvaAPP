@@ -63,6 +63,11 @@ export class PpccalendarComponent implements OnInit {
   summaryModalData: any;
   cols: any;
   modaltype: number = 1;
+  red: number = 0;
+  orange: number = 0;
+  green: number = 0;
+  bgClass: any = '';
+
   constructor(
     public plantservice: PlantService,
     public toastr: ToastrService,
@@ -123,6 +128,8 @@ export class PpccalendarComponent implements OnInit {
   summary2() {
     this.summaryModalData = [];
     this.modaltype = 2;
+    this.bgClass = '';
+
     $('#summaryModal').modal('show');
     const me = this;
     this.cols = [
@@ -153,9 +160,12 @@ export class PpccalendarComponent implements OnInit {
   customNumber(value) {
     return parseInt(value, 10) //convert to int
   }
-  summary(data) {
+  summary(data, val1, val2, val3) {
     this.modaltype = 1;
-
+    this.red = val1;
+    this.orange = val2;
+    this.green = val3;
+    this.bgClass = 'removepd';
     this.summaryModalData = [];
     this.cols = [
       { field: 'name', header: 'Customer Name' },
