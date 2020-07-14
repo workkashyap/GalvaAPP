@@ -123,6 +123,33 @@
                 {{ totalRejQty | number:'1.2-2'}}
               </button>
             </td>
+
+            <td>
+              <button class="btn btn-sm custom-fs text-dark bg-compliance"
+              style="float: right;width: 100%;padding: 5px 2px;">
+              {{ totalHoldQty | number:'1.2-2'}}
+            </button>
+            </td>
+            <td>
+            <button class="btn btn-sm custom-fs text-dark bg-summary"
+            style="float: right;width: 100%;padding: 5px 2px;">
+            {{ totalHoldVal | number:'1.2-2'}}
+            </button>
+            </td>
+            <td>
+              <button class="btn btn-sm custom-fs text-dark bg-jig"
+              style="float: right;width: 100%;padding: 5px 2px;">
+              {{ totalBuffQty | number:'1.2-2'}}
+            </button>
+            </td>
+            <td>
+         
+            <button class="btn btn-sm custom-fs text-dark bg-hr"
+            style="float: right;width: 100%;padding: 5px 2px;">
+            {{ totalBuffVal | number:'1.2-2'}}
+          </button>
+            </td>
+
             <td>
               <button class="btn btn-sm  text-dark bg-moulded custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
@@ -153,10 +180,11 @@
                 {{ totalRejVal | number:'1.2-2'}}
               </button>
             </td>
+            
             <td>
-              <!--<button class="btn btn-sm  text-dark bg-danger mb-2" style="float: right;">
-                Total% : {{ totalRejPer | number:'1.2-2'}} 
-              </button>-->
+              <button class="btn btn-sm  text-dark bg-danger custom-fs" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalRejPer2 | number:'1.2-2'}} 
+              </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-action-plan custom-fs"

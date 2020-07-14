@@ -70,10 +70,16 @@ export class RejectionDetailComponent implements OnInit {
 
   public plant_name: string;
 
+  totalBuffQty: number = 0;
+  totalBuffVal: number = 0;
+  totalHoldQty: number = 0;
+  totalHoldVal: number = 0;
 
   totalRejQty: number = 0;
   totalRejPer: number = 0;
   totalRejVal: number = 0;
+
+  totalRejPer2: number = 0;
 
   totalinsQty: number = 0;
   totalinsValue: number = 0;
@@ -189,7 +195,7 @@ export class RejectionDetailComponent implements OnInit {
     this.cols = [
       // { field: 'id', header: 'ID' },
       //   { field: 'pstngdate', header: 'Posting Date' },
-     // { field: 'item_type', header: 'Type' },
+      // { field: 'item_type', header: 'Type' },
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
 
@@ -201,8 +207,14 @@ export class RejectionDetailComponent implements OnInit {
 
       { field: "inspection_value", header: "Insp. Value" },
       { field: "okvalue", header: "Ok Value" },
-      { field: 'reject_value', header: 'Reject Value' },
+      { field: 'reject_value', header: 'Reject Val' },
       { field: 'rejper', header: 'Rej %' },
+      
+      { field: 'holdqty', header: 'Hold Qty' },
+      { field: 'holdvalue', header: 'Hold Val' },
+      { field: 'buffingqty', header: 'Buffing Qty' },
+      { field: 'buffingvalue', header: 'Buffing Val' },
+
       { field: "moulding_value", header: "Moulding Val" },
       { field: "plating_value", header: "Plating Val" },
     ];
@@ -293,11 +305,17 @@ export class RejectionDetailComponent implements OnInit {
 
     this.totalMouldedVal = 0;
     this.totalPlantingVal = 0;
+    
+    this.totalBuffQty = 0;
+    this.totalBuffVal = 0;
+    this.totalHoldQty = 0;
+    this.totalHoldVal = 0;
 
     if (this.filterenable === true) {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
       this.totalRejPer = 0;
+      this.totalRejPer2 = 0;
       for (const rq of this.filterItemrejarray) {
 
         const rejqty = rq.reject_qty;
@@ -321,13 +339,17 @@ export class RejectionDetailComponent implements OnInit {
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
 
-
+        this.totalHoldVal += rq.holdvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalBuffQty += rq.buffingqty;
+        this.totalBuffVal += rq.buffingvalue;
       }
     }
     else {
       this.totalRejQty = 0;
       this.totalinsQty = 0;
       this.totalRejPer = 0;
+      this.totalRejPer2 = 0;
       for (const rq of this.DPservice.itemwiserejlist) {
         const rejqty = rq.reject_qty;
         const insqty = rq.inspection_qty;
@@ -350,10 +372,15 @@ export class RejectionDetailComponent implements OnInit {
 
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
+
+        this.totalHoldVal += rq.holdvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalBuffQty += rq.buffingqty;
+        this.totalBuffVal += rq.buffingvalue;
       }
     }
     //  this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
-    return this.totalRejPer;
+    return this.totalRejPer2 = this.totalRejVal * 100 / this.totalinsValue;
   }
 
 

@@ -77,6 +77,12 @@ export class RejectionMainComponent implements OnInit {
   totalRejPer: number = 0;
   totalRejVal: number = 0;
 
+
+  totalBuffQty: number = 0;
+  totalBuffVal: number = 0;
+  totalHoldQty: number = 0;
+  totalHoldVal: number = 0;
+
   totalinsQty: number = 0;
   totalinsValue: number = 0;
 
@@ -195,6 +201,11 @@ export class RejectionMainComponent implements OnInit {
       { field: "rejper", header: "Rej %" },
       { field: "reject_value", header: "Reject val" },
 
+      { field: 'holdqty', header: 'Hold Qty' },
+      //{ field: 'holdvalue', header: 'Hold Val' },
+      { field: 'buffingqty', header: 'Buffing Qty' },
+      //  { field: 'buffingvalue', header: 'Buffing Val' },
+
       { field: "mouldingqty", header: "Moulding qty" },
       { field: "moulding_value", header: "Moulding val" },
       { field: "platingqty", header: "Plating qty" },
@@ -287,6 +298,15 @@ export class RejectionMainComponent implements OnInit {
     this.totalRejQty = 0;
     this.totalinsQty = 0;
     this.totalRejPer = 0;
+
+    this.totalRejVal = 0;
+
+    this.totalBuffQty = 0;
+    this.totalBuffVal = 0;
+    this.totalHoldQty = 0;
+    this.totalHoldVal = 0;
+
+
     if (this.filterenable == true) {
 
       console.log("filterenable", this.filterenable);
@@ -310,6 +330,12 @@ export class RejectionMainComponent implements OnInit {
 
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
+
+        this.totalHoldVal += rq.holdvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalBuffQty += rq.buffingqty;
+        this.totalBuffVal += rq.buffingvalue;
+
       }
     } else {
 
@@ -329,10 +355,13 @@ export class RejectionMainComponent implements OnInit {
         this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
 
-
         this.totalMouldedVal += rq.moulding_value;
         this.totalPlantingVal += rq.plating_value;
 
+        this.totalHoldVal += rq.holdvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalBuffQty += rq.buffingqty;
+        this.totalBuffVal += rq.buffingvalue;
       }
     }
     //this.totalRejPer = (this.totalRejQty / this.totalinsQty) * 100;

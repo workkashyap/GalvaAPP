@@ -25,5 +25,10 @@ export class ItemwiseRejDetail {
 
     moulding_value:number;
     plating_value:number;
+
+    buffingvalue:number;
+    buffingqty:number;
+    holdvalue:number;
+    holdqty:number;
   }
   
