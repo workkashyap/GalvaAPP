@@ -67,6 +67,7 @@ export class PpccalendarComponent implements OnInit {
   orange: number = 0;
   green: number = 0;
   bgClass: any = '';
+  galvaGroupid: any = 'ppcsummary';
 
   constructor(
     public plantservice: PlantService,
@@ -125,12 +126,11 @@ export class PpccalendarComponent implements OnInit {
 
 
   }
-  summary2() {
-    this.summaryModalData = [];
-    this.modaltype = 2;
-    this.bgClass = '';
-
-    $('#summaryModal').modal('show');
+  selectedGalvaGroup(val: any) {
+    this.galvaGroupid = val;
+    this.getData();
+  }
+  getData() {
     const me = this;
     this.cols = [
       { field: 'name', header: 'Customer Name' },
@@ -149,13 +149,21 @@ export class PpccalendarComponent implements OnInit {
     this.loading = true;
     this.summaryModalData = [];
     this.ppcService
-      .getPPCCalsummary(this.startdate)
+      .getPPCCalsummary(this.startdate, this.galvaGroupid)
       .toPromise()
       .then(res => {
         this.summaryModalData = res as Ppc[];
 
         this.loading = false;
       });
+  }
+  summary2() {
+    this.summaryModalData = [];
+    this.modaltype = 2;
+    this.bgClass = '';
+    this.galvaGroupid = 'ppcsummary';
+    $('#summaryModal').modal('show');
+    this.getData();
   }
   customNumber(value) {
     return parseInt(value, 10) //convert to int

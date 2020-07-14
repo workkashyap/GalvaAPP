@@ -382,7 +382,18 @@
                         </div>
                       </div>
                     </td>
-                    <td style="width:220px;">
+                    <td *ngIf="modaltype==2" style="width: 220px;">
+                      <select name="galvaGroupid" class="form-control mb-2" [(ngModel)]="galvaGroupid"
+                        (change)="selectedGalvaGroup($event.target.value)" style="height: calc(2.01rem + 2px);">
+                        <option value="ppcsummary">Galva Group</option>
+                        <option value="ppcsummaryshpt">Galva SHPT</option>
+                      </select>
+                    </td>
+                    <td *ngIf="modaltype==2">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td *ngIf="modaltype==1" style="width: 220px;">
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
@@ -416,7 +427,8 @@
                       <span *ngIf="col.field=='comp'">
                         <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
                           {{rowData[col.field]}}</button>
-                        <button class="btn btn-warning myCompbtn" *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
+                        <button class="btn btn-warning myCompbtn"
+                          *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
                           {{rowData[col.field]}}</button>
                         <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
                           {{rowData[col.field]}}</button>

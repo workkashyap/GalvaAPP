@@ -82,9 +82,9 @@ export class PpcService {
   }
 
 
-  public getPPCCalsummary(date): Observable<Ppc[]> {
+  public getPPCCalsummary(date,galvaGroupid): Observable<Ppc[]> {
     return this.http.get<Ppc[]>(
-      this.rootUrl + '/PPCimports/ppcsummary/' + date
+      this.rootUrl + '/PPCimports/'+galvaGroupid+'/' + date
     );
   }
 }
