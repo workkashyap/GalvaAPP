@@ -77,7 +77,7 @@ export class PpcdetailComponent implements OnInit {
     this.loading = true;
     this.ppcdetailData = [];
     this.ppcService
-      .getPPCCalsummary(this.startdate)
+      .getPPCCalsummary(this.startdate,'ppcsummary')
       .toPromise()
       .then(res => {
         this.ppcdetailData = res as Ppc[];
