@@ -329,7 +329,7 @@ export class SalescalendarComponent implements OnInit {
                       me.mouldedTotal = me.mouldedTotal + sum.netSale;
                     }
                   });
-                  plant.totalVal = (me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
+                  plant.totalVal = me.netSalesTotal;//(me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
                   me.totalNetsales();
                 }
               });
@@ -378,9 +378,9 @@ export class SalescalendarComponent implements OnInit {
     } else if (val == "GrosSaleDetail") {
       this.totalSumofTitle = "Tot. Gross";
       this.totalSumofBg = "bg-success";
-     
+
       val = "NetSaleDetail";
-     
+
       this.cols.push(
         { field: 'netSale', header: 'Gross Sale' },
       );
