@@ -61,7 +61,7 @@
                     <div class="col-md-10 mt-2">
                       <select class="custom-select" name="typeSelect" #typeSelect="ngModel" [(ngModel)]="selectedtype"
                         (change)="onselecttype($event.target.value)">
-                        <option value="0">Select Sales</option>
+                        <option value="">Select Sales</option>
                         <option value="netSales">Net Sales</option>
                         <option value="salesReturn">Sales Return</option>
                         <option value="cancelInvoice">Can. Invoice </option>
@@ -84,8 +84,8 @@
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
       <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
-        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-        [value]="dpservice.salesdetail" [paginator]="true" [rows]="20" [resizableColumns]="true">
+        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="salesDetailInfo"
+        [paginator]="true" [rows]="20" [resizableColumns]="true">
 
         <ng-template pTemplate="header" let-columns>
           <tr>
@@ -99,13 +99,14 @@
                 </div>
               </div>
             </td>
-            <td colspan="5"></td>
-            <td style="width: 140px;"></td>
             <td></td>
-            <td style="width: 140px;"></td>
             <td></td>
-            <td style="width: 140px;"></td>
-            <td colspan="3" style="text-align: right;">
+            <td style="width: 265px;"></td>
+            <td></td>
+            <td style="width: 265px;">
+              
+            </td>
+            <td colspan="2" style="text-align: right;width: 265px;">
               <button class="btn btn-info">
                 Total : {{ this.totalSumofValue  | number:'1.2-2' }}
               </button>

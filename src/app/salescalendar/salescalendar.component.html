@@ -150,12 +150,10 @@
                         <a class="text-white m-b-0 tip">{{ summaryinfo.plantshortname}}
 
                           <span class="tooltiptext">
-                            Net Sales : {{summaryinfo.netSale}}<br>
-                            Sales Return : {{summaryinfo.salesReturn}}<br>
-                            Cancel Inv. : {{summaryinfo.cancelInv}}<br>
-                            Moulded : {{summaryinfo.moulded}}<br>
-
-
+                            Net Sales : {{summaryinfo.grossSale | number:'1.2-2' }}<br>
+                            Sales Return : {{summaryinfo.salesReturn  | number:'1.2-2'}}<br>
+                            Cancel Inv. : {{summaryinfo.cancelInv | number:'1.2-2'}}<br>
+                            Moulded : {{summaryinfo.moulded | number:'1.2-2'}}<br>
                           </span>
                         </a>
                       </div>
@@ -176,6 +174,22 @@
                       Lacs</h3>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div style="margin: auto;">
+                <button class="btn btn-custom text-dark bg-success">
+                  Gross Sales = <b>{{ netSalesTotal | number:'1.2-2' }}</b> Lacs
+                </button>
+                <button class="btn btn-custom text-dark bg-danger">
+                  Sales Return = <b>{{ salesReturnTotal | number:'1.2-2' }}</b> Lacs
+                </button>
+                <button class="btn btn-custom text-dark bg-warning">
+                  Cancel Invoice = <b>{{ cancelInvTotal | number:'1.2-2' }}</b> Lacs
+                </button>
+                <button class="btn btn-custom text-dark bg-moulded">
+                  Moulded = <b>{{ mouldedTotal | number:'1.2-2' }}</b> Lacs
+                </button>
               </div>
             </div>
           </div>

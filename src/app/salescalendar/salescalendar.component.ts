@@ -69,6 +69,12 @@ export class SalescalendarComponent implements OnInit {
   salesReturnTotal: number = 0;
   netSalesTotal: number = 0;
   mouldedTotal: number = 0;
+
+  grossSalesCompany: number = 0;
+  salesReturnCompany: number = 0;
+  cancelInvCompany: number = 0;
+  mouldedCompany: number = 0;
+
   constructor(
     public plantservice: PlantService,
     public dpservice: DailyproductionService,
@@ -297,6 +303,11 @@ export class SalescalendarComponent implements OnInit {
             }
             me.summaryDetail2[row.plant].push(row);
             if (result.length == me.i) {
+              
+              me.netSalesTotal = 0;
+              me.cancelInvTotal = 0;
+              me.salesReturnTotal = 0;
+              me.mouldedTotal = 0
 
               me.plantservice.splantlist.forEach(plant => {
                 plant.totalVal = 0;
@@ -305,14 +316,15 @@ export class SalescalendarComponent implements OnInit {
                 plant.salesReturn = 0;
                 plant.netSale = 0;
                 plant.moulded = 0;
+                plant.grossSale = 0;
+
+               
 
                 if (me.summaryDetail2[plant.plantcode]) {
-                  me.netSalesTotal = 0;
-                  me.cancelInvTotal = 0;
-                  me.salesReturnTotal = 0;
-                  me.mouldedTotal = 0
+                 
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "netsale") {
+                      plant.totalVal = sum.netSale;
                       plant.netSale = plant.netSale + sum.netSale;
                       me.netSalesTotal = me.netSalesTotal + sum.netSale;
                     }
@@ -328,8 +340,10 @@ export class SalescalendarComponent implements OnInit {
                       plant.moulded = plant.moulded + sum.netSale;
                       me.mouldedTotal = me.mouldedTotal + sum.netSale;
                     }
+                    plant.grossSale = (plant.netSale - (Math.abs(plant.cancelInv) + Math.abs(plant.salesReturn) + Math.abs(plant.moulded)));;
+
                   });
-                  plant.totalVal = me.netSalesTotal;//(me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
+                  // plant.totalVal = me.netSalesTotal;//(me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
                   me.totalNetsales();
                 }
               });

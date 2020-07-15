@@ -16,10 +16,11 @@ export class Plant {
   jig: number = 0;
   service: number = 0;
   utility: number = 0;
-  tool:number=0;
-  hr:number=0;
-  
+  tool: number = 0;
+  hr: number = 0;
+
   netSale: number = 0;
   salesReturn: number = 0;
   cancelInv: number = 0;
+  grossSale: number = 0;
 }

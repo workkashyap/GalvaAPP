@@ -48,6 +48,8 @@ export class SalesDetailComponent implements OnInit {
   totalSumofValue: number = 0;
   selectedItemrej: Salesdetail;
 
+  salesDetailInfo: Salesdetail[] = [];
+
   plantcode: any;
   totalSumofBg: string = '';
   totalSumofTitle: string = '';
@@ -95,19 +97,19 @@ export class SalesDetailComponent implements OnInit {
 
     this.cols = [
       { field: 'plantName', header: 'Plant Name' },
-      { field: 'billingDocTYPE', header: 'Billingdoctype' },
+      //{ field: 'billingDocTYPE', header: 'Billingdoctype' },
       { field: 'invoiceNumber', header: 'Invoiceno' },
-      { field: 'accDocNo', header: 'Accdocno' },
+      //{ field: 'accDocNo', header: 'Accdocno' },
       { field: 'billingDocDate', header: 'Billingdocdate' },
-      { field: 'materialType', header: 'Materialtype' },
-      
+      // { field: 'materialType', header: 'Materialtype' },
+
       { field: 'materialNumber', header: 'Material No.' },
       { field: 'materialDesc', header: 'Materialdesc' },
       { field: 'soldToParty', header: 'Soldtoparty' },
       { field: 'soldToPartyName', header: 'Soldtopartyname' },
-      { field: 'payer', header: 'Payer' },
-      { field: 'payerName', header: 'Payername' },
-      { field: 'soType', header: 'Sotype' },
+      // { field: 'payer', header: 'Payer' },
+      // { field: 'payerName', header: 'Payername' },
+      // { field: 'soType', header: 'Sotype' },
       { field: 'soTypedesc', header: 'Sotypedesc' },
       { field: 'basicAmtINR', header: 'BasicAmtINR' },
 
@@ -128,54 +130,58 @@ export class SalesDetailComponent implements OnInit {
     let me = this;
     this.totalSumofValue = 0;
 
-    this.dpservice.salesdetail = [];
+    this.salesDetailInfo = [];
 
     this.loading = true;
     this.dpservice.getSalesDetail(this.plantcode, this.Fromdate, this.Todate)
       .toPromise()
       .then(res => {
         const salesdetail = res as Salesdetail[];
+        this.salesDetailInfo = res as Salesdetail[];
+        this.salesDetailInfo = [];
+
         salesdetail.forEach(sales_detail => {
-          console.log("billingDocTYPE : ", sales_detail.billingDocTYPE);
+          console.log("salesReturn", sales_detail);
+
           if (this.selectedtype == "salesReturn") {
             if (sales_detail.billingDocTYPE == "ZRET") {
               console.log("salesReturn");
-              this.dpservice.salesdetail.push(sales_detail);
+              this.salesDetailInfo.push(sales_detail);
             } else if (sales_detail.billingDocTYPE == "ZCR") {
               console.log("salesReturn");
-              this.dpservice.salesdetail.push(sales_detail);
+              this.salesDetailInfo.push(sales_detail);
             }
             else if (sales_detail.billingDocTYPE == "G2") {
               console.log("salesReturn");
-              this.dpservice.salesdetail.push(sales_detail);
+              this.salesDetailInfo.push(sales_detail);
             }
           } else if (this.selectedtype == "netSales") {
 
             if (sales_detail.billingDocTYPE == "ZDOM") {
-              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+              this.salesDetailInfo.push(sales_detail); console.log("netSales");
             } else if (sales_detail.billingDocTYPE == "ZJOB") {
-              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+              this.salesDetailInfo.push(sales_detail); console.log("netSales");
             } else if (sales_detail.billingDocTYPE == "ZRAW") {
-              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+              this.salesDetailInfo.push(sales_detail); console.log("netSales");
 
             } else if (sales_detail.billingDocTYPE == "S2") {
-              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+              this.salesDetailInfo.push(sales_detail); console.log("netSales");
 
             } else if (sales_detail.billingDocTYPE == "ZDR") {
-              this.dpservice.salesdetail.push(sales_detail); console.log("netSales");
+              this.salesDetailInfo.push(sales_detail); console.log("netSales");
             }
 
           } else if (this.selectedtype == "cancelInvoice") {
             if (sales_detail.billingDocTYPE == "S1") {
               console.log("cancelInvoice");
-              this.dpservice.salesdetail.push(sales_detail);
+              this.salesDetailInfo.push(sales_detail);
             }
-          } else if (this.selectedtype == "0") {
-            this.dpservice.salesdetail = res as Salesdetail[];
+          } else if (this.selectedtype == "") {
+            this.salesDetailInfo = res as Salesdetail[];
           }
         });
-        //this.dpservice.salesdetail = res as Salesdetail[];
-        console.log("dpservice.salesdetail : ", this.dpservice.salesdetail);
+        //this.salesDetailInfo = res as Salesdetail[];
+        console.log("salesDetailInfo : ", this.salesDetailInfo);
         this.sumgetsale(this.selectedtype);
         this.loading = false;
       });
@@ -187,9 +193,14 @@ export class SalesDetailComponent implements OnInit {
     this.filterItemrejarray = [];
     // console.log(this.selectedItemrejarray[0].id);
     for (const c of this.selectedItemrejarray) {
-      if (c.payerName.toString().includes(ev.toString()) || c.invoiceNumber.toString().includes(ev.toString())
-        || c.materialType.toString().includes(ev.toString()
-          || c.plant.toString().includes(ev.toString()) || c.id.toString().includes(ev.toString()))) {
+      if (c.invoiceNumber.toString().includes(ev.toString())
+        || c.billingDocDate.toString().includes(ev.toString())
+        || c.materialNumber.toString().includes(ev.toString())
+        || c.materialDesc.toString().includes(ev.toString())
+        || c.soldToParty.toString().includes(ev.toString())
+        || c.soTypedesc.toString().includes(ev.toString())
+        || c.basicAmtINR.toString().includes(ev.toString())
+        || c.soldToPartyName.toString().includes(ev.toString())) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;
       }
@@ -208,7 +219,7 @@ export class SalesDetailComponent implements OnInit {
       // this.totalSumofValue = (this.totalSumofValue / 100000);
       return;
     }
-    for (const sd of this.dpservice.salesdetail) {
+    for (const sd of this.salesDetailInfo) {
       this.totalSumofValue = (this.totalSumofValue + sd.basicAmtINR);
     }
     // this.totalSumofValue = (this.totalSumofValue / 100000);

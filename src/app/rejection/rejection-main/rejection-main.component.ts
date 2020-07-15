@@ -160,13 +160,9 @@ export class RejectionMainComponent implements OnInit {
         c.itemcode.toString().includes(ev.toString()) ||
         c.itemname.toString().includes(ev.toString()) ||
         c.pstngdate.toString().includes(ev.toString()) ||
-        c.item_type
-          .toString()
-          .includes(
-            ev.toString() ||
-            c.plant.toString().includes(ev.toString()) ||
-            c.id.toString().includes(ev.toString())
-          )
+        c.item_type.toString().includes(ev.toString()) ||
+        c.plant.toString().includes(ev.toString()) ||
+        c.id.toString().includes(ev.toString())
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
 
@@ -206,9 +202,9 @@ export class RejectionMainComponent implements OnInit {
       { field: 'buffingqty', header: 'Buffing Qty' },
       //  { field: 'buffingvalue', header: 'Buffing Val' },
 
-      { field: "mouldingqty", header: "Moulding qty" },
+      { field: "mouldingqty", header: "Moulding Defect qty" },
       { field: "moulding_value", header: "Moulding val" },
-      { field: "platingqty", header: "Plating qty" },
+      { field: "platingqty", header: "Plating Defect qty" },
       { field: "plating_value", header: "Plating val" },
     ];
 
