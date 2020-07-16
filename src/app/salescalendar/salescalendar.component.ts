@@ -303,7 +303,7 @@ export class SalescalendarComponent implements OnInit {
             }
             me.summaryDetail2[row.plant].push(row);
             if (result.length == me.i) {
-              
+
               me.netSalesTotal = 0;
               me.cancelInvTotal = 0;
               me.salesReturnTotal = 0;
@@ -318,29 +318,32 @@ export class SalescalendarComponent implements OnInit {
                 plant.moulded = 0;
                 plant.grossSale = 0;
 
-               
+
 
                 if (me.summaryDetail2[plant.plantcode]) {
-                 
+
                   me.summaryDetail2[plant.plantcode].forEach(sum => {
                     if (sum.mode == "netsale") {
                       plant.totalVal = sum.netSale;
+                      //     plant.netSale = plant.netSale + sum.netSale;
                       plant.netSale = plant.netSale + sum.netSale;
+                      plant.grossSale = plant.grossSale + sum.netSale;
                       me.netSalesTotal = me.netSalesTotal + sum.netSale;
                     }
                     if (sum.mode == "salereturn") {
                       plant.salesReturn = plant.salesReturn + sum.netSale;
-                      me.salesReturnTotal = me.salesReturnTotal + sum.netSale;
+                      me.salesReturnTotal = me.salesReturnTotal + Math.abs(sum.netSale);
                     }
                     if (sum.mode == "cancelinv") {
                       plant.cancelInv = plant.cancelInv + sum.netSale;
-                      me.cancelInvTotal = me.cancelInvTotal + sum.netSale;
+                      me.cancelInvTotal = me.cancelInvTotal + Math.abs(sum.netSale);
                     }
                     if (sum.mode == "Moulded") {
                       plant.moulded = plant.moulded + sum.netSale;
                       me.mouldedTotal = me.mouldedTotal + sum.netSale;
                     }
-                    plant.grossSale = (plant.netSale - (Math.abs(plant.cancelInv) + Math.abs(plant.salesReturn) + Math.abs(plant.moulded)));;
+                    //plant.grossSale = (plant.netSale - (Math.abs(plant.cancelInv) + Math.abs(plant.salesReturn) + Math.abs(plant.moulded)));;
+                    plant.totalVal = (plant.netSale - (Math.abs(plant.cancelInv) + Math.abs(plant.salesReturn) + Math.abs(plant.moulded)));;
 
                   });
                   // plant.totalVal = me.netSalesTotal;//(me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
