@@ -248,7 +248,7 @@
             </ng-template>-->
             <ng-template pTemplate="header" let-columns>
               <tr>
-                <td>
+                <td style="width: 160px;">
                   <div class="input-group">
                     <input type="text" pInputText placeholder="Global Filter"
                       (input)="dtdefect.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
@@ -257,7 +257,8 @@
                     </div>
                   </div>
                 </td>
-                <td></td>
+                <td><button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
+                  <i class="fa fa-file-excel-o"></i> Export</button></td>
                 <td></td>
                 <td>
                   <button class="btn bg-warning " style="float: right;">

@@ -68,6 +68,10 @@ import { RoletopagesComponent } from './roles/roletopages/roletopages.component'
 import { RoletouserComponent } from './roles/roletouser/roletouser.component';
 import { CompanytouserComponent } from './roles/compannytouser/companytouser.component';
 import { PpcdetailComponent } from './ppccalendar/ppcdetail/ppcdetail.component';
+import { ProductionsComponent } from './productions/productions.component';
+import { AddproductionComponent } from './productions/addproduction/addproduction.component';
+import { AttendancesummaryComponent } from './hr/attendancesummary.component';
+import { HrcalendarComponent } from './hr/hrcalendar/hrcalendar.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +126,11 @@ import { PpcdetailComponent } from './ppccalendar/ppcdetail/ppcdetail.component'
     RoletopagesComponent,
     RoletouserComponent,
     CompanytouserComponent,
-    PpcdetailComponent
+    PpcdetailComponent,
+    AddproductionComponent,
+    ProductionsComponent,
+    AttendancesummaryComponent,
+    HrcalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -367,6 +375,27 @@ import { PpcdetailComponent } from './ppccalendar/ppcdetail/ppcdetail.component'
         component: PpcdetailComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: "productions",
+        component: ProductionsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "addproduction",
+        component: AddproductionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "attendSummary",
+        component: AttendancesummaryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "hrcalendar",
+        component: HrcalendarComponent,
+        canActivate: [AuthGuard],
+      },
+
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),
