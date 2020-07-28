@@ -120,11 +120,16 @@ export class AttendancesummaryComponent implements OnInit {
                   newArrWorking.push(me.productions[m].totempworked);
                   newArrBrandWorking.push(me.productions[m].status);
                   newArr.push({ l: 'working', v: me.productions[m].totempworked });
-                } else if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "totmanpower") {
+                }
+                if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "workinghours") {
                   newArrTempworking.push(me.productions[m].totempworked);
                   newArrBrandTempworking.push(me.productions[m].status);
-                  newArr.push({ l: 'totmanpower', v: me.productions[m].totempworked });
+                  newArr.push({ l: 'workinghours', v: me.productions[m].totempworked });
                 }
+                /*if (me.productions[m].departmentFName != me.brand[j]) {
+                  newArr.push({ l: 'workinghours', v: 0 });
+                  newArr.push({ l: 'working', v: 0 });
+                }*/
 
               }
               const finalArr = [];
@@ -136,9 +141,9 @@ export class AttendancesummaryComponent implements OnInit {
                   finalArr.push(newArr[m].v);
                   finalBrands.push('working');
                 }
-                if (newArr[m].l == "totmanpower") {
+                if (newArr[m].l == "workinghours") {
                   finalArr.push(newArr[m].v);
-                  finalBrands.push('totmanpower');
+                  finalBrands.push('workinghours');
                 }
               }
               me.sales.push({ brand: me.brand[j], data: finalArr, brands: finalBrands });
