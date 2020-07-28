@@ -15,9 +15,9 @@ export class AttendancesummaryService {
 
   constructor(public http: HttpClient) { }
 
-  public getallHRwdept(month,selectedcode): Observable<Attendancesummary[]> {
+  public getallHRwdept(month, selectedcode, company_name): Observable<Attendancesummary[]> {
     return this.http.get<Attendancesummary[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month + "/" + selectedcode
+      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month + "/" + company_name
     );
   }
 

@@ -32,10 +32,11 @@ export class AttendancesummaryComponent implements OnInit {
   tk: number = 0;
 
   public currentUser: User;
-
+  cols: any = []
   public selectedcode: string = "All";
+  company_name: string;
   public selected_plantname: string;
-
+  companySelect
   constructor(
     public plantservice: PlantService,
     private lservice: LoginService,
@@ -45,7 +46,15 @@ export class AttendancesummaryComponent implements OnInit {
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
+    this.cols = [
+      { field: 'departmentFName', header: 'Customer Name' },
+      { field: 'manhours', header: 'Material' },
+      { field: 'manpowerno', header: 'Material' },
 
+    ];
+
+    this.subtitle.push('Manpower (Nos.)');
+    this.subtitle.push('Manhours Worked');
     /*  this.brand =
         ["ETP", "JIGGING", "LAB", "MAINTENANCE", "MOULDING", "MOULDING QUALITY", "PLATING", "QUALITY", "STORE", "IQC/PDI", "JIG MFG", "MOULDING T", "QUALITY ASSEMBLY", "SAP", "HK & DRIVER"];
     */
@@ -74,7 +83,7 @@ export class AttendancesummaryComponent implements OnInit {
   }
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.getData();
+    this.getProductionList();
   }
   getData() {
     const me = this;
@@ -87,71 +96,33 @@ export class AttendancesummaryComponent implements OnInit {
     me.brand = [];
     me.sales = [];
     me.companies = [];
+
+    // All Company List
     this.attenSummary.getallHRsumcont(this.month, me.selectedcode).toPromise()
       .then(res => {
         me.companies = res as Attendancesummary[];
-
-        //list data
-        this.attenSummary.getallHRwdept(this.month, me.selectedcode).toPromise()
-          .then(res => {
-            me.productions = res as Attendancesummary[];
-            if (me.companies) {
-              for (let j = 0; j < me.companies.length; j++) {
-                me.subtitle.push('Manpower (Nos.)');
-                me.subtitle.push('Manhours Worked');
-              }
-            }
-            me.productions.forEach(production => {
-              me.brand.push(production.departmentFName);
-              me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
-            });
-
-            for (let j = 0; j < me.brand.length; j++) {
-              const newArr = [];
-              const newArrWorking = [];
-              const newArrTempworking = [];
-              const newArrBrandWorking = [];
-
-              const newArrBrandTempworking = [];
-
-              //  me.makearray(me.brand[j]);
-              for (let m = 0; m < me.productions.length; m++) {
-                if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "working") {
-                  newArrWorking.push(me.productions[m].totempworked);
-                  newArrBrandWorking.push(me.productions[m].status);
-                  newArr.push({ l: 'working', v: me.productions[m].totempworked });
-                }
-                if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "workinghours") {
-                  newArrTempworking.push(me.productions[m].totempworked);
-                  newArrBrandTempworking.push(me.productions[m].status);
-                  newArr.push({ l: 'workinghours', v: me.productions[m].totempworked });
-                }
-                /*if (me.productions[m].departmentFName != me.brand[j]) {
-                  newArr.push({ l: 'workinghours', v: 0 });
-                  newArr.push({ l: 'working', v: 0 });
-                }*/
-
-              }
-              const finalArr = [];
-              const finalBrands = [];
-              me.wk = 0;
-              me.tk = 0;
-              for (let m = 0; m < newArr.length; m++) {
-                if (newArr[m].l == "working") {
-                  finalArr.push(newArr[m].v);
-                  finalBrands.push('working');
-                }
-                if (newArr[m].l == "workinghours") {
-                  finalArr.push(newArr[m].v);
-                  finalBrands.push('workinghours');
-                }
-              }
-              me.sales.push({ brand: me.brand[j], data: finalArr, brands: finalBrands });
-            }
-            console.log(me.sales);
-
-          });
+        me.company_name = me.companies[0].companyFName;
+        //All Production List
+        me.getProductionList();
       });
   }
+  getProductionList() {
+    const me = this;
+    me.productions = [];
+    this.loading = true;
+    this.attenSummary.getallHRwdept(this.month, me.selectedcode, me.company_name).toPromise()
+      .then(res => {
+        this.loading = false;
 
+        me.productions = res as Attendancesummary[];
+        // Find Unique Dept. List
+        me.productions.forEach(production => {
+          me.brand.push(production.departmentFName);
+          me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
+        });
+      }, erro => {
+        this.loading = false;
+
+      });
+  }
 }
