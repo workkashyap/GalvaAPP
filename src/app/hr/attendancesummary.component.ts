@@ -33,7 +33,7 @@ export class AttendancesummaryComponent implements OnInit {
 
   public currentUser: User;
 
-  public selectedcode: string;
+  public selectedcode: string = "All";
   public selected_plantname: string;
 
   constructor(
@@ -46,8 +46,9 @@ export class AttendancesummaryComponent implements OnInit {
     ];
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
 
-    this.brand =
-      ["ETP", "JIGGING", "LAB", "MAINTENANCE", "MOULDING", "MOULDING QUALITY", "PLATING", "QUALITY", "STORE", "IQC/PDI", "JIG MFG", "MOULDING T", "QUALITY ASSEMBLY", "SAP", "HK & DRIVER"];
+    /*  this.brand =
+        ["ETP", "JIGGING", "LAB", "MAINTENANCE", "MOULDING", "MOULDING QUALITY", "PLATING", "QUALITY", "STORE", "IQC/PDI", "JIG MFG", "MOULDING T", "QUALITY ASSEMBLY", "SAP", "HK & DRIVER"];
+    */
   }
 
   ngOnInit() {
@@ -61,18 +62,18 @@ export class AttendancesummaryComponent implements OnInit {
       .toPromise()
       .then(res => {
         me.plantservice.splantlist = res as Plant[];
-        me.selectedcode = me.plantservice.splantlist[0].plantcode;
-        me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
+        //   me.selectedcode = me.plantservice.splantlist[0].plantcode;
+        //  me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
         me.getData();
       });
 
   }
   selectedMonth(ev) {
-    this.month=ev;
+    this.month = ev;
     this.getData();
   }
   selectedGrid(ev) {
-    this.selectedcode=ev;
+    this.selectedcode = ev;
     this.getData();
   }
   getData() {
@@ -83,19 +84,27 @@ export class AttendancesummaryComponent implements OnInit {
     me.totempworked = [];
     me.totempworked2 = [];
     me.i = 0;
-    this.attenSummary.getallHRsumcont(this.month).toPromise()
+    me.brand = [];
+    me.sales = [];
+    me.companies = [];
+    this.attenSummary.getallHRsumcont(this.month, me.selectedcode).toPromise()
       .then(res => {
         me.companies = res as Attendancesummary[];
 
         //list data
-        this.attenSummary.getallHRwdept(this.month).toPromise()
+        this.attenSummary.getallHRwdept(this.month, me.selectedcode).toPromise()
           .then(res => {
             me.productions = res as Attendancesummary[];
-
-            for (let j = 0; j < me.companies.length; j++) {
-              me.subtitle.push('Manpower (Nos.)');
-              me.subtitle.push('Manhours Worked');
+            if (me.companies) {
+              for (let j = 0; j < me.companies.length; j++) {
+                me.subtitle.push('Manpower (Nos.)');
+                me.subtitle.push('Manhours Worked');
+              }
             }
+            me.productions.forEach(production => {
+              me.brand.push(production.departmentFName);
+              me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
+            });
 
             for (let j = 0; j < me.brand.length; j++) {
               const newArr = [];
@@ -110,10 +119,11 @@ export class AttendancesummaryComponent implements OnInit {
                 if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "working") {
                   newArrWorking.push(me.productions[m].totempworked);
                   newArrBrandWorking.push(me.productions[m].status);
-                }
-                if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "totmanpower") {
+                  newArr.push({ l: 'working', v: me.productions[m].totempworked });
+                } else if (me.productions[m].departmentFName == me.brand[j] && me.productions[m].status == "totmanpower") {
                   newArrTempworking.push(me.productions[m].totempworked);
                   newArrBrandTempworking.push(me.productions[m].status);
+                  newArr.push({ l: 'totmanpower', v: me.productions[m].totempworked });
                 }
 
               }
@@ -121,19 +131,14 @@ export class AttendancesummaryComponent implements OnInit {
               const finalBrands = [];
               me.wk = 0;
               me.tk = 0;
-              for (let m = 0; m < me.productions.length; m++) {
-                if (m % 2 == 0) {
-                  if (newArrWorking[me.wk]) {
-                    finalArr.push(newArrWorking[me.wk]);
-                    finalBrands.push(newArrBrandWorking[me.wk]);
-                  }
-                  me.wk++;
-                } else {
-                  if (newArrTempworking[me.wk]) {
-                    finalArr.push(newArrTempworking[me.wk]);
-                    finalBrands.push(newArrBrandTempworking[me.wk]);
-                  }
-                  me.tk++;
+              for (let m = 0; m < newArr.length; m++) {
+                if (newArr[m].l == "working") {
+                  finalArr.push(newArr[m].v);
+                  finalBrands.push('working');
+                }
+                if (newArr[m].l == "totmanpower") {
+                  finalArr.push(newArr[m].v);
+                  finalBrands.push('totmanpower');
                 }
               }
               me.sales.push({ brand: me.brand[j], data: finalArr, brands: finalBrands });
@@ -142,13 +147,6 @@ export class AttendancesummaryComponent implements OnInit {
 
           });
       });
-
-    /*this.sales = [
-      { brand: 'Apple', data: ['working', 'totmanpower', 'working', 'totmanpower', 'working', 'totmanpower'] },
-      { brand: 'Samsung', data: ['working', 'totmanpower', 'working', 'totmanpower', 'working', 'totmanpower'] },
-      { brand: 'Microsoft',data: ['working', 'totmanpower', 'working', 'totmanpower', 'working', 'totmanpower']},
-      { brand: 'Toshiba', data: ['working', 'totmanpower', 'working', 'totmanpower', 'working', 'totmanpower'] }
-    ];*/
   }
 
 }

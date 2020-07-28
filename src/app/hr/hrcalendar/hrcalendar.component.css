@@ -2,11 +2,16 @@
     font-size: 10px;
     margin: 0px 2px 3px 0px;
 }
+.custom-box-font-2{
+    font-size: 11px;
+    margin: 8px 2px 3px 0px;
+    font-weight: bolder;
+}
 .comphr{
     margin: 5px 0px;
     border-top: 1px solid white;
 }
-.card-block,.card-footer {
+.card-block,.card-footer,.card-header {
     padding: 0.25rem 0.96rem
 }
 
@@ -29,6 +34,9 @@
     font-size: 10px;
 }
 .update-card {
-   
     margin-bottom: 0.1rem;
+}
+.update-card.card-hedaer{
+    border-bottom:  1px solid white;
+
 }

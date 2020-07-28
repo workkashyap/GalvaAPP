@@ -15,15 +15,15 @@ export class AttendancesummaryService {
 
   constructor(public http: HttpClient) { }
 
-  public getallHRwdept(month): Observable<Attendancesummary[]> {
+  public getallHRwdept(month,selectedcode): Observable<Attendancesummary[]> {
     return this.http.get<Attendancesummary[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month
+      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month + "/" + selectedcode
     );
   }
 
-  public getallHRsumcont(month): Observable<Attendancesummary[]> {
+  public getallHRsumcont(month, selectedcode): Observable<Attendancesummary[]> {
     return this.http.get<Attendancesummary[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRsumcont/' + month
+      this.rootUrl + '/EMP_CONT_ATT/getallHRsumcont/' + month + "/" + selectedcode
     );
   }
 

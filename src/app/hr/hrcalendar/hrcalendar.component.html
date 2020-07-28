@@ -46,33 +46,45 @@
                   <div class="col-md-2" *ngFor="let company of companies">
                     <!--.card 1-->
                     <div class="card  update-card" [ngClass]='company.color' (click)="detail(company.companyFName)">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-10">
+                            <h5 class="text-white m-b-0 custom-box-font-2"> {{company.companyFName}}</h5>
+                          </div>
+                          <div class="col-md-2">
+                            <p class="text-white m-b-0">
+                              <i class="fa fa-users f-14 m-r-10" aria-hidden="true"></i>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                       <div class="card-block">
                         <div class="row align-items-end">
-                          <div class="col-12">
-                            <h4 class="text-white m-b-0 custom-box-font"> {{company.companyFName}}</h4>
+                          <div class="col-6" style="padding: 0px 3px;">
                             <h4 class="text-white custom-box-font">
-                              Manpower: {{ company.manpower | number:'1.2-2' }}
+                              <b>Manpower (Nos.)</b><br>{{ company.manpower | number:'1.2-2' }}
                             </h4>
+                          </div>
+                          <div class="col-md-6"  style="padding: 0px 3px;">
                             <h4 class="text-white custom-box-font">
-                              Man. Worked: {{ company.manpowerWorking | number:'1.2-2' }}
+                              <b> Manhours Worked</b> <br> {{ company.manpowerWorking | number:'1.2-2' }}
                             </h4>
                           </div>
                         </div>
                       </div>
                       <div class="card-footer">
                         <div class="row align-items-end">
-                          <div class="col-10">
+                          <div class="col-6">
                             <h4 class="text-white custom-box-font">
-                              Amount: {{ company.amount | number:'1.2-2' }} Lacs
+                              <b>Amount</b><br> {{ company.amount | number:'1.2-2' }} Lacs
                             </h4>
-                            <h4 class="text-white custom-box-font">
-                              Tot. Hours: {{ company.totalHours | number:'1.2-2' }}
-                            </h4>
+
                           </div>
-                          <div class="col-2">
-                            <p class="text-white m-b-0">
-                              <i class="fa fa-user-o f-14 m-r-10" aria-hidden="true" style="font-size: 20px;"></i>
-                            </p>
+                          <div class="col-6">
+                            <h4 class="text-white custom-box-font">
+                              <b> Tot. Hours</b><br> {{ company.totalHours | number:'1.2-2' }}
+                            </h4>
+
                           </div>
                         </div>
 

@@ -12,6 +12,9 @@
           <div class="col-sm-2">
             <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
               (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
+              <option value="All">
+                All Company
+              </option>
               <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                 {{ pl.plantshortname }}
               </option>
@@ -68,13 +71,13 @@
                       <td *ngFor="let d of sale.data">{{d}}</td>
                     </tr>
                   </ng-template>
-                  <ng-template pTemplate="footer">
+                  <!--<ng-template pTemplate="footer">
                     <tr>
                       <td colspan="3">Totals</td>
                       <td>$506,202</td>
                       <td>$531,020</td>
                     </tr>
-                  </ng-template>
+                  </ng-template>-->
                 </p-table>
 
               </div>
