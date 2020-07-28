@@ -82,7 +82,7 @@ export class AttendancesummaryComponent implements OnInit {
     this.getData();
   }
   selectedGrid(ev) {
-    this.selectedcode = ev;
+    this.company_name = ev;
     this.getProductionList();
   }
   getData() {
