@@ -30,17 +30,12 @@ export class AttendancesummaryComponent implements OnInit {
   i: number = 0;
   wk: number = 0;
   tk: number = 0;
-
+  company_name: string = "GUJARAT MANPOWER";
   public currentUser: User;
-  cols: any = []
+
   public selectedcode: string = "All";
-  company_name: string;
   public selected_plantname: string;
-  companySelect: any;
-
-  manhours: number = 0;
-  manpowerno: number = 0;
-
+  totals: any = [];
   constructor(
     public plantservice: PlantService,
     private lservice: LoginService,
@@ -50,14 +45,7 @@ export class AttendancesummaryComponent implements OnInit {
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
-    this.cols = [
-      { field: 'departmentFName', header: 'Department' },
-      { field: 'manpowerno', header: 'Manpower (Nos.)' },
-      { field: 'manhours', header: 'Manhours Worked' },
-    ];
 
-    this.subtitle.push('Manpower (Nos.)');
-    this.subtitle.push('Manhours Worked');
     /*  this.brand =
         ["ETP", "JIGGING", "LAB", "MAINTENANCE", "MOULDING", "MOULDING QUALITY", "PLATING", "QUALITY", "STORE", "IQC/PDI", "JIG MFG", "MOULDING T", "QUALITY ASSEMBLY", "SAP", "HK & DRIVER"];
     */
@@ -85,16 +73,14 @@ export class AttendancesummaryComponent implements OnInit {
     this.getData();
   }
   selectedGrid(ev) {
-    this.company_name = ev;
-    this.getProductionList();
+    this.selectedcode = ev;
+    this.getData();
   }
   getData() {
     const me = this;
     //all companies
     me.productions = [];
     me.subtitle = [];
-    me.totempworked = [];
-    me.totempworked2 = [];
     me.i = 0;
     me.brand = [];
     me.sales = [];
@@ -104,43 +90,69 @@ export class AttendancesummaryComponent implements OnInit {
     this.attenSummary.getallHRsumcont(this.month, me.selectedcode).toPromise()
       .then(res => {
         me.companies = res as Attendancesummary[];
-        me.company_name = me.companies[0].companyFName;
+        //me.company_name = me.companies[0].companyFName;
         //All Production List
-        me.getProductionList();
+        this.attenSummary.getallHRwdept(this.month, me.selectedcode, me.company_name).toPromise()
+          .then(res => {
+            me.productions = res as Attendancesummary[];
+
+            // Find Unique Dept. List
+            me.productions.forEach(production => {
+              me.brand.push(production.departmentFName);
+              me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
+            });
+            // console.log(me.productions);
+            if (me.companies) {
+              for (let indexCompany = 0; indexCompany < me.companies.length; indexCompany++) {
+                me.subtitle.push({ title: 'MANPowerNOS ', total: 0, status: '1', });
+
+                me.subtitle.push({ title: 'Manhoursworked', total: 0, status: '2', });
+
+
+                me.companies[indexCompany].deptList = [...me.brand];
+                me.companies[indexCompany].deptList2 = new Array();
+
+                //ALREADY CHE  2 min 1 min
+                for (let indexBrand = 0; indexBrand < me.brand.length; indexBrand++) {
+                  me.companies[indexCompany].deptList2[indexBrand] = {
+                    'departmentFName': me.brand[indexBrand],
+                    'manhours': 0,
+                    'manpowerno': 0
+                  }; // set default value
+                  for (let indexProduction = 0; indexProduction < me.productions.length; indexProduction++) {
+
+                    if (me.productions[indexProduction].companyFName == me.companies[indexCompany].companyFName) {
+                      if (me.productions[indexProduction].departmentFName == me.brand[indexBrand]) {
+                        me.companies[indexCompany].deptList2[indexBrand] = {
+                          'departmentFName': me.productions[indexProduction].departmentFName,
+                          'manhours': (me.productions[indexProduction].manhours == null) ? 0 : me.productions[indexProduction].manhours,
+                          'manpowerno': (me.productions[indexProduction].manpowerno == null) ? 0 : me.productions[indexProduction].manpowerno,
+                        };
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            me.sales = [];
+            for (let intBrand = 0; intBrand < me.brand.length; intBrand++) {
+              console.log(intBrand, me.brand[intBrand]);
+              const dataList = []; //[1,2];
+              for (let intCompany = 0; intCompany < me.companies.length; intCompany++) {
+                dataList.push( me.companies[intCompany].deptList2[intBrand].manpowerno, me.companies[intCompany].deptList2[intBrand].manhours);
+              }
+              me.sales.push({ 'brand': me.brand[intBrand], 'data': dataList });
+            }
+
+            for (let salesIndex = 0; salesIndex < me.sales.length; salesIndex++) {
+              me.i = 0;
+              for (let dataIndex = 0; dataIndex < me.sales[salesIndex].data.length; dataIndex++) {
+                me.subtitle[me.i].total = me.subtitle[me.i].total + me.sales[salesIndex].data[dataIndex];
+                me.i++;
+              }
+            }
+          });
       });
   }
-  getProductionList() {
-    const me = this;
-    me.productions = [];
-    this.loading = true;
 
-    me.manhours = 0;
-    me.manpowerno = 0;
-
-    this.attenSummary.getallHRwdept(this.month, me.selectedcode, me.company_name).toPromise()
-      .then(res => {
-        this.loading = false;
-
-        me.productions = res as Attendancesummary[];
-        // Find Unique Dept. List
-
-        me.productions.forEach(production => {
-          me.brand.push(production.departmentFName);
-          me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
-          
-          if (production.manhours == null) {
-            production.manhours = 0;
-          }
-          me.manhours = me.manhours + parseInt(production.manhours);
-          
-          if (production.manpowerno == null) {
-            production.manpowerno = 0;
-          }
-          me.manpowerno = me.manpowerno + parseInt(production.manpowerno);
-        });
-      }, erro => {
-        this.loading = false;
-
-      });
-  }
 }

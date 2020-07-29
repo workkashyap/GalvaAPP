@@ -17,7 +17,7 @@ export class AttendancesummaryService {
 
   public getallHRwdept(month, selectedcode, company_name): Observable<Attendancesummary[]> {
     return this.http.get<Attendancesummary[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month + "/" + company_name
+      this.rootUrl + '/EMP_CONT_ATT/getallHRwdept/' + month 
     );
   }
 
