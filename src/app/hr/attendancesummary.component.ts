@@ -36,7 +36,11 @@ export class AttendancesummaryComponent implements OnInit {
   public selectedcode: string = "All";
   company_name: string;
   public selected_plantname: string;
-  companySelect
+  companySelect: any;
+
+  manhours: number = 0;
+  manpowerno: number = 0;
+
   constructor(
     public plantservice: PlantService,
     private lservice: LoginService,
@@ -47,10 +51,9 @@ export class AttendancesummaryComponent implements OnInit {
     ];
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
     this.cols = [
-      { field: 'departmentFName', header: 'Customer Name' },
-      { field: 'manhours', header: 'Material' },
-      { field: 'manpowerno', header: 'Material' },
-
+      { field: 'departmentFName', header: 'Department' },
+      { field: 'manpowerno', header: 'Manpower (Nos.)' },
+      { field: 'manhours', header: 'Manhours Worked' },
     ];
 
     this.subtitle.push('Manpower (Nos.)');
@@ -110,15 +113,30 @@ export class AttendancesummaryComponent implements OnInit {
     const me = this;
     me.productions = [];
     this.loading = true;
+
+    me.manhours = 0;
+    me.manpowerno = 0;
+
     this.attenSummary.getallHRwdept(this.month, me.selectedcode, me.company_name).toPromise()
       .then(res => {
         this.loading = false;
 
         me.productions = res as Attendancesummary[];
         // Find Unique Dept. List
+
         me.productions.forEach(production => {
           me.brand.push(production.departmentFName);
           me.brand = me.brand.filter((v, i, a) => a.indexOf(v) === i);
+          
+          if (production.manhours == null) {
+            production.manhours = 0;
+          }
+          me.manhours = me.manhours + parseInt(production.manhours);
+          
+          if (production.manpowerno == null) {
+            production.manpowerno = 0;
+          }
+          me.manpowerno = me.manpowerno + parseInt(production.manpowerno);
         });
       }, erro => {
         this.loading = false;
