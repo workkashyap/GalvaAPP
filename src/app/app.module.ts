@@ -72,6 +72,7 @@ import { ProductionsComponent } from './productions/productions.component';
 import { AddproductionComponent } from './productions/addproduction/addproduction.component';
 import { AttendancesummaryComponent } from './hr/attendancesummary.component';
 import { HrcalendarComponent } from './hr/hrcalendar/hrcalendar.component';
+import { MouldproductionComponent } from './mouldproduction/mouldproduction.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,8 @@ import { HrcalendarComponent } from './hr/hrcalendar/hrcalendar.component';
     AddproductionComponent,
     ProductionsComponent,
     AttendancesummaryComponent,
-    HrcalendarComponent
+    HrcalendarComponent,
+    MouldproductionComponent
   ],
   imports: [
     BrowserModule,
@@ -395,7 +397,11 @@ import { HrcalendarComponent } from './hr/hrcalendar/hrcalendar.component';
         component: HrcalendarComponent,
         canActivate: [AuthGuard],
       },
-
+      {
+        path: "mouldproduction",
+        component: MouldproductionComponent,
+        canActivate: [AuthGuard],
+      },
       { path: "**", redirectTo: "" },
     ]),
     ToastrModule.forRoot(),

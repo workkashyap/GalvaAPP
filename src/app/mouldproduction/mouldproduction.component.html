@@ -1,0 +1,175 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Moulding Calendar
+            </h5>
+          </div>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-4">
+            <div class="row" style="text-align: center;">
+              <div class="col-md-6">
+                <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
+                  (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
+                  <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                    {{ pl.plantshortname }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4" style="padding: unset !important;">
+                <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
+                  style="border-radius: 5px 0px 0px 5px">Previous</button>
+                <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
+                  style="border-radius: 0px 5px 5px 0px;">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mx-2">
+            <div class="card card-primary card-outline">
+              <div class="card-header ">
+                <!--  card-tools -->
+                <div class="form-inline">
+                  <div style="margin: auto;">
+
+                    <button class="btn btn-custom text-dark bg-info"
+                      (click)="extraVal('getmouldsumsdetail','prodqty')">Total
+                      Produce Qty = <b>{{ prodqty  | number:'1.2-2'}}</b>
+                    </button>
+
+                    <button class="btn btn-custom text-dark bg-danger"
+                      (click)="extraVal('getmouldsumsdetail','rejqty')">
+                      Reject Qty = <b>{{ rejqty | number:'1.2-2' }}</b>
+                    </button>
+                    <button class="btn btn-custom text-dark bg-primary"
+                      (click)="extraVal('getmouldsumsdetail','consumption')" style="width: auto;">
+                      Consumption = <b>{{ consumption | number:'1.2-2' }}</b>
+                    </button>
+
+                    <button class="btn btn-custom text-dark bg-dark"
+                      (click)="extraVal('getmouldissuesumdetail','issuedqty')" style="width: auto;">
+                      Issued Qty = <b>{{ issuedqty | number:'1.2-2' }}</b>
+                    </button>
+
+                  </div>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0" style="overflow-y: scroll; height:auto;">
+
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+                <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
+                  [header]="options.header" [weekends]="true" [displayEventTime]="false"
+                  [events]="mouldprodService.mouldProdcalendar" [editable]="true" [aspectRatio]="3.5" height="auto"
+                  (eventClick)="eventClick($event)" class="my-calender">
+                </full-calendar>
+                <div class="table-responsive mailbox-messages">
+
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+
+              </div>
+            </div>
+
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" [ngClass]="customclass">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>Moulding Summary
+                  <span *ngIf="!monthName">({{selected_eventdate | date :'dd MMM, y'}})</span>
+                  <span *ngIf="monthName">({{monthName | date :'MMM'}})</span> </h5>
+              </div>
+              <div class="col-md-5">
+                <h4>{{selected_plantname }}</h4>
+              </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 450px;">
+              <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" [value]="mouldprodService.mouldprodDetail"
+                [paginator]="false" [rows]="15" [responsive]="true">
+
+                <ng-template pTemplate="header" let-columns>
+                  <!-- header button section -->
+                  <tr>
+                    <td>
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          (input)="loadmdata($event.target.value , dt)" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width:315px;">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                  </tr>
+                  <!-- regular date section -->
+
+                  <tr class="tbl-tr">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of columns">
+                      <span *ngIf="col.field=='acDocumentDate'">
+                        {{rowData[col.field]  | date :'dd MMM, y'}}
+                      </span>
+                      <span *ngIf="col.field!='acDocumentDate' ">
+                        {{rowData[col.field]}}</span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-wrapper -->
