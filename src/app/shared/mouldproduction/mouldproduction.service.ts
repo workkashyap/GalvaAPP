@@ -36,11 +36,25 @@ export class MouldproductionService {
       this.rootUrl + '/Moulded/getmouldissuesum/' + id + '/' + date
     );
   }
+  public getmouldopeningsum(id): Observable<Mouldproduction[]> {
+    return this.http.get<Mouldproduction[]>(
+      this.rootUrl + '/moulded/getmouldopeningsum/' + id
+    );
+  }
 
   public btnclick(val, id, date): Observable<Mouldproduction[]> {
-    return this.http.get<Mouldproduction[]>(
-      this.rootUrl + '/Moulded/' + val + '/' + id + '/' + date
-    );
+    if (val == "getmouldopeningsumdetail") {
+
+      return this.http.get<Mouldproduction[]>(
+        this.rootUrl + '/Moulded/' + val + '/' + id 
+      );
+    } else {
+
+      return this.http.get<Mouldproduction[]>(
+        this.rootUrl + '/Moulded/' + val + '/' + id + '/' + date
+      );
+
+    }
   }
 }
 

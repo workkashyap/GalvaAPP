@@ -44,6 +44,9 @@ export class MouldproductionComponent implements OnInit {
   rejqty: number = 0;
   consumption: number = 0;
   issuedqty: number = 0;
+  opening: number = 0;
+  balance2: number = 0;
+
   customclass = '';
   constructor(
     public plantservice: PlantService,
@@ -154,6 +157,17 @@ export class MouldproductionComponent implements OnInit {
             }
           });
 
+        this.mouldprodService.getmouldopeningsum(this.selectedcode)
+          .toPromise()
+          .then(res2 => {
+            const getmouldopeningsum = res2 as Mouldproduction[];
+            if (getmouldopeningsum && getmouldopeningsum.length) {
+              getmouldopeningsum.forEach(getmouldopeningsumElem => {
+                me.opening = (getmouldopeningsumElem.opening != null) ? getmouldopeningsumElem.opening : 0;
+              });
+            }
+          });
+
         me.loading = false;
       }, error => {
         me.loading = false;
@@ -201,16 +215,18 @@ export class MouldproductionComponent implements OnInit {
 
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
-      { field: 'description', header: 'Description' }];
+      { field: 'description', header: 'Description' },
+    ];
 
-    if (val2 == "abscode") {
-      this.cols.push({ field: 'abscode', header: 'Abs Code' });
+    if (val2 == "opening") {
+      this.cols.push({ field: 'opening', header: 'Opening' });
     } else if (val2 == "prodqty") {
-      this.cols.push({ field: 'prodqty', header: 'Prod. Qty' });
+      this.cols.push({ field: 'abscode', header: 'Abs Code' }, { field: 'prodqty', header: 'Prod. Qty' });
     } else if (val2 == "rejqty") {
-      this.cols.push({ field: 'rejqty', header: 'Rej. Qty' });
+      this.cols.push({ field: 'abscode', header: 'Abs Code' }, { field: 'rejqty', header: 'Rej. Qty' });
     } else if (val2 == "consumption") {
-      this.cols.push({ field: 'consumption', header: 'consumption' });
+      this.cols.push({ field: 'abscode', header: 'Abs Code' },
+        { field: 'consumption', header: 'consumption' });
     } else if (val2 == "issuedqty") {
       this.cols.push({ field: 'issuedqty', header: 'Issued Qty' });
     }
@@ -227,6 +243,13 @@ export class MouldproductionComponent implements OnInit {
         this.detailLoading = false;
       });
 
+
+  }
+  balance() {
+    this.balance2 = 0;
+    this.balance2 = this.opening + this.issuedqty - Math.abs(this.consumption)
+
+    return this.balance2;
 
   }
   //selected plant

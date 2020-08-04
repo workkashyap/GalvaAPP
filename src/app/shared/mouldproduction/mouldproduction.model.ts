@@ -6,12 +6,13 @@ export class Mouldproduction {
   backgroundColor: string;
   borderColor: string;
 
-  itemcode:string;
-  description:string;
-  abscode:string;
-  prodqty:number;
-  rejqty:number;
-  consumption:number;
+  itemcode: string;
+  description: string;
+  abscode: string;
+  prodqty: number;
+  rejqty: number;
+  consumption: number;
 
-  issuedqty:number;
+  issuedqty: number;
+  opening: number;
 }
