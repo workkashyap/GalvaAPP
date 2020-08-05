@@ -134,8 +134,10 @@ export class PpccalendarComponent implements OnInit {
     const me = this;
     this.cols = [
       { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
       { field: 'itemname', header: 'Material' },
       { field: 'schqty', header: 'Schedule Current' },
+      { field: 'schvalue', header: 'Schedule Value' },
       { field: 'dispatchqty', header: 'Dispatch' },
       { field: 'balance', header: 'Balance' },
       { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },

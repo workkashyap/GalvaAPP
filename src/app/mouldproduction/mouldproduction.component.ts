@@ -141,7 +141,7 @@ export class MouldproductionComponent implements OnInit {
               getmouldsum.forEach(getmouldsumElem => {
                 me.prodqty = (getmouldsumElem.prodqty != null) ? getmouldsumElem.prodqty : 0;
                 me.rejqty = (getmouldsumElem.rejqty != null) ? getmouldsumElem.rejqty : 0;
-                me.consumption = (getmouldsumElem.consumption != null) ? getmouldsumElem.consumption : 0;
+                me.consumption = (getmouldsumElem.consumption != null) ? getmouldsumElem.consumption / 1000 : 0;
               });
             }
           });
@@ -152,7 +152,7 @@ export class MouldproductionComponent implements OnInit {
             const getmouldissuesum = res2 as Mouldproduction[];
             if (getmouldissuesum && getmouldissuesum.length) {
               getmouldissuesum.forEach(getmouldissuesumElem => {
-                me.issuedqty = (getmouldissuesumElem.issuedqty != null) ? getmouldissuesumElem.issuedqty : 0;
+                me.issuedqty = (getmouldissuesumElem.issuedqty != null) ? getmouldissuesumElem.issuedqty / 1000 : 0;
               });
             }
           });
@@ -163,7 +163,7 @@ export class MouldproductionComponent implements OnInit {
             const getmouldopeningsum = res2 as Mouldproduction[];
             if (getmouldopeningsum && getmouldopeningsum.length) {
               getmouldopeningsum.forEach(getmouldopeningsumElem => {
-                me.opening = (getmouldopeningsumElem.opening != null) ? getmouldopeningsumElem.opening : 0;
+                me.opening = (getmouldopeningsumElem.opening != null) ? getmouldopeningsumElem.opening / 1000 : 0;
               });
             }
           });
@@ -239,7 +239,28 @@ export class MouldproductionComponent implements OnInit {
     this.mouldprodService.btnclick(val, this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
-        this.mouldprodService.mouldprodDetail = res as Mouldproduction[];
+        const data = res as Mouldproduction[];
+        if (val2 == "opening" || val2 == "consumption" || val2 == "issuedqty") {
+          if (data && data.length) {
+            data.forEach(row => {
+              if (val2 == "opening") {
+                row.opening = row.opening / 1000;
+              }
+              if (val2 == "issuedqty") {
+                row.issuedqty = row.issuedqty / 1000;
+              }
+              if (val2 == "consumption") {
+                row.consumption = row.consumption / 1000;
+              }
+
+            });
+            this.mouldprodService.mouldprodDetail = data;
+
+          }
+        } else {
+          this.mouldprodService.mouldprodDetail = res as Mouldproduction[];
+
+        }
         this.detailLoading = false;
       });
 
@@ -248,9 +269,7 @@ export class MouldproductionComponent implements OnInit {
   balance() {
     this.balance2 = 0;
     this.balance2 = this.opening + this.issuedqty - Math.abs(this.consumption)
-
     return this.balance2;
-
   }
   //selected plant
   selectedPlanName() {

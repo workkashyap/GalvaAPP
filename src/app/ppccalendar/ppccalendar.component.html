@@ -382,12 +382,15 @@
                         </div>
                       </div>
                     </td>
-                    <td *ngIf="modaltype==2" style="width: 220px;">
+                    <td *ngIf="modaltype==2" style="width: 111px;">
                       <select name="galvaGroupid" class="form-control mb-2" [(ngModel)]="galvaGroupid"
-                        (change)="selectedGalvaGroup($event.target.value)" style="height: calc(2.01rem + 2px);">
+                        (change)="selectedGalvaGroup($event.target.value)" style="height: calc(2.01rem + 2px);font-size: 12px;padding: 0.315rem .45rem;">
                         <option value="ppcsummary">Galva Group</option>
                         <option value="ppcsummaryshpt">Galva SHPT</option>
                       </select>
+                    </td>
+                    <td *ngIf="modaltype==2" style="width: 240px;">
+                     
                     </td>
                     <td *ngIf="modaltype==2">
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
