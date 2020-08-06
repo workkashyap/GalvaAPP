@@ -23,6 +23,10 @@ import { PpcService } from '../shared/ppc/ppc.service';
   providers: [DatePipe]
 })
 export class PpccalendarComponent implements OnInit {
+  filterenable: boolean = false;
+  selectedItemrejarray: any[];
+  iv: number = 0;
+  filterItemrejarray: any[];
 
   public sDate: Date;
   public lDate: Date;
@@ -59,6 +63,8 @@ export class PpccalendarComponent implements OnInit {
   length7: number = 0;
   length8: number = 0;
   length9: number = 0;
+
+  schedulevalue: number = 0;
 
   summaryModalData: any;
   cols: any;
@@ -130,8 +136,47 @@ export class PpccalendarComponent implements OnInit {
     this.galvaGroupid = val;
     this.getData();
   }
+
+
+  loadmdata(ev, dt) {
+    const me = this;
+    me.schedulevalue = 0;
+    this.filterenable = true;
+    this.selectedItemrejarray = dt.value;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of this.selectedItemrejarray) {
+      if (
+        c.name.toString().includes(ev.toString()) ||
+        c.itemcode.toString().includes(ev.toString()) ||
+        c.itemname.toString().includes(ev.toString()) ||
+        c.schqty.toString().includes(ev.toString()) ||
+        c.schvalue.toString().includes(ev.toString()) ||
+        c.balance.toString().includes(ev.toString()) ||
+        c.platingpartreq.toString().includes(ev.toString()) ||
+        c.mouldpartreq.toString().includes(ev.toString()) ||
+        c.fgVZ.toString().includes(ev.toString()) ||
+        c.dispatchqty.toString().includes(ev.toString())
+      ) {
+        this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      } else {
+        this.iv += 1;
+      }
+    }
+    me.filterItemrejarray.forEach(smd => {
+      if (smd.schvalue != null) {
+        me.schedulevalue = me.schedulevalue + smd.schvalue;
+      }
+    });
+    me.schedulevalue = me.schedulevalue / 100000;
+  }
+
   getData() {
     const me = this;
+    this.schedulevalue = 0;
+
     this.cols = [
       { field: 'name', header: 'Customer Name' },
       { field: 'itemcode', header: 'Item Code' },
@@ -152,17 +197,23 @@ export class PpccalendarComponent implements OnInit {
     this.summaryModalData = [];
     this.ppcService
       .getPPCCalsummary(this.startdate, this.galvaGroupid)
-      .toPromise()
-      .then(res => {
-        this.summaryModalData = res as Ppc[];
+      .toPromise().then(res => {
+        me.summaryModalData = res as Ppc[];
+        me.summaryModalData.forEach(smd => {
+          if (smd.schvalue != null) {
+            me.schedulevalue = me.schedulevalue + smd.schvalue;
+          }
 
-        this.loading = false;
+        });
+        me.schedulevalue = me.schedulevalue / 100000;
+        me.loading = false;
       });
   }
   summary2() {
+    this.schedulevalue = 0;
     this.summaryModalData = [];
     this.modaltype = 2;
-    this.bgClass = '';
+    this.bgClass = 'removepd2';
     this.galvaGroupid = 'ppcsummary';
     $('#summaryModal').modal('show');
     this.getData();

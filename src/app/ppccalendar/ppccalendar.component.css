@@ -142,3 +142,7 @@ td.removepd {
   width: 100%;
   border-radius: unset;
 }
+.removepd2 {
+  padding: 7px 0px !important;
+  font-size: 10px;
+}
