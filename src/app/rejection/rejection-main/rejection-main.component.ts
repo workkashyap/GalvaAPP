@@ -98,6 +98,9 @@ export class RejectionMainComponent implements OnInit {
 
   totalPlantingVal: number = 0;
 
+  totalOthers_value: number = 0;
+  totalOthersqty: number = 0;
+
   iv: number;
   filterenable: boolean = false;
   constructor(
@@ -206,6 +209,8 @@ export class RejectionMainComponent implements OnInit {
       { field: "moulding_value", header: "Moulding val" },
       { field: "platingqty", header: "Plating Defect qty" },
       { field: "plating_value", header: "Plating val" },
+      { field: "othersqty", header: "Others qty" },
+      { field: "others_value", header: "Others value" },
     ];
 
     this.subcols = [
@@ -302,12 +307,20 @@ export class RejectionMainComponent implements OnInit {
     this.totalHoldQty = 0;
     this.totalHoldVal = 0;
 
+    this.totalOthersqty = 0;
+    this.totalOthers_value = 0;
+
+
 
     if (this.filterenable == true) {
 
       console.log("filterenable", this.filterenable);
       console.log("filterItemrejarray : ", this.filterItemrejarray);
       for (const rq of this.filterItemrejarray) {
+
+
+        this.totalOthersqty += rq.othersqty;
+        this.totalOthers_value += rq.others_value;
 
         //
         this.totalRejQty += rq.reject_qty;
@@ -336,6 +349,10 @@ export class RejectionMainComponent implements OnInit {
     } else {
 
       for (const rq of this.DPservice.itemwiserejdetaillist) {
+
+        this.totalOthersqty += rq.othersqty;
+        this.totalOthers_value += rq.others_value;
+
         //
         this.totalRejQty += rq.reject_qty;
         this.totalinsQty += rq.inspection_qty;

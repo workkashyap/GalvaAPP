@@ -106,6 +106,18 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#5D4037,#fe909d);
 }
+
+.bg-others_value {
+	border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#062af1,#707dc3);
+}
+
+.bg-othersqty {
+	border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#FFC107,#fe909d);
+}
 .bg-success{
     border: unset; 
     background: linear-gradient(to right,#0ac282,#0df3a3) !important;
