@@ -20,7 +20,29 @@ import { PpcService } from '../shared/ppc/ppc.service';
   selector: 'app-ppccalendar',
   templateUrl: './ppccalendar.component.html',
   styleUrls: ['./ppccalendar.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  styles: [
+    `
+     
+      :host ::ng-deep ::-webkit-scrollbar {
+        width: 10px;
+      }
+      /* Track */
+      :host ::ng-deep ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+       
+      /* Handle */
+      :host ::ng-deep ::-webkit-scrollbar-thumb {
+        background: #c1c1c1; 
+      }
+      
+      /* Handle on hover */
+      :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+        background: #c1c1c1; 
+      }
+    `
+  ]
 })
 export class PpccalendarComponent implements OnInit {
   filterenable: boolean = false;
@@ -74,6 +96,14 @@ export class PpccalendarComponent implements OnInit {
   green: number = 0;
   bgClass: any = '';
   galvaGroupid: any = 'ppcsummary';
+
+  viewModalData: any = [];
+  clonedData: { [s: string]: any; } = {};
+
+  viewModalLoader: boolean = false;
+
+  ppcsummarycloneData: any = [];
+  ppcsummarycloneLoader: boolean = false;
 
   constructor(
     public plantservice: PlantService,
@@ -172,7 +202,6 @@ export class PpccalendarComponent implements OnInit {
     });
     me.schedulevalue = me.schedulevalue / 100000;
   }
-
   getData() {
     const me = this;
     this.schedulevalue = 0;
@@ -221,6 +250,185 @@ export class PpccalendarComponent implements OnInit {
   customNumber(value) {
     return parseInt(value, 10) //convert to int
   }
+  //for delete
+  onRowDelete(row: any) {
+
+    this.ppcService
+      .ppcdelete(row).subscribe(
+        res => {
+          this.toastr.success('Deleted Successfully', 'Save ActionPlan');
+          this.refreshList();
+        },
+        err => {
+          console.log(err);
+        });
+  }
+
+  refreshList() {
+    let me = this;
+    this.ppcService
+      .ppcimportclones()
+      .toPromise().then(res => {
+        me.viewModalData = res as Ppc[];
+      }, error => {
+      });
+  }
+  editing: boolean = false;
+
+  onRowEditSave(row: any) {
+    const me = this;
+    //row.id = 0;
+    row.budat = this.datePipe.transform(new Date(row.budat), 'yyyy-MM-dd');
+    row.dispatchDate = this.datePipe.transform(new Date(row.dispatchDate), 'yyyy-MM-dd');
+
+    if (row.id) {
+      console.log("Update", row);
+      this.ppcService.updatePpcimportclones(row).subscribe(
+        res => {
+          me.toastr.success('Updated Successfully', 'Save ActionPlan');
+          me.refreshList();
+          me.resetColumnWidth();
+        },
+        err => {
+          console.log(err);
+        });
+    }
+  }
+
+
+  getView() {
+    const me = this;
+    this.viewModalLoader = true;
+    this.viewModalData = [];
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: 'custno', header: 'Cust No.', width: "100px" },
+      { field: 'itemcode', header: 'Item code', width: "130px" },
+      { field: 'itemname', header: 'Item Name', width: "150px" },
+      { field: 'schqty', header: 'Sch Qty', width: "80px" },
+      { field: 'dispatchqty', header: 'Sispatch Qty', width: "80px" },
+      { field: 'balance', header: 'Balance', width: "80px" },
+      { field: 'totaltransit', header: 'Total Transit', width: "80px" },
+      { field: 'fgVZ', header: 'fgVZ', width: "80px" },
+      { field: 'fgother', header: 'fgother', width: "80px" },
+      { field: 'platingpartreq', header: 'Plating part req.', width: "80px" },
+      { field: 'mouldpartreq', header: 'Mould part req', width: "80px" },
+      { field: 'fgmouldstock', header: 'Fgmould Stock', width: "80px" },
+      { field: 'comp', header: 'Comp', width: "80px" },
+      { field: 'dispatchDate', header: 'Dispatch Date', width: "130px" },
+      /// { field: 'price', header: 'Price', width: "80px" },
+      // { field: 'dispatchval', header: 'Dispatch Val', width: "80px" },
+      //   { field: 'stock', header: 'Stock', width: "80px" },
+      // { field: 'plant', header: 'Plant', width: "100px" },
+      //{ field: 'schvalue', header: 'Sch Value', width: "80px" },
+      //  { field: 'budat', header: 'Budat', width: "130px" },
+      // { field: 'totalstock', header: 'Total Stock', width: "80px" },
+      // { field: 'orderno', header: 'Order No.', width: "100px" },
+      // { field: 'transit', header: 'Transit', width: "80px" },F
+      // { field: 'linenum', header: 'Linenum', width: "80px" },
+    ];
+
+
+    $('#viewModal').modal('show');
+    this.ppcService
+      .ppcimportclones()
+      .toPromise().then(res => {
+        me.viewModalData = res as Ppc[];
+        me.viewModalLoader = false;
+      }, error => {
+        me.viewModalLoader = false;
+      });
+  }
+  onRowEditInit(row: any) {
+
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: 'custno', header: 'Cust No.', width: "100px" },
+      { field: 'itemcode', header: 'Item code', width: "130px" },
+      { field: 'itemname', header: 'Item Name', width: "150px" },
+      { field: 'schqty', header: 'Sch Qty', width: "80px" },
+      { field: 'dispatchqty', header: 'Sispatch Qty', width: "80px" },
+      { field: 'balance', header: 'Balance', width: "80px" },
+      { field: 'totaltransit', header: 'Total Transit', width: "80px" },
+      { field: 'fgVZ', header: 'fgVZ', width: "80px" },
+      { field: 'fgother', header: 'fgother', width: "80px" },
+      { field: 'platingpartreq', header: 'Plating part req.', width: "80px" },
+      { field: 'mouldpartreq', header: 'Mould part req', width: "80px" },
+      { field: 'fgmouldstock', header: 'Fgmould Stock', width: "80px" },
+      { field: 'comp', header: 'Comp', width: "80px" },
+      { field: 'dispatchDate', header: 'Dispatch Date', width: "130px" },
+      /// { field: 'price', header: 'Price', width: "80px" },
+      // { field: 'dispatchval', header: 'Dispatch Val', width: "80px" },
+      //   { field: 'stock', header: 'Stock', width: "80px" },
+      // { field: 'plant', header: 'Plant', width: "100px" },
+      //{ field: 'schvalue', header: 'Sch Value', width: "80px" },
+      //  { field: 'budat', header: 'Budat', width: "130px" },
+      // { field: 'totalstock', header: 'Total Stock', width: "80px" },
+      // { field: 'orderno', header: 'Order No.', width: "100px" },
+      // { field: 'transit', header: 'Transit', width: "80px" },F
+      // { field: 'linenum', header: 'Linenum', width: "80px" },
+    ];
+
+    row.dispatchDate = this.formatDate(new Date(row.dispatchDate));
+    row.budat = this.formatDate(new Date(row.budat));
+    console.log(row);
+
+    this.clonedData[row.id] = { row };
+  }
+
+  onRowEditCancel(row: any, index: number) {
+    // this.allActionPlan[index] = this.clonedData[row.id];
+    if (!row.id) {
+      this.viewModalData.splice(index, 1);
+    }
+    delete this.clonedData[row.id];
+    this.resetColumnWidth();
+  }
+
+  formatDate(date) {
+    var day = date.getDate();
+    if (day < 10) {
+      day = "0" + day;
+    }
+    var month = date.getMonth() + 1;
+    if (month < 10) {
+      month = "0" + month;
+    }
+    var year = date.getFullYear();
+    return year + '-' + month + '-' + day; //day + "-" + month + "-" + year;
+  }
+
+  resetColumnWidth() {
+
+    this.cols = [
+      { field: "edit", header: "Action", width: "100px" },
+      { field: 'custno', header: 'Cust No.', width: "100px" },
+      { field: 'itemcode', header: 'Item code', width: "130px" },
+      { field: 'itemname', header: 'Item Name', width: "150px" },
+      { field: 'schqty', header: 'Sch Qty', width: "80px" },
+      { field: 'dispatchqty', header: 'Sispatch Qty', width: "80px" },
+      { field: 'balance', header: 'Balance', width: "80px" },
+      { field: 'totaltransit', header: 'Total Transit', width: "80px" },
+      { field: 'fgVZ', header: 'fgVZ', width: "80px" },
+      { field: 'fgother', header: 'fgother', width: "80px" },
+      { field: 'platingpartreq', header: 'Plating part req.', width: "80px" },
+      { field: 'mouldpartreq', header: 'Mould part req', width: "80px" },
+      { field: 'fgmouldstock', header: 'Fgmould Stock', width: "80px" },
+      { field: 'comp', header: 'Comp', width: "80px" },
+      { field: 'dispatchDate', header: 'Dispatch Date', width: "130px" },
+      /// { field: 'price', header: 'Price', width: "80px" },
+      // { field: 'dispatchval', header: 'Dispatch Val', width: "80px" },
+      //   { field: 'stock', header: 'Stock', width: "80px" },
+      // { field: 'plant', header: 'Plant', width: "100px" },
+      //{ field: 'schvalue', header: 'Sch Value', width: "80px" },
+      //  { field: 'budat', header: 'Budat', width: "130px" },
+      // { field: 'totalstock', header: 'Total Stock', width: "80px" },
+      // { field: 'orderno', header: 'Order No.', width: "100px" },
+      // { field: 'transit', header: 'Transit', width: "80px" },F
+      // { field: 'linenum', header: 'Linenum', width: "80px" },
+    ];
+  }
+
   summary(data, val1, val2, val3) {
     this.modaltype = 1;
     this.red = val1;
@@ -400,5 +608,38 @@ export class PpccalendarComponent implements OnInit {
       });
     }
     // return this.selected_plantname;
+  }
+  //ppcsummaryclone
+  ppcsummaryclone() {
+    const me = this;
+    this.ppcsummarycloneLoader = true;
+    this.ppcsummarycloneData = [];
+    
+    this.bgClass = 'removepd2';
+    this.cols = [
+      { field: 'name', header: 'Name' },
+      { field: 'custno', header: 'Cust No.' },
+      { field: 'itemcode', header: 'Item code' },
+      { field: 'itemname', header: 'Item Name' },
+      { field: 'schqty', header: 'Sch Qty' },
+      { field: 'schvalue', header: 'Sch Value' },
+      { field: 'dispatchqty', header: 'Sispatch Qty' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'totaltransit', header: 'Total Transit' },
+      { field: 'fgVZ', header: 'fgVZ' },
+      { field: 'fgother', header: 'fgother' },
+      { field: 'platingpartreq', header: 'Plating part req.' },
+      { field: 'mouldpartreq', header: 'Mould part req' },
+      { field: 'fgmouldstock', header: 'Fgmould Stock' },
+    ];
+    $('#ppcsummaryclone').modal('show');
+    this.ppcService
+      .ppcsummaryclone(this.startdate)
+      .toPromise().then(res => {
+        me.ppcsummarycloneData = res as Ppc[];
+        me.ppcsummarycloneLoader = false;
+      }, error => {
+        me.ppcsummarycloneLoader = false;
+      });
   }
 }

@@ -82,9 +82,28 @@ export class PpcService {
   }
 
 
-  public getPPCCalsummary(date,galvaGroupid): Observable<Ppc[]> {
+  public getPPCCalsummary(date, galvaGroupid): Observable<Ppc[]> {
     return this.http.get<Ppc[]>(
-      this.rootUrl + '/PPCimports/'+galvaGroupid+'/' + date
+      this.rootUrl + '/PPCimports/' + galvaGroupid + '/' + date
+    );
+  }
+
+  public ppcimportclones(): Observable<Ppc[]> {
+    return this.http.get<Ppc[]>(
+      this.rootUrl + '/ppcimportclones'
+    );
+  }
+  public ppcdelete(data) {
+    return this.http.delete(this.rootUrl + '/ppcimportclones/' + data.id);
+  }
+  updatePpcimportclones(row) {
+    return this.http.put(this.rootUrl + '/ppcimportclones/' + row.id, row);
+  }
+
+  //ppcsummaryclone
+  public ppcsummaryclone(date) {
+    return this.http.get<Ppc[]>(
+      this.rootUrl + '/ppCimports/ppcsummaryclone/'+date
     );
   }
 }

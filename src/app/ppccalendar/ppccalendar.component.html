@@ -11,10 +11,13 @@
           </div>
           <div class="col-sm-6">
             <div class="row" style="text-align: center;">
+              <!--<div class="col-md-2" style="padding: unset !important;">
+                <button class="btn btn-success" (click)="getView()">PPC</button>
+              </div>-->
               <div class="col-md-2" style="padding: unset !important;">
-
+                <button class="btn btn-success" (click)="ppcsummaryclone()">PPC</button>
               </div>
-              <div class="col-sm-5 mb-2">
+              <div class="col-sm-5 mb-2" style="padding: unset !important;">
                 <select class="custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
                   #Monthname='ngModel' [(ngModel)]='monthname'>
                   <option value="Jan">Jan</option>
@@ -33,21 +36,11 @@
               </div>
 
               <div class="col-md-2" style="padding: unset !important;">
-                <!--<select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
-                  (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
-                  < !-- <option value="0">--Select--</option> -- >
-                  <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                    {{ pl.plantshortname }}
-                  </option>
-                </select>-->
-                <button class="btn bg-summary " (click)="summary2()"
-                  style="padding: 4px 10px 4px 10px;">Summary</button>
-
+                <button class="btn bg-summary " (click)="summary2()">Summary</button>
               </div>
-
               <div class="col-md-1" style="padding: unset !important;">
-                <button class="btn btn-primary " (click)="loaddata()" style="padding: 2px 10px 3px 10px;"><i
-                    class="fa fa-refresh" aria-hidden="true"></i></button>
+                <button class="btn btn-primary " (click)="loaddata()"><i class="fa fa-refresh"
+                    aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -406,6 +399,416 @@
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
 
+                  </tr>
+                  <!-- regular date section -->
+
+                  <tr class="tbl-tr">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px;font-size: 10px;"
+                      class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td *ngFor="let col of columns" [ngClass]="bgClass">
+                      <span *ngIf="col.field=='budat'">
+                        {{rowData[col.field]  | date :'dd MMM, y'}}
+                      </span>
+                      <span *ngIf="col.field=='itemcode'">
+                        {{ this.customNumber(rowData[col.field]) }}
+                      </span>
+                      <span *ngIf="col.field=='schvalue'">
+                        {{ this.customNumber(rowData[col.field])   | number:'1.2-2'}}
+                      </span>
+                      <span
+                        *ngIf="col.field!='schvalue' && col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
+                        {{rowData[col.field]}}</span>
+
+                      <span *ngIf="col.field=='comp'">
+
+                        <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
+                          {{rowData[col.field]}}</button>
+                        <button class="btn btn-warning myCompbtn"
+                          *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
+                          {{rowData[col.field]}}</button>
+                        <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
+                          {{rowData[col.field]}}</button>
+
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--view Modal -->
+    <div class="modal fade bd-example-modal-xl" id="viewModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>PPC Calendar Summary
+                </h5>
+              </div>
+
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 550px;">
+              <p-table #dt [value]="viewModalData" dataKey="id" editMode="row" class="ptable"
+                [style]="{'text-align': 'center', 'font-size': '0.7em'}" [paginator]="true" [rows]="20"
+                [resizableColumns]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="tbl-th" *ngFor="let col of cols" [width]="col.width">{{col.header}}</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="rowData">
+                    <td style="text-align:center">
+                      <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" class="ui-button-danger"
+                        (click)="onRowDelete(rowData)"></button>&nbsp;
+                      <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+
+                      <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                        class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                      <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check"
+                        class="ui-button-success" style="margin-left: .5em" (click)="onRowEditSave(rowData)"></button>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="rowData.custno" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.custno}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="rowData.itemcode" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.itemcode}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="rowData.itemname" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.itemname}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.schqty" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.schqty}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.dispatchqty" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.dispatchqty}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.balance" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.balance}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.totaltransit" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.totaltransit}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.fgVZ" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.fgVZ}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.fgother" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.fgother}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.platingpartreq" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.platingpartreq}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.mouldpartreq" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.mouldpartreq}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.fgmouldstock" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.fgmouldstock}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.comp" class="form-control " required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.comp }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="date" [(ngModel)]="rowData.dispatchDate" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.dispatchDate  | date : 'dd/MM/yyyy'}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <!--
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.linenum" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.linenum}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.dispatchval" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.dispatchval}}</ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.stock" class="form-control " required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.stock}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.totalstock" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.totalstock}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.transit" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.transit}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>-->
+                    <!--<td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="rowData.orderno" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.orderno}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>  <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="rowData.plant" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.plant}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td><td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" min="0" [(ngModel)]="rowData.price" class="form-control"
+                            required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.price}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>-->
+                    <!--
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.schvalue" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.schvalue}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="date" [(ngModel)]="rowData.budat" class="form-control" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.budat  | date : 'dd/MM/yyyy'}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>-->
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ppcsummaryclone-->
+    <div class="modal fade bd-example-modal-xl" id="ppcsummaryclone" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>PPC
+                  <span *ngIf="monthname">({{monthname}})</span>
+                </h5>
+              </div>
+
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div style="overflow-y: scroll; height: 550px;">
+              <ngx-loading [show]="ppcsummarycloneLoader" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+
+              <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" [value]="ppcsummarycloneData" [paginator]="false"
+                [rows]="15" [responsive]="true">
+
+                <ng-template pTemplate="header" let-columns>
+                  <!-- header button section -->
+                  <tr>
+                    <td style="width:180px;">
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width: 95px;">
+                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td style="width: 90px;"></td>
+                    <td style="width: 235px;">
+                    </td>
                   </tr>
                   <!-- regular date section -->
 
