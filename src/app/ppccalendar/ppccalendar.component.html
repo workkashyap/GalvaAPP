@@ -14,10 +14,17 @@
               <!--<div class="col-md-2" style="padding: unset !important;">
                 <button class="btn btn-success" (click)="getView()">PPC</button>
               </div>-->
-              <div class="col-md-2" style="padding: unset !important;">
+              <div class="col-md-5" style="padding: 0px 7px 0px 0px;text-align: right !important;">
+                <button class="btn btn-info" style="padding: 8px 2px;font-size: 14px;">Schedule Value
+                  {{schedulevalue | number:'1.2-2'}} Lacs</button>
+              </div>
+              <div class="col-md-1" style="padding: unset !important;">
                 <button class="btn btn-success" (click)="ppcsummaryclone()">PPC</button>
               </div>
-              <div class="col-sm-5 mb-2" style="padding: unset !important;">
+              <div class="col-md-2" style="padding: unset !important;">
+                <button class="btn bg-summary " (click)="summary2()">Summary</button>
+              </div>
+              <div class="col-sm-3 mb-2" style="padding: unset !important;">
                 <select class="custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
                   #Monthname='ngModel' [(ngModel)]='monthname'>
                   <option value="Jan">Jan</option>
@@ -35,9 +42,7 @@
                 </select>
               </div>
 
-              <div class="col-md-2" style="padding: unset !important;">
-                <button class="btn bg-summary " (click)="summary2()">Summary</button>
-              </div>
+
               <div class="col-md-1" style="padding: unset !important;">
                 <button class="btn btn-primary " (click)="loaddata()"><i class="fa fa-refresh"
                     aria-hidden="true"></i></button>
@@ -770,8 +775,8 @@
           <div class="modal-header">
             <div class="row col-md-11">
               <div class="col-md-6">
-                <h5>PPC
-                  <span *ngIf="monthname">({{monthname}})</span>
+                <h5>Production Planning Requirement for the month of
+                  <span *ngIf="monthname">{{monthname}}</span>
                 </h5>
               </div>
 
@@ -796,7 +801,8 @@
                     <td style="width:180px;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
-                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                          (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          (input)="loadmdata($event.target.value , dt)" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
@@ -806,8 +812,12 @@
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
-                    <td style="width: 90px;"></td>
                     <td style="width: 235px;">
+                    </td>
+                    <td></td>
+                    <td style="width: 100px;">
+                      <button class="btn btn-sm btn-success"
+                        style="padding: 6px 2px;font-size: 10px;">{{schedulevalue | number:'1.2-2'}} Lacs</button>
                     </td>
                   </tr>
                   <!-- regular date section -->

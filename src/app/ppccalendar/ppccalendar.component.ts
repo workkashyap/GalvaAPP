@@ -96,7 +96,7 @@ export class PpccalendarComponent implements OnInit {
   green: number = 0;
   bgClass: any = '';
   galvaGroupid: any = 'ppcsummary';
-
+  schedulevalueHome: number = 0;
   viewModalData: any = [];
   clonedData: { [s: string]: any; } = {};
 
@@ -159,7 +159,7 @@ export class PpccalendarComponent implements OnInit {
     me.selectedcode = '1010';
     me.selected_plantname = 'Gdpl Vapi';
     this.loaddata();
-
+    this.getData();
 
   }
   selectedGalvaGroup(val: any) {
@@ -205,7 +205,7 @@ export class PpccalendarComponent implements OnInit {
   getData() {
     const me = this;
     this.schedulevalue = 0;
-
+    me.schedulevalueHome = 0;
     this.cols = [
       { field: 'name', header: 'Customer Name' },
       { field: 'itemcode', header: 'Item Code' },
@@ -231,9 +231,15 @@ export class PpccalendarComponent implements OnInit {
         me.summaryModalData.forEach(smd => {
           if (smd.schvalue != null) {
             me.schedulevalue = me.schedulevalue + smd.schvalue;
+            if (me.galvaGroupid == "ppcsummary") {
+
+            }
+            me.schedulevalueHome = me.schedulevalueHome + smd.schvalue;
+
           }
 
         });
+        me.schedulevalueHome = me.schedulevalueHome / 100000;
         me.schedulevalue = me.schedulevalue / 100000;
         me.loading = false;
       });
@@ -595,6 +601,8 @@ export class PpccalendarComponent implements OnInit {
 
 
     this.loaddata();
+    this.getData();
+
 
   }
   //selected plant 
@@ -614,29 +622,35 @@ export class PpccalendarComponent implements OnInit {
     const me = this;
     this.ppcsummarycloneLoader = true;
     this.ppcsummarycloneData = [];
-    
+    me.schedulevalue = 0;
     this.bgClass = 'removepd2';
     this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'custno', header: 'Cust No.' },
-      { field: 'itemcode', header: 'Item code' },
-      { field: 'itemname', header: 'Item Name' },
-      { field: 'schqty', header: 'Sch Qty' },
-      { field: 'schvalue', header: 'Sch Value' },
-      { field: 'dispatchqty', header: 'Sispatch Qty' },
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
+      { field: 'itemname', header: 'Material' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'schvalue', header: 'Schedule Value' },
+      { field: 'dispatchqty', header: 'Dispatch' },
       { field: 'balance', header: 'Balance' },
-      { field: 'totaltransit', header: 'Total Transit' },
-      { field: 'fgVZ', header: 'fgVZ' },
-      { field: 'fgother', header: 'fgother' },
-      { field: 'platingpartreq', header: 'Plating part req.' },
-      { field: 'mouldpartreq', header: 'Mould part req' },
-      { field: 'fgmouldstock', header: 'Fgmould Stock' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
     ];
     $('#ppcsummaryclone').modal('show');
     this.ppcService
       .ppcsummaryclone(this.startdate)
       .toPromise().then(res => {
         me.ppcsummarycloneData = res as Ppc[];
+
+        me.ppcsummarycloneData.forEach(smd => {
+          if (smd.schvalue != null) {
+            me.schedulevalue = me.schedulevalue + smd.schvalue;
+          }
+        });
+        me.schedulevalue = me.schedulevalue / 100000;
         me.ppcsummarycloneLoader = false;
       }, error => {
         me.ppcsummarycloneLoader = false;
