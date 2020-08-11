@@ -98,6 +98,10 @@ export class RejectionDetailComponent implements OnInit {
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
 
+
+  totalOthers_value: number = 0;
+  totalOthersqty: number = 0;
+
   iv: number;
   filterenable = false;
   constructor(
@@ -209,7 +213,7 @@ export class RejectionDetailComponent implements OnInit {
       { field: "okvalue", header: "Ok Value" },
       { field: 'reject_value', header: 'Reject Val' },
       { field: 'rejper', header: 'Rej %' },
-      
+
       { field: 'holdqty', header: 'Hold Qty' },
       { field: 'holdvalue', header: 'Hold Val' },
       { field: 'buffingqty', header: 'Buffing Qty' },
@@ -217,6 +221,10 @@ export class RejectionDetailComponent implements OnInit {
 
       { field: "moulding_value", header: "Moulding Val" },
       { field: "plating_value", header: "Plating Val" },
+
+      { field: "othersqty", header: "Others Qty" },
+      { field: "othersvalue", header: "Others Val" },
+
     ];
 
     this.subcols = [
@@ -305,11 +313,15 @@ export class RejectionDetailComponent implements OnInit {
 
     this.totalMouldedVal = 0;
     this.totalPlantingVal = 0;
-    
+
     this.totalBuffQty = 0;
     this.totalBuffVal = 0;
     this.totalHoldQty = 0;
     this.totalHoldVal = 0;
+
+
+    this.totalOthersqty = 0;
+    this.totalOthers_value = 0;
 
     if (this.filterenable === true) {
       this.totalRejQty = 0;
@@ -317,6 +329,11 @@ export class RejectionDetailComponent implements OnInit {
       this.totalRejPer = 0;
       this.totalRejPer2 = 0;
       for (const rq of this.filterItemrejarray) {
+
+
+
+        this.totalOthersqty += rq.othersqty;
+        this.totalOthers_value += rq.othersvalue;
 
         const rejqty = rq.reject_qty;
         const insqty = rq.inspection_qty;
@@ -351,6 +368,9 @@ export class RejectionDetailComponent implements OnInit {
       this.totalRejPer = 0;
       this.totalRejPer2 = 0;
       for (const rq of this.DPservice.itemwiserejlist) {
+        this.totalOthersqty += rq.othersqty;
+        this.totalOthers_value += rq.othersvalue;
+
         const rejqty = rq.reject_qty;
         const insqty = rq.inspection_qty;
         //

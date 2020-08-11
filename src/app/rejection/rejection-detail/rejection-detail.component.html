@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <!-- Main content -->
     <section class="content">
-      <div class="row">
+      <div class="row"> 
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
@@ -110,7 +110,8 @@
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalinsQty | number:'1.2-2'}}
               </button>
-            </td>
+            </td>    
+
             <td>
               <button class="btn btn-sm  text-dark bg-dark  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
@@ -183,16 +184,29 @@
             </td>
 
             <td>
-              <button class="btn btn-sm custom-fs text-dark bg-moulded" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm custom-fs text-dark bg-moulded"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalMouldedVal | number:'1.2-2'}}
               </button>
             </td>
             <td>
-              <button class="btn btn-sm custom-fs text-dark bg-capital" style="float: right;width: 100%;padding: 5px 2px;">
+              <button class="btn btn-sm custom-fs text-dark bg-capital"
+                style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalPlantingVal | number:'1.2-2'}}
               </button>
             </td>
-
+            <td>
+              <button class="btn btn-sm custom-fs text-dark bg-othersqty"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalOthersqty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm custom-fs text-dark bg-others_value"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalOthers_value | number:'1.2-2'}}
+              </button> 
+            </td> 
           </tr>
           <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
@@ -258,7 +272,7 @@
                   </div>
                 </td>
                 <td><button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm">
-                  <i class="fa fa-file-excel-o"></i> Export</button></td>
+                    <i class="fa fa-file-excel-o"></i> Export</button></td>
                 <td></td>
                 <td>
                   <button class="btn bg-warning " style="float: right;">

@@ -30,4 +30,7 @@ export class Itemwiserej {
 
   moulding_value:number;
   plating_value:number;
+
+  othersqty:number;
+  othersvalue:number;
 }
