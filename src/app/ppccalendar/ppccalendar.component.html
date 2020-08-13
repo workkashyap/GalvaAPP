@@ -428,7 +428,7 @@
                         {{ this.customNumber(rowData[col.field]) }}
                       </span>
                       <span *ngIf="col.field=='schvalue'">
-                        {{ this.customNumber(rowData[col.field])   | number:'1.2-2'}}
+                        {{ this.customNumber(rowData[col.field]) }}
                       </span>
                       <span
                         *ngIf="col.field!='schvalue' && col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
@@ -843,7 +843,7 @@
                         {{ this.customNumber(rowData[col.field]) }}
                       </span>
                       <span *ngIf="col.field=='schvalue'">
-                        {{ this.customNumber(rowData[col.field])   | number:'1.2-2'}}
+                        {{ this.customNumber(rowData[col.field]) }}
                       </span>
                       <span
                         *ngIf="col.field!='schvalue' && col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
