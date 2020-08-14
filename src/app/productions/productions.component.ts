@@ -9,6 +9,8 @@ import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { InboxService } from "../shared/inbox/inbox.service";
 import { ToastrService } from "ngx-toastr";
+import { PlantService } from '../shared/plant/plant.service';
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: "app-productions",
@@ -24,16 +26,18 @@ export class ProductionsComponent implements OnInit {
   jobworkMlist: any[];
   cols: any = [];
   selectedItemrej: Productions;
-
+  public selectedcode: any;
+  productionlist2: any = [];
   constructor(
     private toastr: ToastrService,
     public lservice: LoginService,
+    public plantservice: PlantService,
     private datePipe: DatePipe,
     public productionsService: ProductionsService,
     public iservice: InboxService,
     private route: Router
   ) {
-
+    this.lservice.currentUser.subscribe(x => (this.currentUser = x));
   }
 
   ngOnInit() {
@@ -41,37 +45,70 @@ export class ProductionsComponent implements OnInit {
     this.cols = [
       { field: "view", header: "Action" },
       //  { field: 'id', header: 'ID' },
-      { field: "insplot", header: "insplot" },
-      { field: "orderno", header: "orderno" },
-      { field: "roundno", header: "roundno" },
-      { field: "qty", header: "qty" },
-      { field: "plantcode", header: "plantcode" },
-      { field: "shift", header: "shift" },
-      { field: "itemcode", header: "itemcode" },
-      { field: "itemname", header: "itemname" },
-      { field: "size", header: "size" },
+      { field: 'pstngdate', header: 'Posting Date' },
+      { field: "insplot", header: "Insplot" },
+      { field: "orderno", header: "Orderno" },
+      //{ field: "roundno", header: "roundno" },
+      { field: "qty", header: "Qty" },
+      { field: "plantcode", header: "Plantcode" },
+      // { field: "shift", header: "shift" },
+      { field: "itemcode", header: "Itemcode" },
+      { field: "itemname", header: "Itemname" },
+      { field: "size", header: "Size" },
 
-      { field: "type", header: "type" },
-      { field: "okqty", header: "okqty" },
-      { field: "holdqty", header: "holdqty" },
+      { field: "type", header: "Type" },
+      { field: "okqty", header: "Okqty" },
+      { field: "holdqty", header: "Holdqty" },
 
-      { field: 'buffingqty', header: 'buffingqty' },
-      { field: 'rejectionqty', header: 'rejectionqty' },
+      { field: 'buffingqty', header: 'Buffingqty' },
+      { field: 'rejectionqty', header: 'Rejectionqty' },
 
-      { field: "pitting", header: "pitting" },
-      { field: "pinhole", header: "pinhole" },
-      { field: "patchmark", header: "patchmark" },
-      { field: "nickle", header: "nickle" },
+      /* { field: "pitting", header: "pitting" },
+       { field: "pinhole", header: "pinhole" },
+       { field: "patchmark", header: "patchmark" },
+       { field: "nickle", header: "nickle" },*/
     ];
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
+      .toPromise()
+      .then(res => {
+        me.plantservice.splantlist = res as Plant[];
+        me.selectedcode = me.plantservice.splantlist[0].plantcode;
+      });
     this.getDetail();
   }
   getDetail() {
-    this.loading = true;
-    this.productionsService.productionlist = [];
-    this.productionsService.productions().toPromise().then(res => {
-      this.productionsService.productionlist = res as Productions[];
-      this.loading = false;
+    let me = this;
+    me.loading = true;
+    me.productionsService.productionlist = [];
+    me.productionsService.productions().toPromise().then(res => {
+      me.productionlist2 = res as Productions[];
+      me.getFilterData();
+      // me.productionsService.productionlist = res as Productions[];
+      me.loading = false;
+    }, err => {
+      me.loading = false;
     });
+  }
+
+  selectedPlant(ev) {
+    this.selectedcode = ev;
+    this.getFilterData()
+  }
+  getFilterData() {
+    let me = this;
+    me.loading = true;
+    me.productionsService.productionlist = [];
+
+    if (me.productionlist2 && me.productionlist2.length) {
+      me.productionlist2.forEach(prdEle => {
+        if (prdEle.plantcode == me.selectedcode) {
+          me.productionsService.productionlist.push(prdEle);
+        }
+      });
+    } else {
+      me.loading = false;
+    }
   }
   opendetail(id) {
     this.productionsService.id = id;

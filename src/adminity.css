@@ -101,6 +101,16 @@ nav.header.navbar.navbar-expand-md.navbar-light {
     color: white !important;
     background: linear-gradient(to right,#2196F3,#00BCD4);
 }
+
+.bg-etpchemical {
+	border: unset;
+	color: white !important;
+    background: linear-gradient(to right,#062af1,#707dc3);
+}
+.bg-storesspares{
+	border: unset; 
+    background: linear-gradient(to right,#d6c532,#e8de9a);
+}
 .bg-planting-per {
 	border: unset;
     color: white !important;
@@ -111,6 +121,22 @@ nav.header.navbar.navbar-expand-md.navbar-light {
 	border: unset;
     color: white !important;
     background: linear-gradient(to right,#062af1,#707dc3);
+}
+.bg-packing{
+	border: unset;
+    color: white !important;
+    background: linear-gradient(to right,#FFC107,#fe909d);
+}
+.bg-storesspares{
+	color: white !important;
+	background: linear-gradient(to right,#ef0598,#e070b6);
+    border: unset; 
+}
+
+.bg-consumables{
+	border: unset;
+    color: white !important;
+	background: linear-gradient(to right,#FF9800,#FFC107) !important;
 }
 
 .bg-othersqty {

@@ -25,10 +25,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-
-
+        <div class="col-md-12">
           <!-- /.card -->
           <section class="content">
             <div class="container-fluid">
@@ -54,8 +51,7 @@
                         <div class="row">
                           <div class="col-md-12">
                             <div class="row">
-                              <div class="col-md-6">
-
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <input type="hidden" name="id" #id2="ngModel"
@@ -69,7 +65,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -83,62 +80,8 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="roundno">Round Number:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="roundno" name="roundno"
-                                        #roundno="ngModel" [(ngModel)]="productionsService.productionData.roundno " />
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="qty">Quantity:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="qty" name="qty" #qty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.qty" />
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="plantcode">Plantcode:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
-                                        #plantcode="ngModel"
-                                        [(ngModel)]="productionsService.productionData.plantcode" />-->
-
-                                      <select class="form-control" name="plantcode" #plantcode="ngModel"  id="plantcode"
-                                        [(ngModel)]="productionsService.productionData.plantcode">
-                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                                          {{ pl.plantshortname }}
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="shift">Shift:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="shift" name="shift" #shift="ngModel"
-                                        [(ngModel)]="productionsService.productionData.shift" />
-                                    </div>
-                                  </div>
-                                </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -150,7 +93,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -162,6 +106,57 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-3 in-label">
+                                      <label for="qty">Quantity:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                      <input class="form-control" type='text' id="qty" name="qty" #qty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.qty" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-3 in-label">
+                                      <label for="plantcode">Plantcode:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                      <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
+                                        #plantcode="ngModel"
+                                        [(ngModel)]="productionsService.productionData.plantcode" />-->
+
+                                      <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                                        [(ngModel)]="productionsService.productionData.plantcode">
+                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                          {{ pl.plantshortname }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-3 in-label">
+                                      <label for="shift">Shift:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                      <input class="form-control" type='text' id="shift" name="shift" #shift="ngModel"
+                                        [(ngModel)]="productionsService.productionData.shift" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
 
                                 <div class="form-group">
                                   <div class="row">
@@ -175,6 +170,10 @@
                                   </div>
                                 </div>
 
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -186,8 +185,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -200,6 +199,8 @@
                                   </div>
                                 </div>
 
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -212,6 +213,8 @@
                                   </div>
                                 </div>
 
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -224,6 +227,11 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -236,7 +244,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -248,8 +257,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -261,7 +270,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -274,6 +284,10 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -285,6 +299,8 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -297,7 +313,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -310,6 +327,8 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -321,6 +340,10 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -333,6 +356,8 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -345,7 +370,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -358,7 +384,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -370,6 +397,11 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -382,13 +414,8 @@
                                     </div>
                                   </div>
                                 </div>
-
                               </div>
-                              <div class="col-md-6">
-
-
-
-
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -400,7 +427,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -413,7 +441,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -426,7 +455,10 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -439,7 +471,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -452,7 +485,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -464,8 +498,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -478,7 +512,10 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -490,7 +527,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -502,7 +540,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -514,8 +553,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -527,7 +566,11 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
 
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -539,7 +582,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -551,20 +595,9 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
 
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="pstngdate">Pstng Date:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='date' id="pstngdate" name="pstngdate"
-                                        #pstngdate="ngModel"
-                                        [(ngModel)]="productionsService.productionData.pstngdate" />
-                                    </div>
-                                  </div>
-                                </div>
-
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -576,7 +609,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -588,7 +622,12 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
 
+                            <div class="row">
+
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -600,8 +639,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -613,8 +652,8 @@
                                     </div>
                                   </div>
                                 </div>
-
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -626,6 +665,8 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -637,7 +678,11 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
 
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -649,7 +694,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -662,6 +708,8 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -673,7 +721,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -686,7 +735,10 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -699,7 +751,8 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-3 in-label">
@@ -712,7 +765,20 @@
                                     </div>
                                   </div>
                                 </div>
-
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-3 in-label">
+                                      <label for="pstngdate">Pstng Date:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                      <input class="form-control" type='date' id="pstngdate" name="pstngdate"
+                                        #pstngdate="ngModel"
+                                        [(ngModel)]="productionsService.productionData.pstngdate" />
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
 
