@@ -364,7 +364,7 @@
           </div>
           <div class="modal-body">
             <div style="overflow-y: scroll; height: 550px;">
-              <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [value]="summaryModalData" [paginator]="false"
                 [rows]="15" [responsive]="true">
 
@@ -374,8 +374,8 @@
                     <td style=" width:175px;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
-                          (input)="dt.filterGlobal($event.target.value, 'contains')"
-                          (input)="loadmdata($event.target.value , dt)" class="form-control fix-height">
+                          (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                          (input)="loadmdata($event.target.value , dt2)" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
@@ -390,7 +390,7 @@
                       </select>
                     </td>
                     <td *ngIf="modaltype==2" style="width: 225px;">
-                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                      <button type="button" label="EXCEL" (click)="dt2.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
                     <td *ngIf="modaltype==2">
@@ -400,7 +400,7 @@
                         style="padding: 6px 2px;font-size: 10px;">{{schedulevalue | number:'1.2-2'}} Lacs</button>
                     </td>
                     <td *ngIf="modaltype==1" style="width: 220px;">
-                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                      <button type="button" label="EXCEL" (click)="dt2.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
 
@@ -437,12 +437,12 @@
                       <span *ngIf="col.field=='comp'">
 
                         <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
-                          {{rowData[col.field]}}</button>
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
                         <button class="btn btn-warning myCompbtn"
                           *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
-                          {{rowData[col.field]}}</button>
+                          {{rowData[col.field]  | number:'1.0-0' }}</button>
                         <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
-                          {{rowData[col.field]}}</button>
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
 
                       </span>
                     </td>
