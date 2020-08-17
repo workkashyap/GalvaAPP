@@ -149,7 +149,7 @@ export class MouldconscalendarComponent implements OnInit {
           if (!mconsbtn.value) {
             mconsbtn.value = 0;
           }
-          mconsbtn.value = mconsbtn.value / 1000;
+          //mconsbtn.value = mconsbtn.value / 1000;
 
           mconsbtn.class = mconsbtn.matgroup.replace(/\s/g, '');
           mconsbtn.class = mconsbtn.class.replace('&', '');
@@ -178,7 +178,7 @@ export class MouldconscalendarComponent implements OnInit {
       { field: 'description', header: 'Description' },
       { field: 'pGroup', header: 'Group' },
       { field: 'consumptionQty', header: 'Consumption Qty' },
-      { field: 'consumptionValue', header: 'Consumption Value (KG)' },
+      { field: 'consumptionValue', header: 'Consumption Value' },
       // { field: 'uom', header: 'Uom' },
     ];
     this.monthName = this.datePipe.transform(this.startdate, 'yyyy-MM-d');
@@ -194,10 +194,10 @@ export class MouldconscalendarComponent implements OnInit {
         const mouldprodDetail = res as Mouldconscalendar[];
         mouldprodDetail.forEach(mouldprodData => {
           if (mouldprodData.pGroup = matgroup) {
-            if (mouldprodData.uom == "G") {
+            /*if (mouldprodData.uom == "G") {
               mouldprodData.uom = "KG";
               mouldprodData.consumptionValue = mouldprodData.consumptionValue / 1000;
-            }
+            }*/
             me.mconsService.mouldprodDetail.push(mouldprodData);
 
           }
@@ -213,7 +213,7 @@ export class MouldconscalendarComponent implements OnInit {
       //{ field: 'budat', header: 'Budat' },
       { field: 'pGroup', header: 'Group' },
       { field: 'qty', header: 'Consumption Qty ' },
-      { field: 'consumption', header: 'Consumption Value (KG)' },
+      { field: 'consumption', header: 'Consumption Value' },
       //{ field: 'uom', header: 'Uom' },
       { field: 'code', header: 'Code' },
     ];
@@ -231,10 +231,10 @@ export class MouldconscalendarComponent implements OnInit {
 
         const mouldprodDetail = res as Mouldconscalendar[];
         mouldprodDetail.forEach(mouldprodData => {
-          if (mouldprodData.uom == "G") {
+          /*if (mouldprodData.uom == "G") {
             mouldprodData.uom = "KG";
             mouldprodData.consumption = mouldprodData.consumption / 1000;
-          }
+          }*/
           me.mconsService.mouldprodDetail.push(mouldprodData);
         });
 
