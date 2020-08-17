@@ -48,8 +48,8 @@
                 <div class="form-inline">
                   <div style="margin: auto;text-align: center;"
                     *ngIf="mconsService.mconsbtnData && mconsService.mconsbtnData.length">
-                    <button [ngClass]="btnd.class" class="btn btn-custom text-dark" (click)="getBtnClikData(btnd.matgroup)"
-                      *ngFor="let btnd of mconsService.mconsbtnData ">
+                    <button [ngClass]="btnd.class" class="btn btn-custom text-dark"
+                      (click)="getBtnClikData(btnd.matgroup)" *ngFor="let btnd of mconsService.mconsbtnData ">
                       {{btnd.matgroup}} Qty : <b>{{ btnd.qty  | number:'1.2-2'}} | Value :
                         {{ btnd.value  | number:'1.2-2'}}</b>
                     </button>
@@ -150,9 +150,12 @@
                       <span *ngIf="col.field=='budat'">
                         {{rowData[col.field]  | date :'dd-MM-yyyy'}}
                       </span>
-                      <span *ngIf="col.field!='budat' ">
+                      <span *ngIf="col.field!='budat' && col.field!='consumption' && col.field!='consumptionValue'">
                         {{rowData[col.field]}}</span>
+                      <span *ngIf="col.field=='consumption' || col.field=='consumptionValue' ">
+                        {{rowData[col.field] | number:'1.2-2' }}</span>
                     </td>
+
                   </tr>
                 </ng-template>
               </p-table>

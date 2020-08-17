@@ -145,6 +145,8 @@ export class MouldconscalendarComponent implements OnInit {
           if (!mconsbtn.value) {
             mconsbtn.value = 0;
           }
+          mconsbtn.value = mconsbtn.value / 1000;
+
           mconsbtn.class = mconsbtn.matgroup.replace(/\s/g, '');
           mconsbtn.class = mconsbtn.class.replace('&', '');
           mconsbtn.class = mconsbtn.class.toLowerCase();
@@ -173,7 +175,7 @@ export class MouldconscalendarComponent implements OnInit {
       { field: 'pGroup', header: 'PGroup' },
       { field: 'consumptionQty', header: 'Consumption Qty' },
       { field: 'consumptionValue', header: 'consumption Value' },
-      { field: 'uom', header: 'Uom' },
+      // { field: 'uom', header: 'Uom' },
     ];
     this.monthName = this.datePipe.transform(this.startdate, 'yyyy-MM-d');
 
@@ -188,7 +190,12 @@ export class MouldconscalendarComponent implements OnInit {
         const mouldprodDetail = res as Mouldconscalendar[];
         mouldprodDetail.forEach(mouldprodData => {
           if (mouldprodData.pGroup = matgroup) {
+            if (mouldprodData.uom == "G") {
+              mouldprodData.uom = "KG";
+              mouldprodData.consumptionValue = mouldprodData.consumptionValue / 1000;
+            }
             me.mconsService.mouldprodDetail.push(mouldprodData);
+
           }
         });
         me.detailLoading = false;
@@ -196,13 +203,14 @@ export class MouldconscalendarComponent implements OnInit {
   }
   //calendar event click
   eventClick(model) {
+    const me = this;
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
       { field: 'budat', header: 'Budat' },
       { field: 'pGroup', header: 'PGroup' },
       { field: 'qty', header: 'Qty' },
       { field: 'consumption', header: 'Consumption' },
-      { field: 'uom', header: 'Uom' },
+      //{ field: 'uom', header: 'Uom' },
       { field: 'code', header: 'Code' },
     ];
     this.monthName = '';
@@ -212,11 +220,21 @@ export class MouldconscalendarComponent implements OnInit {
 
     this.selected_eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
     this.detailLoading = true;
-    this.mconsService.getmouldconscaldetail(this.selectedcode, this.selected_eventdate)
+    this.mconsService.getmouldconscaldetail(me.selectedcode, me.selected_eventdate)
       .toPromise()
       .then(res => {
-        this.mconsService.mouldprodDetail = res as Mouldconscalendar[];
-        this.detailLoading = false;
+        // me.mconsService.mouldprodDetail = res as Mouldconscalendar[];
+
+        const mouldprodDetail = res as Mouldconscalendar[];
+        mouldprodDetail.forEach(mouldprodData => {
+          if (mouldprodData.uom == "G") {
+            mouldprodData.uom = "KG";
+            mouldprodData.consumption = mouldprodData.consumption / 1000;
+          }
+          me.mconsService.mouldprodDetail.push(mouldprodData);
+        });
+
+        me.detailLoading = false;
       });
 
   }
