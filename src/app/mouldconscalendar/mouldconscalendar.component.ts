@@ -116,6 +116,10 @@ export class MouldconscalendarComponent implements OnInit {
     this.startdate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
     this.lDate = new Date(this.sDate.getFullYear(), this.sDate.getMonth() + 1, 0);
   }
+  
+  customNumber(value) {
+    return parseInt(value, 10) //convert to int
+  }
   getdata() {
     let me = this;
     this.loading = true;
@@ -172,9 +176,9 @@ export class MouldconscalendarComponent implements OnInit {
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
       { field: 'description', header: 'Description' },
-      { field: 'pGroup', header: 'PGroup' },
+      { field: 'pGroup', header: 'Group' },
       { field: 'consumptionQty', header: 'Consumption Qty' },
-      { field: 'consumptionValue', header: 'consumption Value' },
+      { field: 'consumptionValue', header: 'Consumption Value (KG)' },
       // { field: 'uom', header: 'Uom' },
     ];
     this.monthName = this.datePipe.transform(this.startdate, 'yyyy-MM-d');
@@ -206,10 +210,10 @@ export class MouldconscalendarComponent implements OnInit {
     const me = this;
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
-      { field: 'budat', header: 'Budat' },
-      { field: 'pGroup', header: 'PGroup' },
-      { field: 'qty', header: 'Qty' },
-      { field: 'consumption', header: 'Consumption' },
+      //{ field: 'budat', header: 'Budat' },
+      { field: 'pGroup', header: 'Group' },
+      { field: 'qty', header: 'Consumption Qty ' },
+      { field: 'consumption', header: 'Consumption Value (KG)' },
       //{ field: 'uom', header: 'Uom' },
       { field: 'code', header: 'Code' },
     ];
