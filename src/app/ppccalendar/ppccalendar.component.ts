@@ -70,7 +70,7 @@ export class PpccalendarComponent implements OnInit {
   firstcolumn: any;
   secondcolumn: any;
   thirdcolumn: any;
-
+  removeBg: number = 0;
   allrecord: number = 0;
 
 
@@ -434,9 +434,40 @@ export class PpccalendarComponent implements OnInit {
       // { field: 'linenum', header: 'Linenum', width: "80px" },
     ];
   }
+  allData() {
+    this.modaltype = 1;
+    this.bgClass = '';
+    this.removeBg = 1;
+    this.summaryModalData = [];
+    this.cols = [
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
+      { field: 'itemname', header: 'Material' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      //{ field: 'fgmouldstock', header: 'Moulded stock' },
+      //{ field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      //{ field: 'platingpartreq', header: 'Plat. Parts Req.' },
+      { field: 'comp', header: 'Complience %' },
 
+    ];
+    this.ppcService
+      .allData(this.startdate)
+      .toPromise()
+      .then(res => {
+        this.summaryModalData = res as Ppc[];
+        this.loading = false;
+      });
+
+    $('#summaryModal').modal('show');
+  }
   summary(data, val1, val2, val3) {
     this.modaltype = 1;
+    this.removeBg = 0;
     this.red = val1;
     this.orange = val2;
     this.green = val3;
@@ -444,6 +475,7 @@ export class PpccalendarComponent implements OnInit {
     this.summaryModalData = [];
     this.cols = [
       { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
       { field: 'itemname', header: 'Material' },
       { field: 'schqty', header: 'Schedule Current' },
       { field: 'dispatchqty', header: 'Dispatch' },

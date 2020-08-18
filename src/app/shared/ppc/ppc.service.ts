@@ -14,7 +14,11 @@ export class PpcService {
   public ppc: Ppc[] = [];
 
   constructor(public http: HttpClient) { }
-
+  public allData( date): Observable<Ppc[]> {
+    return this.http.get<Ppc[]>(
+      this.rootUrl + '/PPCimports/getppcImport/'+ date
+    );
+  }
   public getCompliancePer(company, date): Observable<Ppc[]> {
     return this.http.get<Ppc[]>(
       this.rootUrl + '/PPCimports/ppcavgmonth/' + company + '/' + date

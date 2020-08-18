@@ -59,10 +59,14 @@
         <div class="col-md-6">
           <h5>{{monthname}} Compliance</h5>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-5  text-right">
+          <button class="btn bg-info " (click)="allData()">ALL Complience</button>
+        </div>
+        <div class="col-md-1 text-right">
           <h5 class="bg-yellow btn" style="color: white !important;font-weight: bold;">{{compliancePer}}%
           </h5>
         </div>
+        
       </div>
       <div class="row">
         <div class="col-md-4">
@@ -364,9 +368,9 @@
           </div>
           <div class="modal-body">
             <div style="overflow-y: scroll; height: 550px;">
-              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
-                selectionMode="single" [style]="{'width':'100%'}" [value]="summaryModalData" [paginator]="false"
-                [rows]="15" [responsive]="true">
+              <p-table #dt2 [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                [responsive]="true" selectionMode="single" [style]="{'width':'100%'}" [value]="summaryModalData"
+                [paginator]="false" [rows]="15" [responsive]="true">
 
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
@@ -399,9 +403,11 @@
                       <button class="btn btn-sm btn-success"
                         style="padding: 6px 2px;font-size: 10px;">{{schedulevalue | number:'1.2-2'}} Lacs</button>
                     </td>
+                    <td *ngIf="modaltype==1"> <button type="button" label="EXCEL" (click)="dt2.exportCSV()"
+                        class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button></td>
                     <td *ngIf="modaltype==1" style="width: 220px;">
-                      <button type="button" label="EXCEL" (click)="dt2.exportCSV()" class="btn btn-success btn-sm mb-2">
-                        <i class="fa fa-file-excel-o"></i> Export</button>
+
                     </td>
 
                   </tr>
@@ -434,7 +440,7 @@
                         *ngIf="col.field!='schvalue' && col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
                         {{rowData[col.field]}}</span>
 
-                      <span *ngIf="col.field=='comp'">
+                      <span *ngIf="col.field=='comp' && removeBg==0 ">
 
                         <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
                           {{rowData[col.field]  | number:'1.0-0'  }}</button>
@@ -444,6 +450,9 @@
                         <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
                           {{rowData[col.field]  | number:'1.0-0'  }}</button>
 
+                      </span>
+                      <span *ngIf="col.field=='comp' && removeBg==1 ">
+                        {{rowData[col.field]  | number:'1.0-0'  }}
                       </span>
                     </td>
                   </tr>
