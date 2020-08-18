@@ -451,9 +451,9 @@ export class PpccalendarComponent implements OnInit {
       { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
       { field: 'totaltransit', header: 'Transit' },
       { field: 'fgother', header: 'FG at chennai / ap / pune' },
-      { field: 'fgmouldstock', header: 'Moulded stock' },
-      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
-      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
+      //{ field: 'fgmouldstock', header: 'Moulded stock' },
+      //{ field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      //{ field: 'platingpartreq', header: 'Plat. Parts Req.' },
       { field: 'comp', header: 'Complience %' },
 
     ];
