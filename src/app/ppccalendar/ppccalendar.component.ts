@@ -128,7 +128,6 @@ export class PpccalendarComponent implements OnInit {
     this.sDate = new Date(date.getFullYear(), date.getMonth(), 1);
     this.lDate = new Date(me.sDate.getFullYear(), me.sDate.getMonth() + 1, 0);
 
-
     var d = new Date();
     const m = this.monthNames.indexOf(me.monthname, 0) //d.getMonth(); //current month
     console.log(m + 1);
@@ -136,30 +135,11 @@ export class PpccalendarComponent implements OnInit {
     console.log(new Date(y, m + 1, 0));
     this.lastDate = this.datePipe.transform(new Date(y, m + 1, 0), 'dd');
 
-
-    //this.loading = true;
-    //get plant
-    /* this.plantservice
-       .sgetPlantData(me.currentUser.id)
-       .toPromise()
-       .then(res => {
-         me.plantservice.splantlist = res as Plant[];
-         console.log("splantlist", me.plantservice.splantlist);
-         me.selectedcode = me.plantservice.splantlist[0].plantcode;
-         me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
-         me.loading = false;
- 
-         if (res) {
-           //call function ;
-           this.loaddata();
-         }
-       });
- 
- */
     me.selectedcode = '1010';
     me.selected_plantname = 'Gdpl Vapi';
     this.loaddata();
     this.getData();
+    this.ppcsummaryclone();
 
   }
   selectedGalvaGroup(val: any) {
@@ -205,7 +185,7 @@ export class PpccalendarComponent implements OnInit {
   getData() {
     const me = this;
     this.schedulevalue = 0;
-    me.schedulevalueHome = 0;
+    //me.schedulevalueHome = 0;
     this.cols = [
       { field: 'name', header: 'Customer Name' },
       { field: 'itemcode', header: 'Item Code' },
@@ -234,12 +214,12 @@ export class PpccalendarComponent implements OnInit {
             if (me.galvaGroupid == "ppcsummary") {
 
             }
-            me.schedulevalueHome = me.schedulevalueHome + smd.schvalue;
+            // me.schedulevalueHome = me.schedulevalueHome + smd.schvalue;
 
           }
 
         });
-        me.schedulevalueHome = me.schedulevalueHome / 100000;
+        // me.schedulevalueHome = me.schedulevalueHome / 100000;
         me.schedulevalue = me.schedulevalue / 100000;
         me.loading = false;
       });
@@ -607,8 +587,7 @@ export class PpccalendarComponent implements OnInit {
 
           });
       });
-
-
+    this.ppcsummaryclone();
   }
   //on change option value
   selectedGrid(ev) {
@@ -655,6 +634,7 @@ export class PpccalendarComponent implements OnInit {
     this.ppcsummarycloneLoader = true;
     this.ppcsummarycloneData = [];
     me.schedulevalue = 0;
+    me.schedulevalueHome = 0;
     this.bgClass = 'removepd2';
     this.cols = [
       { field: 'name', header: 'Customer Name' },
@@ -671,7 +651,7 @@ export class PpccalendarComponent implements OnInit {
       { field: 'mouldpartreq', header: 'Moud Parts Req.' },
       { field: 'platingpartreq', header: 'Plat. Parts Req.' },
     ];
-    $('#ppcsummaryclone').modal('show');
+    //$('#ppcsummaryclone').modal('show');
     this.ppcService
       .ppcsummaryclone(this.startdate)
       .toPromise().then(res => {
@@ -680,12 +660,17 @@ export class PpccalendarComponent implements OnInit {
         me.ppcsummarycloneData.forEach(smd => {
           if (smd.schvalue != null) {
             me.schedulevalue = me.schedulevalue + smd.schvalue;
+            me.schedulevalueHome = me.schedulevalueHome + smd.schvalue;
           }
         });
         me.schedulevalue = me.schedulevalue / 100000;
+        me.schedulevalueHome = me.schedulevalueHome / 100000;
         me.ppcsummarycloneLoader = false;
       }, error => {
         me.ppcsummarycloneLoader = false;
       });
+  }
+  ppcsummarycloneOpnemodal() {
+    $('#ppcsummaryclone').modal('show');
   }
 }
