@@ -14,15 +14,11 @@
               <!--<div class="col-md-2" style="padding: unset !important;">
                 <button class="btn btn-success" (click)="getView()">PPC</button>
               </div>-->
-              <div class="col-md-5" style="padding: 0px 7px 0px 0px;text-align: right !important;">
+              <div class="col-md-8" style="padding: 0px 7px 0px 0px;text-align: right !important;">
                 <button class="btn btn-info" style="padding: 8px 2px;font-size: 14px;">Schedule Value
-                  {{schedulevalue | number:'1.2-2'}} Lacs</button>
-              </div>
-              <div class="col-md-1" style="padding: unset !important;">
-                <button class="btn btn-success" (click)="ppcsummaryclone()">PPC</button>
-              </div>
-              <div class="col-md-2" style="padding: unset !important;">
-                <button class="btn bg-summary " (click)="summary2()">Summary</button>
+                  {{schedulevalue | number:'1.2-2'}} Lacs</button>&nbsp;
+                <button class="btn btn-success" (click)="ppcsummaryclone()">PPC</button> &nbsp;
+                <button class="btn bg-summary " (click)="summary2()">Sch Vs Disp</button>&nbsp;
               </div>
               <div class="col-sm-3 mb-2" style="padding: unset !important;">
                 <select class="custom-select" name="Monthname" (change)="selectedMonth($event.target.value)"
@@ -60,13 +56,13 @@
           <h5>{{monthname}} Compliance</h5>
         </div>
         <div class="col-md-5  text-right">
-          <button class="btn bg-info " (click)="allData()">ALL Complience</button>
+          <button class="btn bg-info " (click)="allData()">ALL Compliance</button>
         </div>
         <div class="col-md-1 text-right">
           <h5 class="bg-yellow btn" style="color: white !important;font-weight: bold;">{{compliancePer}}%
           </h5>
         </div>
-        
+
       </div>
       <div class="row">
         <div class="col-md-4">
@@ -375,7 +371,7 @@
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
                   <tr>
-                    <td style=" width:175px;">
+                    <td style=" width:185px;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
                           (input)="dt2.filterGlobal($event.target.value, 'contains')"
@@ -452,7 +448,13 @@
 
                       </span>
                       <span *ngIf="col.field=='comp' && removeBg==1 ">
-                        {{rowData[col.field]  | number:'1.0-0'  }}
+                        <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<50">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
+                        <button class="btn btn-warning myCompbtn"
+                          *ngIf="rowData[col.field]>=50 && rowData[col.field] < 80">
+                          {{rowData[col.field]  | number:'1.0-0' }}</button>
+                        <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=80">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
                       </span>
                     </td>
                   </tr>

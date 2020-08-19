@@ -436,8 +436,8 @@ export class PpccalendarComponent implements OnInit {
   }
   allData() {
     this.modaltype = 1;
-    this.bgClass = '';
     this.removeBg = 1;
+    this.bgClass = 'removepd';
     this.summaryModalData = [];
     this.cols = [
       { field: 'name', header: 'Customer Name' },
@@ -452,7 +452,7 @@ export class PpccalendarComponent implements OnInit {
       //{ field: 'fgmouldstock', header: 'Moulded stock' },
       //{ field: 'mouldpartreq', header: 'Moud Parts Req.' },
       //{ field: 'platingpartreq', header: 'Plat. Parts Req.' },
-      { field: 'comp', header: 'Complience %' },
+      { field: 'comp', header: 'Compliance %' },
 
     ];
     this.ppcService
@@ -486,7 +486,7 @@ export class PpccalendarComponent implements OnInit {
       //{ field: 'fgmouldstock', header: 'Moulded stock' },
       //{ field: 'mouldpartreq', header: 'Moud Parts Req.' },
       //{ field: 'platingpartreq', header: 'Plat. Parts Req.' },
-      { field: 'comp', header: 'Complience %' },
+      { field: 'comp', header: 'Compliance %' },
 
     ];
 
