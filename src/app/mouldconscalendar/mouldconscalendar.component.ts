@@ -25,7 +25,7 @@ export class MouldconscalendarComponent implements OnInit {
   public sDate: Date;
   public lDate: Date;
   cols: any[];
-
+  loadingData:boolean=false;
 
   public selectedcode: string;
   public selected_plantname: string;
@@ -116,7 +116,7 @@ export class MouldconscalendarComponent implements OnInit {
     this.startdate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
     this.lDate = new Date(this.sDate.getFullYear(), this.sDate.getMonth() + 1, 0);
   }
-  
+
   customNumber(value) {
     return parseInt(value, 10) //convert to int
   }
@@ -172,6 +172,7 @@ export class MouldconscalendarComponent implements OnInit {
   }
   //btn click data
   getBtnClikData(matgroup) {
+    this.loadingData = true;
     const me = this;
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
@@ -192,8 +193,10 @@ export class MouldconscalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         const mouldprodDetail = res as Mouldconscalendar[];
+        this.loadingData = false;
+
         mouldprodDetail.forEach(mouldprodData => {
-          if (mouldprodData.pGroup = matgroup) {
+          if (mouldprodData.pGroup == matgroup) {
             /*if (mouldprodData.uom == "G") {
               mouldprodData.uom = "KG";
               mouldprodData.consumptionValue = mouldprodData.consumptionValue / 1000;
@@ -203,6 +206,8 @@ export class MouldconscalendarComponent implements OnInit {
           }
         });
         me.detailLoading = false;
+      }, error => {
+        this.loadingData = false;
       });
   }
   //calendar event click

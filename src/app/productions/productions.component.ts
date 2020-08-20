@@ -16,7 +16,14 @@ import { Plant } from '../shared/plant/plant.model';
   selector: "app-productions",
   templateUrl: "./productions.component.html",
   styleUrls: ["./productions.component.css"],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  styles: [
+    `
+    .backdrop{
+      top: 76px !important;
+    }
+    `
+  ]
 })
 export class ProductionsComponent implements OnInit {
   public cDate: string;

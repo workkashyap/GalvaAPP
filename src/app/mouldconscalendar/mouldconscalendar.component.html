@@ -109,6 +109,7 @@
             </button>
           </div>
           <div class="modal-body">
+            <ngx-loading [show]="loadingData" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
             <div style="overflow-y: scroll; height: 450px;">
               <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [value]="mconsService.mouldprodDetail"
