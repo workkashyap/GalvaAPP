@@ -129,7 +129,7 @@ li.breadcrumb-item {
 
 @media (min-width: 1200px){
   .modal-xl {
-    max-width: 1300px !important;
+    max-width: 1200px !important;
     margin: 1.25rem auto;
 }
 

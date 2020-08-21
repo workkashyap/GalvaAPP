@@ -25,7 +25,7 @@ export class MouldconscalendarComponent implements OnInit {
   public sDate: Date;
   public lDate: Date;
   cols: any[];
-  loadingData:boolean=false;
+  loadingData: boolean = false;
 
   public selectedcode: string;
   public selected_plantname: string;
@@ -42,7 +42,6 @@ export class MouldconscalendarComponent implements OnInit {
   public loading = false;
 
   public detailLoading = false;
-
   filterenable: boolean = false;
 
   public currentUser: User;
@@ -172,15 +171,17 @@ export class MouldconscalendarComponent implements OnInit {
   }
   //btn click data
   getBtnClikData(matgroup) {
+    this.modalType = 1;
+
     this.loadingData = true;
     const me = this;
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
       { field: 'description', header: 'Description' },
       { field: 'pGroup', header: 'Group' },
+      { field: 'uom', header: 'Uom' },
       { field: 'consumptionQty', header: 'Consumption Qty' },
       { field: 'consumptionValue', header: 'Consumption Value' },
-      // { field: 'uom', header: 'Uom' },
     ];
     this.monthName = this.datePipe.transform(this.startdate, 'yyyy-MM-d');
 
@@ -212,14 +213,16 @@ export class MouldconscalendarComponent implements OnInit {
   }
   //calendar event click
   eventClick(model) {
+    this.modalType = 2;
     const me = this;
     this.cols = [
       { field: 'itemcode', header: 'Item code' },
+      { field: 'description', header: 'Material Name' },
       //{ field: 'budat', header: 'Budat' },
       { field: 'pGroup', header: 'Group' },
+      { field: 'uom', header: 'Uom' },
       { field: 'qty', header: 'Consumption Qty ' },
       { field: 'consumption', header: 'Consumption Value' },
-      //{ field: 'uom', header: 'Uom' },
       { field: 'code', header: 'Code' },
     ];
     this.monthName = '';
