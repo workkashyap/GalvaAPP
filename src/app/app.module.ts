@@ -74,6 +74,8 @@ import { AttendancesummaryComponent } from './hr/attendancesummary.component';
 import { HrcalendarComponent } from './hr/hrcalendar/hrcalendar.component';
 import { MouldproductionComponent } from './mouldproduction/mouldproduction.component';
 import { MouldconscalendarComponent } from './mouldconscalendar/mouldconscalendar.component';
+import { RoundhoursComponent } from './roundhours/roundhours.component';
+import { AddroundhourComponent } from './roundhours/addroundhour/addroundhour.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,9 @@ import { MouldconscalendarComponent } from './mouldconscalendar/mouldconscalenda
     AttendancesummaryComponent,
     HrcalendarComponent,
     MouldproductionComponent,
-    MouldconscalendarComponent
+    MouldconscalendarComponent,
+    RoundhoursComponent,
+    AddroundhourComponent
   ],
   imports: [
     BrowserModule,
@@ -407,6 +411,16 @@ import { MouldconscalendarComponent } from './mouldconscalendar/mouldconscalenda
       {
         path: "mouldconscalendar",
         component: MouldconscalendarComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "roundhours",
+        component: RoundhoursComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "addroundhour",
+        component: AddroundhourComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },
