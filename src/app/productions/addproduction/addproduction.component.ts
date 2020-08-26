@@ -35,9 +35,6 @@ export class AddproductionComponent implements OnInit {
   ) {
     const me = this;
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-
-
-
   }
 
   ngOnInit() {
@@ -130,7 +127,7 @@ export class AddproductionComponent implements OnInit {
       this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
 
       if (this.productionsService.productionData.id > 0) {
-        /*this.productionsService.updateProduction(this.productionsService.productionData.id).subscribe(res => {
+        this.productionsService.updateProduction(this.productionsService.productionData.id).subscribe(res => {
           this.resetForm(form);
           this.toastr.success(
             "Successfully Updated.",
@@ -141,9 +138,8 @@ export class AddproductionComponent implements OnInit {
           // this.service.refreshList();
         }, err => {
           console.log(err);
-        });*/
+        });
       } else {
-
         this.productionsService.productionData.createddate = this.datePipe.transform(this.date, "yyyy-MM-dd");
 
         console.log("Save", this.productionsService.productionData);

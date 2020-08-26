@@ -1,0 +1,81 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="card card-primary card-outline">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5>Round Loading Hourly Follow Chart</h5>
+                        </div>
+                        <div class="col-sm-6" style="text-align: right;">
+                            <button class="btn btn-info" (click)="addRoundHour()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            &nbsp;
+                            &nbsp;
+                            <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success ">
+                                <i class="fa fa-file-excel-o"></i> Export</button>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+                <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                    [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
+                    [(selection)]="selectedItemrej" [value]="roundHours" [paginator]="false" [rows]="20"
+                    [resizableColumns]="true" sortField="pstng_date" [sortOrder]="-1">
+
+                    <ng-template pTemplate="header" let-columns>
+
+                        <tr>
+                            <td style="width: 105px;">Action</td>
+                            <td style="width: 75px;"></td>
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" *ngIf="col.header=='Date'" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order">
+                                </p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr [pSelectableRow]="rowData">
+                            <td *ngFor="let col of columns" class="ui-resizable-column">
+                                <button *ngIf="col.field=='edit'" class="btn btn-success btn-sm"
+                                    style="font-size: 10px;" (click)="editData(rowData)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button *ngIf="col.field=='edit'" class="btn btn-danger btn-sm"
+                                    style="font-size: 10px;margin-left: 5px;" (click)="removeData(rowData)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <span *ngIf="col.field=='pstng_date' && col.field!='edit'" style="font-size: 10px;">
+                                    {{rowData[col.field] | date :'dd-MM-y'}}
+                                </span>
+                                <span *ngIf="col.field!='pstng_date'  && col.field!='edit'" style="font-size: 10px;">
+                                    {{rowData[col.field]}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </section>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->

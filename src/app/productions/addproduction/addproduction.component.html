@@ -54,8 +54,9 @@
                               <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="row">
+                                    <!--
                                     <input type="hidden" name="id" #id2="ngModel"
-                                      [(ngModel)]="productionsService.productionData.id" />
+                                      [(ngModel)]="productionsService.productionData.id" />-->
                                     <div class="col-md-3 in-label">
                                       <label for="insplot">Insplot:</label>
                                     </div>
@@ -73,7 +74,7 @@
                                       <label for="orderno">Order Number:</label>
                                     </div>
                                     <div class="col-md-9">
-                                      <input class="form-control" type="text" id="orderno" name="orderno"
+                                      <input class="form-control" type="number" id="orderno" name="orderno"
                                         #orderno="ngModel" [(ngModel)]="productionsService.productionData.orderno"
                                         min="0" />
 

@@ -113,6 +113,8 @@ export class ProductionsComponent implements OnInit {
           me.productionsService.productionlist.push(prdEle);
         }
       });
+      me.loading = false;
+
     } else {
       me.loading = false;
     }

@@ -198,10 +198,14 @@ export class MouldconscalendarComponent implements OnInit {
 
         mouldprodDetail.forEach(mouldprodData => {
           if (mouldprodData.pGroup == matgroup) {
-            /*if (mouldprodData.uom == "G") {
-              mouldprodData.uom = "KG";
+            if (mouldprodData.uom == "G") {
+              //mouldprodData.uom = "KG";
               mouldprodData.consumptionValue = mouldprodData.consumptionValue / 1000;
-            }*/
+            }
+            if (mouldprodData.uom == "ML") {
+              //mouldprodData.uom = "L";
+              mouldprodData.consumptionValue = mouldprodData.consumptionValue / 1000;
+            }
             me.mconsService.mouldprodDetail.push(mouldprodData);
 
           }
@@ -239,10 +243,14 @@ export class MouldconscalendarComponent implements OnInit {
 
         const mouldprodDetail = res as Mouldconscalendar[];
         mouldprodDetail.forEach(mouldprodData => {
-          /*if (mouldprodData.uom == "G") {
-            mouldprodData.uom = "KG";
+          if (mouldprodData.uom == "G") {
+            // mouldprodData.uom = "KG";
             mouldprodData.consumption = mouldprodData.consumption / 1000;
-          }*/
+          }
+          if (mouldprodData.uom == "ML") {
+            // mouldprodData.uom = "L";
+            mouldprodData.consumption = mouldprodData.consumption / 1000;
+          }
           me.mconsService.mouldprodDetail.push(mouldprodData);
         });
 
