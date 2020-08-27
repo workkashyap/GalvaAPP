@@ -155,7 +155,7 @@ export class AddroundhourComponent implements OnInit {
   }
   compliance() {
     const total = this.getTotal();
-    return total / 160;
+    return Math.round((total / 160) * 100);
   }
   getTotalC() {
     return this.rhService.roundhourInfo.r23to24 + this.rhService.roundhourInfo.r24to1 + this.rhService.roundhourInfo.r1to2 + this.rhService.roundhourInfo.r2to3 + this.rhService.roundhourInfo.r3to4 + this.rhService.roundhourInfo.r4to5 + this.rhService.roundhourInfo.r5to6 + this.rhService.roundhourInfo.r6to7;

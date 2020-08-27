@@ -37,7 +37,7 @@
                         <div class="col-md-2">
                           <input type="date" class="form-control" id="date" name="pstng_date" [(ngModel)]="date">
                           <h6 class="mt-2">
-                            Compliance% : {{this.compliance() | number:'1.2-2' }}
+                            Compliance : {{this.compliance()  }}%
                           </h6>
                         </div>
                         <div class="col-md-1">
@@ -249,23 +249,23 @@
                           </td>
                         </tr>
                         <tr>
-                          <td>
+                          <th>
                             Supervisor
-                          </td>
+                          </th>
                           <td>
                             <input type="text" name="shiftaname" placeholder="Supervisor Name" id="shiftaname"
                               #shiftaname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftaname">
                           </td>
-                          <td>
+                          <th>
                             Supervisor
-                          </td>
+                          </th>
                           <td>
                             <input type="text" name="shiftbname" placeholder="Supervisor Name" id="shiftbname"
                               #shiftbname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftbname">
                           </td>
-                          <td>
+                          <th>
                             Supervisor
-                          </td>
+                          </th>
                           <td>
                             <input type="text" name="shiftcname" placeholder="Supervisor Name" id="shiftcname"
                               #shiftcname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftcname">
@@ -291,7 +291,8 @@
                             <button type="submit" (click)="onCancelClick()" class="btn btn-danger  float-right px-3">
                               Cancel
                             </button>
-                            <button type="submit" (click)="onSaveClick()" class="btn btn-success float-right  px-4 mr-3">
+                            <button type="submit" (click)="onSaveClick()"
+                              class="btn btn-success float-right  px-4 mr-3">
                               Save
                             </button>
 
