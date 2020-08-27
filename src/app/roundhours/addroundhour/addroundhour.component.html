@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/nhome">Home</a></li>
-              <li class="breadcrumb-item active">Round Loading Hourly Follow Chart</li>
+              <li class="breadcrumb-item active">Production Round Loading Follow -Up Chart</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -36,11 +36,26 @@
                   <div class="card card-primary card-outline">
                     <div class="card-header">
                       <div class="row ">
-                        <div class="col-md-9">
-                          <h3 class="card-title-md">Round Loading Hourly Follow Chart</h3>
+                        <div class="col-md-6">
+                          <h3 class="card-title-md">Production Round Loading Follow -Up Chart </h3>
+                          <h6 class="card-title-md">Target for the month 160 round per day </h6>
+                        </div>
+                        <div class="col-md-3">
+                          <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                            [(ngModel)]="selectedcode">
+                            <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                              {{ pl.plantshortname }}
+                            </option>
+                          </select>
+                          <h6 class="mt-2">
+                            Actual Round : {{this.getTotal() | number:'1.2-2'}}
+                          </h6>
                         </div>
                         <div class="col-md-2">
                           <input type="date" class="form-control" id="date" name="pstng_date" [(ngModel)]="date">
+                          <h6 class="mt-2">
+                            Compliance% : {{this.compliance() | number:'1.2-2' }}
+                          </h6>
                         </div>
                         <div class="col-md-1">
                           <Button (click)="backtoProduction()" class="btn btn-primary btn-block mb-3">Back</Button>
@@ -61,6 +76,7 @@
                           <th colspan="2">
                             SHIFT-C
                           </th>
+
                         </tr>
                         <tr>
                           <td>
@@ -250,17 +266,39 @@
                           </td>
                         </tr>
                         <tr>
+                          <td>
+                            Supervisor
+                          </td>
+                          <td>
+                            <input type="text" name="shiftaname" placeholder="Supervisor Name" id="shiftaname"
+                              #shiftaname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftaname">
+                          </td>
+                          <td>
+                            Supervisor
+                          </td>
+                          <td>
+                            <input type="text" name="shiftbname" placeholder="Supervisor Name" id="shiftbname"
+                              #shiftbname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftbname">
+                          </td>
+                          <td>
+                            Supervisor
+                          </td>
+                          <td>
+                            <input type="text" name="shiftcname" placeholder="Supervisor Name" id="shiftcname"
+                              #shiftcname="ngModel" [(ngModel)]="rhService.roundhourInfo.shiftcname">
+                          </td>
+                        </tr>
+                        <tr>
                           <th colspan="2">
-                            Total : {{this.getTotalA()}}
+                            Total : {{this.getTotalA() | number:'1.0'}}
                           </th>
                           <th colspan="2">
-                            Total : {{this.getTotalb()}}
+                            Total : {{this.getTotalb() | number:'1.0'}}
                           </th>
                           <th colspan="2">
-                            Total: {{this.getTotalC()}}
+                            Total: {{this.getTotalC() | number:'1.0'}}
                           </th>
                         </tr>
-
                       </table>
                       <!-- /.card-body -->
 

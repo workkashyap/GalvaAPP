@@ -10,12 +10,21 @@
                         <div class="col-sm-6">
                             <h5>Round Loading Hourly Follow Chart</h5>
                         </div>
-                        <div class="col-sm-6" style="text-align: right;">
+                        <div class="col-sm-2" style="text-align: right;"></div>
+                        <div class="col-sm-2" style="text-align: right;">
+                            <div class="input-group custome-gs mb-2">
+                                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                <div class="input-group-append">
+                                    <i class="fa fa-search input-group-text"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="text-align: center;">
                             <button class="btn btn-info" (click)="addRoundHour()">
                                 <i class="fa fa-plus"></i>
-                            </button>
-                            &nbsp;
-                            &nbsp;
+                            </button> &nbsp; &nbsp;
                             <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success ">
                                 <i class="fa fa-file-excel-o"></i> Export</button>
                         </div>
@@ -35,8 +44,8 @@
                     <ng-template pTemplate="header" let-columns>
 
                         <tr>
-                            <td style="width: 105px;">Action</td>
-                            <td style="width: 75px;"></td>
+                            <td style="width: 79px;"></td>
+                            <td style="width: 73px;"></td>
                         </tr>
                         <tr>
                             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>

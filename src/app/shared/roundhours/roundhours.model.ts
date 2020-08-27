@@ -28,6 +28,10 @@ export class Roundhours {
   r5to6?: number;
   r6to7?: number;
   total?: number;
+  plant: number;
   pstng_date?: string;
+  shiftaname?: string;
+  shiftcname?: string;
+  shiftbname?: string;
   edit?: boolean = false;
 }

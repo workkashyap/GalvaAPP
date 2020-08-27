@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styles: [
     `
       :host ::ng-deep .ui-table .ui-table-thead > tr > th {
-        font-size:10px;
+        font-size:7px;
       }
       :host ::ng-deep .ui-table-resizable>.ui-table-wrapper {
           overflow-x: unset;
@@ -58,6 +58,8 @@ export class RoundhoursComponent implements OnInit {
       { field: "edit", header: "Action" },
       { field: "pstng_date", header: "Date" },
       { field: "total", header: "Total" },
+      { field: "plant", header: "Plant" },
+      //{ field: "shiftaname", header: "Shift A" },
       { field: "r7to8", header: "7-8" },
       { field: "r8to9", header: "8-9" },
       { field: "r9to10", header: "9-10" },
@@ -66,6 +68,7 @@ export class RoundhoursComponent implements OnInit {
       { field: "r12to13", header: "12-13" },
       { field: "r13to14", header: "13-14" },
       { field: "r14to15", header: "14-15" },
+     // { field: "shiftbname", header: "Shift B" },
       { field: "r15to16", header: "15-16" },
       { field: "r16to17", header: "16-17" },
       { field: "r17to18", header: "17-18" },
@@ -74,6 +77,7 @@ export class RoundhoursComponent implements OnInit {
       { field: "r20to21", header: "20-21" },
       { field: "r21to22", header: "21-22" },
       { field: "r22to23", header: "22-23" },
+      //{ field: "shiftcname", header: "Shift C" },
       { field: "r23to24", header: "23-24" },
       { field: "r1to2", header: "1-2" },
       { field: "r2to3", header: "2-3" },
@@ -109,7 +113,9 @@ export class RoundhoursComponent implements OnInit {
   }
 
   editData(data) {
+    console.log(data);
     this.rhservice.date = data.pstng_date;
+    this.rhservice.plant = data.plant;
     this.route.navigate(["./addroundhour"]);
 
   }

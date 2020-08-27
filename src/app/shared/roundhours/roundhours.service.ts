@@ -13,6 +13,8 @@ export class RoundhoursService {
   public RoundhourData: Roundhours[] = [];
   public id: number;
   public date: string;
+  public plant: number;
+
 
   constructor(public http: HttpClient) { }
 
@@ -24,8 +26,8 @@ export class RoundhoursService {
       this.rootUrl + "/roundHours"
     );
   }
-  public getRoundHour(date): any {
-    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date).toPromise()
+  public getRoundHour(date, plant): any {
+    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant).toPromise()
       .then(res => {
         const roundhourInfo = res as Roundhours;
         if (roundhourInfo && roundhourInfo != null) {
