@@ -1,3 +1,15 @@
 .in-label{
     font-size: 13px;
 }
+.table td, .table th {
+    padding: 0.3rem;
+    font-size: 12px;
+
+}
+.card-header,.card-footer {
+    padding: .3rem 1.25rem;
+}
+.form-control {
+    height: calc(2.25rem - 2px);
+    padding: .1rem .3rem;
+}
