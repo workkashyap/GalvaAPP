@@ -29,7 +29,8 @@
                             <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                               {{ pl.plantshortname }}
                             </option>
-                          </select>
+                          </select> 
+                          
                           <h6 class="mt-2">
                             Actual Round : {{this.getTotal() | number:'1.2-2'}}
                           </h6>
