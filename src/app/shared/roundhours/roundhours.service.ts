@@ -14,6 +14,7 @@ export class RoundhoursService {
   public id: number;
   public date: string;
   public plant: number;
+  public rtype: string;
 
 
   constructor(public http: HttpClient) { }
@@ -26,8 +27,8 @@ export class RoundhoursService {
       this.rootUrl + "/roundHours"
     );
   }
-  public getRoundHour(date, plant): any {
-    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant).toPromise()
+  public getRoundHour(date, plant, rtype): any {
+    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant + "/" + rtype).toPromise()
       .then(res => {
         const roundhourInfo = res as Roundhours;
         if (roundhourInfo && roundhourInfo != null) {

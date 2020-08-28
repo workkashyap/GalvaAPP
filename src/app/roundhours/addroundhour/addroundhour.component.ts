@@ -20,7 +20,7 @@ export class AddroundhourComponent implements OnInit {
   public currentUser: User;
 
   public selectedcode: string;
-
+  rtype: string = "Production";
   public date: string;
   public actionvalue: string;
   public loading = false;
@@ -47,13 +47,25 @@ export class AddroundhourComponent implements OnInit {
       .then(res => {
         me.plantservice.splantlist = res as Plant[];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
+        this.getInItval();
+      }, error => {
+        this.getInItval();
       });
 
-    if (me.rhService.date && me.rhService.plant) {
+
+  }
+  getInItval() {
+    const me = this;
+
+    if (me.rhService.date && me.rhService.plant && me.rhService.rtype) {
       this.rhService.date = this.datePipe.transform(this.rhService.date, "yyyy-MM-dd");
       this.date = this.rhService.date;
-      me.rhService.getRoundHour(me.rhService.date, me.rhService.plant);
-      this.selectedcode = "" + this.rhService.roundhourInfo.plant;
+      this.rtype = this.rhService.rtype;
+      this.selectedcode = this.rhService.plant.toString();
+      console.log("s", this.rhService.plant.toString());
+      me.rhService.getRoundHour(me.rhService.date, me.rhService.plant, me.rhService.rtype);
+      //this.selectedcode = this.rhService.roundhourInfo.plant.toString(8);
+      //this.rtype = this.rhService.roundhourInfo.rtype;
 
     } else {
       me.rhService.roundhourInfo = {
@@ -87,6 +99,7 @@ export class AddroundhourComponent implements OnInit {
         r6to7: 0,
         plant: 0,
         shiftaname: "",
+        rtype: "",
         shiftbname: "",
         shiftcname: "",
         pstng_date: "",
@@ -102,6 +115,8 @@ export class AddroundhourComponent implements OnInit {
     //console.log("form", this.productionsService.productionData);
     this.loading = true;
     this.rhService.roundhourInfo.plant = parseInt(this.selectedcode);
+    this.rhService.roundhourInfo.rtype = this.rtype;
+
     if (this.actionvalue === "Save") {
 
       this.rhService.roundhourInfo.pstng_date = this.datePipe.transform(this.date, "yyyy-MM-dd");

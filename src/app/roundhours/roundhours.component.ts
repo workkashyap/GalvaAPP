@@ -59,6 +59,7 @@ export class RoundhoursComponent implements OnInit {
       { field: "pstng_date", header: "Date" },
       { field: "total", header: "Total" },
       { field: "plant", header: "Plant" },
+      { field: "rtype", header: "Type" },
       //{ field: "shiftaname", header: "Shift A" },
       { field: "r7to8", header: "7-8" },
       { field: "r8to9", header: "8-9" },
@@ -68,7 +69,7 @@ export class RoundhoursComponent implements OnInit {
       { field: "r12to13", header: "12-13" },
       { field: "r13to14", header: "13-14" },
       { field: "r14to15", header: "14-15" },
-     // { field: "shiftbname", header: "Shift B" },
+      // { field: "shiftbname", header: "Shift B" },
       { field: "r15to16", header: "15-16" },
       { field: "r16to17", header: "16-17" },
       { field: "r17to18", header: "17-18" },
@@ -116,6 +117,8 @@ export class RoundhoursComponent implements OnInit {
     console.log(data);
     this.rhservice.date = data.pstng_date;
     this.rhservice.plant = data.plant;
+    this.rhservice.rtype = data.rtype;
+
     this.route.navigate(["./addroundhour"]);
 
   }

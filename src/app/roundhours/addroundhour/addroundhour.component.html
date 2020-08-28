@@ -19,18 +19,25 @@
                   <div class="card card-primary card-outline">
                     <div class="card-header">
                       <div class="row ">
-                        <div class="col-md-6">
-                          <h5 class="card-title-md">Production Round Loading Follow -Up Chart </h5>
-                          <h6 class="card-title-md">Target for the month 160 round per day </h6>
+                        <div class="col-md-5">
+                          <h6 class="card-title-md">Production Round Loading Follow -Up Chart </h6>
+                          <p class="card-title-md">Target for the month 160 round per day </p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
+                          <select class="form-control" name="rtype" [(ngModel)]="rtype" #rtype2="ngModel"
+                            id="rtype">
+                            <option value="Production">Production</option>
+                            <option value="Inspection">Inspection</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
                           <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
                             [(ngModel)]="selectedcode">
                             <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                               {{ pl.plantshortname }}
                             </option>
-                          </select> 
-                          
+                          </select>
+
                           <h6 class="mt-2">
                             Actual Round : {{this.getTotal() | number:'1.2-2'}}
                           </h6>
