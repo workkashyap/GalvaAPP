@@ -123,6 +123,10 @@ export class RoundhoursComponent implements OnInit {
 
   }
   addRoundHour() {
+
+    this.rhservice.date = null;
+    this.rhservice.plant = null;
+    this.rhservice.rtype = null;
     // this.iservice.uid = this.currentUser.id;
     this.route.navigate(["./addroundhour"]);
   }
