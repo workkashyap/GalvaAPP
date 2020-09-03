@@ -12,7 +12,9 @@ export class Mouldproduction {
   prodqty: number;
   rejqty: number;
   consumption: number;
-
+  unitcons: number;
+  rejcons: number;
   issuedqty: number;
   opening: number;
+  uom:string;
 }

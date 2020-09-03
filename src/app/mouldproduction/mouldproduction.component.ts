@@ -46,7 +46,8 @@ export class MouldproductionComponent implements OnInit {
   issuedqty: number = 0;
   opening: number = 0;
   balance2: number = 0;
-
+  rejconsumption: number = 0;
+  consforunit: number = 0;
   customclass = '';
   constructor(
     public plantservice: PlantService,
@@ -127,7 +128,8 @@ export class MouldproductionComponent implements OnInit {
     me.prodqty = 0;
     me.rejqty = 0;
     me.consumption = 0;
-
+    me.rejconsumption = 0;
+    me.consforunit = 0;
     this.mouldprodService.getMProdctionCalendar(this.selectedcode, this.startdate)
       .toPromise()
       .then(res => {
@@ -143,6 +145,13 @@ export class MouldproductionComponent implements OnInit {
                 me.rejqty = (getmouldsumElem.rejqty != null) ? getmouldsumElem.rejqty : 0;
                 //  me.consumption = (getmouldsumElem.consumption != null) ? getmouldsumElem.consumption / 1000 : 0;
                 me.consumption = (getmouldsumElem.consumption != null) ? getmouldsumElem.consumption : 0;
+                me.consforunit = me.consumption / me.prodqty;
+                console.clear();
+                console.log("me.consforunit : ", me.consforunit);
+                me.consforunit = (!me.consforunit) ? 0 : me.consforunit;
+                me.rejconsumption = me.consforunit * me.rejqty;
+                me.rejconsumption = (!me.rejconsumption) ? 0 : me.rejconsumption;
+                console.log("me.rejconsumption : ", me.rejconsumption);
               });
             }
           });
@@ -196,6 +205,10 @@ export class MouldproductionComponent implements OnInit {
       { field: 'prodqty', header: 'Prod. Qty' },
       { field: 'rejqty', header: 'Rej. Qty' },
       { field: 'consumption', header: 'Consumption' },
+      // { field: 'unitcons', header: 'Consumption for 1 unit' },
+      { field: 'rejcons', header: 'Rej Consumption' },
+      { field: 'uom', header: 'Uom' },
+
     ];
     this.monthName = '';
     this.mouldprodService.mouldprodDetail = [];
@@ -205,7 +218,19 @@ export class MouldproductionComponent implements OnInit {
     this.mouldprodService.getMProdctionClickData(this.selectedcode, this.selected_eventdate)
       .toPromise()
       .then(res => {
-        this.mouldprodService.mouldprodDetail = res as Mouldproduction[];
+        const mouldprodDetail = res as Mouldproduction[];
+        mouldprodDetail.forEach(mouldprod => {
+          if (mouldprod.uom == "G") {
+            mouldprod.uom = "KG";
+            mouldprod.consumption = mouldprod.consumption / 1000;
+          }
+
+          mouldprod.unitcons = mouldprod.consumption / mouldprod.prodqty;
+          mouldprod.rejcons = mouldprod.unitcons * mouldprod.rejqty;
+
+          this.mouldprodService.mouldprodDetail.push(mouldprod);
+        });
+        // this.mouldprodService.mouldprodDetail = res as Mouldproduction[];
         this.detailLoading = false;
       });
 
@@ -234,6 +259,7 @@ export class MouldproductionComponent implements OnInit {
     } else if (val2 == "issuedqty") {
       this.cols.push({ field: 'issuedqty', header: 'Issued Qty' });
     }
+    this.cols.push({ field: 'uom', header: 'Uom' });
 
     this.monthName = this.datePipe.transform(this.sDate, 'yyyy-MM-d');
 
@@ -256,8 +282,12 @@ export class MouldproductionComponent implements OnInit {
               if (val2 == "consumption") {
                 //row.consumption = row.consumption / 1000;
               }
-
+              if (row.uom == "G") {
+                row.uom = "KG";
+                row.consumption = row.consumption / 1000;
+              }
             });
+
             this.mouldprodService.mouldprodDetail = data;
 
           }

@@ -11,7 +11,7 @@
             <div class="card-header">
               <div class="row ">
                 <div class="col-md-10">
-                  <h5 class="card-title-md">Summary Report</h5>
+                  <h5 class="card-title-md">{{reporttype}} Summary Report</h5>
                 </div>
                 <div class="col-md-2 ">
 
@@ -52,9 +52,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="row mt-2">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                       <select class=" custom-select" name="myselect" #mySelect="ngModel"
                         [(ngModel)]="this.DPservice.plantcode" (change)="selectedGrid($event.target.value)">
                         <option value="0">--Select Plant--</option>
@@ -65,7 +65,18 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <div class="row ">
+                    <div class="col-md-12 mt-2">
+                      <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
+                        [(ngModel)]="this.reporttype" (change)="onselectReporttype($event.target.value)">
+                        <option value="Value">Value</option>
+                        <option value="Quantity">Quantity</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
                   <div class="row ">
                     <div class="col-md-8 mt-2">
                       <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
@@ -105,108 +116,113 @@
                 </div>
               </div>
             </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalinsQty | number:'1.2-2'}}
               </button>
             </td>
-
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm  text-dark bg-dark  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalokqtyValue | number:'1.2-2'}}
               </button>
             </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm  text-dark bg-warning  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalRejQty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm  text-dark bg-moulded custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalMouldedQty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm  text-dark bg-capital custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalPlantingQty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-success  custom-fs"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalinsValue | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-primary  custom-fs"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalokValue | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-danger custom-fs"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalRejVal | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm  text-dark bg-danger custom-fs"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalRejPer2 | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
+
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm custom-fs text-dark bg-compliance"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalHoldQty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
-              <button class="btn btn-sm custom-fs text-dark bg-summary"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalHoldVal | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm custom-fs text-dark bg-jig" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalBuffQty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
-              <button class="btn btn-sm custom-fs text-dark bg-hr" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalBuffVal | number:'1.2-2'}}
-              </button>
-            </td>
 
-            <td>
-              <button class="btn btn-sm custom-fs text-dark bg-moulded"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalMouldedVal | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm custom-fs text-dark bg-capital"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalPlantingVal | number:'1.2-2'}}
-              </button>
-            </td>
-            <td>
+            <td *ngIf="this.reporttype == 'Quantity'">
               <button class="btn btn-sm custom-fs text-dark bg-othersqty"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalOthersqty | number:'1.2-2'}}
               </button>
             </td>
-            <td>
+         
+            <!--value-->
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm  text-dark bg-success  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalinsValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm  text-dark bg-primary  custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalokValue | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm  text-dark bg-danger custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalRejVal | number:'1.2-2'}}
+              </button>
+            </td>
+
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm custom-fs text-dark bg-summary"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalHoldVal | number:'1.2-2'}}
+              </button>
+            </td>
+
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm custom-fs text-dark bg-hr" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalBuffVal | number:'1.2-2'}}
+              </button>
+            </td>
+
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm custom-fs text-dark bg-moulded"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalMouldedVal | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Value'">
+              <button class="btn btn-sm custom-fs text-dark bg-capital"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalPlantingVal | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Value'">
               <button class="btn btn-sm custom-fs text-dark bg-others_value"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalOthers_value | number:'1.2-2'}}
               </button>
             </td>
+            <!--<td *ngIf="this.reporttype == 'Quantity'">
+              <button class="btn btn-sm  text-dark bg-danger custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalRejPer2 | number:'1.2-2'}}
+              </button>
+            </td>-->
           </tr>
           <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>

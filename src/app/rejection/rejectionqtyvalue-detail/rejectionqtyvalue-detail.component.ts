@@ -18,9 +18,9 @@ import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
 import { Plant } from '../../shared/plant/plant.model';
 
 @Component({
-  selector: 'app-rejection-detail',
-  styleUrls: ['./rejection-detail.component.css'],
-  templateUrl: './rejection-detail.component.html',
+  selector: 'app-rejectionqtyvalue-detail',
+  styleUrls: ['./rejectionqtyvalue-detail.component.css'],
+  templateUrl: './rejectionqtyvalue-detail.component.html',
   providers: [DatePipe],
   styles: [`
   :host ::ng-deep .ui-table .ui-table-thead > tr > th {
@@ -49,7 +49,7 @@ import { Plant } from '../../shared/plant/plant.model';
 
 `]
 })
-export class RejectionDetailComponent implements OnInit {
+export class RejectionqtyvalueDetailComponent implements OnInit {
   public currentUser: User;
   public loading = false;
   public inbox: Inbox;
@@ -60,6 +60,7 @@ export class RejectionDetailComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
   public selectedtype: string;
+  reporttype: any = 'Value';
   cols: any[];
   subcols: any[];
   editcols: any[];
@@ -123,35 +124,78 @@ export class RejectionDetailComponent implements OnInit {
   onselecttype(ev) {
     this.selectedtype = ev;
   }
-  //   exportExcel(dt) {
-  //     console.log(dt.data);
-  //     import('xlsx').then(xlsx => {
-  //         const worksheet = xlsx.utils.json_to_sheet(this.DPservice.itemwiserejlist);
-  //         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-  //         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-  //         this.saveAsExcelFile(excelBuffer, 'DetailComponents');
-  //     });
-  // }
-  // saveAsExcelFile(buffer: any, fileName: string): void {
-  //   import('file-saver').then(FileSaver => {
-  //       const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  //       const EXCEL_EXTENSION = '.xlsx';
-  //       const data: Blob = new Blob([buffer], {
-  //           type: EXCEL_TYPE
-  //       });
-  //       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-  //   });
-  // }
+  onselectReporttype(ev) {
+    this.reporttype = ev;
+    this.cols = [
+      { field: 'itemcode', header: 'Code' },
+      { field: 'itemname', header: 'Name' },
+    ];
+    if (this.reporttype == "Value") {
+      this.cols.push(
+        { field: "inspection_value", header: "Insp. Value" },
+        { field: "okvalue", header: "Ok Value" },
+        { field: 'reject_value', header: 'Reject Val' },
+        { field: 'holdvalue', header: 'Hold Val' },
+        { field: 'buffingvalue', header: 'Buffing Val' },
+        { field: "moulding_value", header: "Moulding Val" },
+        { field: "plating_value", header: "Plating Val" },
+        { field: "othersvalue", header: "Others Val" },
+      )
+    }
+    if (this.reporttype == "Quantity") {
+      this.cols.push(
+        { field: "inspection_qty", header: "Insp. qty" },
+        { field: "okqty", header: "Ok qty" },
+        { field: 'reject_qty', header: 'Reject qty' },
+        { field: "mouldingqty", header: "Moulding qty " },
+        { field: "platingqty", header: "Plating qty" },
+        //        { field: 'rejper', header: 'Rej %' },
+        { field: 'holdqty', header: 'Hold Qty' },
+        { field: 'buffingqty', header: 'Buffing Qty' },
+        { field: "othersqty", header: "Others Qty" },
+      );
+    }
+
+  }
   onviewDetail() {
     this.filterenable = false;
     this.loading = true;
     this.DPservice.itemwiserejlist = [];
     if (this.selectedtype !== '') {
       this.selectedtype = this.selectedtype;
-
     } else {
       this.selectedtype = 'NULL';
     }
+    this.cols = [
+      { field: 'itemcode', header: 'Code' },
+      { field: 'itemname', header: 'Name' },
+    ];
+    if (this.reporttype == "Value") {
+      this.cols.push(
+        { field: "inspection_value", header: "Insp. Value" },
+        { field: "okvalue", header: "Ok Value" },
+        { field: 'reject_value', header: 'Reject Val' },
+        { field: 'holdvalue', header: 'Hold Val' },
+        { field: 'buffingvalue', header: 'Buffing Val' },
+        { field: "moulding_value", header: "Moulding Val" },
+        { field: "plating_value", header: "Plating Val" },
+        { field: "othersvalue", header: "Others Val" },
+      )
+    }
+    if (this.reporttype == "Quantity") {
+      this.cols.push(
+        { field: "inspection_qty", header: "Insp. qty" },
+        { field: "okqty", header: "Ok qty" },
+        { field: 'reject_qty', header: 'Reject qty' },
+        { field: "mouldingqty", header: "Moulding qty " },
+        { field: "platingqty", header: "Plating qty" },
+        //        { field: 'rejper', header: 'Rej %' },
+        { field: 'holdqty', header: 'Hold Qty' },
+        { field: 'buffingqty', header: 'Buffing Qty' },
+        { field: "othersqty", header: "Others Qty" },
+      );
+    }
+
     this.DPservice.getRejectdetail(this.DPservice.plantcode, this.selectedtype, this.Fromdate, this.Todate)
       .toPromise()
       .then(res => {
@@ -196,37 +240,6 @@ export class RejectionDetailComponent implements OnInit {
     }
 
 
-    this.cols = [
-      // { field: 'id', header: 'ID' },
-      //   { field: 'pstngdate', header: 'Posting Date' },
-      // { field: 'item_type', header: 'Type' },
-      { field: 'itemcode', header: 'Code' },
-      { field: 'itemname', header: 'Name' },
-
-      { field: "inspection_qty", header: "Insp. qty" },
-      { field: "okqty", header: "Ok qty" },
-      { field: 'reject_qty', header: 'Reject qty' },
-      { field: "mouldingqty", header: "Moulding qty " },
-      { field: "platingqty", header: "Plating qty" },
-
-      { field: "inspection_value", header: "Insp. Value" },
-      { field: "okvalue", header: "Ok Value" },
-      { field: 'reject_value', header: 'Reject Val' },
-      { field: 'rejper', header: 'Rej %' },
-
-      { field: 'holdqty', header: 'Hold Qty' },
-      { field: 'holdvalue', header: 'Hold Val' },
-      { field: 'buffingqty', header: 'Buffing Qty' },
-      { field: 'buffingvalue', header: 'Buffing Val' },
-
-      { field: "moulding_value", header: "Moulding Val" },
-      { field: "plating_value", header: "Plating Val" },
-
-      { field: "othersqty", header: "Others Qty" },
-      { field: "othersvalue", header: "Others Val" },
-
-    ];
-
     this.subcols = [
       { field: 'id', header: 'ID' },
       // { field: 'inspectiondate', header: 'Date' },
@@ -244,30 +257,14 @@ export class RejectionDetailComponent implements OnInit {
         me.plantservice.plantlist = res as Plant[];
         me.DPservice.plantcode = me.plantservice.plantlist[0].plantcode;
         me.plant_name = me.plantservice.plantlist[0].plantshortname;
+        this.onviewDetail()
 
-        me.DPservice.getRejectdetail(me.DPservice.plantcode, 'NULL', me.Fromdate, me.Todate)
-          .toPromise()
-          .then(res => {
-            me.DPservice.itemwiserejlist = res as Itemwiserej[];
-            me.rejectpersum();
-            me.loading = false;
-          });
 
       });
-
-
-    // tslint:disable-next-line:max-line-length
-    // this.DPservice.getRejectdefectdetail(this.DPservice.plantcode, 'CHROME' , this.Fromdate, this.Todate, '91000149')
-    //       .toPromise()
-    //       .then(res => {
-    //         this.DPservice.itemtopdefectlist = res as TopDefect[];
-    //         this.loading = false;
-    //       });
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;
     this.selectedPlanName();
-
   }
   backtoRejection() {
     this.router.navigate(['./rejection']);

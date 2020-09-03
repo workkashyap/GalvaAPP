@@ -45,16 +45,19 @@
                   <div style="margin: auto;">
                     <button class="btn btn-custom text-dark bg-success"
                       (click)="extraVal('getmouldopeningsumdetail','opening')">
-                      Opening ABS = <b>{{ opening  | number:'1.2-2'}} <!--Kg--></b>
+                      Opening ABS = <b>{{ opening  | number:'1.2-2'}}
+                        <!--Kg--></b>
                     </button>
 
                     <button class="btn btn-custom text-dark bg-primary"
                       (click)="extraVal('getmouldsumsdetail','consumption')" style="width: auto;">
-                      Consumption ABS = <b>{{ consumption | number:'1.2-2' }} <!--Kg--></b>
+                      Consumption ABS = <b>{{ consumption | number:'1.2-2' }}
+                        <!--Kg--></b>
                     </button>
                     <button class="btn btn-custom text-dark bg-dark"
                       (click)="extraVal('getmouldissuesumdetail','issuedqty')" style="width: auto;">
-                      Receipt ABS = <b>{{ issuedqty | number:'1.2-2' }} <!--Kg--></b>
+                      Receipt ABS = <b>{{ issuedqty | number:'1.2-2' }}
+                        <!--Kg--></b>
                     </button>
 
                     <button class="btn btn-custom text-dark bg-info" (click)="extraVal('getmouldsumsdetail','prodqty')">
@@ -67,6 +70,10 @@
                     </button>
                     <button class="btn btn-custom text-dark bg-warning">
                       Balance = <b>{{ this.balance() | number:'1.2-2' }}</b>
+                    </button>
+
+                    <button class="btn btn-custom text-dark bg-tool-def">
+                      Rej Consumption = <b>{{ rejconsumption | number:'1.1' }} Kg.</b>
                     </button>
 
 
@@ -132,11 +139,10 @@
                 <ng-template pTemplate="header" let-columns>
                   <!-- header button section -->
                   <tr>
-                    <td>
+                    <td style="width: 170px;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
-                          (input)="dt.filterGlobal($event.target.value, 'contains')"
-                          (input)="loadmdata($event.target.value , dt)" class="form-control fix-height">
+                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
                         <div class="input-group-append fix-height">
                           <i class="fa fa-search input-group-text"></i>
                         </div>
@@ -145,6 +151,9 @@
                     <td style="width:315px;">
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td style="width:140px;">
+
                     </td>
                   </tr>
                   <!-- regular date section -->
@@ -165,8 +174,10 @@
                       <span *ngIf="col.field=='acDocumentDate'">
                         {{rowData[col.field]  | date :'dd MMM, y'}}
                       </span>
-                      <span *ngIf="col.field!='acDocumentDate' ">
+                      <span *ngIf="col.field!='acDocumentDate' && col.field!='rejcons' ">
                         {{rowData[col.field]}}</span>
+                      <span *ngIf="col.field=='rejcons' ">
+                        {{rowData[col.field] | number:'1.1' }}</span>
                     </td>
                   </tr>
                 </ng-template>
