@@ -42,6 +42,7 @@
           <div class="col-sm-1">
             <select class="custom-select" name="month" (change)="selectedAh($event.target.value)" #Month='ngModel'
               [(ngModel)]='selectedah'>
+              <option value="All">All</option>
               <option value="08 - Hrs">08-Hrs</option>
               <option value="11 - Hrs">11-Hrs</option>
               <option value="12 - Hrs">12-Hrs</option>
@@ -95,7 +96,7 @@
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
                 <div class="row mb-2 mt-2">
                   <button class="btn btn-success ml-3">Head Count Total {{grand_total_1}}</button> &nbsp;
-                  <button class="btn btn-info">Manhoursworked Total  {{grand_total_2}}</button>
+                  <button class="btn btn-info">Manhoursworked Total {{grand_total_2}}</button>
                 </div>
                 <p-table #dt [value]="sales" [columns]="subtitle">
                   <ng-template pTemplate="header">
@@ -106,15 +107,19 @@
                     </tr>
                     <tr>
                       <th colspan="2" *ngFor="let company of companies">{{company.companyFName}}</th>
+                      <th colspan="2"></th>
                     </tr>
                     <tr>
                       <th *ngFor="let st of subtitle">{{st.title}}</th>
+                      <th>Head Count Total</th>
+                      <th>Manhoursworked Total</th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-sale>
                     <tr>
                       <td>{{sale.brand}}</td>
                       <td *ngFor="let d of sale.data">{{d}}</td>
+                      <td *ngFor="let d of sale.gtotal">{{d}}</td>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="footer">
@@ -128,6 +133,8 @@
                           {{st.total}}
                         </span>
                       </td>
+                      <td> {{grand_total_1}}</td>
+                      <td> {{grand_total_2}}</td>
                     </tr>
                   </ng-template>
                 </p-table>

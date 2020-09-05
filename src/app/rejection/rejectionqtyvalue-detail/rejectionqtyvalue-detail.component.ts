@@ -16,6 +16,7 @@ import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Itemwiserej } from 'src/app/shared/dailyProduction/itemwiserej.model';
 import { TopDefect } from 'src/app/shared/dailyProduction/topdefect.model';
 import { Plant } from '../../shared/plant/plant.model';
+import { Itemvalueqty } from 'src/app/shared/dailyProduction/itemvalueqty.model';
 
 @Component({
   selector: 'app-rejectionqtyvalue-detail',
@@ -60,45 +61,60 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
   public selectedtype: string;
-  reporttype: any = 'Value';
+  reporttype: any = 'Plating';
   cols: any[];
   subcols: any[];
   editcols: any[];
   actions: any[];
   selectedItemrej: Itemwiserej;
-  selectedItemrejarray: Itemwiserej[] = [];
-  filterItemrejarray: Itemwiserej[] = [];
+  selectedItemrejarray: Itemvalueqty[] = [];
+  filterItemrejarray: Itemvalueqty[] = [];
 
   public plant_name: string;
 
-  totalBuffQty: number = 0;
-  totalBuffVal: number = 0;
-  totalHoldQty: number = 0;
-  totalHoldVal: number = 0;
+  pinHolesqty: number = 0;
+  skipplatingQty: number = 0;
+  whitemarKqty: number = 0;
+  dotplastiCqty: number = 0;
+  crburninGqty: number = 0;
+  copperburninGqty: number = 0;
+  nicklEqty: number = 0;
+  roughnesSqty: number = 0;
+  blisteRqty: number = 0;
+  watermarKqty: number = 0;
+  shadevaRqty: number = 0;
+  platingpeeLqty: number = 0;
+  chemicalmarKqty: number = 0;
 
-  totalRejQty: number = 0;
-  totalRejPer: number = 0;
-  totalRejVal: number = 0;
+  silverQty: number = 0;
+  denTqty: number = 0;
+  handmouldingreJqty: number = 0;
+  pittinGqty: number = 0;
+  flowmarKqty: number = 0;
 
-  totalRejPer2: number = 0;
+  tooldeF_qty: number = 0;
+  jigdamagEqty: number = 0;
 
-  totalinsQty: number = 0;
-  totalinsValue: number = 0;
-
-  totalokValue: number = 0;
-  totalokqtyValue: number = 0;
-
-  totalMouldedQty: number = 0;
-  totalMouldedPer: number = 0;
-  totalMouldedVal: number = 0;
-
-  totalPlantingQty: number = 0;
-  totalPlantingPer: number = 0;
-  totalPlantingVal: number = 0;
+  warpagEqty: number = 0;
+  scratchmarKqty: number = 0;
+  otheR1qty: number = 0;
+  otheR2qty: number = 0;
 
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
 
+  totalRejQty: number = 0;
+  totalinsQty: number = 0;
+  totalRejPer: number = 0;
+  totalRejPer2: number = 0;
+  totalRejVal: number = 0;
+  totalinsValue: number = 0;
+  totalokqtyValue: number = 0;
+  totalPlantingQty: number = 0;
+  totalMouldedQty: number = 0;
+
+  totalBuffQty = 0;
+  totalHoldQty = 0;
 
   totalOthers_value: number = 0;
   totalOthersqty: number = 0;
@@ -126,80 +142,94 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   }
   onselectReporttype(ev) {
     this.reporttype = ev;
+
+    this.mycol();
+  }
+  mycol() {
     this.cols = [
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
+      { field: "inspection_qty", header: "Insp. Qty." },
+      { field: "okqty", header: "Ok Qty" },
+      { field: "reject_qty", header: "Reject Qty." },
     ];
-    if (this.reporttype == "Value") {
+
+
+    if (this.reporttype == "Plating") {
       this.cols.push(
-        { field: "inspection_value", header: "Insp. Value" },
-        { field: "okvalue", header: "Ok Value" },
-        { field: 'reject_value', header: 'Reject Val' },
-        { field: 'holdvalue', header: 'Hold Val' },
-        { field: 'buffingvalue', header: 'Buffing Val' },
-        { field: "moulding_value", header: "Moulding Val" },
-        { field: "plating_value", header: "Plating Val" },
-        { field: "othersvalue", header: "Others Val" },
+        { field: "platingqty", header: "Plating Qty" },
+
+        { field: "rejper", header: "Reject%" },
+        { field: "holdqty", header: "Hold Qty." },
+        { field: "buffingqty", header: "Buffing Qty." },
+
+        { field: "pinHolesqty", header: "Pinhole" },
+        { field: "skipplatingQty", header: "Skipplating" },
+        { field: 'whitemarKqty', header: 'Whitemark' },
+        { field: 'dotplastiCqty', header: 'Dotplastic' },
+        { field: 'crburninGqty', header: 'Crburning' },
+        { field: "copperburninGqty", header: "Copper Burning" },
+        { field: "nicklEqty", header: "Nickle" },
+        { field: "roughnesSqty", header: "Roughness" },
+        { field: "blisteRqty", header: "Blister" },
+        { field: "watermarKqty", header: "Watermark" },
+        { field: "shadevaRqty", header: "Shadevar" },
+        { field: "platingpeeLqty", header: "Platingpeel" },
+        { field: "chemicalmarKqty", header: "Chemicalmark" },
       )
     }
-    if (this.reporttype == "Quantity") {
+    if (this.reporttype == "Moulding") {
       this.cols.push(
-        { field: "inspection_qty", header: "Insp. qty" },
-        { field: "okqty", header: "Ok qty" },
-        { field: 'reject_qty', header: 'Reject qty' },
-        { field: "mouldingqty", header: "Moulding qty " },
-        { field: "platingqty", header: "Plating qty" },
-        //        { field: 'rejper', header: 'Rej %' },
-        { field: 'holdqty', header: 'Hold Qty' },
-        { field: 'buffingqty', header: 'Buffing Qty' },
-        { field: "othersqty", header: "Others Qty" },
+        { field: "mouldingqty", header: "Moulding Qty" },
+
+        { field: "rejper", header: "Reject%" },
+        { field: "holdqty", header: "Hold Qty." },
+        { field: "buffingqty", header: "Buffing Qty." },
+
+        { field: "silverQty", header: "Silver" },
+        { field: "denTqty", header: "Dent" },
+        { field: 'handmouldingreJqty', header: 'Hand Moulding Rej' },
+        { field: "pittinGqty", header: "Pitting" },
+        { field: "flowmarKqty", header: "Flowmark" },
       );
     }
+    if (this.reporttype == "ToolDefect") {
+      this.cols.push(
+        { field: "rejper", header: "Reject%" },
+        { field: "holdqty", header: "Hold Qty." },
+        { field: "buffingqty", header: "Buffing Qty." },
 
+        { field: "tooldeF_qty", header: "Tooldef" },
+        { field: "jigdamagEqty", header: "Jig Damage" },
+      );
+    }
+    if (this.reporttype == "Others") {
+      this.cols.push(
+        { field: "rejper", header: "Reject%" },
+        { field: "holdqty", header: "Hold Qty." },
+        { field: "buffingqty", header: "Buffing Qty." },
+
+        { field: "warpagEqty", header: "War Page" },
+        { field: "scratchmarKqty", header: "Scratch Mark" },
+        { field: 'otheR1qty', header: 'Other1' },
+        { field: "otheR2qty", header: "Other2" },
+      );
+    }
   }
   onviewDetail() {
     this.filterenable = false;
     this.loading = true;
-    this.DPservice.itemwiserejlist = [];
+    this.DPservice.itemwiserejlist2 = [];
     if (this.selectedtype !== '') {
       this.selectedtype = this.selectedtype;
     } else {
       this.selectedtype = 'NULL';
     }
-    this.cols = [
-      { field: 'itemcode', header: 'Code' },
-      { field: 'itemname', header: 'Name' },
-    ];
-    if (this.reporttype == "Value") {
-      this.cols.push(
-        { field: "inspection_value", header: "Insp. Value" },
-        { field: "okvalue", header: "Ok Value" },
-        { field: 'reject_value', header: 'Reject Val' },
-        { field: 'holdvalue', header: 'Hold Val' },
-        { field: 'buffingvalue', header: 'Buffing Val' },
-        { field: "moulding_value", header: "Moulding Val" },
-        { field: "plating_value", header: "Plating Val" },
-        { field: "othersvalue", header: "Others Val" },
-      )
-    }
-    if (this.reporttype == "Quantity") {
-      this.cols.push(
-        { field: "inspection_qty", header: "Insp. qty" },
-        { field: "okqty", header: "Ok qty" },
-        { field: 'reject_qty', header: 'Reject qty' },
-        { field: "mouldingqty", header: "Moulding qty " },
-        { field: "platingqty", header: "Plating qty" },
-        //        { field: 'rejper', header: 'Rej %' },
-        { field: 'holdqty', header: 'Hold Qty' },
-        { field: 'buffingqty', header: 'Buffing Qty' },
-        { field: "othersqty", header: "Others Qty" },
-      );
-    }
-
-    this.DPservice.getRejectdetail(this.DPservice.plantcode, this.selectedtype, this.Fromdate, this.Todate)
+    this.mycol();
+    this.DPservice.getRejectdetailQtyValue(this.DPservice.plantcode, this.Fromdate, this.Todate, this.selectedtype)
       .toPromise()
       .then(res => {
-        this.DPservice.itemwiserejlist = res as Itemwiserej[];
+        this.DPservice.itemwiserejlist2 = res as Itemvalueqty[];
         this.rejectpersum();
         this.loading = false;
       });
@@ -258,8 +288,6 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         me.DPservice.plantcode = me.plantservice.plantlist[0].plantcode;
         me.plant_name = me.plantservice.plantlist[0].plantshortname;
         this.onviewDetail()
-
-
       });
   }
   selectedGrid(ev) {
@@ -296,113 +324,138 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   }
 
   rejectpersum() {
+    this.pinHolesqty = 0;
+    this.skipplatingQty = 0;
+    this.whitemarKqty = 0;
+    this.dotplastiCqty = 0;
+    this.crburninGqty = 0;
+    this.copperburninGqty = 0;
+    this.roughnesSqty = 0;
+    this.nicklEqty = 0;
+    this.blisteRqty = 0;
+    this.watermarKqty = 0;
+    this.shadevaRqty = 0;
+    this.platingpeeLqty = 0;
+    this.chemicalmarKqty = 0;
+
+    this.silverQty = 0;
+    this.denTqty = 0;
+    this.handmouldingreJqty = 0;
+    this.pittinGqty = 0;
+    this.flowmarKqty = 0;
+
+    this.tooldeF_qty = 0;
+    this.jigdamagEqty = 0;
+
+    this.warpagEqty = 0;
+    this.scratchmarKqty = 0;
+    this.otheR1qty = 0;
+    this.otheR2qty = 0;
+
+
+    this.totalRejQty = 0;
+    this.totalinsQty = 0;
+    this.totalRejPer = 0;
+    this.totalRejPer2 = 0;
+    this.totalRejVal = 0;
     this.totalinsValue = 0;
-    this.totalokValue = 0;
     this.totalokqtyValue = 0;
-
-    this.totalMouldedQty = 0;
-    this.totalMouldedPer = 0;
-
-    this.totalPlantingPer = 0;
     this.totalPlantingQty = 0;
 
-    this.totalRejVal = 0;
-
-    this.totalMouldedVal = 0;
-    this.totalPlantingVal = 0;
-
     this.totalBuffQty = 0;
-    this.totalBuffVal = 0;
     this.totalHoldQty = 0;
-    this.totalHoldVal = 0;
-
-
-    this.totalRejPer2 = 0;
-
-    this.totalOthersqty = 0;
-    this.totalOthers_value = 0;
-
+    this.totalMouldedQty = 0; 
+    
     if (this.filterenable === true) {
-      this.totalRejQty = 0;
-      this.totalinsQty = 0;
-      this.totalRejPer = 0;
       for (const rq of this.filterItemrejarray) {
-
-        this.totalOthersqty += rq.othersqty;
-        this.totalOthers_value += rq.othersvalue;
-
-        const rejqty = rq.reject_qty;
-        const insqty = rq.inspection_qty;
-        //
-        this.totalRejQty += rejqty;
-        this.totalinsQty += insqty;
+        this.totalRejQty += rq.reject_qty;
+        this.totalinsQty += rq.inspection_qty;
+        this.totalRejPer += rq.rejper;
+        this.totalinsValue += rq.inspection_value
         this.totalRejVal += rq.reject_value;
-
-        //
-        this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
-        this.totalinsValue += rq.inspection_value;
-
-        this.totalMouldedQty += rq.mouldingqty;
-        this.totalMouldedPer += rq.mouldingper;
-
-        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
-
-        this.totalMouldedVal += rq.moulding_value;
-        this.totalPlantingVal += rq.plating_value;
-
-        this.totalHoldVal += rq.holdvalue;
-        this.totalHoldQty += rq.holdqty;
         this.totalBuffQty += rq.buffingqty;
-        this.totalBuffVal += rq.buffingvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalMouldedQty += rq.mouldingqty;
+
+
+        this.pinHolesqty += rq.pinHolesqty;
+        this.skipplatingQty += rq.skipplatingQty;
+        this.whitemarKqty += rq.whitemarKqty;
+        this.dotplastiCqty += rq.dotplastiCqty;
+        this.crburninGqty += rq.crburninGqty;
+        this.copperburninGqty += rq.copperburninGqty;
+        this.roughnesSqty += rq.roughnesSqty;
+        this.nicklEqty += rq.nicklEqty;
+        this.blisteRqty += rq.blisteRqty;
+        this.watermarKqty += rq.watermarKqty;
+        this.shadevaRqty += rq.shadevaRqty;
+        this.platingpeeLqty += rq.platingpeeLqty;
+        this.chemicalmarKqty += rq.chemicalmarKqty;
+
+        this.silverQty += rq.silverQty;
+        this.denTqty += rq.denTqty;
+        this.handmouldingreJqty += rq.handmouldingreJqty;
+        this.pittinGqty += rq.pittinGqty;
+        this.flowmarKqty += rq.flowmarKqty;
+
+        this.tooldeF_qty += rq.tooldeF_qty;
+        this.jigdamagEqty += rq.jigdamagEqty;
+
+        this.warpagEqty += rq.warpagEqty;
+        this.scratchmarKqty += rq.scratchmarKqty;
+        this.otheR1qty += rq.otheR1qty;
+        this.otheR2qty += rq.otheR2qty;
       }
       this.totalRejPer2 = this.totalRejVal * 100 / this.totalinsValue;
 
     }
     else {
-      this.totalRejQty = 0;
-      this.totalinsQty = 0;
-      this.totalRejPer = 0;
-      for (const rq of this.DPservice.itemwiserejlist) {
-        this.totalOthersqty += rq.othersqty;
-        this.totalOthers_value += rq.othersvalue;
-
-        const rejqty = rq.reject_qty;
-        const insqty = rq.inspection_qty;
-        //
-        this.totalRejQty += rejqty;
-        this.totalinsQty += insqty;
-        //
+      for (const rq of this.DPservice.itemwiserejlist2) {
+        this.totalRejQty += rq.reject_qty;
+        this.totalinsQty += rq.inspection_qty;
+        this.totalRejPer += rq.rejper;
+        this.totalinsValue += rq.inspection_value
         this.totalRejVal += rq.reject_value;
-
-        this.totalokValue += rq.okvalue;
         this.totalokqtyValue += rq.okqty;
-        this.totalinsValue += rq.inspection_value;
-
-        this.totalMouldedQty += rq.mouldingqty;
-        this.totalMouldedPer += rq.mouldingper;
-
-        this.totalPlantingPer += rq.platingper;
         this.totalPlantingQty += rq.platingqty;
-
-
-        this.totalMouldedVal += rq.moulding_value;
-        this.totalPlantingVal += rq.plating_value;
-
-        this.totalHoldVal += rq.holdvalue;
-        this.totalHoldQty += rq.holdqty;
         this.totalBuffQty += rq.buffingqty;
-        this.totalBuffVal += rq.buffingvalue;
+        this.totalHoldQty += rq.holdqty;
+        this.totalMouldedQty += rq.mouldingqty;
+
+
+        this.pinHolesqty += rq.pinHolesqty;
+        this.skipplatingQty += rq.skipplatingQty;
+        this.whitemarKqty += rq.whitemarKqty;
+        this.dotplastiCqty += rq.dotplastiCqty;
+        this.crburninGqty += rq.crburninGqty;
+        this.copperburninGqty += rq.copperburninGqty;
+        this.roughnesSqty += rq.roughnesSqty;
+        this.nicklEqty += rq.nicklEqty;
+        this.blisteRqty += rq.blisteRqty;
+        this.watermarKqty += rq.watermarKqty;
+        this.shadevaRqty += rq.shadevaRqty;
+        this.platingpeeLqty += rq.platingpeeLqty;
+        this.chemicalmarKqty += rq.chemicalmarKqty;
+
+        this.silverQty += rq.silverQty;
+        this.denTqty += rq.denTqty;
+        this.handmouldingreJqty += rq.handmouldingreJqty;
+        this.pittinGqty += rq.pittinGqty;
+        this.flowmarKqty += rq.flowmarKqty;
+
+        this.tooldeF_qty += rq.tooldeF_qty;
+        this.jigdamagEqty += rq.jigdamagEqty;
+
+        this.warpagEqty += rq.warpagEqty;
+        this.scratchmarKqty += rq.scratchmarKqty;
+        this.otheR1qty += rq.otheR1qty;
+        this.otheR2qty += rq.otheR2qty;
       }
       this.totalRejPer2 = this.totalRejVal * 100 / this.totalinsValue;
+
     }
-    console.log(" this.totalRejPer2 ", this.totalRejPer2);
-    if (!this.totalRejPer2) {
-      this.totalRejPer2 = 0;
-    }
-    return this.totalRejPer2;
-    //  this.totalRejPer = this.totalRejQty / this.totalinsQty  * 100;
   }
 
 
@@ -424,8 +477,6 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     }
     return this.totalRejValueSum;
   }
-
-
 
   selectedPlanName() {
     const me = this;

@@ -18,6 +18,7 @@ import { Top5rejectiondefectwise } from './top5rejectiondefectwise.model';
 import { Salessummary } from './salessummary.model'
 import { Salesdetail } from './salesdetail.model';
 import { Purchasesummary } from '../purchase/purchasesummary.model';
+import { Itemvalueqty } from './itemvalueqty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class DailyproductionService {
   readonly rootUrl = environment.apiUrl;
   public dailyprodlist: Dailyproduction[] = [];
   public itemwiserejlist: Itemwiserej[] = [];
+  public itemwiserejlist2: Itemvalueqty[] = [];
   public salesdetail: Salesdetail[] = [];
   public itemwiserejdetaillist: ItemwiseRejDetail[] = [];
   public itemtopdefectlist: TopDefect[] = [];
@@ -96,6 +98,25 @@ export class DailyproductionService {
       fromdate +
       '/' +
       todate
+    );
+  }
+
+  public getRejectdetailQtyValue(
+    plantcode,
+    fromdate,
+    todate,
+    type
+  ): Observable<Itemvalueqty[]> {
+    return this.http.get<Itemvalueqty[]>(
+      this.rootUrl +
+      '/itemwiserejs/rejectdetaildata_qtyval/' +
+      plantcode +
+      '/' +
+      fromdate +
+      '/' +
+      todate +
+      '/' +
+      type
     );
   }
 

@@ -77,6 +77,7 @@ import { MouldconscalendarComponent } from './mouldconscalendar/mouldconscalenda
 import { RoundhoursComponent } from './roundhours/roundhours.component';
 import { AddroundhourComponent } from './roundhours/addroundhour/addroundhour.component';
 import { RejectionqtyvalueDetailComponent } from './rejection/rejectionqtyvalue-detail/rejectionqtyvalue-detail.component';
+import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail/rejectionvalue-detail.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { RejectionqtyvalueDetailComponent } from './rejection/rejectionqtyvalue-
     MouldconscalendarComponent,
     RoundhoursComponent,
     AddroundhourComponent,
-    RejectionqtyvalueDetailComponent
+    RejectionqtyvalueDetailComponent,
+    RejectionvalueDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -426,8 +428,13 @@ import { RejectionqtyvalueDetailComponent } from './rejection/rejectionqtyvalue-
         canActivate: [AuthGuard],
       },
       {
-        path: "rejqtyvalue",
+        path: "rejqty",
         component: RejectionqtyvalueDetailComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "rejvalue",
+        component: RejectionvalueDetailComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },

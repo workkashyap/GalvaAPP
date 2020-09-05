@@ -41,12 +41,15 @@ export class AttendancesummaryComponent implements OnInit {
 
   selected_startdate: any;
   selected_enddate: any;
-  selectedah: any = '08 - Hrs';
+  selectedah: any = 'All';
   public selectedcode: string = "All";
   public selected_plantname: string;
   totals: any = [];
   grand_total_1: number = 0;
   grand_total_2: number = 0;
+
+  manpowerno: number = 0;
+  manhours: number = 0;
 
   constructor(
     public plantservice: PlantService,
@@ -137,6 +140,8 @@ export class AttendancesummaryComponent implements OnInit {
     me.companies = [];
     me.grand_total_1 = 0;
     me.grand_total_2 = 0;
+    me.manpowerno = 0;
+    me.manhours = 0;
     // All Company List
     this.attenSummary.getallHRsumcont(this.selected_startdate, this.selected_enddate, me.selectedah).toPromise()
       .then(res => {
@@ -187,28 +192,44 @@ export class AttendancesummaryComponent implements OnInit {
             }
             me.sales = [];
             for (let intBrand = 0; intBrand < me.brand.length; intBrand++) {
-              console.log(intBrand, me.brand[intBrand]);
+              // console.log(intBrand, me.brand[intBrand]);
               const dataList = []; //[1,2];
               for (let intCompany = 0; intCompany < me.companies.length; intCompany++) {
+
+                // me.companies[intCompany].deptList2[intBrand].manpowerno_total = me.companies[intCompany].deptList2[intBrand].manpowerno_total + me.companies[intCompany].deptList2[intBrand].manpowerno;
+                //me.companies[intCompany].deptList2[intBrand].manhours_total = me.companies[intCompany].deptList2[intBrand].manhours_total + me.companies[intCompany].deptList2[intBrand].manhours;
+
                 dataList.push(me.companies[intCompany].deptList2[intBrand].manpowerno, me.companies[intCompany].deptList2[intBrand].manhours);
               }
+              //console.log("dataList", dataList);
               me.sales.push({ 'brand': me.brand[intBrand], 'data': dataList });
             }
 
             for (let salesIndex = 0; salesIndex < me.sales.length; salesIndex++) {
               me.i = 0;
+              me.manpowerno = 0;
+              me.manhours = 0;
               for (let dataIndex = 0; dataIndex < me.sales[salesIndex].data.length; dataIndex++) {
                 me.subtitle[me.i].total = me.subtitle[me.i].total + me.sales[salesIndex].data[dataIndex];
+
                 if (me.subtitle[me.i].status == 1) {
                   me.grand_total_1 = me.grand_total_1 + me.sales[salesIndex].data[dataIndex];
+                  me.manpowerno = me.manpowerno + me.sales[salesIndex].data[dataIndex];
+
                 } else {
                   me.grand_total_2 = me.grand_total_2 + me.sales[salesIndex].data[dataIndex];
+                  me.manhours = me.manhours + me.sales[salesIndex].data[dataIndex];
                 }
-
-
                 me.i++;
               }
+              if (!me.sales[salesIndex].gtotal) {
+                me.sales[salesIndex].gtotal = [];
+              }
+              me.sales[salesIndex].gtotal[0] = me.manpowerno;
+              me.sales[salesIndex].gtotal[1] = me.manhours;
             }
+            console.log("sales: ", me.sales);
+
           });
       });
   }
