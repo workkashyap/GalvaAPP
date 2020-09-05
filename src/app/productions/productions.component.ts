@@ -79,7 +79,15 @@ export class ProductionsComponent implements OnInit {
       .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
-        me.plantservice.splantlist = res as Plant[];
+        me.plantservice.splantlist = [];
+        const splantlist = res as Plant[];
+        splantlist.forEach(splant => {
+          if (splant.plantcode == "1040" || splant.plantcode == "1050") {
+            me.plantservice.splantlist.push(splant);
+            // me.selectedcode = ''//me.plantservice.splantlist[0].plantcode;
+          }
+        });
+        // me.plantservice.splantlist = res as Plant[];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
       });
     this.getDetail();

@@ -7,12 +7,15 @@ import { Attendancesummary } from '../shared/hr/attendancesummary.model';
 import { User } from '../shared/login/User.model';
 import { PlantService } from '../shared/plant/plant.service';
 import { Plant } from '../shared/plant/plant.model';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-attendancesummary',
   templateUrl: './attendancesummary.component.html',
   styleUrls: ['./attendancesummary.component.css'],
+  providers: [DatePipe]
+
 })
 export class AttendancesummaryComponent implements OnInit {
   month: any;
@@ -33,11 +36,21 @@ export class AttendancesummaryComponent implements OnInit {
   company_name: string = "GUJARAT MANPOWER";
   public currentUser: User;
 
+  current_month_startdate: any;
+  current_month_enddate: any;
+
+  selected_startdate: any;
+  selected_enddate: any;
+  selectedah: any = '08 - Hrs';
   public selectedcode: string = "All";
   public selected_plantname: string;
   totals: any = [];
+  grand_total_1: number = 0;
+  grand_total_2: number = 0;
+
   constructor(
     public plantservice: PlantService,
+    private datePipe: DatePipe,
     private lservice: LoginService,
     public attenSummary: AttendancesummaryService
   ) {
@@ -57,6 +70,11 @@ export class AttendancesummaryComponent implements OnInit {
     this.month = this.date.getMonth() + 1;
     console.log("this.month : ", this.month);
     this.monthName = this.monthNames[this.month];
+    console.log("this.month : ", this.monthName);
+    this.selectedMonth(this.month);
+    /* */
+
+    /* */
     this.plantservice
       .sgetPlantData(me.currentUser.id)
       .toPromise()
@@ -64,12 +82,44 @@ export class AttendancesummaryComponent implements OnInit {
         me.plantservice.splantlist = res as Plant[];
         //   me.selectedcode = me.plantservice.splantlist[0].plantcode;
         //  me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
-        me.getData();
+        // me.getData();
       });
 
   }
+  selectedEnddate(ev) {
+    this.selected_enddate = ev; // this.datePipe.transform(lastDay, "yyyy-MM-dd");
+    this.getData();
+  }
+  selectedAh(ev) {
+    this.selectedah = ev; // this.datePipe.transform(lastDay, "yyyy-MM-dd");
+    this.getData();
+  }
+  selectedStartdate(ev) {
+    // this.selected_enddate = this.datePipe.transform(lastDay, "yyyy-MM-dd");
+    this.selected_startdate = ev; // this.datePipe.transform(firstDay, "yyyy-MM-dd");
+    this.getData();
+  }
   selectedMonth(ev) {
     this.month = ev;
+    this.monthName = this.monthNames[this.month];
+    const year = new Date().getFullYear();
+    const month = this.monthName;
+    const a = '1-' + month + '-' + year;
+    const date = new Date(a);
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    console.log(firstDay);
+    console.log(lastDay);
+
+    this.current_month_enddate = this.datePipe.transform(lastDay, "yyyy-MM-dd");
+    this.current_month_startdate = this.datePipe.transform(firstDay, "yyyy-MM-dd");
+
+    this.selected_enddate = this.datePipe.transform(lastDay, "yyyy-MM-dd");
+    this.selected_startdate = this.datePipe.transform(firstDay, "yyyy-MM-dd");
+
+    console.log(this.current_month_startdate);
+    console.log(this.current_month_enddate);
+
     this.getData();
   }
   selectedGrid(ev) {
@@ -85,14 +135,15 @@ export class AttendancesummaryComponent implements OnInit {
     me.brand = [];
     me.sales = [];
     me.companies = [];
-
+    me.grand_total_1 = 0;
+    me.grand_total_2 = 0;
     // All Company List
-    this.attenSummary.getallHRsumcont(this.month, me.selectedcode).toPromise()
+    this.attenSummary.getallHRsumcont(this.selected_startdate, this.selected_enddate, me.selectedah).toPromise()
       .then(res => {
         me.companies = res as Attendancesummary[];
         //me.company_name = me.companies[0].companyFName;
         //All Production List
-        this.attenSummary.getallHRwdept(this.month, me.selectedcode, me.company_name).toPromise()
+        this.attenSummary.getallHRwdept(this.selected_startdate, me.selected_enddate, me.selectedah).toPromise()
           .then(res => {
             me.productions = res as Attendancesummary[];
 
@@ -104,7 +155,7 @@ export class AttendancesummaryComponent implements OnInit {
             // console.log(me.productions);
             if (me.companies) {
               for (let indexCompany = 0; indexCompany < me.companies.length; indexCompany++) {
-                me.subtitle.push({ title: 'MANPowerNOS ', total: 0, status: '1', });
+                me.subtitle.push({ title: 'Head Count', total: 0, status: '1', });
 
                 me.subtitle.push({ title: 'Manhoursworked', total: 0, status: '2', });
 
@@ -139,7 +190,7 @@ export class AttendancesummaryComponent implements OnInit {
               console.log(intBrand, me.brand[intBrand]);
               const dataList = []; //[1,2];
               for (let intCompany = 0; intCompany < me.companies.length; intCompany++) {
-                dataList.push( me.companies[intCompany].deptList2[intBrand].manpowerno, me.companies[intCompany].deptList2[intBrand].manhours);
+                dataList.push(me.companies[intCompany].deptList2[intBrand].manpowerno, me.companies[intCompany].deptList2[intBrand].manhours);
               }
               me.sales.push({ 'brand': me.brand[intBrand], 'data': dataList });
             }
@@ -148,6 +199,13 @@ export class AttendancesummaryComponent implements OnInit {
               me.i = 0;
               for (let dataIndex = 0; dataIndex < me.sales[salesIndex].data.length; dataIndex++) {
                 me.subtitle[me.i].total = me.subtitle[me.i].total + me.sales[salesIndex].data[dataIndex];
+                if (me.subtitle[me.i].status == 1) {
+                  me.grand_total_1 = me.grand_total_1 + me.sales[salesIndex].data[dataIndex];
+                } else {
+                  me.grand_total_2 = me.grand_total_2 + me.sales[salesIndex].data[dataIndex];
+                }
+
+
                 me.i++;
               }
             }

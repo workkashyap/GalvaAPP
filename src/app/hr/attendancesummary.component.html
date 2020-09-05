@@ -5,13 +5,10 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-10">
-            <h3>Summary of Attendance for the month of {{monthName}}</h3>
+          <div class="col-sm-4">
+            <h6>Summary of Attendance for the month of {{monthName}}</h6>
           </div>
-          <div class="col-sm-1" style="text-align: center;">
-            <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2  mt-2">
-              <i class="fa fa-file-excel-o"></i> Export</button>
-          </div>
+
           <!--<div class="col-sm-2">
             <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
               (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
@@ -41,6 +38,47 @@
               <option value="12">Dec</option>
             </select>
           </div>
+
+          <div class="col-sm-1">
+            <select class="custom-select" name="month" (change)="selectedAh($event.target.value)" #Month='ngModel'
+              [(ngModel)]='selectedah'>
+              <option value="08 - Hrs">08-Hrs</option>
+              <option value="11 - Hrs">11-Hrs</option>
+              <option value="12 - Hrs">12-Hrs</option>
+              <option value="13 - Hrs">13-Hrs</option>
+              <option value="14 - Hrs">14-Hrs</option>
+              <option value="15 - Hrs">15-Hrs</option>
+              <option value="16 - Hrs">16-Hrs</option>
+              <option value="17 - Hrs">17-Hrs</option>
+              <option value="18 - Hrs">18-Hrs</option>
+              <option value="19 - Hrs">19-Hrs</option>
+              <option value="20 - Hrs">20-Hrs</option>
+              <option value="21 - Hrs">21-Hrs</option>
+            </select>
+          </div>
+          <div class="col-sm-5">
+            <div class="row">
+              <div class="col-md-2 cf">
+                From Date
+              </div>
+              <div class="col-md-4">
+                <input type="date" class="form-control" (change)="selectedStartdate($event.target.value)"
+                  [(ngModel)]="selected_startdate" placeholder="From Date" name="from_date" id="from_date">
+              </div>
+              <div class="col-md-2 cf">
+                To Date
+              </div>
+              <div class="col-md-4">
+                <input type="date" class="form-control" (change)="selectedEnddate($event.target.value)"
+                  [(ngModel)]="selected_enddate" placeholder="To Date" name="to_date" id="to_date">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-1" style="text-align: center;">
+            <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm ">
+              <i class="fa fa-file-excel-o"></i> Export</button>
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -55,9 +93,14 @@
               <div class="card-body p-0" style="overflow-y: scroll; height:auto;">
 
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-
+                <div class="row mb-2 mt-2">
+                  <button class="btn btn-success ml-3">Head Count Total {{grand_total_1}}</button> &nbsp;
+                  <button class="btn btn-info">Manhoursworked Total  {{grand_total_2}}</button>
+                </div>
                 <p-table #dt [value]="sales" [columns]="subtitle">
                   <ng-template pTemplate="header">
+
+
                     <tr>
                       <th rowspan="3">Department</th>
                     </tr>
