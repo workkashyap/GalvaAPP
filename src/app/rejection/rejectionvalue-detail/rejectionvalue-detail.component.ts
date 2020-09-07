@@ -195,11 +195,6 @@ export class RejectionvalueDetailComponent implements OnInit {
     this.filterenable = false;
     this.loading = true;
     this.DPservice.itemwiserejlist2 = [];
-    if (this.selectedtype !== '') {
-      this.selectedtype = this.selectedtype;
-    } else {
-      this.selectedtype = 'NULL';
-    }
 
     this.cols = [
       { field: 'itemcode', header: 'Code' },

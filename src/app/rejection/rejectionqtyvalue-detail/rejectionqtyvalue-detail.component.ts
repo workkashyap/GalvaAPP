@@ -220,11 +220,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     this.filterenable = false;
     this.loading = true;
     this.DPservice.itemwiserejlist2 = [];
-    if (this.selectedtype !== '') {
-      this.selectedtype = this.selectedtype;
-    } else {
-      this.selectedtype = 'NULL';
-    }
+    
     this.mycol();
     this.DPservice.getRejectdetailQtyValue(this.DPservice.plantcode, this.Fromdate, this.Todate, this.selectedtype)
       .toPromise()
