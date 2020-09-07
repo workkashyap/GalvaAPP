@@ -27,8 +27,7 @@ import { Itemvalueqty } from 'src/app/shared/dailyProduction/itemvalueqty.model'
   :host ::ng-deep .ui-table .ui-table-thead > tr > th {
     position: -webkit-sticky;
     position: sticky;
-    background: blue;
-    color: white;
+   
     font-size:10px;
     top: 0px;
     z-index: 1;
@@ -119,6 +118,10 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   totalOthers_value: number = 0;
   totalOthersqty: number = 0;
 
+  platingqty: number = 0;
+  mouldingqty: number = 0;
+  othersqty: number = 0;
+
   iv: number;
   filterenable = false;
   constructor(
@@ -152,16 +155,19 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
       { field: "inspection_qty", header: "Insp. Qty." },
       { field: "okqty", header: "Ok Qty" },
       { field: "reject_qty", header: "Reject Qty." },
+
+      { field: "rejper", header: "Reject%" },
+      { field: "holdqty", header: "Hold Qty." },
+      { field: "buffingqty", header: "Buffing Qty." },
     ];
 
 
     if (this.reporttype == "Plating") {
       this.cols.push(
+        { field: "mouldingqty", header: "Moulding Qty" },
         { field: "platingqty", header: "Plating Qty" },
-
-        { field: "rejper", header: "Reject%" },
-        { field: "holdqty", header: "Hold Qty." },
-        { field: "buffingqty", header: "Buffing Qty." },
+        { field: "tooldeF_qty", header: "Tooldef" },
+        { field: "othersqty", header: "Others" },
 
         { field: "pinHolesqty", header: "Pinhole" },
         { field: "skipplatingQty", header: "Skipplating" },
@@ -182,10 +188,6 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
       this.cols.push(
         { field: "mouldingqty", header: "Moulding Qty" },
 
-        { field: "rejper", header: "Reject%" },
-        { field: "holdqty", header: "Hold Qty." },
-        { field: "buffingqty", header: "Buffing Qty." },
-
         { field: "silverQty", header: "Silver" },
         { field: "denTqty", header: "Dent" },
         { field: 'handmouldingreJqty', header: 'Hand Moulding Rej' },
@@ -195,19 +197,13 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     }
     if (this.reporttype == "ToolDefect") {
       this.cols.push(
-        { field: "rejper", header: "Reject%" },
-        { field: "holdqty", header: "Hold Qty." },
-        { field: "buffingqty", header: "Buffing Qty." },
-
         { field: "tooldeF_qty", header: "Tooldef" },
         { field: "jigdamagEqty", header: "Jig Damage" },
       );
     }
     if (this.reporttype == "Others") {
       this.cols.push(
-        { field: "rejper", header: "Reject%" },
-        { field: "holdqty", header: "Hold Qty." },
-        { field: "buffingqty", header: "Buffing Qty." },
+        { field: "othersqty", header: "Others" },
 
         { field: "warpagEqty", header: "War Page" },
         { field: "scratchmarKqty", header: "Scratch Mark" },
@@ -220,7 +216,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     this.filterenable = false;
     this.loading = true;
     this.DPservice.itemwiserejlist2 = [];
-    
+
     this.mycol();
     this.DPservice.getRejectdetailQtyValue(this.DPservice.plantcode, this.Fromdate, this.Todate, this.selectedtype)
       .toPromise()
@@ -360,10 +356,16 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
 
     this.totalBuffQty = 0;
     this.totalHoldQty = 0;
-    this.totalMouldedQty = 0; 
+    this.totalMouldedQty = 0;
+
+    this.othersqty = 0;
     
+
     if (this.filterenable === true) {
       for (const rq of this.filterItemrejarray) {
+        this.othersqty += rq.othersqty;
+
+
         this.totalRejQty += rq.reject_qty;
         this.totalinsQty += rq.inspection_qty;
         this.totalRejPer += rq.rejper;
@@ -409,6 +411,9 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     }
     else {
       for (const rq of this.DPservice.itemwiserejlist2) {
+        this.othersqty += rq.othersqty;
+
+
         this.totalRejQty += rq.reject_qty;
         this.totalinsQty += rq.inspection_qty;
         this.totalRejPer += rq.rejper;

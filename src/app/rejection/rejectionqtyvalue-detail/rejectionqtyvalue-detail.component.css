@@ -35,3 +35,8 @@
     }
   
   }
+  
+  .platingqty,.mouldingqty,.othersqty,.tooldeF_qty {
+    background: #100cef !important;
+    color:white  !important;
+}
