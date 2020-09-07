@@ -35,3 +35,7 @@
     }
   
   }
+  .moulding_value,.plating_value,.tooldeF_value,.othersvalue {
+    background: #100cef !important;
+    color:white  !important;
+}

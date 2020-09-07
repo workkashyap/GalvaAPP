@@ -83,4 +83,8 @@ export class Itemvalueqty {
   holdqty: number = 0;
   buffingqty: number = 0;
   mouldingqty: number = 0;
+
+  moulding_value: number = 0;
+  plating_value: number = 0;
+  othersvalue: number = 0;
 }

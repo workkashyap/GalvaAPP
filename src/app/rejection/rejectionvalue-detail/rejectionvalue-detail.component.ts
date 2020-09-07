@@ -30,8 +30,7 @@ import { Plant } from '../../shared/plant/plant.model';
   :host ::ng-deep .ui-table .ui-table-thead > tr > th {
     position: -webkit-sticky;
     position: sticky;
-    background: blue;
-    color: white;
+   
     font-size:10px;
     top: 0px;
     z-index: 1;
@@ -110,6 +109,9 @@ export class RejectionvalueDetailComponent implements OnInit {
   totalinsValue: number = 0;
   totalRejPer2: number = 0;
 
+  moulding_value: number = 0;
+  plating_value: number = 0;
+  othersvalue: number = 0;
 
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
@@ -137,8 +139,9 @@ export class RejectionvalueDetailComponent implements OnInit {
   }
   onselectReporttype(ev) {
     this.reporttype = ev;
-
-
+    this.mycol();
+  }
+  mycol() {
     this.cols = [
       { field: 'itemcode', header: 'Code' },
       { field: 'itemname', header: 'Name' },
@@ -147,10 +150,16 @@ export class RejectionvalueDetailComponent implements OnInit {
       { field: "reject_value", header: "Reject Val." },
       { field: "rejper", header: "Reject%" },
       { field: "holdvalue", header: "Hold Val." },
-      { field: "buffingvalue", header: "buffing Val." },
+      { field: "buffingvalue", header: "Buffing Val." },
     ];
     if (this.reporttype == "Plating") {
       this.cols.push(
+
+        { field: "moulding_value", header: "Moulding" },
+        { field: "plating_value", header: "Plating" },
+        { field: 'tooldeF_value', header: 'Tooldef' },
+        { field: 'othersvalue', header: 'others' },
+
         { field: "pinholEvalue", header: "Pinhole" },
         { field: "skipplatinGval", header: "Skipplating" },
         { field: 'whitemarKval', header: 'Whitemark' },
@@ -168,6 +177,8 @@ export class RejectionvalueDetailComponent implements OnInit {
     }
     if (this.reporttype == "Moulding") {
       this.cols.push(
+        { field: "moulding_value", header: "Moulding" },
+
         { field: "silveRval", header: "Silver" },
         { field: "denTval", header: "Dent" },
         { field: 'handmouldingreJval', header: 'Hand Moulding Rej' },
@@ -183,69 +194,20 @@ export class RejectionvalueDetailComponent implements OnInit {
     }
     if (this.reporttype == "Others") {
       this.cols.push(
+        { field: 'othersvalue', header: 'others' },
+
         { field: "warpagEval", header: "War Page" },
         { field: "scratchmarKval", header: "Scratch Mark" },
         { field: 'otheR1val', header: 'Other1' },
         { field: "otheR2val", header: "Other2" },
       );
     }
-
   }
   onviewDetail() {
     this.filterenable = false;
     this.loading = true;
     this.DPservice.itemwiserejlist2 = [];
-
-    this.cols = [
-      { field: 'itemcode', header: 'Code' },
-      { field: 'itemname', header: 'Name' },
-      { field: "inspection_value", header: "Insp. Val." },
-      { field: "okvalue", header: "Ok Value" },
-      { field: "reject_value", header: "Reject Val." },
-      { field: "rejper", header: "Reject%" },
-      { field: "holdvalue", header: "Hold Val." },
-      { field: "buffingvalue", header: "buffing Val." },
-    ];
-    if (this.reporttype == "Plating") {
-      this.cols.push(
-        { field: "pinholEvalue", header: "Pinhole" },
-        { field: "skipplatinGval", header: "Skipplating" },
-        { field: 'whitemarKval', header: 'Whitemark' },
-        { field: 'dotplastiCval', header: 'Dotplastic' },
-        { field: 'crburninGval', header: 'Crburning' },
-        { field: "copperburninGval", header: "Copper Burning" },
-        { field: "nicklEval", header: "Nickle" },
-        { field: "roughnesSval", header: "Roughness" },
-        { field: "blisteRval", header: "Blister" },
-        { field: "watermarKval", header: "Watermark" },
-        { field: "shadevaRval", header: "Shadevar" },
-        { field: "platingpeeLval", header: "Platingpeel" },
-        { field: "chemicalmarKval", header: "Chemicalmark" },
-      )
-    }
-    if (this.reporttype == "Moulding") {
-      this.cols.push(
-        { field: "silveRval", header: "Silver" },
-        { field: "denTval", header: "Dent" },
-        { field: 'handmouldingreJval', header: 'Hand Moulding Rej' },
-        { field: "pittinGval", header: "Pitting" },
-        { field: "flowmarKval", header: "Flowmark" },
-      );
-    }
-    if (this.reporttype == "ToolDefect") {
-      this.cols.push(
-        { field: "tooldeF_value", header: "Tooldef" },
-        { field: "jigdamagEval", header: "Jig Damage" },
-      );
-    }
-    if (this.reporttype == "Others") {
-      this.cols.push(
-        { field: "warpagEval", header: "War Page" },
-        { field: "scratchmarKval", header: "Scratch Mark" },
-        { field: 'otheR1val', header: 'Other1' },
-        { field: "otheR2val", header: "Other2" },
-      );
-    }
+    this.mycol();
 
     this.DPservice.getRejectdetailQtyValue(this.DPservice.plantcode, this.Fromdate, this.Todate, this.selectedtype)
       .toPromise()
@@ -382,9 +344,17 @@ export class RejectionvalueDetailComponent implements OnInit {
 
     this.totalRejPer2 = 0;
 
+    this.moulding_value = 0;
+    this.plating_value = 0;
+    this.othersvalue = 0;
+
     if (this.filterenable === true) {
 
       for (const rq of this.filterItemrejarray) {
+
+        this.moulding_value += rq.moulding_value;
+        this.plating_value += rq.plating_value;
+        this.othersvalue += rq.othersvalue;
 
         this.totalBuffVal += rq.buffingvalue;
         this.totalHoldVal += rq.holdvalue;
@@ -425,6 +395,10 @@ export class RejectionvalueDetailComponent implements OnInit {
     }
     else {
       for (const rq of this.DPservice.itemwiserejlist2) {
+
+        this.moulding_value += rq.moulding_value;
+        this.plating_value += rq.plating_value;
+        this.othersvalue += rq.othersvalue;
 
         this.totalBuffVal += rq.buffingvalue;
         this.totalHoldVal += rq.holdvalue;
