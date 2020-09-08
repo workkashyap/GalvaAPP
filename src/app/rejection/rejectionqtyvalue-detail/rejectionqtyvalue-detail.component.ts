@@ -164,8 +164,8 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
 
     if (this.reporttype == "Plating") {
       this.cols.push(
-        { field: "mouldingqty", header: "Moulding Qty" },
         { field: "platingqty", header: "Plating Qty" },
+        { field: "mouldingqty", header: "Moulding Qty" },
         { field: "tooldeF_qty", header: "Tooldef" },
         { field: "othersqty", header: "Others" },
 

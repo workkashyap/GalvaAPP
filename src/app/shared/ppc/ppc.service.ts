@@ -14,9 +14,9 @@ export class PpcService {
   public ppc: Ppc[] = [];
 
   constructor(public http: HttpClient) { }
-  public allData( date): Observable<Ppc[]> {
+  public allData(date): Observable<Ppc[]> {
     return this.http.get<Ppc[]>(
-      this.rootUrl + '/PPCimports/getppcImport/'+ date
+      this.rootUrl + '/PPCimports/getppcImport/' + date
     );
   }
   public getCompliancePer(company, date): Observable<Ppc[]> {
@@ -107,7 +107,13 @@ export class PpcService {
   //ppcsummaryclone
   public ppcsummaryclone(date) {
     return this.http.get<Ppc[]>(
-      this.rootUrl + '/ppCimports/ppcsummaryclone/'+date
+      this.rootUrl + '/ppCimports/ppcsummaryclone/' + date
     );
   }
+
+  updateppcimports(row, date) {
+    return this.http.get(this.rootUrl + '/ppcimports/UpdateSchQtyPPC/' + row.schqty + '/' + row.custno + '/' + row.itemcode + '/' + date);
+    // return this.http.put(this.rootUrl + '/ppcimports/' + row.id, row);
+  }
+
 }

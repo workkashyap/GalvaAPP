@@ -58,6 +58,7 @@ export class PpccalendarComponent implements OnInit {
 
   public selectedcode: string;
   public selected_plantname: string;
+  editing: boolean = false;
 
   monthname: any;
   monthNames: any;
@@ -90,6 +91,8 @@ export class PpccalendarComponent implements OnInit {
 
   summaryModalData: any;
   cols: any;
+  cols_schvsdisp: any;
+
   modaltype: number = 1;
   red: number = 0;
   orange: number = 0;
@@ -182,6 +185,7 @@ export class PpccalendarComponent implements OnInit {
     });
     me.schedulevalue = me.schedulevalue / 100000;
   }
+
   getData() {
     const me = this;
     this.schedulevalue = 0;
@@ -230,8 +234,117 @@ export class PpccalendarComponent implements OnInit {
     this.modaltype = 2;
     this.bgClass = 'removepd2';
     this.galvaGroupid = 'ppcsummary';
-    $('#summaryModal').modal('show');
-    this.getData();
+    $('#summaryModal2').modal('show');
+
+    const me = this;
+    this.schedulevalue = 0;
+    //me.schedulevalueHome = 0;
+    this.cols_schvsdisp = [
+      { field: 'action', header: 'Action' },
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
+      { field: 'itemname', header: 'Material' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'schvalue', header: 'Schedule Value' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
+    ];
+
+    this.loading = true;
+    this.summaryModalData = [];
+    this.ppcService
+      .getPPCCalsummary(this.startdate, this.galvaGroupid)
+      .toPromise().then(res => {
+        me.summaryModalData = res as Ppc[];
+        // me.schedulevalueHome = me.schedulevalueHome / 100000;
+        me.schedulevalue = me.schedulevalue / 100000;
+        me.loading = false;
+      });
+  }
+  refresh() {
+    const me = this;
+    this.loading = true;
+    this.summaryModalData = [];
+    this.ppcService
+      .getPPCCalsummary(this.startdate, this.galvaGroupid)
+      .toPromise().then(res => {
+        me.summaryModalData = res as Ppc[];
+        // me.schedulevalueHome = me.schedulevalueHome / 100000;
+        me.schedulevalue = me.schedulevalue / 100000;
+        me.loading = false;
+      });
+  }
+  //edit
+  onRowEditInitSchVsDisp(row: any) {
+    this.cols_schvsdisp = [
+      { field: 'action', header: 'Action' },
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
+      { field: 'itemname', header: 'Material' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'schvalue', header: 'Schedule Value' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
+    ];
+    this.clonedData[row.id] = { row };
+  }
+
+
+  onRowEditCancelSchVsDisp(row: any, index: number) {
+    // this.allActionPlan[index] = this.clonedData[row.id];
+    if (!row.id) {
+      this.summaryModalData.splice(index, 1);
+    }
+    delete this.clonedData[row.id];
+    this.resetColumnWidthSchVsDisp();
+  }
+
+
+  onRowEditSaveSchVsDisp(row: any) {
+    const me = this;
+    if (row.id) {
+      console.log("Update", row);
+      this.ppcService.updateppcimports(row,this.startdate).subscribe(
+        res => {
+          me.toastr.success('Updated Successfully', 'Save PPC Summary');
+          me.resetColumnWidthSchVsDisp();
+          me.refresh();
+        },
+        err => {
+          console.log(err);
+        });
+    }
+  }
+
+  resetColumnWidthSchVsDisp() {
+    this.cols_schvsdisp = [
+      { field: 'action', header: 'Action' },
+      { field: 'name', header: 'Customer Name' },
+      { field: 'itemcode', header: 'Item Code' },
+      { field: 'itemname', header: 'Material' },
+      { field: 'schqty', header: 'Schedule Current' },
+      { field: 'schvalue', header: 'Schedule Value' },
+      { field: 'dispatchqty', header: 'Dispatch' },
+      { field: 'balance', header: 'Balance' },
+      { field: 'fgVZ', header: 'FG  Vapi/Zaroli' },
+      { field: 'totaltransit', header: 'Transit' },
+      { field: 'fgother', header: 'FG at chennai / ap / pune' },
+      { field: 'fgmouldstock', header: 'Moulded stock' },
+      { field: 'mouldpartreq', header: 'Moud Parts Req.' },
+      { field: 'platingpartreq', header: 'Plat. Parts Req.' },
+    ];
   }
   customNumber(value) {
     return parseInt(value, 10) //convert to int
@@ -259,7 +372,6 @@ export class PpccalendarComponent implements OnInit {
       }, error => {
       });
   }
-  editing: boolean = false;
 
   onRowEditSave(row: any) {
     const me = this;

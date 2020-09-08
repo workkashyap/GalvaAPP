@@ -883,4 +883,174 @@
         </div>
       </div>
     </div>
+    <!--Editable Summary Modal -->
+    <div class="modal fade bd-example-modal-xl" id="summaryModal2" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row col-md-11">
+              <div class="col-md-6">
+                <h5>PPC Summary
+                  <span *ngIf="monthname">({{monthname}})</span>
+                </h5>
+              </div>
+
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-y: scroll; height: 550px;">
+              <p-table #summaryModal2 [columns]="cols_schvsdisp" dataKey="id" editMode="row" class="ptable"
+                [paginator]="false" [resizableColumns]="true" [value]="summaryModalData">
+                <!--
+                [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true" selectionMode="single"
+                [style]="{'width':'100%'}" [value]="summaryModalData" [paginator]="false" [rows]="15"
+                [responsive]="true"-->
+
+                <ng-template pTemplate="header" let-columns>
+                  <!-- header button section -->
+                  <tr>
+                    <td *ngIf="modaltype==2" style="width: 80px;">
+                      <button type="button" label="EXCEL" (click)="summaryModal2.exportCSV()"
+                        class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button>
+                    </td>
+                    <td style=" width:185px;">
+                      <div class="input-group mb-2 ">
+                        <input type="text" pInputText placeholder="Global Filter"
+                          (input)="summaryModal2.filterGlobal($event.target.value, 'contains')"
+                          (input)="loadmdata($event.target.value , summaryModal2)" class="form-control fix-height">
+                        <div class="input-group-append fix-height">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td *ngIf="modaltype==2" style="width: 120px;">
+                      <select name="galvaGroupid" class="form-control mb-2" [(ngModel)]="galvaGroupid"
+                        (change)="selectedGalvaGroup($event.target.value)"
+                        style="height: calc(2.01rem + 2px);font-size: 12px;padding: 0.315rem .45rem;">
+                        <option value="ppcsummary">Galva Group</option>
+                        <option value="ppcsummaryshpt">Galva SHPT</option>
+                      </select>
+                    </td>
+
+                    <td *ngIf="modaltype==2" style="width: 210px;">
+                    </td>
+                    <td>
+                    </td>
+                    <td *ngIf="modaltype==2" style="width: 100px;">
+                      <button class="btn btn-sm btn-success"
+                        style="padding: 6px 2px;font-size: 10px;">{{schedulevalue | number:'1.2-2'}} Lacs</button>
+                    </td>
+                    <td *ngIf="modaltype==1"> <button type="button" label="EXCEL" (click)="summaryModal2.exportCSV()"
+                        class="btn btn-success btn-sm mb-2">
+                        <i class="fa fa-file-excel-o"></i> Export</button></td>
+                    <td *ngIf="modaltype==1" style="width: 220px;">
+
+                    </td>
+
+                  </tr>
+                  <!-- regular date section -->
+
+                  <tr class="tbl-tr">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px;font-size: 10px;"
+                      class="tbl-th">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="rowData">
+                    <td style="text-align:center">
+                      <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="ui-button-info" (click)="onRowEditInitSchVsDisp(rowData)"
+                        style="width: 22px; height: 22px;"></button>
+
+                      <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                        class="ui-button-danger" (click)="onRowEditCancelSchVsDisp(rowData, ri)"
+                        style="width: 22px; height: 22px;"></button>
+
+                      <button *ngIf="editing" pButton type="submit" pSaveEditableRow icon="pi pi-check"
+                        class="ui-button-success" style="margin-left: .5em;width: 22px; height: 22px;"
+                        (click)="onRowEditSaveSchVsDisp(rowData)"></button>
+                    </td>
+                    <td class="cfs"> {{rowData.name}} </td>
+                    <td class="cfs"> {{rowData.itemcode}} </td>
+                    <td class="cfs">{{rowData.itemname}}</td>
+                    <td class="cfs">
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="number" [(ngModel)]="rowData.schqty" class="form-control" required
+                            min="0">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{rowData.schqty}}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td class="cfs">
+                      {{rowData.schvalue}}
+                    </td>
+                    <td class="cfs"> {{rowData.dispatchqty}} </td>
+                    <td class="cfs"> {{rowData.balance}} </td>
+                    <td class="cfs"> {{rowData.fgVZ}} </td>
+                    <td class="cfs"> {{rowData.totaltransit}} </td>
+                    <td class="cfs"> {{rowData.fgother}} </td>
+                    <td class="cfs"> {{rowData.fgmouldstock}} </td>
+                    <td class="cfs"> {{rowData.mouldpartreq}} </td>
+                    <td class="cfs"> {{rowData.platingpartreq}} </td>
+                    <!--
+                    <td *ngFor="let col of columns" [ngClass]="bgClass">
+                      <span *ngIf="col.field=='budat'">
+                        {{rowData[col.field]  | date :'dd MMM, y'}}
+                      </span>
+                      <span *ngIf="col.field=='itemcode'">
+                        {{ this.customNumber(rowData[col.field]) }}
+                      </span>
+                      <span *ngIf="col.field=='schvalue'">
+                        {{ this.customNumber(rowData[col.field]) }}
+                      </span>
+                      <span
+                        *ngIf="col.field!='schvalue' && col.field!='budat' && col.field!='itemcode' && col.field!='comp'">
+                        {{rowData[col.field]}}</span>
+
+                      <span *ngIf="col.field=='comp' && removeBg==0 ">
+
+                        <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<red">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
+                        <button class="btn btn-warning myCompbtn"
+                          *ngIf="rowData[col.field]>=red && rowData[col.field] < orange">
+                          {{rowData[col.field]  | number:'1.0-0' }}</button>
+                        <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=orange">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
+
+                      </span>
+                      <span *ngIf="col.field=='comp' && removeBg==1 ">
+                        <button class="btn btn-danger myCompbtn" *ngIf="rowData[col.field]<50">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
+                        <button class="btn btn-warning myCompbtn"
+                          *ngIf="rowData[col.field]>=50 && rowData[col.field] < 80">
+                          {{rowData[col.field]  | number:'1.0-0' }}</button>
+                        <button class="btn btn-success myCompbtn" *ngIf="rowData[col.field]>=80">
+                          {{rowData[col.field]  | number:'1.0-0'  }}</button>
+                      </span>
+                    </td>-->
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- /.content-wrapper -->

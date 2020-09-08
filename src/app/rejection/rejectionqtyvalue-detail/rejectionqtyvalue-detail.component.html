@@ -11,7 +11,7 @@
             <div class="card-header">
               <div class="row ">
                 <div class="col-md-10">
-                  <h5 class="card-title-md">{{reporttype}} Summary Report</h5>
+                  <h5 class="card-title-md">Production Summary Qty Report</h5>
                 </div>
                 <div class="col-md-2 ">
 
@@ -159,26 +159,26 @@
             <!--value-->
             <!--Plating-->
 
-            <td *ngIf="this.reporttype == 'Plating'">
-              <button class="btn btn-sm  text-dark bg-info custom-fs"
-                style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalMouldedQty | number:'1.2-2'}}
-              </button>
-            </td>
-            <td *ngIf="this.reporttype == 'Plating'">
-              <button class="btn btn-sm  text-dark bg-info custom-fs"
+            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+              <button class="btn btn-sm  text-dark bg-danger custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalPlantingQty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
-              <button class="btn btn-sm  text-dark bg-info custom-fs"
+            <td *ngIf="this.reporttype == 'Plating'" style="width: 63px;">
+              <button class="btn btn-sm  text-dark bg-warning custom-fs"
+                style="float: right;width: 100%;padding: 5px 2px;">
+                {{ totalMouldedQty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+              <button class="btn btn-sm  text-dark bg-storesspares custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ tooldeF_qty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
-              <button class="btn btn-sm  text-dark bg-info custom-fs"
+            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+              <button class="btn btn-sm  text-dark bg-summary custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ othersqty | number:'1.2-2'}}
               </button>

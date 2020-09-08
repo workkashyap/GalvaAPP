@@ -35,7 +35,22 @@
     }
   
   }
-  .moulding_value,.plating_value,.tooldeF_value,.othersvalue {
-    background: #100cef !important;
+ .moulding_value {
+    background: #d6c532  !important;
     color:white  !important;
+}
+.plating_value {
+    background: #fe5d70 !important;
+    color:white  !important;
+}
+.tooldeF_value {
+    background: #ef0598 !important;
+    color:white  !important;
+}
+.othersvalue {
+    background: #f78554 !important;
+    color:white  !important;
+}
+.bg-info{
+    background: linear-gradient(to right,#08ca55,#28af64) !important;
 }

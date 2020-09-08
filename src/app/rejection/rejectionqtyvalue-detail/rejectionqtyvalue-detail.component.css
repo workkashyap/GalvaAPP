@@ -36,7 +36,23 @@
   
   }
   
-  .platingqty,.mouldingqty,.othersqty,.tooldeF_qty {
-    background: #100cef !important;
+ .mouldingqty {
+    background: #d6c532  !important;
     color:white  !important;
+}
+.platingqty {
+    background: #fe5d70 !important;
+    color:white  !important;
+}
+.tooldeF_qty {
+    background: #ef0598 !important;
+    color:white  !important;
+}
+.othersqty {
+    background: #f78554 !important;
+    color:white  !important;
+}
+
+.bg-info{
+    background: linear-gradient(to right,#08ca55,#28af64) !important;
 }
