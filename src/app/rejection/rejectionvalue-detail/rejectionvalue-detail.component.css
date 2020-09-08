@@ -47,10 +47,24 @@
     background: #ef0598 !important;
     color:white  !important;
 }
+.mechfail_value {
+    background: #062af1 !important;
+    color:white  !important;
+}
 .othersvalue {
     background: #f78554 !important;
     color:white  !important;
 }
 .bg-info{
     background: linear-gradient(to right,#08ca55,#28af64) !important;
+}
+
+
+.ptable{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+}
+.ui-table table {
+    transform: rotateX(180deg);
 }

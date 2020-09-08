@@ -89,4 +89,6 @@ export class Itemvalueqty {
   othersvalue: number = 0;
 
   othersqty:number=0;
+  mechfail_value:number=0;
+  mechfail_qty:number=0;
 }

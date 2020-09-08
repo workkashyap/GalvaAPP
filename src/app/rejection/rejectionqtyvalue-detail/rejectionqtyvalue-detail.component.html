@@ -70,10 +70,12 @@
                     <div class="col-md-12 mt-2">
                       <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
                         [(ngModel)]="this.reporttype" (change)="onselectReporttype($event.target.value)">
+                        <option value="All">All</option>
                         <option value="Plating">Plating</option>
                         <option value="Moulding">Moulding</option>
                         <option value="ToolDefect">ToolDefect</option>
                         <option value="Others">Others</option>
+                        <option value="Summary">Summary</option>
                       </select>
                     </div>
                   </div>
@@ -101,16 +103,16 @@
         </div>
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-      <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
-        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
-        [value]="DPservice.itemwiserejlist2" [paginator]="true" [rows]="20" [resizableColumns]="true"
-        (onRowSelect)="onRowSelect($event)">
+      <p-table #dt [columns]="cols" [responsive]="true" selectionMode="single"
+        [style]="{'text-align': 'center','font-size': '0.7em','width':'auto','transform':'rotateX(180deg)'}"
+        [(selection)]="selectedItemrej" [value]="DPservice.itemwiserejlist2" [paginator]="true" [rows]="20"
+        [resizableColumns]="true" (onRowSelect)="onRowSelect($event)" class="ptable"
+        [ngClass]="{'all': this.reporttype=='All'}">
 
         <ng-template pTemplate="header" let-columns>
-
           <tr>
             <td colspan="2" style="width: 230px;">
-              <div class="input-group custome-gs mb-2">
+              <div class="input-group custome-gs mb-2  mt-1">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="loadper($event.target.value , dt)"
                   (input)="dt.filterGlobal($event.target.value, 'contains')">
@@ -119,7 +121,6 @@
                 </div>
               </div>
             </td>
-
             <td>
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
@@ -159,99 +160,107 @@
             <!--value-->
             <!--Plating-->
 
-            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+            <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'All') || this.reporttype == 'Summary'"
+              style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-danger custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalPlantingQty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'" style="width: 63px;">
+            <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'All') || this.reporttype == 'Summary'"
+              style="width: 63px;">
               <button class="btn btn-sm  text-dark bg-warning custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ totalMouldedQty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+            <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'All') || this.reporttype == 'Summary'"
+              style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-storesspares custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ tooldeF_qty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'" style="width: 54px;">
+            <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'All') || this.reporttype == 'Summary'"
+              style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-summary custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ othersqty | number:'1.2-2'}}
               </button>
             </td>
-
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Summary'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-others_value" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ mechfail_qty | number:'1.2-2'}}
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All' ">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ pinHolesqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ skipplatingQty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm  text-dark bg-info custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ whitemarKqty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ dotplastiCqty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ crburninGqty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ copperburninGqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ roughnesSqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ nicklEqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ blisteRqty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ watermarKqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ shadevaRqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ platingpeeLqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Plating'">
+            <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ chemicalmarKqty | number:'1.2-2'}}
               </button>
@@ -264,28 +273,28 @@
               </button>
             </td>
             <!--Moulding-->
-            <td *ngIf="this.reporttype == 'Moulding'">
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ silverQty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Moulding'">
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs  bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ denTqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Moulding'">
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ handmouldingreJqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Moulding'">
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ pittinGqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Moulding'">
+            <td *ngIf="this.reporttype == 'Moulding' || this.reporttype=='All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ flowmarKqty | number:'1.2-2'}}
               </button>
@@ -296,39 +305,41 @@
                 {{ tooldeF_qty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'ToolDefect'">
+            <td *ngIf="this.reporttype == 'ToolDefect'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ jigdamagEqty | number:'1.2-2'}}
               </button>
             </td>
             <!--Others-->
-            <td *ngIf="this.reporttype == 'Others'">
+            <td *ngIf="this.reporttype == 'Others' ">
               <button class="btn btn-sm  text-dark bg-info custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
                 {{ othersqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Others'">
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ warpagEqty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Others'">
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ scratchmarKqty | number:'1.2-2'}}
               </button>
             </td>
 
-            <td *ngIf="this.reporttype == 'Others'">
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ otheR1qty | number:'1.2-2'}}
               </button>
             </td>
-            <td *ngIf="this.reporttype == 'Others'">
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ otheR2qty | number:'1.2-2'}}
               </button>
             </td>
+
+           
           </tr>
           <tr>
             <th *ngFor="let col of columns" [class]="col.field" [pSortableColumn]="col.field" pResizableColumn>

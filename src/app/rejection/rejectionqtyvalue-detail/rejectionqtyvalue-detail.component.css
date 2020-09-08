@@ -52,7 +52,10 @@
     background: #f78554 !important;
     color:white  !important;
 }
-
+.mechfail_qty{
+    background: #062af1 !important;
+    color:white  !important;
+}
 .bg-info{
     background: linear-gradient(to right,#08ca55,#28af64) !important;
 }

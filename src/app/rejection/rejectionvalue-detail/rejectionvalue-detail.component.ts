@@ -27,27 +27,35 @@ import { Plant } from '../../shared/plant/plant.model';
   templateUrl: './rejectionvalue-detail.component.html',
   providers: [DatePipe],
   styles: [`
-  :host ::ng-deep .ui-table .ui-table-thead > tr > th {
-    position: -webkit-sticky;
-    position: sticky;
+  :host ::ng-deep .all .ui-table  table {
+    width:auto;
+  }
+  :host ::ng-deep .ui-table-resizable > .ui-table-wrapper > table{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+  }
+  :host ::ng-deep .ui-table-resizable > p-paginator > div {
+    transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg);
+    -webkit-transform: rotateX(180deg);
+  }
+  :host ::ng-deep ::-webkit-scrollbar {
+    width: 8px;
+  }
+  /* Track */
+  :host ::ng-deep ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
    
-    font-size:10px;
-    top: 0px;
-    z-index: 1;
+  /* Handle */
+  :host ::ng-deep ::-webkit-scrollbar-thumb {
+    background: #c1c1c1; 
   }
-
-  :host ::ng-deep .ui-table-resizable > .ui-table-wrapper {
-    overflow-x: initial !important;
-  }
-
-  :host ::ng-deep .ui-table-resizable .ui-resizable-column {
-    position: sticky !important;
-  }
-
-  @media screen and (max-width: 64em) {
-    :host ::ng-deep .ui-table .ui-table-thead > tr > th {
-      top: 0px;
-    }
+  
+  /* Handle on hover */
+  :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+    background: #c1c1c1; 
   }
 
 `]
@@ -63,7 +71,7 @@ export class RejectionvalueDetailComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
   public selectedtype: string;
-  reporttype: any = 'Plating';
+  reporttype: any = 'All';
   cols: any[];
   subcols: any[];
   editcols: any[];
@@ -112,6 +120,7 @@ export class RejectionvalueDetailComponent implements OnInit {
   moulding_value: number = 0;
   plating_value: number = 0;
   othersvalue: number = 0;
+  mechfail_value: number = 0;
 
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
@@ -152,6 +161,46 @@ export class RejectionvalueDetailComponent implements OnInit {
       { field: "holdvalue", header: "Hold Val." },
       { field: "buffingvalue", header: "Buffing Val." },
     ];
+    if (this.reporttype == "All") {
+      this.cols.push(
+        { field: "plating_value", header: "Plating" },
+        { field: "moulding_value", header: "Moulding" },
+        { field: 'tooldeF_value', header: 'Tooldef' },
+        { field: 'othersvalue', header: 'others' },
+        { field: 'mechfail_value', header: 'Mechfail' },
+
+        { field: "pinholEvalue", header: "Pinhole" },
+        { field: "skipplatinGval", header: "Skipplating" },
+        { field: 'whitemarKval', header: 'Whitemark' },
+        { field: 'dotplastiCval', header: 'Dotplastic' },
+        { field: 'crburninGval', header: 'Crburning' },
+        { field: "copperburninGval", header: "Copper Burning" },
+        { field: "nicklEval", header: "Nickle" },
+        { field: "roughnesSval", header: "Roughness" },
+        { field: "blisteRval", header: "Blister" },
+        { field: "watermarKval", header: "Watermark" },
+        { field: "shadevaRval", header: "Shadevar" },
+        { field: "platingpeeLval", header: "Platingpeel" },
+        { field: "chemicalmarKval", header: "Chemicalmark" },
+
+        { field: "silveRval", header: "Silver" },
+        { field: "denTval", header: "Dent" },
+        { field: 'handmouldingreJval', header: 'Hand Moulding Rej' },
+        { field: "pittinGval", header: "Pitting" },
+        { field: "flowmarKval", header: "Flowmark" },
+
+        { field: "jigdamagEval", header: "Jig Damage" },
+
+
+        { field: "warpagEval", header: "War Page" },
+        { field: "scratchmarKval", header: "Scratch Mark" },
+        { field: 'otheR1val', header: 'Other1' },
+        { field: "otheR2val", header: "Other2" },
+
+        { field: 'mechfail_value', header: 'Mechfail' },
+
+      )
+    }
     if (this.reporttype == "Plating") {
       this.cols.push(
         { field: "plating_value", header: "Plating" },
@@ -193,12 +242,24 @@ export class RejectionvalueDetailComponent implements OnInit {
     }
     if (this.reporttype == "Others") {
       this.cols.push(
+
         { field: 'othersvalue', header: 'others' },
 
         { field: "warpagEval", header: "War Page" },
         { field: "scratchmarKval", header: "Scratch Mark" },
         { field: 'otheR1val', header: 'Other1' },
         { field: "otheR2val", header: "Other2" },
+      );
+    }
+
+    if (this.reporttype == "Summary") {
+      this.cols.push(
+        { field: "plating_value", header: "Plating" },
+        { field: "moulding_value", header: "Moulding" },
+        { field: 'tooldeF_value', header: 'Tooldef' },
+        { field: 'othersvalue', header: 'others' },
+
+        { field: 'mechfail_value', header: 'Mechfail' },
       );
     }
   }
@@ -346,10 +407,12 @@ export class RejectionvalueDetailComponent implements OnInit {
     this.moulding_value = 0;
     this.plating_value = 0;
     this.othersvalue = 0;
-
+    this.mechfail_value = 0;
     if (this.filterenable === true) {
 
       for (const rq of this.filterItemrejarray) {
+
+        this.mechfail_value += rq.mechfail_value;
 
         this.moulding_value += rq.moulding_value;
         this.plating_value += rq.plating_value;
@@ -394,6 +457,7 @@ export class RejectionvalueDetailComponent implements OnInit {
     }
     else {
       for (const rq of this.DPservice.itemwiserejlist2) {
+        this.mechfail_value += rq.mechfail_value;
 
         this.moulding_value += rq.moulding_value;
         this.plating_value += rq.plating_value;

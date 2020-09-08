@@ -24,27 +24,36 @@ import { Itemvalueqty } from 'src/app/shared/dailyProduction/itemvalueqty.model'
   templateUrl: './rejectionqtyvalue-detail.component.html',
   providers: [DatePipe],
   styles: [`
-  :host ::ng-deep .ui-table .ui-table-thead > tr > th {
-    position: -webkit-sticky;
-    position: sticky;
+  :host ::ng-deep .all .ui-table  table {
+    width:auto;
+  }
+  
+  :host ::ng-deep .ui-table-resizable > .ui-table-wrapper > table{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+  }
+  :host ::ng-deep .ui-table-resizable > p-paginator > div {
+    transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg);
+    -webkit-transform: rotateX(180deg);
+  }
+  :host ::ng-deep ::-webkit-scrollbar {
+    width: 8px;
+  }
+  /* Track */
+  :host ::ng-deep ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
    
-    font-size:10px;
-    top: 0px;
-    z-index: 1;
+  /* Handle */
+  :host ::ng-deep ::-webkit-scrollbar-thumb {
+    background: #c1c1c1; 
   }
-
-  :host ::ng-deep .ui-table-resizable > .ui-table-wrapper {
-    overflow-x: initial !important;
-  }
-
-  :host ::ng-deep .ui-table-resizable .ui-resizable-column {
-    position: sticky !important;
-  }
-
-  @media screen and (max-width: 64em) {
-    :host ::ng-deep .ui-table .ui-table-thead > tr > th {
-      top: 0px;
-    }
+  
+  /* Handle on hover */
+  :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+    background: #c1c1c1; 
   }
 
 `]
@@ -60,7 +69,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
   public selectedtype: string;
-  reporttype: any = 'Plating';
+  reporttype: any = 'All';
   cols: any[];
   subcols: any[];
   editcols: any[];
@@ -121,6 +130,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   platingqty: number = 0;
   mouldingqty: number = 0;
   othersqty: number = 0;
+  mechfail_qty:number=0;
 
   iv: number;
   filterenable = false;
@@ -161,6 +171,44 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
       { field: "buffingqty", header: "Buffing Qty." },
     ];
 
+
+    if (this.reporttype == "All") {
+      this.cols.push(
+        { field: "platingqty", header: "Plating Qty" },
+        { field: "mouldingqty", header: "Moulding Qty" },
+        { field: "tooldeF_qty", header: "Tooldef" },
+        { field: "othersqty", header: "Others" },
+        { field: 'mechfail_qty', header: 'Mechfail' },
+
+        { field: "pinHolesqty", header: "Pinhole" },
+        { field: "skipplatingQty", header: "Skipplating" },
+        { field: 'whitemarKqty', header: 'Whitemark' },
+        { field: 'dotplastiCqty', header: 'Dotplastic' },
+        { field: 'crburninGqty', header: 'Crburning' },
+        { field: "copperburninGqty", header: "Copper Burning" },
+        { field: "nicklEqty", header: "Nickle" },
+        { field: "roughnesSqty", header: "Roughness" },
+        { field: "blisteRqty", header: "Blister" },
+        { field: "watermarKqty", header: "Watermark" },
+        { field: "shadevaRqty", header: "Shadevar" },
+        { field: "platingpeeLqty", header: "Platingpeel" },
+        { field: "chemicalmarKqty", header: "Chemicalmark" },
+
+        { field: "silverQty", header: "Silver" },
+        { field: "denTqty", header: "Dent" },
+        { field: 'handmouldingreJqty', header: 'Hand Moulding Rej' },
+        { field: "pittinGqty", header: "Pitting" },
+        { field: "flowmarKqty", header: "Flowmark" },
+
+        { field: "jigdamagEqty", header: "Jig Damage" },
+
+        { field: "warpagEqty", header: "War Page" },
+        { field: "scratchmarKqty", header: "Scratch Mark" },
+        { field: 'otheR1qty', header: 'Other1' },
+        { field: "otheR2qty", header: "Other2" },
+
+      )
+    }
 
     if (this.reporttype == "Plating") {
       this.cols.push(
@@ -209,6 +257,17 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         { field: "scratchmarKqty", header: "Scratch Mark" },
         { field: 'otheR1qty', header: 'Other1' },
         { field: "otheR2qty", header: "Other2" },
+      );
+    }
+
+    if (this.reporttype == "Summary") {
+      this.cols.push(
+        { field: "platingqty", header: "Plating Qty" },
+        { field: "mouldingqty", header: "Moulding Qty" },
+        { field: "tooldeF_qty", header: "Tooldef" },
+        { field: "othersqty", header: "Others" },
+
+        { field: 'mechfail_qty', header: 'Mechfail' },
       );
     }
   }
@@ -359,12 +418,12 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     this.totalMouldedQty = 0;
 
     this.othersqty = 0;
-    
+    this.mechfail_qty = 0;
 
     if (this.filterenable === true) {
       for (const rq of this.filterItemrejarray) {
         this.othersqty += rq.othersqty;
-
+        this.mechfail_qty += rq.mechfail_qty;
 
         this.totalRejQty += rq.reject_qty;
         this.totalinsQty += rq.inspection_qty;
@@ -412,6 +471,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     else {
       for (const rq of this.DPservice.itemwiserejlist2) {
         this.othersqty += rq.othersqty;
+        this.mechfail_qty += rq.mechfail_qty;
 
 
         this.totalRejQty += rq.reject_qty;
