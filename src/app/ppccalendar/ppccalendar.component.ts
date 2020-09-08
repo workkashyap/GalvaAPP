@@ -107,7 +107,7 @@ export class PpccalendarComponent implements OnInit {
 
   ppcsummarycloneData: any = [];
   ppcsummarycloneLoader: boolean = false;
-
+  st_date: any;
   constructor(
     public plantservice: PlantService,
     public toastr: ToastrService,
@@ -130,12 +130,12 @@ export class PpccalendarComponent implements OnInit {
 
     this.sDate = new Date(date.getFullYear(), date.getMonth(), 1);
     this.lDate = new Date(me.sDate.getFullYear(), me.sDate.getMonth() + 1, 0);
+    this.st_date = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');;
+    console.log("st_date : ", this.st_date);
 
     var d = new Date();
     const m = this.monthNames.indexOf(me.monthname, 0) //d.getMonth(); //current month
-    console.log(m + 1);
     const y = d.getFullYear(); //current year
-    console.log(new Date(y, m + 1, 0));
     this.lastDate = this.datePipe.transform(new Date(y, m + 1, 0), 'dd');
 
     me.selectedcode = '1010';
@@ -315,8 +315,7 @@ export class PpccalendarComponent implements OnInit {
   onRowEditSaveSchVsDisp(row: any) {
     const me = this;
     if (row.id) {
-      console.log("Update", row);
-      this.ppcService.updateppcimports(row,this.startdate).subscribe(
+      this.ppcService.updateppcimports(row, this.st_date).subscribe(
         res => {
           me.toastr.success('Updated Successfully', 'Save PPC Summary');
           me.resetColumnWidthSchVsDisp();
@@ -380,7 +379,6 @@ export class PpccalendarComponent implements OnInit {
     row.dispatchDate = this.datePipe.transform(new Date(row.dispatchDate), 'yyyy-MM-dd');
 
     if (row.id) {
-      console.log("Update", row);
       this.ppcService.updatePpcimportclones(row).subscribe(
         res => {
           me.toastr.success('Updated Successfully', 'Save ActionPlan');
@@ -469,7 +467,6 @@ export class PpccalendarComponent implements OnInit {
 
     row.dispatchDate = this.formatDate(new Date(row.dispatchDate));
     row.budat = this.formatDate(new Date(row.budat));
-    console.log(row);
 
     this.clonedData[row.id] = { row };
   }
@@ -588,8 +585,6 @@ export class PpccalendarComponent implements OnInit {
 
   calPer(val1, val2) {
     const val3 = 0;
-    //console.log("val1:", val1);
-    //console.log("val2:", val2);
     if (val1 > 0 && val2 > 0) {
       return (val1 * 100) / val2;
     }
@@ -618,7 +613,6 @@ export class PpccalendarComponent implements OnInit {
       .then(res => {
         const data = res as Ppc[];
         me.allrecord = data.length;
-        console.log("allrecord : ", me.allrecord)
       });
 
     me.firstcolumn = [];
@@ -704,11 +698,9 @@ export class PpccalendarComponent implements OnInit {
   //on change option value
   selectedGrid(ev) {
     this.selectedcode = ev;
-    console.log("company : ", ev);
     this.loaddata();
   }
   selectedMonth(ev) {
-    console.log("month : ", ev)
 
     this.lastDate = '';
     // co a = fruits.indexOf("Apple", 4);
@@ -720,6 +712,8 @@ export class PpccalendarComponent implements OnInit {
     this.lastDate = this.datePipe.transform(new Date(y, m + 1, 0), 'dd');
 
     this.startdate = this.datePipe.transform(new Date(y, m, 1), 'yyyy-MM-dd');
+    this.st_date = this.startdate;
+    console.log("st_date : ", this.st_date);
     console.log("startdate : ", this.startdate);
 
 
