@@ -903,6 +903,8 @@
           </div>
           <div class="modal-body">
             <div style="overflow-y: scroll; height: 550px;">
+              <ngx-loading [show]="schvsdispLoading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
               <p-table #summaryModal2 [columns]="cols_schvsdisp" dataKey="id" editMode="row" class="ptable"
                 [paginator]="false" [resizableColumns]="true" [value]="summaryModalData">
                 <!--
@@ -928,7 +930,7 @@
                         </div>
                       </div>
                     </td>
-                    <td *ngIf="modaltype==2" style="width: 120px;">
+                    <td *ngIf="modaltype==2" style="width: 111px;">
                       <select name="galvaGroupid" class="form-control mb-2" [(ngModel)]="galvaGroupid"
                         (change)="selectedGalvaGroup($event.target.value)"
                         style="height: calc(2.01rem + 2px);font-size: 12px;padding: 0.315rem .45rem;">
@@ -941,7 +943,7 @@
                     </td>
                     <td>
                     </td>
-                    <td *ngIf="modaltype==2" style="width: 100px;">
+                    <td *ngIf="modaltype==2" style="width: 100px;" hidden>
                       <button class="btn btn-sm btn-success"
                         style="padding: 6px 2px;font-size: 10px;">{{schedulevalue | number:'1.2-2'}} Lacs</button>
                     </td>
@@ -981,7 +983,7 @@
                         (click)="onRowEditSaveSchVsDisp(rowData)"></button>
                     </td>
                     <td class="cfs"> {{rowData.name}} </td>
-                    <td class="cfs"> {{rowData.itemcode}} </td>
+                    <td class="cfs">  {{ this.customNumber(rowData.itemcode) }} </td>
                     <td class="cfs">{{rowData.itemname}}</td>
                     <td class="cfs">
                       <p-cellEditor>

@@ -104,7 +104,7 @@ export class PpccalendarComponent implements OnInit {
   clonedData: { [s: string]: any; } = {};
 
   viewModalLoader: boolean = false;
-
+  schvsdispLoading: boolean = false;
   ppcsummarycloneData: any = [];
   ppcsummarycloneLoader: boolean = false;
   st_date: any;
@@ -229,6 +229,7 @@ export class PpccalendarComponent implements OnInit {
       });
   }
   summary2() {
+    this.schvsdispLoading = true;
     this.schedulevalue = 0;
     this.summaryModalData = [];
     this.modaltype = 2;
@@ -261,23 +262,33 @@ export class PpccalendarComponent implements OnInit {
     this.ppcService
       .getPPCCalsummary(this.startdate, this.galvaGroupid)
       .toPromise().then(res => {
+        me.schvsdispLoading = false;
         me.summaryModalData = res as Ppc[];
         // me.schedulevalueHome = me.schedulevalueHome / 100000;
         me.schedulevalue = me.schedulevalue / 100000;
         me.loading = false;
+      }, err => {
+        me.schvsdispLoading = false;
       });
   }
   refresh() {
     const me = this;
     this.loading = true;
+    me.schvsdispLoading = true;
+
     this.summaryModalData = [];
     this.ppcService
       .getPPCCalsummary(this.startdate, this.galvaGroupid)
       .toPromise().then(res => {
+        me.schvsdispLoading = false;
+
         me.summaryModalData = res as Ppc[];
         // me.schedulevalueHome = me.schedulevalueHome / 100000;
         me.schedulevalue = me.schedulevalue / 100000;
         me.loading = false;
+      },error=>{
+        me.schvsdispLoading = false;
+
       });
   }
   //edit
