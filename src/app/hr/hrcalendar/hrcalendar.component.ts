@@ -208,6 +208,7 @@ export class HrcalendarComponent implements OnInit {
     this.totalhours = 0;
     this.cols = [
       //{ field: 'item_type', header: 'Type' },
+      { field: 'employeeCode', header: 'Employee Code' },
       { field: 'employeeName', header: 'Employee Name' },
       { field: 'gender', header: 'Gender' },
       { field: 'locationName', header: 'Location' },

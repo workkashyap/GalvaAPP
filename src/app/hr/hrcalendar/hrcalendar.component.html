@@ -65,7 +65,7 @@
                               <b>Manpower (Nos.)</b><br>{{ company.manpower | number:'1.2-2' }}
                             </h4>
                           </div>
-                          <div class="col-md-6"  style="padding: 0px 3px;">
+                          <div class="col-md-6" style="padding: 0px 3px;">
                             <h4 class="text-white custom-box-font">
                               <b> Man. Worked</b> <br> {{ company.manpowerWorking | number:'1.2-2' }}
                             </h4>
@@ -154,6 +154,22 @@
 
                 <ng-template pTemplate="header" let-columns>
                   <tr>
+                    <td style="width:110px ;" *ngIf="selected_eventdate"> </td>
+                    <td> </td>
+                    <td style="width:110px ;" *ngIf="!selected_eventdate"> </td>
+
+                    <td> </td>
+                    <td style="width:140px ;"> </td>
+                    <td style="width:140px ;"> </td>
+                    <td style="width:110px ;"> </td>
+                    <td> </td>
+
+                    <td> </td>
+                    <td style="width:100px ;">
+                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;display: none;">
+                        {{ totalhours | number:'1.2-2'}}
+                      </button>
+                    </td>
                     <td style="width:15%;">
                       <div class="input-group mb-2 ">
                         <input type="text" pInputText placeholder="Global Filter"
@@ -168,20 +184,7 @@
                       <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
                         <i class="fa fa-file-excel-o"></i> Export</button>
                     </td>
-                    <td> </td>
-                    <td style="width:140px ;"> </td>
-                    <td style="width:140px ;"> </td>
-                    <td style="width:110px ;"> </td>
-                    <td> </td>
-                    <td style="width:110px ;" *ngIf="selected_eventdate"> </td>
 
-                    <td> </td>
-                    <td> </td>
-                    <td style="width:100px ;">
-                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;display: none;">
-                        {{ totalhours | number:'1.2-2'}}
-                      </button>
-                    </td>
                   </tr>
 
                   <tr class="tbl-tr">
