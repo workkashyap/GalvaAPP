@@ -146,49 +146,41 @@
           </div>
           <div class="modal-body">
             <ngx-loading [show]="loading2" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            <table>
+              <tr>
 
+                <td>
+                  <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;display: none;">
+                    {{ totalhours | number:'1.2-2'}}
+                  </button>
+                </td>
+                <td>
+                  <div class="input-group mb-2 ">
+                    <input type="text" pInputText placeholder="Global Filter"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
+                    <div class="input-group-append fix-height">
+                      <i class="fa fa-search input-group-text"></i>
+                    </div>
+                  </div>
+                </td>
+                <!--not for summary -->
+                <td>
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2 ml-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button>
+                </td>
+
+              </tr>
+            </table>
             <div style="overflow-y: scroll; height: 550px;">
               <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
                 selectionMode="single" [style]="{'width':'100%'}" [value]="hrcalendarService.hrcalendarEventData"
                 [paginator]="true" [rows]="15" [responsive]="true">
 
                 <ng-template pTemplate="header" let-columns>
-                  <tr>
-                    <td style="width:110px ;" *ngIf="selected_eventdate"> </td>
-                    <td> </td>
-                    <td style="width:110px ;" *ngIf="!selected_eventdate"> </td>
 
-                    <td> </td>
-                    <td style="width:140px ;"> </td>
-                    <td style="width:140px ;"> </td>
-                    <td style="width:110px ;"> </td>
-                    <td> </td>
-
-                    <td> </td>
-                    <td style="width:100px ;">
-                      <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;display: none;">
-                        {{ totalhours | number:'1.2-2'}}
-                      </button>
-                    </td>
-                    <td style="width:15%;">
-                      <div class="input-group mb-2 ">
-                        <input type="text" pInputText placeholder="Global Filter"
-                          (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control fix-height">
-                        <div class="input-group-append fix-height">
-                          <i class="fa fa-search input-group-text"></i>
-                        </div>
-                      </div>
-                    </td>
-                    <!--not for summary -->
-                    <td style="width:100px;">
-                      <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
-                        <i class="fa fa-file-excel-o"></i> Export</button>
-                    </td>
-
-                  </tr>
 
                   <tr class="tbl-tr">
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width:140px" class="tbl-th">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="tbl-th">
                       {{col.header}}
                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                         ariaLabelDesc="Activate to sort in descending order"
