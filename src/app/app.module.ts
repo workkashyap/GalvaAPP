@@ -78,6 +78,7 @@ import { RoundhoursComponent } from './roundhours/roundhours.component';
 import { AddroundhourComponent } from './roundhours/addroundhour/addroundhour.component';
 import { RejectionqtyvalueDetailComponent } from './rejection/rejectionqtyvalue-detail/rejectionqtyvalue-detail.component';
 import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail/rejectionvalue-detail.component';
+import { HrcalComponent } from './hrcal/hrcal.component';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,8 @@ import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail
     RoundhoursComponent,
     AddroundhourComponent,
     RejectionqtyvalueDetailComponent,
-    RejectionvalueDetailComponent
+    RejectionvalueDetailComponent,
+    HrcalComponent
   ],
   imports: [
     BrowserModule,
@@ -435,6 +437,11 @@ import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail
       {
         path: "rejvalue",
         component: RejectionvalueDetailComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "hrcal",
+        component: HrcalComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },
