@@ -69,6 +69,10 @@ export class HrcalComponent implements OnInit {
   edays: number = 0;
   totalDays: number = 0;
   rate: number = 0;
+  pdays: number = 0;
+  wopdays: number = 0;
+  hpdays: number = 0;
+
   monthName: any;
   public monthNames: any;
   month: any;
@@ -119,9 +123,7 @@ export class HrcalComponent implements OnInit {
       { field: "pdays", header: "Present Days" },
       { field: "wopdays", header: "WOP Days" },
       { field: "hpdays", header: "HP Days" },
-
       { field: "tpresent", header: "Total Present" },
-
       { field: "totalHours", header: "Total Hours" },
       //{ field: "edays", header: "Current month days" },
       { field: "totalDays", header: "Total Days" },
@@ -183,12 +185,11 @@ export class HrcalComponent implements OnInit {
         c.employeeCode.toString().includes(ev.toString()) ||
         c.employeeName.toString().includes(ev.toString()) ||
         c.doj.toString().includes(ev.toString()) ||
-        c.gender.toString().includes(ev.toString() ||
-          c.locationName.toString().includes(ev.toString()) ||
-          c.companyFName.toString().includes(ev.toString()) ||
-          c.designationsName.toString().includes(ev.toString()) ||
-          c.departmentFName.toString().includes(ev.toString())
-        )
+        c.gender.toString().includes(ev.toString()) ||
+        c.locationName.toString().includes(ev.toString()) ||
+        c.companyFName.toString().includes(ev.toString()) ||
+        c.designationsName.toString().includes(ev.toString()) ||
+        c.departmentFName.toString().includes(ev.toString())
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;
@@ -204,12 +205,24 @@ export class HrcalComponent implements OnInit {
     this.totalDays = 0;
     this.rate = 0;
 
+    this.hpdays = 0;
+    this.wopdays = 0;
+    this.pdays = 0;
+
     if (this.filterenable == true) {
+      console.log("this.filterenable", this.filterenable);
+      console.log("this.filterItemrejarray", this.filterItemrejarray);
+
       this.filterItemrejarray.forEach(element => {
+
         this.totalHours += element.totalHours;
         this.edays += element.edays;
         this.totalDays += element.totalDays;
         this.rate += element.rate;
+
+        this.hpdays += element.hpdays;
+        this.wopdays += element.wopdays;
+        this.pdays += element.pdays;
       });
       return;
     }
@@ -219,6 +232,10 @@ export class HrcalComponent implements OnInit {
       this.edays += element.edays;
       this.totalDays += element.totalDays;
       this.rate += element.rate;
+
+      this.hpdays += element.hpdays;
+      this.wopdays += element.wopdays;
+      this.pdays += element.pdays;
     });
   }
 }
