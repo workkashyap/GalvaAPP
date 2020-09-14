@@ -151,9 +151,9 @@ export class HrcalComponent implements OnInit {
       .getallData(me.Fromdate, me.Todate, me.selectedPlant)
       .toPromise()
       .then(res => {
-        // me.hrcalservice.hrcalList = res as Hrcal[];
+        me.hrcalservice.hrcalList = res as Hrcal[];
         const hrcalList = res as Hrcal[];
-        hrcalList.forEach(hrcal => {
+        me.hrcalservice.hrcalList.forEach(hrcal => {
           if (!hrcal.pdays) {
             hrcal.pdays = 0;
           }
@@ -164,7 +164,7 @@ export class HrcalComponent implements OnInit {
             hrcal.hpdays = 0;
           }
           hrcal.tpresent = hrcal.pdays + hrcal.wopdays + hrcal.hpdays;
-          me.hrcalservice.hrcalList.push(hrcal);
+          // me.hrcalservice.hrcalList.push(hrcal);
         });
         me.sumOfvalues();
         me.loading = false;
