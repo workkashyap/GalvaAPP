@@ -17,9 +17,9 @@ export class ProductionsService {
   constructor(public http: HttpClient) { }
 
 
-  public productions(): Observable<Productions[]> {
-    return this.http
-      .get<Productions[]>(this.rootUrl + "/productions");
+  public productions(code): Observable<Productions[]> {
+    // return this.http.get<Productions[]>(this.rootUrl + "/productions");
+    return this.http.get<Productions[]>(this.rootUrl + "/productions/GetProductionbycomp/" + code);
   }
   public productionbyid(id): any {
     return this.http

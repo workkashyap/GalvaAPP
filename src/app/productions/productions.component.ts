@@ -89,14 +89,15 @@ export class ProductionsComponent implements OnInit {
         });
         // me.plantservice.splantlist = res as Plant[];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
+        me.getDetail();
+
       });
-    this.getDetail();
   }
   getDetail() {
     let me = this;
     me.loading = true;
     me.productionsService.productionlist = [];
-    me.productionsService.productions().toPromise().then(res => {
+    me.productionsService.productions(me.selectedcode).toPromise().then(res => {
       me.productionlist2 = res as Productions[];
       me.getFilterData();
       // me.productionsService.productionlist = res as Productions[];
@@ -108,7 +109,8 @@ export class ProductionsComponent implements OnInit {
 
   selectedPlant(ev) {
     this.selectedcode = ev;
-    this.getFilterData()
+    //  this.getFilterData()
+    this.getDetail()
   }
   getFilterData() {
     let me = this;
