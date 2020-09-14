@@ -69,6 +69,10 @@ export class HrcalComponent implements OnInit {
   edays: number = 0;
   totalDays: number = 0;
   rate: number = 0;
+  monthName: any;
+  public monthNames: any;
+  month: any;
+  public date: any;
 
   constructor(
     public asservice: AttendancesummaryService,
@@ -82,12 +86,24 @@ export class HrcalComponent implements OnInit {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     // this.selectedPlant = "Gujarat";
-
+    this.monthNames = ['--', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+      'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ];
   }
   ngOnInit() {
     let me = this;
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
+
+    this.date = new Date();
+    this.month = this.date.getMonth() + 1;
+    this.monthName = this.monthNames[this.month];
+    const year = new Date().getFullYear();
+    const month = this.monthName;
+    const a = '1-' + month + '-' + year;
+    const date = new Date(a);
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const current_month_startdate = this.datePipe.transform(firstDay, "yyyy-MM-dd");
 
     this.cols = [
       // { field: 'id', header: 'ID' },
@@ -99,14 +115,21 @@ export class HrcalComponent implements OnInit {
       { field: "companyFName", header: "Company" },
       { field: "departmentFName", header: "Department" },
       { field: "designationsName", header: "Designations" },
+
+      { field: "pdays", header: "Present Days" },
+      { field: "wopdays", header: "WOP Days" },
+      { field: "hpdays", header: "HP Days" },
+
+      { field: "tpresent", header: "Total Present" },
+
       { field: "totalHours", header: "Total Hours" },
-      { field: "edays", header: "Current month days" },
+      //{ field: "edays", header: "Current month days" },
       { field: "totalDays", header: "Total Days" },
       { field: "rate", header: "Rate" },
     ];
 
     this.asservice
-      .getallHRsumcont(me.Fromdate, me.Todate, 'All')
+      .getallHRsumcont(current_month_startdate, me.Todate, 'All')
       .toPromise()
       .then(res => {
         me.asservice.attendancesummary = res as Attendancesummary[];
@@ -128,7 +151,21 @@ export class HrcalComponent implements OnInit {
       .getallData(me.Fromdate, me.Todate, me.selectedPlant)
       .toPromise()
       .then(res => {
-        me.hrcalservice.hrcalList = res as Hrcal[];
+        // me.hrcalservice.hrcalList = res as Hrcal[];
+        const hrcalList = res as Hrcal[];
+        hrcalList.forEach(hrcal => {
+          if (!hrcal.pdays) {
+            hrcal.pdays = 0;
+          }
+          if (!hrcal.wopdays) {
+            hrcal.wopdays = 0;
+          }
+          if (!hrcal.hpdays) {
+            hrcal.hpdays = 0;
+          }
+          hrcal.tpresent = hrcal.pdays + hrcal.wopdays + hrcal.hpdays;
+          me.hrcalservice.hrcalList.push(hrcal);
+        });
         me.sumOfvalues();
         me.loading = false;
       }, error => {
@@ -166,7 +203,7 @@ export class HrcalComponent implements OnInit {
     this.edays = 0;
     this.totalDays = 0;
     this.rate = 0;
-    
+
     if (this.filterenable == true) {
       this.filterItemrejarray.forEach(element => {
         this.totalHours += element.totalHours;

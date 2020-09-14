@@ -28,7 +28,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" style="text-align: center;">
                   <div class="row mt-2">
                     <div class="col-md-2">
                       <label>From</label>
@@ -41,7 +41,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3"  style="text-align: center;">
                   <div class="row mt-2">
                     <div class="col-md-2">
                       <label>To</label>
@@ -60,11 +60,10 @@
                       {{cmpny.companyFName}}</option>
                   </select>
                 </div>
-                <div class="col-md-1" style="text-align: center;">
-                  <button class="btn btn-primary btn-sm mt-2" (click)="getData()">View</button>
-                </div>
-                <div class="col-md-1">
-                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mt-2">
+                <div class="col-md-2" style="text-align: center;">
+                  <button class="btn btn-primary mt-2" (click)="getData()">View</button>
+                  &nbsp;
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
                     <i class="fa fa-file-excel-o"></i> Export</button></div>
               </div>
             </div>
@@ -84,12 +83,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>
                       <button class="btn btn-info mt-2 w-100">{{totalHours}}</button>
                     </td>
-                    <td>
+                    <!--<td>
                       <button class="btn btn-warning mt-2  w-100">{{edays}}</button>
-                    </td>
+                    </td>-->
                     <td>
                       <button class="btn btn-danger mt-2  w-100">{{totalDays}}</button>
                     </td>

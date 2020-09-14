@@ -12,4 +12,9 @@ export class Hrcal {
   edays: number;
   totalDays: number;
   rate: number;
+
+  pdays: number;
+  wopdays: number;
+  hpdays: number;
+  tpresent: number;
 }
