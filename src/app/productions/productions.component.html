@@ -20,42 +20,51 @@
                 </div>
               </div>
             </div>
-            
+
           </div>
           <div class="card">
             <div class="chart">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="input-group custome-gs mb-2">
+                      <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                      <div class="input-group-append">
+                        <i class="fa fa-search input-group-text"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <select class="form-control mb-2" name="plantcode" #plantcode="ngModel" id="plantcode"
+                      [(ngModel)]="selectedcode" (change)="selectedPlant($event.target.value)">
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                        {{ pl.plantshortname }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-8"></div>
+                </div>
+
+
+              </div>
               <div class="row">
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
                 <div class="card-body">
                   <!--  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>-->
-    
-                  <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
-                    selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" sortField="pstngdate"
-                    [sortOrder]="-1" [value]="productionsService.productionlist" [paginator]="true" [rows]="20"
+
+                  <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                    [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
+                    [(selection)]="selectedItemrej" sortField="pstngdate" [sortOrder]="-1"
+                    [value]="productionsService.productionlist" [paginator]="true" [rows]="20"
                     [resizableColumns]="true">
-    
+
                     <ng-template pTemplate="header" let-columns>
+
                       <tr>
-                        <td colspan="2">
-                          <div class="input-group custome-gs mb-2">
-                            <input type="text" class="form-control" pInputText placeholder="Global Filter"
-                              (input)="dt.filterGlobal($event.target.value, 'contains')">
-                            <div class="input-group-append">
-                              <i class="fa fa-search input-group-text"></i>
-                            </div>
-                          </div>
-                        </td>
-                        <td style="width: 150px;">
-                          <select class="form-control mb-2" name="plantcode" #plantcode="ngModel" id="plantcode"
-                            [(ngModel)]="selectedcode" (change)="selectedPlant($event.target.value)">
-                            <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                              {{ pl.plantshortname }}
-                            </option>
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field"
+                          pResizableColumn>
                           {{col.header}}
                           <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                             ariaLabelDesc="Activate to sort in descending order"
@@ -68,12 +77,13 @@
                       <tr [pSelectableRow]="rowData">
                         <td *ngFor="let col of columns" class="ui-resizable-column">
                           <span *ngIf="col.field=='view'">
-                            <button class="btn btn-primary  mt-1" (click)="opendetail(rowData.id)">View</button>
+                            <button class="btn btn-primary btn-sm mt-1" (click)="opendetail(rowData.id)"><i
+                                class="fa fa-pencil"></i></button>
                           </span>
                           <span *ngIf="col.field=='pstngdate'">
                             {{rowData[col.field]   | date :'dd-MM-yyyy'}}
                           </span>
-    
+
                           <span *ngIf="col.field!='view' && col.field!='pstngdate'">{{rowData[col.field]}}</span>
                         </td>
                       </tr>

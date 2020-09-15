@@ -9,6 +9,7 @@ import { User } from "src/app/shared/login/User.model";
 import { NgForm } from "@angular/forms";
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
+import { Productions } from 'src/app/shared/productions/productions.model';
 
 @Component({
   selector: "app-addproduction",
@@ -59,11 +60,18 @@ export class AddproductionComponent implements OnInit {
             // me.selectedcode = ''//me.plantservice.splantlist[0].plantcode;
           }
         });
-
+        // this.productionsService.productionData = [];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
 
         if (me.productionsService.id) {
-          me.productionsService.productionbyid(me.productionsService.id);
+          me.productionsService.productionbyid(me.productionsService.id)
+            .toPromise()
+            .then((res: any) => {
+              this.productionsService.productionData = res; //as Productions[];
+              this.productionsService.productionData.pstngdate = this.datePipe.transform(this.productionsService.productionData.pstngdate, "yyyy-MM-dd");
+            });
+
+
         } else {
           me.productionsService.productionData = {
             id: 0,

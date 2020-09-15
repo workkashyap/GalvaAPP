@@ -1,5 +1,5 @@
 export class Productions {
-  id: number;
+  id?: number;
   insplot?: number;
   orderno?: number;
   roundno?: string;
@@ -40,7 +40,7 @@ export class Productions {
   mandt?: string;
   stprs?: number;
   createddate?: string;
-  pstngdate?: string;
+  pstngdate: string;
   plating?: number;
   moulding?: number;
   mechfail?: number;

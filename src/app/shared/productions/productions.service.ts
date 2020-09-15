@@ -21,13 +21,9 @@ export class ProductionsService {
     // return this.http.get<Productions[]>(this.rootUrl + "/productions");
     return this.http.get<Productions[]>(this.rootUrl + "/productions/GetProductionbycomp/" + code);
   }
-  public productionbyid(id): any {
-    return this.http
-      .get(this.rootUrl + "/productions/" + id)
-      .toPromise()
-      .then(res => {
-        this.productionData = res as Productions;
-      });
+  public productionbyid(id): Observable<Productions[]> {
+    return this.http.get<Productions[]>(this.rootUrl + "/productions/" + id);
+
   }
 
   public saveProduction(): any {

@@ -25,14 +25,10 @@
                           <div class="col-md-10">
                             <h6 class="card-title-md">Add New Production</h6>
                           </div>
-                          <div class="col-md-1">
-                            <button type="submit" (click)="onSaveClick()"
-                              class="btn btn-success btn-sm  float-left px-3">
-                              Save
-                            </button>
-                          </div>
-                          <div class="col-md-1">
-                            <Button (click)="backtoProduction()" class="btn btn-primary btn-sm btn-block ">Back</Button>
+                          <div class="col-md-2" style="text-align: center;">
+                            <button type="submit" (click)="onSaveClick()" class="btn btn-success btn-sm  px-3"> Save
+                            </button>&nbsp;
+                            <Button (click)="backtoProduction()" class="btn btn-primary btn-sm px-3 ">Back</Button>
                           </div>
                         </div>
                       </div>
@@ -102,38 +98,17 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="qty">Quantity:</label>
+                                      <label class="gr1" for="qty">Quantity:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" [ngClass]="{error:validQtyError}" type='text'
-                                        id="qty" name="qty" #qty="ngModel"
+                                      <input class="form-control grp-input-1" [ngClass]="{error:validQtyError}"
+                                        type='text' id="qty" name="qty" #qty="ngModel"
                                         [(ngModel)]="productionsService.productionData.qty"
                                         (change)="qtyChange($event.target.value,productionsService.productionData)" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-2 custom-col-2">
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-4 in-label">
-                                      <label for="plantcode">Plantcode:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                      <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
-                                        #plantcode="ngModel"
-                                        [(ngModel)]="productionsService.productionData.plantcode" />-->
-
-                                      <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
-                                        [(ngModel)]="productionsService.productionData.plantcode">
-                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
-                                          {{ pl.plantshortname }}
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
 
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
@@ -142,7 +117,7 @@
                                       <label for="plantcode">Plantcode:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
+                                      <!--<input class="form-control grp-input-3" type='text' id="plantcode" name="plantcode"
                                         #plantcode="ngModel"
                                         [(ngModel)]="productionsService.productionData.plantcode" />-->
 
@@ -202,12 +177,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="okqty">Ok Quantity:</label>
+                                      <label class="gr2" for="okqty">Ok Quantity:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
-                                        min="0" id="okqty" name="okqty" #okqty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.okqty" />
+                                      <input class="form-control grp-input-2" type='number'
+                                        [ngClass]="{error:validQtyError}" min="0" id="okqty" name="okqty"
+                                        #okqty="ngModel" [(ngModel)]="productionsService.productionData.okqty" />
                                     </div>
                                   </div>
                                 </div>
@@ -217,12 +192,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="holdqty">Hold Quantity:</label>
+                                      <label class="gr2" for="holdqty">Hold Quantity:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
-                                        min="0" id="holdqty" name="holdqty" #holdqty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.holdqty" />
+                                      <input class="form-control grp-input-2" type='number'
+                                        [ngClass]="{error:validQtyError}" min="0" id="holdqty" name="holdqty"
+                                        #holdqty="ngModel" [(ngModel)]="productionsService.productionData.holdqty" />
                                     </div>
                                   </div>
                                 </div>
@@ -232,11 +207,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="buffingqty">Buffing Quantity:</label>
+                                      <label class="gr2" for="buffingqty">Buffing Quantity:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
-                                        min="0" id="buffingqty" name="buffingqty" #buffingqty="ngModel"
+                                      <input class="form-control grp-input-2" type='number'
+                                        [ngClass]="{error:validQtyError}" min="0" id="buffingqty" name="buffingqty"
+                                        #buffingqty="ngModel"
                                         [(ngModel)]="productionsService.productionData.buffingqty" />
                                     </div>
                                   </div>
@@ -248,11 +224,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="rejectionqty">Rejection Quantity:</label>
+                                      <label class="gr2" for="rejectionqty">Rejection Quantity:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
-                                        min="0" id="rejectionqty" name="rejectionqty" #rejectionqty="ngModel"
+                                      <input class="form-control grp-input-2" type='number'
+                                        [ngClass]="{error:validQtyError}" min="0" id="rejectionqty" name="rejectionqty"
+                                        #rejectionqty="ngModel"
                                         [(ngModel)]="productionsService.productionData.rejectionqty"
                                         (change)="rejectQtyChange($event.target.value,productionsService.productionData)" />
                                     </div>
@@ -263,11 +240,13 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="pitting">Pitting:</label>
+                                      <label class="gr3" for="pitting">Pitting:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="pitting" name="pitting"
-                                        #pitting="ngModel" [(ngModel)]="productionsService.productionData.pitting" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="pitting" name="pitting" #pitting="ngModel"
+                                        [(ngModel)]="productionsService.productionData.pitting" />
                                     </div>
                                   </div>
                                 </div>
@@ -276,11 +255,13 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="pinhole">Pinhole:</label>
+                                      <label class="gr3" for="pinhole">Pinhole:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="pinhole" name="pinhole"
-                                        #pinhole="ngModel" [(ngModel)]="productionsService.productionData.pinhole" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="pinhole" name="pinhole" #pinhole="ngModel"
+                                        [(ngModel)]="productionsService.productionData.pinhole" />
                                     </div>
                                   </div>
                                 </div>
@@ -289,11 +270,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="patchmark">Patchmark:</label>
+                                      <label class="gr3" for="patchmark">Patchmark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="patchmark" name="patchmark"
-                                        #patchmark="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="patchmark" name="patchmark" #patchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.patchmark" />
                                     </div>
                                   </div>
@@ -304,11 +286,13 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="nickle">Nickle:</label>
+                                      <label class="gr3" for="nickle">Nickle:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="nickle" name="nickle"
-                                        #nickle="ngModel" [(ngModel)]="productionsService.productionData.nickle" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="nickle" name="nickle" #nickle="ngModel"
+                                        [(ngModel)]="productionsService.productionData.nickle" />
                                     </div>
                                   </div>
                                 </div>
@@ -317,11 +301,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="crburning">Crburning:</label>
+                                      <label class="gr3" for="crburning">Crburning:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="crburning" name="crburning"
-                                        #crburning="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="crburning" name="crburning" #crburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.crburning" />
                                     </div>
                                   </div>
@@ -331,11 +316,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="skipplating">Skipplating:</label>
+                                      <label class="gr3" for="skipplating">Skipplating:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="skipplating"
-                                        name="skipplating" #skipplating="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="skipplating" name="skipplating" #skipplating="ngModel"
                                         [(ngModel)]="productionsService.productionData.skipplating" />
                                     </div>
                                   </div>
@@ -345,11 +331,13 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="dent">Dent:</label>
+                                      <label class="gr3" for="dent">Dent:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="dent" name="dent"
-                                        #dent="ngModel" [(ngModel)]="productionsService.productionData.dent" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
+                                        id="dent" name="dent" #dent="ngModel"
+                                        [(ngModel)]="productionsService.productionData.dent" />
                                     </div>
                                   </div>
                                 </div>
@@ -359,11 +347,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="handmouldingrej">Handmoulding Rej.:</label>
+                                      <label class="gr3" for="handmouldingrej">Handmoulding Rej.:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="handmouldingrej"
-                                        name="handmouldingrej" #handmouldingrej="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="handmouldingrej" name="handmouldingrej"
+                                        #handmouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.handmouldingrej" />
                                     </div>
                                   </div>
@@ -373,11 +362,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="scratchmark">Scratchmark:</label>
+                                      <label class="gr3" for="scratchmark">Scratchmark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="scratchmark"
-                                        name="scratchmark" #scratchmark="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="scratchmark" name="scratchmark"
+                                        #scratchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.scratchmark" />
                                     </div>
                                   </div>
@@ -387,10 +377,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="roughness">Roughness:</label>
+                                      <label class="gr3" for="roughness">Roughness:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="roughness" name="roughness"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="roughness" name="roughness"
                                         #roughness="ngModel"
                                         [(ngModel)]="productionsService.productionData.roughness" />
                                     </div>
@@ -401,11 +392,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="silver">Silver:</label>
+                                      <label class="gr3" for="silver">Silver:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="silver" name="silver"
-                                        #silver="ngModel" [(ngModel)]="productionsService.productionData.silver" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="silver" name="silver" #silver="ngModel"
+                                        [(ngModel)]="productionsService.productionData.silver" />
                                     </div>
                                   </div>
                                 </div>
@@ -415,11 +407,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="mouldingrej">Mouldingrej:</label>
+                                      <label class="gr3" for="mouldingrej">Mouldingrej:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="mouldingrej"
-                                        name="mouldingrej" #mouldingrej="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="mouldingrej" name="mouldingrej"
+                                        #mouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.mouldingrej" />
                                     </div>
                                   </div>
@@ -429,10 +422,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="warpage">Warpage:</label>
+                                      <label class="gr3" for="warpage">Warpage:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="warpage" name="warpage"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="warpage" name="warpage"
                                         #warpage="ngModel" [(ngModel)]="productionsService.productionData.warpage" />
                                     </div>
                                   </div>
@@ -442,11 +436,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="copperburning">Copper Burning:</label>
+                                      <label class="gr3" for="copperburning">Copper Burning:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="copperburning"
-                                        name="copperburning" #copperburning="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="copperburning" name="copperburning"
+                                        #copperburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.copperburning" />
                                     </div>
                                   </div>
@@ -456,10 +451,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="whitemark">Whitemark:</label>
+                                      <label class="gr3" for="whitemark">Whitemark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="whitemark" name="whitemark"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="whitemark" name="whitemark"
                                         #whitemark="ngModel"
                                         [(ngModel)]="productionsService.productionData.whitemark" />
                                     </div>
@@ -471,11 +467,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="dotplastic">Dotplastic:</label>
+                                      <label class="gr3" for="dotplastic">Dotplastic:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="dotplastic"
-                                        name="dotplastic" #dotplastic="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="dotplastic" name="dotplastic"
+                                        #dotplastic="ngModel"
                                         [(ngModel)]="productionsService.productionData.dotplastic" />
                                     </div>
                                   </div>
@@ -485,10 +482,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="watermark">Watermark:</label>
+                                      <label class="gr3" for="watermark">Watermark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="watermark" name="watermark"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="watermark" name="watermark"
                                         #watermark="ngModel"
                                         [(ngModel)]="productionsService.productionData.watermark" />
                                     </div>
@@ -499,10 +497,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="blister">Blister:</label>
+                                      <label class="gr3" for="blister">Blister:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="blister" name="blister"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="blister" name="blister"
                                         #blister="ngModel" [(ngModel)]="productionsService.productionData.blister" />
                                     </div>
                                   </div>
@@ -512,10 +511,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="jigdamage">Jig Damage:</label>
+                                      <label class="gr3" for="jigdamage">Jig Damage:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="jigdamage" name="jigdamage"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="jigdamage" name="jigdamage"
                                         #jigdamage="ngModel"
                                         [(ngModel)]="productionsService.productionData.jigdamage" />
                                     </div>
@@ -527,11 +527,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="otheR1">OtheR1:</label>
+                                      <label class="gr3" for="otheR1">OtheR1:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR1" name="otheR1"
-                                        #otheR1="ngModel" [(ngModel)]="productionsService.productionData.otheR1" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="otheR1" name="otheR1" #otheR1="ngModel"
+                                        [(ngModel)]="productionsService.productionData.otheR1" />
                                     </div>
                                   </div>
                                 </div>
@@ -540,11 +541,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="otheR2">otheR2:</label>
+                                      <label class="gr3" for="otheR2">otheR2:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR2" name="otheR2"
-                                        #otheR2="ngModel" [(ngModel)]="productionsService.productionData.otheR2" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="otheR2" name="otheR2" #otheR2="ngModel"
+                                        [(ngModel)]="productionsService.productionData.otheR2" />
                                     </div>
                                   </div>
                                 </div>
@@ -553,11 +555,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="otheR3">otheR3:</label>
+                                      <label class="gr3" for="otheR3">otheR3:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR3" name="otheR3"
-                                        #otheR3="ngModel" [(ngModel)]="productionsService.productionData.otheR3" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="otheR3" name="otheR3" #otheR3="ngModel"
+                                        [(ngModel)]="productionsService.productionData.otheR3" />
                                     </div>
                                   </div>
                                 </div>
@@ -566,25 +569,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="otheR4">otheR4:</label>
+                                      <label class="gr3" for="otheR4">otheR4:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR4" name="otheR4"
-                                        #otheR4="ngModel" [(ngModel)]="productionsService.productionData.otheR4" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-2 custom-col-2">
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-4 in-label">
-                                      <label for="stprs">Stprs:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="stprs" name="stprs"
-                                        #stprs="ngModel" [(ngModel)]="productionsService.productionData.stprs" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="otheR4" name="otheR4" #otheR4="ngModel"
+                                        [(ngModel)]="productionsService.productionData.otheR4" />
                                     </div>
                                   </div>
                                 </div>
@@ -594,10 +584,26 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="plating">Plating:</label>
+                                      <label class="gr3" for="stprs">Stprs:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="plating" name="plating"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="stprs" name="stprs" #stprs="ngModel"
+                                        [(ngModel)]="productionsService.productionData.stprs" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-2 custom-col-2">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-4 in-label">
+                                      <label class="gr3" for="plating">Plating:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="plating" name="plating"
                                         #plating="ngModel" [(ngModel)]="productionsService.productionData.plating" />
                                     </div>
                                   </div>
@@ -607,10 +613,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="moulding">Moulding:</label>
+                                      <label class="gr3" for="moulding">Moulding:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="moulding" name="moulding"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="moulding" name="moulding"
                                         #moulding="ngModel" [(ngModel)]="productionsService.productionData.moulding" />
                                     </div>
                                   </div>
@@ -620,10 +627,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="mechfail">Mechfail:</label>
+                                      <label class="gr3" for="mechfail">Mechfail:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="mechfail" name="mechfail"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="mechfail" name="mechfail"
                                         #mechfail="ngModel" [(ngModel)]="productionsService.productionData.mechfail" />
                                     </div>
                                   </div>
@@ -635,10 +643,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="tooldef">Tooldef:</label>
+                                      <label class="gr3" for="tooldef">Tooldef:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="tooldef" name="tooldef"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="tooldef" name="tooldef"
                                         #tooldef="ngModel" [(ngModel)]="productionsService.productionData.tooldef" />
                                     </div>
                                   </div>
@@ -648,11 +657,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="others">Others:</label>
+                                      <label class="gr3" for="others">Others:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="others" name="others"
-                                        #others="ngModel" [(ngModel)]="productionsService.productionData.others" />
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="others" name="others" #others="ngModel"
+                                        [(ngModel)]="productionsService.productionData.others" />
                                     </div>
                                   </div>
                                 </div>
@@ -661,10 +671,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="shadevar">Shadevar:</label>
+                                      <label class="gr3" for="shadevar">Shadevar:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="shadevar" name="shadevar"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="shadevar" name="shadevar"
                                         #shadevar="ngModel" [(ngModel)]="productionsService.productionData.shadevar" />
                                     </div>
                                   </div>
@@ -675,11 +686,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="platingpeel">Plating Peel:</label>
+                                      <label class="gr3" for="platingpeel">Plating Peel:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="platingpeel"
-                                        name="platingpeel" #platingpeel="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="platingpeel" name="platingpeel"
+                                        #platingpeel="ngModel"
                                         [(ngModel)]="productionsService.productionData.platingpeel" />
                                     </div>
                                   </div>
@@ -689,10 +701,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="flowmark">Flowmark:</label>
+                                      <label class="gr3" for="flowmark">Flowmark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="flowmark" name="flowmark"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="flowmark" name="flowmark"
                                         #flowmark="ngModel" [(ngModel)]="productionsService.productionData.flowmark" />
                                     </div>
                                   </div>
@@ -702,11 +715,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="chemicalmark">Chemicalmark:</label>
+                                      <label class="gr3" for="chemicalmark">Chemicalmark:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="chemicalmark"
-                                        name="chemicalmark" #chemicalmark="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="chemicalmark" name="chemicalmark"
+                                        #chemicalmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.chemicalmark" />
                                     </div>
                                   </div>
@@ -716,11 +730,12 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="tottooldef">Tot. Tool Def.:</label>
+                                      <label class="gr3" for="tottooldef">Tot. Tool Def.:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="tottooldef"
-                                        name="tottooldef" #tottooldef="ngModel"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="tottooldef" name="tottooldef"
+                                        #tottooldef="ngModel"
                                         [(ngModel)]="productionsService.productionData.tottooldef" />
                                     </div>
                                   </div>
@@ -732,10 +747,11 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="totothers">Tot. Others:</label>
+                                      <label class="gr3" for="totothers">Tot. Others:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="totothers" name="totothers"
+                                      <input class="form-control grp-input-3" type='number' min="0"
+                                        [ngClass]="{error:validRejQtyError}" id="totothers" name="totothers"
                                         #totothers="ngModel"
                                         [(ngModel)]="productionsService.productionData.totothers" />
                                     </div>
