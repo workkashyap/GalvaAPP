@@ -2,24 +2,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2 ml-1">
-          <div class="col-sm-6">
-          </div>
-          <!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/nhome">Home</a></li>
-              <li class="breadcrumb-item active">Add New Production</li>
-            </ol>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </div>
+
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -33,103 +16,110 @@
                 <!-- left column -->
                 <div class="col-md-12">
                   <!-- general form elements -->
+
                   <div class="card card-primary card-outline">
-                    <div class="card-header">
-                      <div class="row ">
-                        <div class="col-md-11">
-                          <h3 class="card-title-md">Add New Production</h3>
-                        </div>
-                        <div class="col-md-1">
-                          <Button (click)="backtoProduction()" class="btn btn-primary btn-block mb-3">Back</Button>
+                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+
+                      <div class="card-header">
+                        <div class="row ">
+                          <div class="col-md-10">
+                            <h6 class="card-title-md">Add New Production</h6>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="submit" (click)="onSaveClick()"
+                              class="btn btn-success btn-sm  float-left px-3">
+                              Save
+                            </button>
+                          </div>
+                          <div class="col-md-1">
+                            <Button (click)="backtoProduction()" class="btn btn-primary btn-sm btn-block ">Back</Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                      <!-- /.card-header -->
+                      <!-- form start -->
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="row">
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
                                     <!--
                                     <input type="hidden" name="id" #id2="ngModel"
                                       [(ngModel)]="productionsService.productionData.id" />-->
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="insplot">Insplot:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='number' id="insplot" name="insplot" min="0"
                                         #insplot="ngModel" [(ngModel)]="productionsService.productionData.insplot" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="orderno">Order Number:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type="number" id="orderno" name="orderno"
                                         #orderno="ngModel" [(ngModel)]="productionsService.productionData.orderno"
                                         min="0" />
-
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="itemcode">Itemcode:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='text' id="itemcode" name="itemcode"
                                         #itemcode="ngModel" [(ngModel)]="productionsService.productionData.itemcode" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="itemname">Itemname:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='text' id="itemname" name="itemname"
                                         #itemname="ngModel" [(ngModel)]="productionsService.productionData.itemname" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="qty">Quantity:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="qty" name="qty" #qty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.qty" />
+                                    <div class="col-md-8">
+                                      <input class="form-control" [ngClass]="{error:validQtyError}" type='text'
+                                        id="qty" name="qty" #qty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.qty"
+                                        (change)="qtyChange($event.target.value,productionsService.productionData)" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="plantcode">Plantcode:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
                                         #plantcode="ngModel"
                                         [(ngModel)]="productionsService.productionData.plantcode" />-->
@@ -144,27 +134,49 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
+                                      <label for="plantcode">Plantcode:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                      <!--<input class="form-control" type='text' id="plantcode" name="plantcode"
+                                        #plantcode="ngModel"
+                                        [(ngModel)]="productionsService.productionData.plantcode" />-->
+
+                                      <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                                        [(ngModel)]="productionsService.productionData.plantcode">
+                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                          {{ pl.plantshortname }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-2 custom-col-2">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-4 in-label">
                                       <label for="shift">Shift:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='text' id="shift" name="shift" #shift="ngModel"
                                         [(ngModel)]="productionsService.productionData.shift" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
 
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="size">Size:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='text' id="size" name="size" #size="ngModel"
                                         [(ngModel)]="productionsService.productionData.size" />
                                     </div>
@@ -172,608 +184,571 @@
                                 </div>
 
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="type">Type:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='text' id="type" name="type" #type="ngModel"
                                         [(ngModel)]="productionsService.productionData.type" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="okqty">Ok Quantity:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="okqty" name="okqty" #okqty="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
+                                        min="0" id="okqty" name="okqty" #okqty="ngModel"
                                         [(ngModel)]="productionsService.productionData.okqty" />
                                     </div>
                                   </div>
                                 </div>
 
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="holdqty">Hold Quantity:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="holdqty" name="holdqty"
-                                        #holdqty="ngModel" [(ngModel)]="productionsService.productionData.holdqty" />
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
+                                        min="0" id="holdqty" name="holdqty" #holdqty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.holdqty" />
                                     </div>
                                   </div>
                                 </div>
 
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="buffingqty">Buffing Quantity:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="buffingqty" name="buffingqty"
-                                        #buffingqty="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
+                                        min="0" id="buffingqty" name="buffingqty" #buffingqty="ngModel"
                                         [(ngModel)]="productionsService.productionData.buffingqty" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
 
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="rejectionqty">Rejection Quantity:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="rejectionqty" name="rejectionqty"
-                                        #rejectionqty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.rejectionqty" />
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' [ngClass]="{error:validQtyError}"
+                                        min="0" id="rejectionqty" name="rejectionqty" #rejectionqty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.rejectionqty"
+                                        (change)="rejectQtyChange($event.target.value,productionsService.productionData)" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="pitting">Pitting:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="pitting" name="pitting"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="pitting" name="pitting"
                                         #pitting="ngModel" [(ngModel)]="productionsService.productionData.pitting" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="pinhole">Pinhole:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="pinhole" name="pinhole"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="pinhole" name="pinhole"
                                         #pinhole="ngModel" [(ngModel)]="productionsService.productionData.pinhole" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="patchmark">Patchmark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="patchmark" name="patchmark"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="patchmark" name="patchmark"
                                         #patchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.patchmark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="nickle">Nickle:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="nickle" name="nickle"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="nickle" name="nickle"
                                         #nickle="ngModel" [(ngModel)]="productionsService.productionData.nickle" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="crburning">Crburning:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="crburning" name="crburning"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="crburning" name="crburning"
                                         #crburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.crburning" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="skipplating">Skipplating:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="skipplating" name="skipplating"
-                                        #skipplating="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="skipplating"
+                                        name="skipplating" #skipplating="ngModel"
                                         [(ngModel)]="productionsService.productionData.skipplating" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="dent">Dent:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="dent" name="dent" #dent="ngModel"
-                                        [(ngModel)]="productionsService.productionData.dent" />
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}" id="dent" name="dent"
+                                        #dent="ngModel" [(ngModel)]="productionsService.productionData.dent" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="handmouldingrej">Handmoulding Rej.:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="handmouldingrej"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="handmouldingrej"
                                         name="handmouldingrej" #handmouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.handmouldingrej" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="scratchmark">Scratchmark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="scratchmark" name="scratchmark"
-                                        #scratchmark="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="scratchmark"
+                                        name="scratchmark" #scratchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.scratchmark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="roughness">roughness:</label>
+                                    <div class="col-md-4 in-label">
+                                      <label for="roughness">Roughness:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="roughness" name="roughness"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="roughness" name="roughness"
                                         #roughness="ngModel"
                                         [(ngModel)]="productionsService.productionData.roughness" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="silver">Silver:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="silver" name="silver"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="silver" name="silver"
                                         #silver="ngModel" [(ngModel)]="productionsService.productionData.silver" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div class="row">
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="mouldingrej">Mouldingrej:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="mouldingrej" name="mouldingrej"
-                                        #mouldingrej="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="mouldingrej"
+                                        name="mouldingrej" #mouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.mouldingrej" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="warpage">Warpage:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="warpage" name="warpage"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="warpage" name="warpage"
                                         #warpage="ngModel" [(ngModel)]="productionsService.productionData.warpage" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="copperburning">Copper Burning:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="copperburning" name="copperburning"
-                                        #copperburning="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="copperburning"
+                                        name="copperburning" #copperburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.copperburning" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="whitemark">Whitemark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="whitemark" name="whitemark"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="whitemark" name="whitemark"
                                         #whitemark="ngModel"
                                         [(ngModel)]="productionsService.productionData.whitemark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="dotplastic">Dotplastic:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="dotplastic" name="dotplastic"
-                                        #dotplastic="ngModel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="dotplastic"
+                                        name="dotplastic" #dotplastic="ngModel"
                                         [(ngModel)]="productionsService.productionData.dotplastic" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="watermark">watermark:</label>
+                                    <div class="col-md-4 in-label">
+                                      <label for="watermark">Watermark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="watermark" name="watermark"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="watermark" name="watermark"
                                         #watermark="ngModel"
                                         [(ngModel)]="productionsService.productionData.watermark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="blister">Blister:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="blister" name="blister"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="blister" name="blister"
                                         #blister="ngModel" [(ngModel)]="productionsService.productionData.blister" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="jigdamage">Jig Damage:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="jigdamage" name="jigdamage"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="jigdamage" name="jigdamage"
                                         #jigdamage="ngModel"
                                         [(ngModel)]="productionsService.productionData.jigdamage" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="otheR1">OtheR1:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="otheR1" name="otheR1"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR1" name="otheR1"
                                         #otheR1="ngModel" [(ngModel)]="productionsService.productionData.otheR1" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="otheR2">otheR2:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="otheR2" name="otheR2"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR2" name="otheR2"
                                         #otheR2="ngModel" [(ngModel)]="productionsService.productionData.otheR2" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="otheR3">otheR3:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="otheR3" name="otheR3"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR3" name="otheR3"
                                         #otheR3="ngModel" [(ngModel)]="productionsService.productionData.otheR3" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="otheR4">otheR4:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="otheR4" name="otheR4"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="otheR4" name="otheR4"
                                         #otheR4="ngModel" [(ngModel)]="productionsService.productionData.otheR4" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div class="row">
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="mandt">Mandt:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="mandt" name="mandt" #mandt="ngModel"
-                                        [(ngModel)]="productionsService.productionData.mandt" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="stprs">Stprs:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='text' id="stprs" name="stprs" #stprs="ngModel"
-                                        [(ngModel)]="productionsService.productionData.stprs" />
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="stprs" name="stprs"
+                                        #stprs="ngModel" [(ngModel)]="productionsService.productionData.stprs" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
 
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="plating">Plating:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="plating" name="plating"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="plating" name="plating"
                                         #plating="ngModel" [(ngModel)]="productionsService.productionData.plating" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="moulding">Moulding:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="moulding" name="moulding"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="moulding" name="moulding"
                                         #moulding="ngModel" [(ngModel)]="productionsService.productionData.moulding" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-
-                            <div class="row">
-
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="mechfail">Mechfail:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="mechfail" name="mechfail"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="mechfail" name="mechfail"
                                         #mechfail="ngModel" [(ngModel)]="productionsService.productionData.mechfail" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="tooldef">Tooldef:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="tooldef" name="tooldef"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="tooldef" name="tooldef"
                                         #tooldef="ngModel" [(ngModel)]="productionsService.productionData.tooldef" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
-                                      <label for="tooldef">Tooldef:</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="tooldef" name="tooldef"
-                                        #tooldef="ngModel" [(ngModel)]="productionsService.productionData.tooldef" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                  <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="others">Others:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="others" name="others"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="others" name="others"
                                         #others="ngModel" [(ngModel)]="productionsService.productionData.others" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="shadevar">Shadevar:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="shadevar" name="shadevar"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="shadevar" name="shadevar"
                                         #shadevar="ngModel" [(ngModel)]="productionsService.productionData.shadevar" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="platingpeel">Plating Peel:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="platingpeel"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="platingpeel"
                                         name="platingpeel" #platingpeel="ngModel"
                                         [(ngModel)]="productionsService.productionData.platingpeel" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="flowmark">Flowmark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="flowmark" name="flowmark"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="flowmark" name="flowmark"
                                         #flowmark="ngModel" [(ngModel)]="productionsService.productionData.flowmark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="chemicalmark">Chemicalmark:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="chemicalmark"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="chemicalmark"
                                         name="chemicalmark" #chemicalmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.chemicalmark" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="tottooldef">Tot. Tool Def.:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="tottooldef"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="tottooldef"
                                         name="tottooldef" #tottooldef="ngModel"
                                         [(ngModel)]="productionsService.productionData.tottooldef" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+
+
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="totothers">Tot. Others:</label>
                                     </div>
-                                    <div class="col-md-9">
-                                      <input class="form-control" type='number' min="0" id="totothers" name="totothers"
+                                    <div class="col-md-8">
+                                      <input class="form-control" type='number' min="0" [ngClass]="{error:validRejQtyError}" id="totothers" name="totothers"
                                         #totothers="ngModel"
                                         [(ngModel)]="productionsService.productionData.totothers" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
-                                    <div class="col-md-3 in-label">
+                                    <div class="col-md-4 in-label">
                                       <label for="pstngdate">Pstng Date:</label>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                       <input class="form-control" type='date' id="pstngdate" name="pstngdate"
                                         #pstngdate="ngModel"
                                         [(ngModel)]="productionsService.productionData.pstngdate" />
@@ -789,20 +764,6 @@
 
                       <!-- /.card-body -->
 
-                      <div class="card-footer">
-                        <div class="row">
-                          <div class="col-md-5in-label"></div>
-                          <div class="col-md-2 ">
-                            <button type="submit" (click)="onSaveClick()" class="btn btn-danger  float-left px-3">
-                              Save
-                            </button>
-                            <button type="submit" (click)="onCancelClick()" class="btn btn-success float-right">
-                              Cancel
-                            </button>
-                          </div>
-                          <div class="col-md-5in-label"></div>
-                        </div>
-                      </div>
                     </form>
                     <!-- </form> -->
                   </div>

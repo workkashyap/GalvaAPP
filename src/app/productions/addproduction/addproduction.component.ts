@@ -23,6 +23,9 @@ export class AddproductionComponent implements OnInit {
   public rateINR: number;
   public loading = false;
   public selectedcode: any;
+  public validQtyError: boolean = false;
+  public validRejQtyError: boolean = false;
+
   constructor(
     private toastr: ToastrService,
     private route: Router,
@@ -67,7 +70,7 @@ export class AddproductionComponent implements OnInit {
             insplot: 0,
             orderno: 0,
             roundno: "",
-            qty: "",
+            qty: "0",
             plantcode: me.selectedcode,
             shift: "",
             itemcode: "",
@@ -101,7 +104,7 @@ export class AddproductionComponent implements OnInit {
             otheR2: 0,
             otheR3: 0,
             otheR4: 0,
-            mandt: "0",
+            mandt: '',
             stprs: 0,
             createddate: me.date,
             pstngdate: me.date,
@@ -128,9 +131,134 @@ export class AddproductionComponent implements OnInit {
       form.form.reset();
     }
   }
+  qtyChange(qty, row) {
+    if (this.productionsService.id) {
+      return;
+    }
+    console.log("qty : ", qty);
+    var number = parseInt(qty);
+    var n = 4;
+
+    var values = [];
+    while (number > 0 && n > 0) {
+      var a = Math.floor(number / n);
+      number -= a;
+      n--;
+      values.push(a);
+    }  //
+    if (values && values.length) {
+      row.okqty = values[0];
+      row.holdqty = values[1];
+      row.buffingqty = values[2];
+      row.rejectionqty = values[3];
+      this.rejectQtyChange(row.rejectionqty, row);
+    }
+    console.log("values : ", values);
+  }
+  rejectQtyChange(qty, row) {
+    if (this.productionsService.id) {
+      return;
+    }
+    console.log("reject qty : ", qty);
+    var number = parseInt(qty);
+    var n = 35;
+
+    var values = [];
+    while (number > 0 && n > 0) {
+      var a = Math.floor(number / n);
+      number -= a;
+      n--;
+      values.push(a);
+    }  //
+    if (values && values.length) {
+      row.pitting = values[0];
+      row.pinhole = values[1];
+      row.patchmark = values[2];
+      row.nickle = values[3];
+      row.crburning = values[4];
+      row.skipplating = values[5];
+      row.dent = values[6];
+      row.handmouldingrej = values[7];
+      row.scratchmark = values[8];
+      row.roughness = values[9];
+      row.silver = values[10];
+      row.mouldingrej = values[11];
+      row.warpage = values[12];
+      row.copperburning = values[13];
+      row.whitemark = values[14];
+      row.dotplastic = values[15];
+      row.watermark = values[16];
+      row.blister = values[17];
+      row.jigdamage = values[18];
+      row.otheR1 = values[19];
+      row.otheR2 = values[20];
+      row.otheR3 = values[21];
+      row.otheR4 = values[22];
+      row.stprs = values[23];
+      row.plating = values[24];
+      row.moulding = values[25];
+      row.mechfail = values[26];
+      row.tooldef = values[27];
+      row.others = values[28];
+      row.shadevar = values[29];
+      row.platingpeel = values[30];
+      row.flowmark = values[31];
+      row.chemicalmark = values[32];
+      row.tottooldef = values[33];
+      row.totothers = values[34];
+    }
+    console.log("values : ", values);
+  }
+  countQty() {
+    const qty = this.productionsService.productionData.okqty + this.productionsService.productionData.holdqty + this.productionsService.productionData.rejectionqty + this.productionsService.productionData.buffingqty;
+    //console.log(qty);
+    ///console.log(parseInt(this.productionsService.productionData.qty));
+    if (parseInt(this.productionsService.productionData.qty) == qty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  countRejQty() {
+    const qty = this.productionsService.productionData.pitting + this.productionsService.productionData.pinhole + this.productionsService.productionData.patchmark +
+      this.productionsService.productionData.nickle + this.productionsService.productionData.crburning + this.productionsService.productionData.skipplating +
+      this.productionsService.productionData.dent + this.productionsService.productionData.handmouldingrej + this.productionsService.productionData.scratchmark +
+      this.productionsService.productionData.roughness + this.productionsService.productionData.silver + this.productionsService.productionData.mouldingrej +
+      this.productionsService.productionData.warpage + this.productionsService.productionData.copperburning + this.productionsService.productionData.whitemark +
+      this.productionsService.productionData.dotplastic + this.productionsService.productionData.watermark + this.productionsService.productionData.blister +
+      this.productionsService.productionData.jigdamage + this.productionsService.productionData.otheR1 + this.productionsService.productionData.otheR2 +
+      this.productionsService.productionData.otheR3 + this.productionsService.productionData.otheR4 + this.productionsService.productionData.stprs +
+      this.productionsService.productionData.plating + this.productionsService.productionData.moulding + this.productionsService.productionData.mechfail +
+      this.productionsService.productionData.tooldef + this.productionsService.productionData.others + this.productionsService.productionData.shadevar +
+      this.productionsService.productionData.platingpeel + this.productionsService.productionData.flowmark + this.productionsService.productionData.chemicalmark +
+      this.productionsService.productionData.tottooldef + this.productionsService.productionData.totothers;
+
+    console.log(qty);
+
+    console.log(this.productionsService.productionData.rejectionqty);
+
+    if (this.productionsService.productionData.rejectionqty == qty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   onComplete(form: NgForm) {
     //console.log("form", this.productionsService.productionData);
+    this.validQtyError = false;
     if (this.actionvalue === "Save") {
+
+      this.validQtyError = this.countQty();
+      if (this.validQtyError) {
+        return;
+      }
+      this.validRejQtyError = false;
+
+      this.validRejQtyError = this.countRejQty();
+      if (this.validRejQtyError) {
+        return;
+      }
+
       this.loading = true;
 
       this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
@@ -166,8 +294,6 @@ export class AddproductionComponent implements OnInit {
         });
       }
       /*
-       
-       
        this.loading = false;*/
     } else {
       this.backtoProduction();

@@ -1,3 +1,23 @@
 .in-label{
-    font-size: 13px;
+    font-size: 9px;
+}
+.form-control {
+    height: 26px;
+    padding: .15rem .65rem;
+    font-size: 0.8rem;
+}
+.card-header{
+    padding: .35rem 1.25rem;
+
+}
+.form-group {
+    margin-bottom: 0.5rem;
+}
+.col-md-2.custom-col-2 {
+    -webkit-box-flex: 0;
+    flex: 0 0 19.666667%;
+    max-width: 20.666667%;
+}
+.error{
+    border:1px solid red;
 }
