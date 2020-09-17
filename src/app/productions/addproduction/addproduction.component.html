@@ -49,7 +49,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control" type='number' id="insplot" name="insplot" min="0"
-                                        #insplot="ngModel" [(ngModel)]="productionsService.productionData.insplot" />
+                                        #insplot="ngModel" [(ngModel)]="productionsService.productionData.insplot"
+                                        readonly />
                                     </div>
                                   </div>
                                 </div>
@@ -63,7 +64,7 @@
                                     <div class="col-md-8">
                                       <input class="form-control" type="number" id="orderno" name="orderno"
                                         #orderno="ngModel" [(ngModel)]="productionsService.productionData.orderno"
-                                        min="0" />
+                                        min="0" readonly />
                                     </div>
                                   </div>
                                 </div>
@@ -75,11 +76,11 @@
                                       <label for="itemname">Itemname:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <p-autoComplete [style]="{'width':'150px'}" [size]="20" 
+                                      <p-autoComplete [style]="{'width':'150px'}" [size]="20"
                                         [(ngModel)]="productionsService.productionData.itemname2" id="itemname2"
                                         name="itemname2" #itemname2="ngModel" [suggestions]="filteredCountries"
-                                        (onSelect)="valueM($event)"
-                                        (completeMethod)="filterCountry($event)" field="itemname" [dropdown]="false">
+                                        (onSelect)="valueM($event)" (completeMethod)="filterCountry($event)"
+                                        field="itemname" [dropdown]="false">
                                         <ng-template let-country pTemplate="item">
                                           <div class="country-item">
                                             <div>{{country.itemname}}</div>
@@ -92,7 +93,7 @@
                                   </div>
                                 </div>
                               </div>
-                              
+
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
@@ -101,7 +102,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control" type='text' id="itemcode" name="itemcode"
-                                        #itemcode="ngModel" [(ngModel)]="productionsService.productionData.itemcode" readonly/>
+                                        #itemcode="ngModel" [(ngModel)]="productionsService.productionData.itemcode"
+                                        readonly />
                                     </div>
                                   </div>
                                 </div>
@@ -115,8 +117,7 @@
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-1" [ngClass]="{error:validQtyError}"
                                         type='text' id="qty" name="qty" #qty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.qty"
-                                        (change)="qtyChange($event.target.value,productionsService.productionData)" />
+                                        [(ngModel)]="productionsService.productionData.qty" readonly />
                                     </div>
                                   </div>
                                 </div>
@@ -134,7 +135,8 @@
                                         [(ngModel)]="productionsService.productionData.plantcode" />-->
 
                                       <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
-                                        [(ngModel)]="productionsService.productionData.plantcode">
+                                        [(ngModel)]="productionsService.productionData.plantcode"
+                                        (change)="plantcodeChange()">
                                         <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                                           {{ pl.plantshortname }}
                                         </option>
@@ -193,8 +195,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-2" type='number'
-                                        [ngClass]="{error:validQtyError}" min="0" id="okqty" name="okqty"
-                                        #okqty="ngModel" [(ngModel)]="productionsService.productionData.okqty" />
+                                        [ngClass]="{error:validQtyError}" (change)="countQty()" min="0" id="okqty"
+                                        name="okqty" #okqty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.okqty" />
                                     </div>
                                   </div>
                                 </div>
@@ -208,8 +211,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-2" type='number'
-                                        [ngClass]="{error:validQtyError}" min="0" id="holdqty" name="holdqty"
-                                        #holdqty="ngModel" [(ngModel)]="productionsService.productionData.holdqty" />
+                                        [ngClass]="{error:validQtyError}" (change)="countQty()" min="0" id="holdqty"
+                                        name="holdqty" #holdqty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.holdqty" />
                                     </div>
                                   </div>
                                 </div>
@@ -223,8 +227,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-2" type='number'
-                                        [ngClass]="{error:validQtyError}" min="0" id="buffingqty" name="buffingqty"
-                                        #buffingqty="ngModel"
+                                        [ngClass]="{error:validQtyError}" (change)="countQty()" min="0" id="buffingqty"
+                                        name="buffingqty" #buffingqty="ngModel"
                                         [(ngModel)]="productionsService.productionData.buffingqty" />
                                     </div>
                                   </div>
@@ -240,10 +244,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-2" type='number'
-                                        [ngClass]="{error:validQtyError}" min="0" id="rejectionqty" name="rejectionqty"
-                                        #rejectionqty="ngModel"
-                                        [(ngModel)]="productionsService.productionData.rejectionqty"
-                                        (change)="rejectQtyChange($event.target.value,productionsService.productionData)" />
+                                        [ngClass]="{error:validQtyError}" (change)="countQty()" min="0"
+                                        id="rejectionqty" name="rejectionqty" #rejectionqty="ngModel"
+                                        [(ngModel)]="productionsService.productionData.rejectionqty" readonly />
                                     </div>
                                   </div>
                                 </div>
@@ -256,8 +259,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="pitting" name="pitting" #pitting="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="pitting"
+                                        name="pitting" #pitting="ngModel"
                                         [(ngModel)]="productionsService.productionData.pitting" />
                                     </div>
                                   </div>
@@ -271,8 +274,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="pinhole" name="pinhole" #pinhole="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="pinhole"
+                                        name="pinhole" #pinhole="ngModel"
                                         [(ngModel)]="productionsService.productionData.pinhole" />
                                     </div>
                                   </div>
@@ -286,8 +289,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="patchmark" name="patchmark" #patchmark="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="patchmark"
+                                        name="patchmark" #patchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.patchmark" />
                                     </div>
                                   </div>
@@ -302,8 +305,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="nickle" name="nickle" #nickle="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="nickle"
+                                        name="nickle" #nickle="ngModel"
                                         [(ngModel)]="productionsService.productionData.nickle" />
                                     </div>
                                   </div>
@@ -317,8 +320,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="crburning" name="crburning" #crburning="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="crburning"
+                                        name="crburning" #crburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.crburning" />
                                     </div>
                                   </div>
@@ -332,8 +335,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="skipplating" name="skipplating" #skipplating="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="skipplating"
+                                        name="skipplating" #skipplating="ngModel"
                                         [(ngModel)]="productionsService.productionData.skipplating" />
                                     </div>
                                   </div>
@@ -347,8 +350,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" [ngClass]="{error:validRejQtyError}"
-                                        id="dent" name="dent" #dent="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="dent"
+                                        name="dent" #dent="ngModel"
                                         [(ngModel)]="productionsService.productionData.dent" />
                                     </div>
                                   </div>
@@ -363,8 +366,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="handmouldingrej" name="handmouldingrej"
-                                        #handmouldingrej="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()"
+                                        id="handmouldingrej" name="handmouldingrej" #handmouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.handmouldingrej" />
                                     </div>
                                   </div>
@@ -378,8 +381,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="scratchmark" name="scratchmark"
-                                        #scratchmark="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="scratchmark"
+                                        name="scratchmark" #scratchmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.scratchmark" />
                                     </div>
                                   </div>
@@ -393,8 +396,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="roughness" name="roughness"
-                                        #roughness="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="roughness"
+                                        name="roughness" #roughness="ngModel"
                                         [(ngModel)]="productionsService.productionData.roughness" />
                                     </div>
                                   </div>
@@ -408,7 +411,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="silver" name="silver" #silver="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="silver"
+                                        name="silver" #silver="ngModel"
                                         [(ngModel)]="productionsService.productionData.silver" />
                                     </div>
                                   </div>
@@ -423,8 +427,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="mouldingrej" name="mouldingrej"
-                                        #mouldingrej="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="mouldingrej"
+                                        name="mouldingrej" #mouldingrej="ngModel"
                                         [(ngModel)]="productionsService.productionData.mouldingrej" />
                                     </div>
                                   </div>
@@ -438,8 +442,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="warpage" name="warpage"
-                                        #warpage="ngModel" [(ngModel)]="productionsService.productionData.warpage" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="warpage"
+                                        name="warpage" #warpage="ngModel"
+                                        [(ngModel)]="productionsService.productionData.warpage" />
                                     </div>
                                   </div>
                                 </div>
@@ -452,8 +457,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="copperburning" name="copperburning"
-                                        #copperburning="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="copperburning"
+                                        name="copperburning" #copperburning="ngModel"
                                         [(ngModel)]="productionsService.productionData.copperburning" />
                                     </div>
                                   </div>
@@ -467,8 +472,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="whitemark" name="whitemark"
-                                        #whitemark="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="whitemark"
+                                        name="whitemark" #whitemark="ngModel"
                                         [(ngModel)]="productionsService.productionData.whitemark" />
                                     </div>
                                   </div>
@@ -483,8 +488,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="dotplastic" name="dotplastic"
-                                        #dotplastic="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="dotplastic"
+                                        name="dotplastic" #dotplastic="ngModel"
                                         [(ngModel)]="productionsService.productionData.dotplastic" />
                                     </div>
                                   </div>
@@ -498,8 +503,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="watermark" name="watermark"
-                                        #watermark="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="watermark"
+                                        name="watermark" #watermark="ngModel"
                                         [(ngModel)]="productionsService.productionData.watermark" />
                                     </div>
                                   </div>
@@ -513,8 +518,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="blister" name="blister"
-                                        #blister="ngModel" [(ngModel)]="productionsService.productionData.blister" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="blister"
+                                        name="blister" #blister="ngModel"
+                                        [(ngModel)]="productionsService.productionData.blister" />
                                     </div>
                                   </div>
                                 </div>
@@ -527,8 +533,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="jigdamage" name="jigdamage"
-                                        #jigdamage="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="jigdamage"
+                                        name="jigdamage" #jigdamage="ngModel"
                                         [(ngModel)]="productionsService.productionData.jigdamage" />
                                     </div>
                                   </div>
@@ -543,7 +549,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="otheR1" name="otheR1" #otheR1="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="otheR1"
+                                        name="otheR1" #otheR1="ngModel"
                                         [(ngModel)]="productionsService.productionData.otheR1" />
                                     </div>
                                   </div>
@@ -557,7 +564,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="otheR2" name="otheR2" #otheR2="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="otheR2"
+                                        name="otheR2" #otheR2="ngModel"
                                         [(ngModel)]="productionsService.productionData.otheR2" />
                                     </div>
                                   </div>
@@ -571,7 +579,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="otheR3" name="otheR3" #otheR3="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="otheR3"
+                                        name="otheR3" #otheR3="ngModel"
                                         [(ngModel)]="productionsService.productionData.otheR3" />
                                     </div>
                                   </div>
@@ -585,13 +594,14 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="otheR4" name="otheR4" #otheR4="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="otheR4"
+                                        name="otheR4" #otheR4="ngModel"
                                         [(ngModel)]="productionsService.productionData.otheR4" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-<!--
+                              <!--
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
@@ -600,7 +610,7 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="stprs" name="stprs" #stprs="ngModel"
+                                        [ngClass]="{error:validRejQtyError}"  (change)="countRejQty()" id="stprs" name="stprs" #stprs="ngModel"
                                         [(ngModel)]="productionsService.productionData.stprs" />
                                     </div>
                                   </div>
@@ -615,8 +625,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="plating" name="plating"
-                                        #plating="ngModel" [(ngModel)]="productionsService.productionData.plating" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="plating"
+                                        name="plating" #plating="ngModel"
+                                        [(ngModel)]="productionsService.productionData.plating" />
                                     </div>
                                   </div>
                                 </div>
@@ -629,8 +640,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="moulding" name="moulding"
-                                        #moulding="ngModel" [(ngModel)]="productionsService.productionData.moulding" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="moulding"
+                                        name="moulding" #moulding="ngModel"
+                                        [(ngModel)]="productionsService.productionData.moulding" />
                                     </div>
                                   </div>
                                 </div>
@@ -643,8 +655,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="mechfail" name="mechfail"
-                                        #mechfail="ngModel" [(ngModel)]="productionsService.productionData.mechfail" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="mechfail"
+                                        name="mechfail" #mechfail="ngModel"
+                                        [(ngModel)]="productionsService.productionData.mechfail" />
                                     </div>
                                   </div>
                                 </div>
@@ -659,8 +672,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="tooldef" name="tooldef"
-                                        #tooldef="ngModel" [(ngModel)]="productionsService.productionData.tooldef" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="tooldef"
+                                        name="tooldef" #tooldef="ngModel"
+                                        [(ngModel)]="productionsService.productionData.tooldef" />
                                     </div>
                                   </div>
                                 </div>
@@ -673,7 +687,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="others" name="others" #others="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="others"
+                                        name="others" #others="ngModel"
                                         [(ngModel)]="productionsService.productionData.others" />
                                     </div>
                                   </div>
@@ -687,8 +702,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="shadevar" name="shadevar"
-                                        #shadevar="ngModel" [(ngModel)]="productionsService.productionData.shadevar" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="shadevar"
+                                        name="shadevar" #shadevar="ngModel"
+                                        [(ngModel)]="productionsService.productionData.shadevar" />
                                     </div>
                                   </div>
                                 </div>
@@ -702,8 +718,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="platingpeel" name="platingpeel"
-                                        #platingpeel="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="platingpeel"
+                                        name="platingpeel" #platingpeel="ngModel"
                                         [(ngModel)]="productionsService.productionData.platingpeel" />
                                     </div>
                                   </div>
@@ -717,8 +733,9 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="flowmark" name="flowmark"
-                                        #flowmark="ngModel" [(ngModel)]="productionsService.productionData.flowmark" />
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="flowmark"
+                                        name="flowmark" #flowmark="ngModel"
+                                        [(ngModel)]="productionsService.productionData.flowmark" />
                                     </div>
                                   </div>
                                 </div>
@@ -731,8 +748,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="chemicalmark" name="chemicalmark"
-                                        #chemicalmark="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="chemicalmark"
+                                        name="chemicalmark" #chemicalmark="ngModel"
                                         [(ngModel)]="productionsService.productionData.chemicalmark" />
                                     </div>
                                   </div>
@@ -746,8 +763,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="tottooldef" name="tottooldef"
-                                        #tottooldef="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="tottooldef"
+                                        name="tottooldef" #tottooldef="ngModel"
                                         [(ngModel)]="productionsService.productionData.tottooldef" />
                                     </div>
                                   </div>
@@ -763,8 +780,8 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control grp-input-3" type='number' min="0"
-                                        [ngClass]="{error:validRejQtyError}" id="totothers" name="totothers"
-                                        #totothers="ngModel"
+                                        [ngClass]="{error:validRejQtyError}" (change)="countRejQty()" id="totothers"
+                                        name="totothers" #totothers="ngModel"
                                         [(ngModel)]="productionsService.productionData.totothers" />
                                     </div>
                                   </div>

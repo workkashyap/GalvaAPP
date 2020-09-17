@@ -42,7 +42,7 @@ export class AddproductionComponent implements OnInit {
   public validRejQtyError: boolean = false;
 
   filteredCountries: any[];
-
+  public insOrdeno: number;
   constructor(
     private toastr: ToastrService,
     private route: Router,
@@ -71,7 +71,6 @@ export class AddproductionComponent implements OnInit {
         filtered.push(country);
       }
     }
-    console.log("filtered : ", filtered);
     this.filteredCountries = filtered;
   }
   valueM(v) {
@@ -88,21 +87,36 @@ export class AddproductionComponent implements OnInit {
       } else if (this.productionsService.productionData.itemname2.itemtype = "Satin") {
         this.productionsService.productionData.type = "ZSAT";
       }
-
+      this.selectedcode = this.productionsService.productionData.plantcode;
+      this.randomData();
     }
-    console.log("v:", this.productionsService.productionData.itemname2);
+  }
+  randomData() {
+    const minm = 10;
+    const maxm = 99;
+    const value = Math.floor(Math.random() * (maxm - minm + 1)) + minm;
+    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
+
+    this.insOrdeno = parseInt(this.selectedcode + "" + date + "" + value);
+    if (this.productionsService.productionData) {
+      this.productionsService.productionData.insplot = this.insOrdeno;
+      this.productionsService.productionData.orderno = this.insOrdeno;
+    }
+  }
+  plantcodeChange() {
+    this.selectedcode = this.productionsService.productionData.plantcode;
+    this.randomData();
   }
   ngOnInit() {
     const me = this;
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    console.log("cDate", this.date);
+
+    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.plantservice
       .sgetPlantData(me.currentUser.id)
       .toPromise()
       .then(res => {
-        //me.plantservice.splantlist = res as Plant[];
-        console.log("splantlist", me.plantservice.splantlist);
         me.plantservice.splantlist = [];
         const splantlist = res as Plant[];
         splantlist.forEach(splant => {
@@ -114,6 +128,7 @@ export class AddproductionComponent implements OnInit {
         // this.productionsService.productionData = [];
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
 
+
         if (me.productionsService.id) {
           me.productionsService.productionbyid(me.productionsService.id)
             .toPromise()
@@ -121,6 +136,8 @@ export class AddproductionComponent implements OnInit {
               this.productionsService.productionData = res; //as Productions[];
               this.productionsService.productionData.pstngdate = this.datePipe.transform(this.productionsService.productionData.pstngdate, "yyyy-MM-dd");
               this.productionsService.productionData.itemname2 = { 'itemname': this.productionsService.productionData.itemname }
+              me.randomData();
+
             });
         } else {
           me.productionsService.productionData = {
@@ -179,7 +196,10 @@ export class AddproductionComponent implements OnInit {
             tottooldef: 0,
             totothers: 0,
           };
+          me.randomData();
+
         }
+
       });
 
 
@@ -194,7 +214,6 @@ export class AddproductionComponent implements OnInit {
     if (this.productionsService.id) {
       return;
     }
-    console.log("qty : ", qty);
     var number = parseInt(qty);
     var n = 4;
 
@@ -212,13 +231,11 @@ export class AddproductionComponent implements OnInit {
       row.rejectionqty = values[3];
       this.rejectQtyChange(row.rejectionqty, row);
     }
-    console.log("values : ", values);
   }
   rejectQtyChange(qty, row) {
     if (this.productionsService.id) {
       return;
     }
-    console.log("reject qty : ", qty);
     var number = parseInt(qty);
     var n = 34;
 
@@ -266,21 +283,19 @@ export class AddproductionComponent implements OnInit {
       row.tottooldef = values[32];
       row.totothers = values[33];
     }
-    console.log("values : ", values);
   }
   countQty() {
     const qty = this.productionsService.productionData.okqty + this.productionsService.productionData.holdqty + this.productionsService.productionData.rejectionqty + this.productionsService.productionData.buffingqty;
-    //console.log(qty);
-    ///console.log(parseInt(this.productionsService.productionData.qty));
-    if (parseInt(this.productionsService.productionData.qty) == qty) {
-      return false;
-    } else {
-      return true;
-    }
+    this.productionsService.productionData.qty = qty.toString();
+    /* if (parseInt(this.productionsService.productionData.qty) == qty) {
+       return false;
+     } else {
+       return true;
+     }*/
   }
   countRejQty() {
     //  this.productionsService.productionData.stprs +
-    const qty = this.productionsService.productionData.pitting + this.productionsService.productionData.pinhole + this.productionsService.productionData.patchmark +
+    this.productionsService.productionData.rejectionqty = this.productionsService.productionData.pitting + this.productionsService.productionData.pinhole + this.productionsService.productionData.patchmark +
       this.productionsService.productionData.nickle + this.productionsService.productionData.crburning + this.productionsService.productionData.skipplating +
       this.productionsService.productionData.dent + this.productionsService.productionData.handmouldingrej + this.productionsService.productionData.scratchmark +
       this.productionsService.productionData.roughness + this.productionsService.productionData.silver + this.productionsService.productionData.mouldingrej +
@@ -292,38 +307,34 @@ export class AddproductionComponent implements OnInit {
       this.productionsService.productionData.tooldef + this.productionsService.productionData.others + this.productionsService.productionData.shadevar +
       this.productionsService.productionData.platingpeel + this.productionsService.productionData.flowmark + this.productionsService.productionData.chemicalmark +
       this.productionsService.productionData.tottooldef + this.productionsService.productionData.totothers;
-
-    console.log(qty);
-
-    console.log(this.productionsService.productionData.rejectionqty);
-
-    if (this.productionsService.productionData.rejectionqty == qty) {
+    this.countQty();
+    /*if (this.productionsService.productionData.rejectionqty == qty) {
       return false;
     } else {
       return true;
-    }
+    }*/
   }
   onComplete(form: NgForm) {
-    //console.log("form", this.productionsService.productionData);
     this.validQtyError = false;
-    console.log("data : ", this.productionsService.productionData);
 
+    console.log("this.productionsService.productionData", this.productionsService.productionData);
+    
     if (this.actionvalue === "Save") {
 
-      this.validQtyError = this.countQty();
-      if (this.validQtyError) {
-        return;
-      }
-      this.validRejQtyError = false;
-
-      this.validRejQtyError = this.countRejQty();
-      if (this.validRejQtyError) {
-        return;
-      }
+      /* this.validQtyError = this.countQty();
+       if (this.validQtyError) {
+         return;
+       }
+       this.validRejQtyError = false;
+ 
+       /* this.validRejQtyError = this.countRejQty();
+        if (this.validRejQtyError) {
+          return;
+        }*/
 
       this.loading = true;
 
-
+      /*
       if (this.productionsService.productionData.id > 0) {
         this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
 
@@ -342,7 +353,6 @@ export class AddproductionComponent implements OnInit {
       } else {
         this.productionsService.productionData.createddate = this.datePipe.transform(this.date, "yyyy-MM-dd");
 
-        console.log("Save", this.productionsService.productionData);
         this.productionsService.saveProduction().subscribe(res => {
           this.resetForm(form);
           this.toastr.success(
