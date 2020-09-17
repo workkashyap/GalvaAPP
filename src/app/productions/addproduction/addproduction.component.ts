@@ -318,7 +318,7 @@ export class AddproductionComponent implements OnInit {
     this.validQtyError = false;
 
     console.log("this.productionsService.productionData", this.productionsService.productionData);
-    
+
     if (this.actionvalue === "Save") {
 
       /* this.validQtyError = this.countQty();
@@ -334,7 +334,6 @@ export class AddproductionComponent implements OnInit {
 
       this.loading = true;
 
-      /*
       if (this.productionsService.productionData.id > 0) {
         this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
 
@@ -345,8 +344,6 @@ export class AddproductionComponent implements OnInit {
             "Production"
           );
           this.route.navigate(["./productions"]);
-          // this.ngOnInit();
-          // this.service.refreshList();
         }, err => {
           console.log(err);
         });
@@ -360,8 +357,6 @@ export class AddproductionComponent implements OnInit {
             "Production"
           );
           this.route.navigate(["./productions"]);
-          // this.ngOnInit();
-          // this.service.refreshList();
         }, err => {
           console.log(err);
         });
