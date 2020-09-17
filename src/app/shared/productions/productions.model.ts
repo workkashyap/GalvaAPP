@@ -6,8 +6,13 @@ export class Productions {
   qty?: string;
   plantcode?: string;
   shift?: string;
+
   itemcode?: string;
+  itemcode2?: any;
+
   itemname?: string;
+  itemname2: any;
+
   size?: string;
   type?: string;
   okqty?: number;

@@ -1,0 +1,173 @@
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2 ml-1">
+          <div class="col-sm-6">
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+              <li class="breadcrumb-item active">New Item</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+
+          <!-- /.card -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <div class="row ">
+                        <div class="col-md-11">
+                          <h3 class="card-title-md">New Item</h3>
+                        </div>
+                        <div class="col-md-1">
+                          <Button (click)="backtoJobWorkMaterial()" class="btn btn-primary btn-block mb-3">Back</Button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2 text-center">
+                                  <label for="itemcode">Itemcode</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type='number' id="itemcode" name="itemcode"
+                                    #itemcode="ngModel" [(ngModel)]="itmService.itemmstsData.itemcode" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="plant">Plant:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type="number" id="plant" name="plant" #plant="ngModel"
+                                    [(ngModel)]="itmService.itemmstsData.plant" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="ctype">Ctype:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type="text" id="ctype" name="ctype" #ctype="ngModel"
+                                    [(ngModel)]="itmService.itemmstsData.ctype" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="itemname">Itemname:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type="text" id="itemname" name="itemname"
+                                    #itemname="ngModel" [(ngModel)]="itmService.itemmstsData.itemname" />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="itemtype">Itemtype:</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type="text" id="itemtype" name="itemtype"
+                                    #itemtype="ngModel" [(ngModel)]="itmService.itemmstsData.itemtype" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-2  text-center">
+                                  <label for="price">Price</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input class="form-control" type='number' id="price" name="price" #price="ngModel"
+                                    [(ngModel)]="itmService.itemmstsData.price" />
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-md-5 text-center"></div>
+                          <div class="col-md-2 ">
+                            <button type="submit" (click)="onSaveClick()" class="btn btn-danger  float-left px-3">
+                              Save
+                            </button>
+                            <button type="submit" (click)="onCancelClick()" class="btn btn-success float-right">
+                              Cancel
+                            </button>
+                          </div>
+                          <div class="col-md-5 text-center"></div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- </form> -->
+                  </div>
+                  <!-- /.card -->
+
+                  <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+          </section>
+          <!-- /.col -->
+          <div class="mx-2">
+            <div></div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

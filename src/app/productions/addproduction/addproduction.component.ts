@@ -10,12 +10,26 @@ import { NgForm } from "@angular/forms";
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
 import { Productions } from 'src/app/shared/productions/productions.model';
+import { ItemmstsService } from 'src/app/shared/itemmsts/itemmsts.service';
 
 @Component({
   selector: "app-addproduction",
   templateUrl: "./addproduction.component.html",
   styleUrls: ["./addproduction.component.css"],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  styles: [
+    `
+    :host >>> .ui-autocomplete .ui-autocomplete-input {
+    width: 93% !important;
+    height: 26px;
+    padding: .15rem .65rem;
+    font-size: 0.8rem;
+  }
+  :host :: input.ng-tns-c5-0.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
+    padding: 0.2em;
+}
+  `
+  ]
 })
 export class AddproductionComponent implements OnInit {
   public currentUser: User;
@@ -27,20 +41,57 @@ export class AddproductionComponent implements OnInit {
   public validQtyError: boolean = false;
   public validRejQtyError: boolean = false;
 
+  filteredCountries: any[];
+
   constructor(
     private toastr: ToastrService,
     private route: Router,
     private datePipe: DatePipe,
     public productionsService: ProductionsService,
     public iservice: InboxService,
+    public itmService: ItemmstsService,
     public plantservice: PlantService,
 
     public lservice: LoginService
   ) {
     const me = this;
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+
+    this.itmService.getallData();
+
   }
 
+  filterCountry(event) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.itmService.itemmstsList.length; i++) {
+      let country = this.itmService.itemmstsList[i];
+      if (country.itemname.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
+    }
+    console.log("filtered : ", filtered);
+    this.filteredCountries = filtered;
+  }
+  valueM(v) {
+    if (this.productionsService.productionData.itemname2) {
+      this.productionsService.productionData.itemname = this.productionsService.productionData.itemname2.itemname;
+      this.productionsService.productionData.itemcode = this.productionsService.productionData.itemname2.itemcode.toString();
+      this.productionsService.productionData.plantcode = this.productionsService.productionData.itemname2.plant.toString();
+      this.productionsService.productionData.stprs = this.productionsService.productionData.itemname2.price;
+      this.productionsService.productionData.size = this.productionsService.productionData.itemname2.ctype;
+      if (this.productionsService.productionData.itemname2.itemtype = "Chrome") {
+        this.productionsService.productionData.type = "ZCRM";
+      } else if (this.productionsService.productionData.itemname2.itemtype = "Moulded") {
+        this.productionsService.productionData.type = "ZMLD";
+      } else if (this.productionsService.productionData.itemname2.itemtype = "Satin") {
+        this.productionsService.productionData.type = "ZSAT";
+      }
+
+    }
+    console.log("v:", this.productionsService.productionData.itemname2);
+  }
   ngOnInit() {
     const me = this;
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
@@ -69,9 +120,8 @@ export class AddproductionComponent implements OnInit {
             .then((res: any) => {
               this.productionsService.productionData = res; //as Productions[];
               this.productionsService.productionData.pstngdate = this.datePipe.transform(this.productionsService.productionData.pstngdate, "yyyy-MM-dd");
+              this.productionsService.productionData.itemname2 = { 'itemname': this.productionsService.productionData.itemname }
             });
-
-
         } else {
           me.productionsService.productionData = {
             id: 0,
@@ -83,6 +133,7 @@ export class AddproductionComponent implements OnInit {
             shift: "",
             itemcode: "",
             itemname: "",
+            itemname2: null,
             size: "",
             type: "",
             okqty: 0,
@@ -169,7 +220,7 @@ export class AddproductionComponent implements OnInit {
     }
     console.log("reject qty : ", qty);
     var number = parseInt(qty);
-    var n = 35;
+    var n = 34;
 
     var values = [];
     while (number > 0 && n > 0) {
@@ -202,18 +253,18 @@ export class AddproductionComponent implements OnInit {
       row.otheR2 = values[20];
       row.otheR3 = values[21];
       row.otheR4 = values[22];
-      row.stprs = values[23];
-      row.plating = values[24];
-      row.moulding = values[25];
-      row.mechfail = values[26];
-      row.tooldef = values[27];
-      row.others = values[28];
-      row.shadevar = values[29];
-      row.platingpeel = values[30];
-      row.flowmark = values[31];
-      row.chemicalmark = values[32];
-      row.tottooldef = values[33];
-      row.totothers = values[34];
+      //row.stprs = values[23];
+      row.plating = values[23];
+      row.moulding = values[24];
+      row.mechfail = values[25];
+      row.tooldef = values[26];
+      row.others = values[27];
+      row.shadevar = values[28];
+      row.platingpeel = values[29];
+      row.flowmark = values[30];
+      row.chemicalmark = values[31];
+      row.tottooldef = values[32];
+      row.totothers = values[33];
     }
     console.log("values : ", values);
   }
@@ -228,6 +279,7 @@ export class AddproductionComponent implements OnInit {
     }
   }
   countRejQty() {
+    //  this.productionsService.productionData.stprs +
     const qty = this.productionsService.productionData.pitting + this.productionsService.productionData.pinhole + this.productionsService.productionData.patchmark +
       this.productionsService.productionData.nickle + this.productionsService.productionData.crburning + this.productionsService.productionData.skipplating +
       this.productionsService.productionData.dent + this.productionsService.productionData.handmouldingrej + this.productionsService.productionData.scratchmark +
@@ -235,7 +287,7 @@ export class AddproductionComponent implements OnInit {
       this.productionsService.productionData.warpage + this.productionsService.productionData.copperburning + this.productionsService.productionData.whitemark +
       this.productionsService.productionData.dotplastic + this.productionsService.productionData.watermark + this.productionsService.productionData.blister +
       this.productionsService.productionData.jigdamage + this.productionsService.productionData.otheR1 + this.productionsService.productionData.otheR2 +
-      this.productionsService.productionData.otheR3 + this.productionsService.productionData.otheR4 + this.productionsService.productionData.stprs +
+      this.productionsService.productionData.otheR3 + this.productionsService.productionData.otheR4 +
       this.productionsService.productionData.plating + this.productionsService.productionData.moulding + this.productionsService.productionData.mechfail +
       this.productionsService.productionData.tooldef + this.productionsService.productionData.others + this.productionsService.productionData.shadevar +
       this.productionsService.productionData.platingpeel + this.productionsService.productionData.flowmark + this.productionsService.productionData.chemicalmark +
@@ -254,6 +306,8 @@ export class AddproductionComponent implements OnInit {
   onComplete(form: NgForm) {
     //console.log("form", this.productionsService.productionData);
     this.validQtyError = false;
+    console.log("data : ", this.productionsService.productionData);
+
     if (this.actionvalue === "Save") {
 
       this.validQtyError = this.countQty();
@@ -269,9 +323,10 @@ export class AddproductionComponent implements OnInit {
 
       this.loading = true;
 
-      this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
 
       if (this.productionsService.productionData.id > 0) {
+        this.productionsService.productionData.createddate = this.datePipe.transform(this.productionsService.productionData.createddate, "yyyy-MM-dd");
+
         this.productionsService.updateProduction(this.productionsService.productionData.id).subscribe(res => {
           this.resetForm(form);
           this.toastr.success(

@@ -72,24 +72,36 @@
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="itemcode">Itemcode:</label>
+                                      <label for="itemname">Itemname:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='text' id="itemcode" name="itemcode"
-                                        #itemcode="ngModel" [(ngModel)]="productionsService.productionData.itemcode" />
+                                      <p-autoComplete [style]="{'width':'150px'}" [size]="20" 
+                                        [(ngModel)]="productionsService.productionData.itemname2" id="itemname2"
+                                        name="itemname2" #itemname2="ngModel" [suggestions]="filteredCountries"
+                                        (onSelect)="valueM($event)"
+                                        (completeMethod)="filterCountry($event)" field="itemname" [dropdown]="false">
+                                        <ng-template let-country pTemplate="item">
+                                          <div class="country-item">
+                                            <div>{{country.itemname}}</div>
+                                          </div>
+                                        </ng-template>
+                                      </p-autoComplete>
+                                      <!-- <input class="form-control" type='text' id="itemname" name="itemname"
+                                        #itemname="ngModel" [(ngModel)]="productionsService.productionData.itemname" />-->
                                     </div>
                                   </div>
                                 </div>
                               </div>
+                              
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
                                     <div class="col-md-4 in-label">
-                                      <label for="itemname">Itemname:</label>
+                                      <label for="itemcode">Itemcode:</label>
                                     </div>
                                     <div class="col-md-8">
-                                      <input class="form-control" type='text' id="itemname" name="itemname"
-                                        #itemname="ngModel" [(ngModel)]="productionsService.productionData.itemname" />
+                                      <input class="form-control" type='text' id="itemcode" name="itemcode"
+                                        #itemcode="ngModel" [(ngModel)]="productionsService.productionData.itemcode" readonly/>
                                     </div>
                                   </div>
                                 </div>
@@ -579,7 +591,7 @@
                                   </div>
                                 </div>
                               </div>
-
+<!--
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">
                                   <div class="row">
@@ -593,7 +605,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div>-->
 
                               <div class="col-md-2 custom-col-2">
                                 <div class="form-group">

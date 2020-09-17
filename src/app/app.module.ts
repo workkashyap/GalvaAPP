@@ -37,6 +37,7 @@ import { OpentaskDetailComponent } from "./approval/opentask/opentask-detail/ope
 import { CompletedTaskDetailComponent } from "./approval/completedtask/completed-task-detail/completed-task-detail.component";
 import { ChartComponent } from "./chart/chart.component";
 import { Ng5SliderModule } from "ng5-slider";
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { FileuploadComponent } from "./Fileupload/Fileupload.component";
 import { FiledownloadComponent } from "./Filedownload/Filedownload.component";
@@ -79,6 +80,8 @@ import { AddroundhourComponent } from './roundhours/addroundhour/addroundhour.co
 import { RejectionqtyvalueDetailComponent } from './rejection/rejectionqtyvalue-detail/rejectionqtyvalue-detail.component';
 import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail/rejectionvalue-detail.component';
 import { HrcalComponent } from './hrcal/hrcal.component';
+import { ItemmstsComponent } from './itemmsts/itemmsts.component';
+import { NewItmComponent } from './itemmsts/new-itm/new-itm.component';
 
 @NgModule({
   declarations: [
@@ -144,11 +147,13 @@ import { HrcalComponent } from './hrcal/hrcal.component';
     AddroundhourComponent,
     RejectionqtyvalueDetailComponent,
     RejectionvalueDetailComponent,
-    HrcalComponent
+    HrcalComponent,
+    ItemmstsComponent,
+    NewItmComponent
   ],
   imports: [
     BrowserModule,
-
+    AutoCompleteModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
     AppRoutingModule,
@@ -437,6 +442,16 @@ import { HrcalComponent } from './hrcal/hrcal.component';
       {
         path: "rejvalue",
         component: RejectionvalueDetailComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "itemmsts",
+        component: ItemmstsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "newItm",
+        component: NewItmComponent,
         canActivate: [AuthGuard],
       },
       {
