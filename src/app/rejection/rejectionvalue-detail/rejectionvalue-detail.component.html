@@ -124,37 +124,37 @@
             <td>
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalinsValue | number:'1.2-2'}}
+                {{ totalinsValue | number:'1.2-2'}} 
               </button>
             </td>
 
             <td>
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalokValue | number:'1.2-2'}}
+                {{ totalokValue | number:'1.2-2'}} 
               </button>
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-info custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalRejVal | number:'1.2-2'}}
-              </button>
+                {{ totalRejVal | number:'1.2-2'}} 
+              </button> 
             </td>
             <td>
               <button class="btn btn-sm  text-dark bg-info custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalRejPer2 | number:'1.2-2'}}
+                {{ totalRejPer2 | number:'1.2-2'}} 
               </button>
             </td>
 
             <td>
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalHoldVal | number:'1.2-2'}}
+                {{ totalHoldVal | number:'1.2-2'}} 
               </button>
             </td>
             <td>
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ totalBuffVal | number:'1.2-2'}}
+                {{ totalBuffVal | number:'1.2-2'}} 
               </button>
             </td>
             <!--value-->
@@ -163,21 +163,21 @@
               style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-danger  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ plating_value | number:'1.2-2'}}
+                {{ plating_value | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'Summary') || this.reporttype == 'All'"
               style="width: 63px;">
               <button class="btn btn-sm  text-dark bg-warning   custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ moulding_value | number:'1.2-2'}}
+                {{ moulding_value | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="(this.reporttype == 'Plating' || this.reporttype == 'Summary') || this.reporttype == 'All'"
               style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-storesspares  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ tooldeF_value | number:'1.2-2'}}
+                {{ tooldeF_value | number:'1.2-2'}} 
               </button>
             </td>
 
@@ -185,12 +185,12 @@
               style="width: 54px;">
               <button class="btn btn-sm  text-dark bg-summary  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ othersvalue | number:'1.2-2'}}
+                {{ othersvalue | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'All' || this.reporttype == 'Summary'">
               <button class="btn btn-sm custom-fs bg-others_value" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ mechfail_value | number:'1.2-2'}} 
+                {{ mechfail_value | number:'1.2-2'}}  
               </button>
             </td>
 
@@ -198,142 +198,146 @@
             <td *ngIf="this.reporttype == 'Plating' || this.reporttype == 'All' ">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ pinholEvalue | number:'1.2-2'}}
+                {{ pinholEvalue | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ skipplatinGval | number:'1.2-2'}}
+                {{ skipplatinGval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm  text-dark bg-info custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ whitemarKval | number:'1.2-2'}}
+                {{ whitemarKval | number:'1.2-2'}} 
               </button>
             </td>
 
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ dotplastiCval | number:'1.2-2'}}
+                {{ dotplastiCval | number:'1.2-2'}} 
               </button>
             </td>
 
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ crburninGval | number:'1.2-2'}}
+                {{ crburninGval | number:'1.2-2'}} 
               </button>
             </td>
 
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ copperburninGval | number:'1.2-2'}}
+                {{ copperburninGval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ nicklEval | number:'1.2-2'}}
+                {{ nicklEval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ roughnesSval | number:'1.2-2'}}
+                {{ roughnesSval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ blisteRval | number:'1.2-2'}}
+                {{ blisteRval | number:'1.2-2'}} 
               </button>
             </td>
 
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ watermarKval | number:'1.2-2'}}
+                {{ watermarKval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ shadevaRval | number:'1.2-2'}}
+                {{ shadevaRval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ platingpeeLval | number:'1.2-2'}}
+                {{ platingpeeLval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Plating'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ chemicalmarKval | number:'1.2-2'}}
+                {{ chemicalmarKval | number:'1.2-2'}} 
               </button>
             </td>
             <!-- Moulding -->
             <td *ngIf="this.reporttype == 'Moulding'">
               <button class="btn btn-sm  text-dark bg-info  custom-fs"
                 style="float: right;width: 100%;padding: 5px 2px;">
-                {{ moulding_value | number:'1.2-2'}}
+                {{ moulding_value | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs text-dark bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ silveRval | number:'1.2-2'}}
+                {{ silveRval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs  bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ denTval | number:'1.2-2'}}
+                {{ denTval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ handmouldingreJval | number:'1.2-2'}}
+                {{ handmouldingreJval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ pittinGval | number:'1.2-2'}}
+                {{ pittinGval | number:'1.2-2'}} 
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ flowmarKval | number:'1.2-2'}}
+                {{ flowmarKval | number:'1.2-2'}} 
               </button>
             </td>
 
 
             <td *ngIf="this.reporttype == 'ToolDefect'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ othersvalue | number:'1.2-2'}}
+                {{ othersvalue | number:'1.2-2'}} 
               </button>
             </td>
 
             <td *ngIf="this.reporttype == 'ToolDefect'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ jigdamagEval | number:'1.2-2'}}
+                {{ jigdamagEval | number:'1.2-2'}} 
               </button>
             </td>
 
             <!--Others-->
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ othersqty | number:'1.2-2'}} 
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ warpagEval | number:'1.2-2'}} 
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ scratchmarKval | number:'1.2-2'}}  
+              </button>
+            </td>
 
             <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ warpagEval | number:'1.2-2'}}
+                {{ otheR1val | number:'1.2-2'}}  
               </button>
             </td>
             <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ scratchmarKval | number:'1.2-2'}} 
-              </button>
-            </td>
-
-            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
-              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ otheR1val | number:'1.2-2'}} 
-              </button>
-            </td>
-            <td *ngIf="this.reporttype == 'Others'  || this.reporttype == 'All'">
-              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
-                {{ otheR2val | number:'1.2-2'}} 
+                {{ otheR2val | number:'1.2-2'}}  
               </button>
             </td>
 

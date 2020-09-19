@@ -130,7 +130,7 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   platingqty: number = 0;
   mouldingqty: number = 0;
   othersqty: number = 0;
-  mechfail_qty:number=0;
+  mechfail_qty: number = 0;
 
   iv: number;
   filterenable = false;
@@ -184,11 +184,13 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         { field: "skipplatingQty", header: "Skipplating" },
         { field: 'whitemarKqty', header: 'Whitemark' },
         { field: 'dotplastiCqty', header: 'Dotplastic' },
+
         { field: 'crburninGqty', header: 'Crburning' },
         { field: "copperburninGqty", header: "Copper Burning" },
         { field: "nicklEqty", header: "Nickle" },
         { field: "roughnesSqty", header: "Roughness" },
         { field: "blisteRqty", header: "Blister" },
+
         { field: "watermarKqty", header: "Watermark" },
         { field: "shadevaRqty", header: "Shadevar" },
         { field: "platingpeeLqty", header: "Platingpeel" },
@@ -422,6 +424,9 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
 
     if (this.filterenable === true) {
       for (const rq of this.filterItemrejarray) {
+        if (rq.othersqty == null) {
+          rq.othersqty = 0;
+        }
         this.othersqty += rq.othersqty;
         this.mechfail_qty += rq.mechfail_qty;
 
@@ -467,9 +472,16 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
       }
       this.totalRejPer2 = this.totalRejVal * 100 / this.totalinsValue;
 
+      if (this.othersqty < 0) {
+        this.othersqty = 0;
+      }
     }
     else {
+
       for (const rq of this.DPservice.itemwiserejlist2) {
+        if (rq.othersqty == null) {
+          rq.othersqty = 0;
+        }
         this.othersqty += rq.othersqty;
         this.mechfail_qty += rq.mechfail_qty;
 
@@ -515,6 +527,9 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         this.otheR2qty += rq.otheR2qty;
       }
       this.totalRejPer2 = this.totalRejVal * 100 / this.totalinsValue;
+      if (this.othersqty < 0) {
+        this.othersqty = 0;
+      }
 
     }
   }
