@@ -292,6 +292,16 @@
             </td>
             <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
               <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ patchmarKqty | number:'1.2-2'}} 
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
+                {{ mouldingreJqty | number:'1.2-2'}}  
+              </button>
+            </td>
+            <td *ngIf="this.reporttype == 'Moulding'  || this.reporttype == 'All'">
+              <button class="btn btn-sm custom-fs bg-info" style="float: right;width: 100%;padding: 5px 2px;">
                 {{ pittinGqty | number:'1.2-2'}} 
               </button>
             </td>

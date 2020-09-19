@@ -132,6 +132,8 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
   othersqty: number = 0;
   mechfail_qty: number = 0;
 
+  patchmarKqty: number = 0;
+  mouldingreJqty: number = 0;
   iv: number;
   filterenable = false;
   constructor(
@@ -199,6 +201,10 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         { field: "silverQty", header: "Silver" },
         { field: "denTqty", header: "Dent" },
         { field: 'handmouldingreJqty', header: 'Hand Moulding Rej' },
+
+        { field: 'patchmarKqty', header: 'Patchmark' },
+        { field: 'mouldingreJqty', header: 'Moulding rej' },
+
         { field: "pittinGqty", header: "Pitting" },
         { field: "flowmarKqty", header: "Flowmark" },
 
@@ -241,6 +247,9 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         { field: "silverQty", header: "Silver" },
         { field: "denTqty", header: "Dent" },
         { field: 'handmouldingreJqty', header: 'Hand Moulding Rej' },
+        { field: 'patchmarKqty', header: 'Patchmark' },
+        { field: 'mouldingreJqty', header: 'Moulding rej' },
+
         { field: "pittinGqty", header: "Pitting" },
         { field: "flowmarKqty", header: "Flowmark" },
       );
@@ -422,12 +431,18 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
     this.othersqty = 0;
     this.mechfail_qty = 0;
 
+    this.patchmarKqty = 0;
+    this.mouldingreJqty = 0;
     if (this.filterenable === true) {
       for (const rq of this.filterItemrejarray) {
         if (rq.othersqty == null) {
           rq.othersqty = 0;
         }
+        this.mouldingreJqty += rq.mouldingreJqty;
+
         this.othersqty += rq.othersqty;
+        this.patchmarKqty += rq.patchmarKqty;
+
         this.mechfail_qty += rq.mechfail_qty;
 
         this.totalRejQty += rq.reject_qty;
@@ -484,6 +499,8 @@ export class RejectionqtyvalueDetailComponent implements OnInit {
         }
         this.othersqty += rq.othersqty;
         this.mechfail_qty += rq.mechfail_qty;
+        this.patchmarKqty += rq.patchmarKqty;
+        this.mouldingreJqty += rq.mouldingreJqty;
 
 
         this.totalRejQty += rq.reject_qty;

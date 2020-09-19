@@ -88,7 +88,12 @@ export class Itemvalueqty {
   plating_value: number = 0;
   othersvalue: number = 0;
 
-  othersqty:number=0;
-  mechfail_value:number=0;
-  mechfail_qty:number=0;
+  othersqty: number = 0;
+  mechfail_value: number = 0;
+  mechfail_qty: number = 0;
+  patchmarKval: number = 0;
+  patchmarKqty: number = 0;
+
+  mouldingreJqty: number = 0;
+  mouldingreJval: number = 0;
 }

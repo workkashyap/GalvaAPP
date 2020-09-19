@@ -125,6 +125,9 @@ export class RejectionvalueDetailComponent implements OnInit {
   totalQtySum: number = 0;
   totalRejValueSum: number = 0;
 
+  patchmarKval: number = 0;
+  mouldingreJval:number=0;
+  
   iv: number;
   filterenable = false;
   constructor(
@@ -185,20 +188,20 @@ export class RejectionvalueDetailComponent implements OnInit {
 
         { field: "silveRval", header: "Silver" },
         { field: "denTval", header: "Dent" },
+
         { field: 'handmouldingreJval', header: 'Hand Moulding Rej' },
+        { field: 'patchmarKval', header: 'Patchmark' },
+        { field: 'mouldingreJval', header: 'Moulding rej' },
+
         { field: "pittinGval", header: "Pitting" },
         { field: "flowmarKval", header: "Flowmark" },
 
         { field: "jigdamagEval", header: "Jig Damage" },
 
-
         { field: "warpagEval", header: "War Page" },
         { field: "scratchmarKval", header: "Scratch Mark" },
         { field: 'otheR1val', header: 'Other1' },
         { field: "otheR2val", header: "Other2" },
-
-        { field: 'mechfail_value', header: 'Mechfail' },
-
       )
     }
     if (this.reporttype == "Plating") {
@@ -230,8 +233,13 @@ export class RejectionvalueDetailComponent implements OnInit {
         { field: "silveRval", header: "Silver" },
         { field: "denTval", header: "Dent" },
         { field: 'handmouldingreJval', header: 'Hand Moulding Rej' },
+        { field: 'patchmarKval', header: 'Patchmark' },
+        { field: 'mouldingreJval', header: 'Moulding rej' },
+
         { field: "pittinGval", header: "Pitting" },
         { field: "flowmarKval", header: "Flowmark" },
+
+
       );
     }
     if (this.reporttype == "ToolDefect") {
@@ -408,10 +416,15 @@ export class RejectionvalueDetailComponent implements OnInit {
     this.plating_value = 0;
     this.othersvalue = 0;
     this.mechfail_value = 0;
+
+    this.patchmarKval = 0;
+    this.mouldingreJval = 0;
     if (this.filterenable === true) {
 
       for (const rq of this.filterItemrejarray) {
+        this.mouldingreJval += rq.mouldingreJval;
 
+        this.patchmarKval += rq.patchmarKval;
         this.mechfail_value += rq.mechfail_value;
 
         this.moulding_value += rq.moulding_value;
@@ -449,6 +462,7 @@ export class RejectionvalueDetailComponent implements OnInit {
         this.jigdamagEval += rq.jigdamagEval;
 
         this.warpagEval += rq.warpagEval;
+
         this.scratchmarKval += rq.scratchmarKval;
         this.otheR1val += rq.otheR1val;
         this.otheR2val += rq.otheR2val;
@@ -458,6 +472,9 @@ export class RejectionvalueDetailComponent implements OnInit {
     else {
       for (const rq of this.DPservice.itemwiserejlist2) {
         this.mechfail_value += rq.mechfail_value;
+        this.mouldingreJval += rq.mouldingreJval;
+
+        this.patchmarKval += rq.patchmarKval;
 
         this.moulding_value += rq.moulding_value;
         this.plating_value += rq.plating_value;
