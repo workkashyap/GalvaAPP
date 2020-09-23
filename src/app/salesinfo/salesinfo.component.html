@@ -1,0 +1,165 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <div class="row ">
+                <div class="col-md-10">
+                  <h5 class="card-title-md">Sales Summary Report
+                  </h5>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+
+                <div class="col-md-3">
+                  <div class="row mt-2">
+                    <div class="col-md-2">
+                      <label>From</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel"
+                        [(ngModel)]="Fromdate" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                        [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row mt-2">
+                    <div class="col-md-2">
+                      <label>To</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="Todate"
+                        class="input-append date" dateFormat="yy-mm-dd" dataType="string" [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="row mt-2">
+                    <div class="col-md-10">
+                      <select class="custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="plantcode"
+                        (change)="selectedGrid($event.target.value)">
+                        <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                          {{ pl.plantshortname }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <button class="btn btn-primary mt-2" (click)="loadData()">View</button>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+      <p-table [value]="salesDetailInfo" dataKey="netsale" #dt>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+            </th>
+            <th>
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'soldToPartyName', 'contains')"
+                placeholder="Search by Party Name" class="p-column-filter">
+            </th>
+            <th>
+              <button class="btn btn-success">{{totalNetSale}}</button>
+            </th>
+          </tr>
+
+          <tr>
+            <th></th>
+            <th pSortableColumn="soldToParty" pResizableColumn>
+              Sold To Party <p-sortIcon field="soldToParty"></p-sortIcon>
+            </th>
+            <th pSortableColumn="soldToPartyName" pResizableColumn>
+              Sold To Party Name <p-sortIcon field="soldToPartyName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="netsale" pResizableColumn>
+              Net Sale (In Lacs) <p-sortIcon field="netsale"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-expanded="expanded">
+          <tr>
+            <td>
+              <button type="button" pButton pRipple (click)="getSubData(product)" [pRowToggler]="product"
+                class="btn-sm p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{product.soldToParty}}</td>
+            <td>{{product.soldToPartyName}}</td>
+            <td>{{product.netsale}}</td>
+          </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="rowexpansion" let-product>
+          <tr>
+            <td colspan="4">
+              <div class="p-p-3">
+                <p-table [value]="product.list" dataKey="netsale">
+                  <ng-template pTemplate="header">
+
+          <tr>
+
+            <th pSortableColumn="materialNumber">Material Number <p-sortIcon field="materialNumber"></p-sortIcon>
+            </th>
+            <th pSortableColumn="materialDesc">Material Desc <p-sortIcon field="materialDesc"></p-sortIcon>
+            </th>
+            <th pSortableColumn="netsale">Net Sale (In Lacs)<p-sortIcon field="netsale"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <ngx-loading [show]="loadingSubData" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+          <tr>
+            <td>{{order.materialNumber}}</td>
+            <td>{{order.materialDesc}}</td>
+            <td>{{order.netsale}}</td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3">Data not found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </div>
+  </td>
+  </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="4">Data not found.</td>
+    </tr>
+  </ng-template>
+  </p-table>
+
+
+
+
+  </section>
+</div>
+</div>

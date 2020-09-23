@@ -82,6 +82,7 @@ import { RejectionvalueDetailComponent } from './rejection/rejectionvalue-detail
 import { HrcalComponent } from './hrcal/hrcal.component';
 import { ItemmstsComponent } from './itemmsts/itemmsts.component';
 import { NewItmComponent } from './itemmsts/new-itm/new-itm.component';
+import { SalesinfoComponent } from './salesinfo/salesinfo.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +150,8 @@ import { NewItmComponent } from './itemmsts/new-itm/new-itm.component';
     RejectionvalueDetailComponent,
     HrcalComponent,
     ItemmstsComponent,
-    NewItmComponent
+    NewItmComponent,
+    SalesinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -457,6 +459,10 @@ import { NewItmComponent } from './itemmsts/new-itm/new-itm.component';
       {
         path: "hrcal",
         component: HrcalComponent,
+        canActivate: [AuthGuard],
+      }, {
+        path: "salesinfo",
+        component: SalesinfoComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },
