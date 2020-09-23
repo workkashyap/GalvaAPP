@@ -12,6 +12,20 @@ import { SalesinfoService } from '../shared/sales/salesinfo.service';
   styleUrls: ['./salesinfo.component.css'],
   templateUrl: './salesinfo.component.html',
   providers: [DatePipe],
+
+  styles: [`
+  :host ::ng-deep .ui-table .ui-table-thead > tr > th {
+    font-size:10px;
+  }
+  :host ::ng-deep .ui-table .ui-table-tbody tr > td {
+    font-size: 10px;
+  }
+  th.sub-heading.ui-sortable-column {
+    background: blue !important;
+    color: white !important;
+  }
+  
+`]
 })
 export class SalesinfoComponent implements OnInit {
   selectedItemrej: Salesinfo;

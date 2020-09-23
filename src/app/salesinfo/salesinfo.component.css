@@ -25,6 +25,7 @@
     }
   }
   .btn-sm {
-    width: 22px !important;
-    height: 22px !important;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 7px !important;
 }

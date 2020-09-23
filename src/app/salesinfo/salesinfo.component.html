@@ -82,7 +82,7 @@
                 placeholder="Search by Party Name" class="p-column-filter">
             </th>
             <th>
-              <button class="btn btn-success">{{totalNetSale}}</button>
+              <button class="btn btn-success">{{totalNetSale | number:'1.2-2'}}</button>
             </th>
           </tr>
 
@@ -121,12 +121,14 @@
                   <ng-template pTemplate="header">
 
           <tr>
-
-            <th pSortableColumn="materialNumber">Material Number <p-sortIcon field="materialNumber"></p-sortIcon>
+            <th class="sub-heading" pSortableColumn="materialNumber">Material Number <p-sortIcon field="materialNumber">
+              </p-sortIcon>
             </th>
-            <th pSortableColumn="materialDesc">Material Desc <p-sortIcon field="materialDesc"></p-sortIcon>
+            <th class="sub-heading" pSortableColumn="materialDesc">Material Desc <p-sortIcon field="materialDesc">
+              </p-sortIcon>
             </th>
-            <th pSortableColumn="netsale">Net Sale (In Lacs)<p-sortIcon field="netsale"></p-sortIcon>
+            <th class="sub-heading" pSortableColumn="netsale">Net Sale (In Lacs)<p-sortIcon field="netsale">
+              </p-sortIcon>
             </th>
           </tr>
         </ng-template>
