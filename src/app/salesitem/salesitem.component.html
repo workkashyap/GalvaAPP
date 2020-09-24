@@ -12,10 +12,9 @@
             <div class="card-header">
               <div class="row ">
                 <div class="col-md-10">
-                  <h5 class="card-title-md">Sales Customer wise Summary
+                  <h5 class="card-title-md">Sales Item wise Summary
                   </h5>
                 </div>
-
               </div>
             </div>
             <div class="card-body">
@@ -76,10 +75,12 @@
             <th style="width: 3rem">
             </th>
             <th>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'materialNumber', 'contains')"
+                placeholder="Material Number" class="p-column-filter">
             </th>
             <th>
-              <input pInputText type="text" (input)="dt.filter($event.target.value, 'soldToPartyName', 'contains')"
-                placeholder="Search by Party Name" class="p-column-filter">
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'materialDesc', 'contains')"
+                placeholder="Material Desc" class="p-column-filter">
             </th>
             <th>
               <button class="btn btn-success">{{totalNetSale | number:'1.2-2'}}</button>
@@ -88,15 +89,15 @@
 
           <tr>
             <th></th>
-            <th pSortableColumn="soldToParty" pResizableColumn>
-              Sold To Party <p-sortIcon field="soldToParty"></p-sortIcon>
+            <th pSortableColumn="materialNumber" pResizableColumn>
+              Material Number<p-sortIcon field="materialNumber"></p-sortIcon>
             </th>
-            <th pSortableColumn="soldToPartyName" pResizableColumn>
-              Sold To Party Name <p-sortIcon field="soldToPartyName"></p-sortIcon>
+            <th pSortableColumn="materialDesc" pResizableColumn>
+              Material Desc <p-sortIcon field="materialDesc"></p-sortIcon>
             </th>
             <th pSortableColumn="netsale" pResizableColumn>
               Net Sale (In Lacs) <p-sortIcon field="netsale"></p-sortIcon>
-            </th>
+            </th> 
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product let-expanded="expanded">
@@ -106,8 +107,8 @@
                 class="btn-sm p-button-text p-button-rounded p-button-plain"
                 [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
-            <td>{{product.soldToParty}}</td>
-            <td>{{product.soldToPartyName}}</td>
+            <td>{{product.materialNumber}}</td>
+            <td>{{product.materialDesc}}</td>
             <td>{{product.netsale}}</td>
           </tr>
 
@@ -121,10 +122,11 @@
                   <ng-template pTemplate="header">
 
           <tr>
-            <th class="sub-heading" pSortableColumn="materialNumber">Material Number <p-sortIcon field="materialNumber">
+            <th class="sub-heading" pSortableColumn="soldToParty">Sold To Party <p-sortIcon field="soldToParty">
               </p-sortIcon>
             </th>
-            <th class="sub-heading" pSortableColumn="materialDesc">Material Desc <p-sortIcon field="materialDesc">
+            <th class="sub-heading" pSortableColumn="soldToPartyName">Sold To Party Name <p-sortIcon
+                field="soldToPartyName">
               </p-sortIcon>
             </th>
             <th class="sub-heading" pSortableColumn="netsale">Net Sale (In Lacs)<p-sortIcon field="netsale">
@@ -136,8 +138,8 @@
           <ngx-loading [show]="loadingSubData" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
           <tr>
-            <td>{{order.materialNumber}}</td>
-            <td>{{order.materialDesc}}</td>
+            <td>{{order.soldToParty}}</td>
+            <td>{{order.soldToPartyName}}</td>
             <td>{{order.netsale}}</td>
 
           </tr>

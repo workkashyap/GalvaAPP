@@ -83,6 +83,7 @@ import { HrcalComponent } from './hrcal/hrcal.component';
 import { ItemmstsComponent } from './itemmsts/itemmsts.component';
 import { NewItmComponent } from './itemmsts/new-itm/new-itm.component';
 import { SalesinfoComponent } from './salesinfo/salesinfo.component';
+import { SalesitemComponent } from './salesitem/salesitem.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { SalesinfoComponent } from './salesinfo/salesinfo.component';
     HrcalComponent,
     ItemmstsComponent,
     NewItmComponent,
-    SalesinfoComponent
+    SalesinfoComponent,
+    SalesitemComponent
   ],
   imports: [
     BrowserModule,
@@ -463,6 +465,10 @@ import { SalesinfoComponent } from './salesinfo/salesinfo.component';
       }, {
         path: "salesinfo",
         component: SalesinfoComponent,
+        canActivate: [AuthGuard],
+      }, {
+        path: "salesitem",
+        component: SalesitemComponent,
         canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "" },
