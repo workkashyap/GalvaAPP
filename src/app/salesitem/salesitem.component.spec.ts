@@ -11,7 +11,7 @@ describe("SalesitemComponent", () => {
       declarations: [SalesitemComponent]
     }).compileComponents();
   }));
-
+ 
   beforeEach(() => {
     fixture = TestBed.createComponent(SalesitemComponent);
     component = fixture.componentInstance;

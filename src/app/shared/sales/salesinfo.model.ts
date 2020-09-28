@@ -10,3 +10,4 @@ export class Salesinfo {
   materialDesc:string;
   list:any;  
 }
+ 

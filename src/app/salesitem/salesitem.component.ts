@@ -111,7 +111,7 @@ export class SalesitemComponent implements OnInit {
     }
     if (product.list && product.list.length > 0) {
       return;
-    }
+    } 
     this.loadingSubData = true;
     this.sinservice.netSaleSumItemDetail(product.materialNumber, this.plantcode, this.Fromdate, this.Todate)
       .toPromise()

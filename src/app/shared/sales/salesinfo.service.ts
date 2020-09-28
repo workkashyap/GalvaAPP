@@ -28,7 +28,7 @@ export class SalesinfoService {
     );
   }
 
-
+ 
   
   public netSaleSumItem(plantcode, startdate, endate): Observable<Salesinfo[]> {
     return this.http.get<Salesinfo[]>(
