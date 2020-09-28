@@ -467,7 +467,7 @@ import { SalesitemComponent } from './salesitem/salesitem.component';
         component: SalesinfoComponent,
         canActivate: [AuthGuard],
       }, {
-        path: "salesitem",
+        path: "salesitem", 
         component: SalesitemComponent,
         canActivate: [AuthGuard],
       },
