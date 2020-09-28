@@ -88,14 +88,13 @@ export class SalesitemComponent implements OnInit {
     const me = this;
     this.salesDetailInfo = [];
     this.totalNetSale = 0;
-    this.loading = true; 
+    this.loading = true;
     this.sinservice.netSaleSumItem(this.plantcode, this.Fromdate, this.Todate)
       .toPromise()
       .then(res => {
         me.salesDetailInfo = res as Salesinfo[];
-        me.salesDetailInfo.forEach(element => {
-          me.totalNetSale += element.netsale;
-        });
+
+        me.sumgetsale();
         me.loading = false;
       }, error => {
         me.loading = false;
@@ -104,6 +103,38 @@ export class SalesitemComponent implements OnInit {
   selectedGrid(ev) {
     this.selectedPlant = ev;
   }
+
+  loadper(ev, dt) {
+    this.filterenable = true;
+    const selectedItemrejarray = this.salesDetailInfo;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of selectedItemrejarray) {
+      if (c.materialDesc.toString().includes(ev.toString()) ||
+        c.materialNumber.toString().includes(ev.toString())) {
+        this.filterItemrejarray.push(selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      }
+      else {
+        this.iv += 1;
+      }
+    }
+    this.sumgetsale();
+  }
+  sumgetsale() {
+    this.totalNetSale = 0;
+    if (this.filterenable == true) {
+      for (const sd of this.filterItemrejarray) {
+        this.totalNetSale += sd.netsale;
+      }
+      return;
+    }
+    this.salesDetailInfo.forEach(element => {
+      this.totalNetSale += element.netsale;
+    });
+    return;
+  }
   getSubData(product) {
     console.log("product : ", product);
     if (!product.list) {
@@ -111,7 +142,7 @@ export class SalesitemComponent implements OnInit {
     }
     if (product.list && product.list.length > 0) {
       return;
-    } 
+    }
     this.loadingSubData = true;
     this.sinservice.netSaleSumItemDetail(product.materialNumber, this.plantcode, this.Fromdate, this.Todate)
       .toPromise()

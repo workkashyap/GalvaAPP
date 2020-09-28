@@ -87,19 +87,47 @@ export class SalesinfoComponent implements OnInit {
   loadData() {
     const me = this;
     this.salesDetailInfo = [];
-    this.totalNetSale = 0;
     this.loading = true;
     this.sinservice.netSaleSUM(this.plantcode, this.Fromdate, this.Todate)
       .toPromise()
       .then(res => {
         me.salesDetailInfo = res as Salesinfo[];
-        me.salesDetailInfo.forEach(element => {
-          me.totalNetSale += element.netsale;
-        });
+        me.sumgetsale();
         me.loading = false;
       }, error => {
         me.loading = false;
       });
+  }
+
+  loadper(ev, dt) {
+    this.filterenable = true;
+    const selectedItemrejarray = this.salesDetailInfo;
+    this.iv = 0;
+    this.filterItemrejarray = [];
+    // console.log(this.selectedItemrejarray[0].id);
+    for (const c of selectedItemrejarray) {
+      if (c.soldToPartyName.toString().includes(ev.toString())) {
+        this.filterItemrejarray.push(selectedItemrejarray[this.iv]);
+        this.iv += 1;
+      }
+      else {
+        this.iv += 1;
+      }
+    }
+    this.sumgetsale();
+  }
+  sumgetsale() {
+    this.totalNetSale = 0;
+    if (this.filterenable == true) {
+      for (const sd of this.filterItemrejarray) {
+        this.totalNetSale += sd.netsale;
+      }
+      return;
+    }
+    this.salesDetailInfo.forEach(element => {
+      this.totalNetSale += element.netsale;
+    });
+    return;
   }
   selectedGrid(ev) {
     this.selectedPlant = ev;

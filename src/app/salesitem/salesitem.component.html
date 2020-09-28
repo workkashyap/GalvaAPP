@@ -65,22 +65,24 @@
             <!-- </form> -->
           </div>
         </div>
-      </div> 
+      </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table [value]="salesDetailInfo" dataKey="id" #dt> 
+      <p-table [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
 
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 3rem">
             </th>
             <th>
-              <input pInputText type="text" (input)="dt.filter($event.target.value, 'materialNumber', 'contains')"
-                placeholder="Material Number" class="p-column-filter">
+              <input pInputText type="text" (input)="loadper($event.target.value , dt)"
+                (input)="dt.filter($event.target.value, 'materialNumber', 'contains')" placeholder="Material Number"
+                class="p-column-filter">
             </th>
             <th>
-              <input pInputText type="text" (input)="dt.filter($event.target.value, 'materialDesc', 'contains')"
-                placeholder="Material Desc" class="p-column-filter">
+              <input pInputText type="text" (input)="loadper($event.target.value , dt)"
+                (input)="dt.filter($event.target.value, 'materialDesc', 'contains')" placeholder="Material Desc"
+                class="p-column-filter">
             </th>
             <th>
               <button class="btn btn-success">{{totalNetSale | number:'1.2-2'}}</button>
@@ -97,7 +99,7 @@
             </th>
             <th pSortableColumn="netsale" pResizableColumn>
               Net Sale (In Lacs) <p-sortIcon field="netsale"></p-sortIcon>
-            </th> 
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product let-expanded="expanded">
@@ -122,7 +124,7 @@
                   <ng-template pTemplate="header">
 
           <tr>
-            <th class="sub-heading" pSortableColumn="soldToParty">Sold To Party <p-sortIcon field="soldToParty">
+            <th class="sub-heading" pSortableColumn="soldToParty">Sold to Customer <p-sortIcon field="soldToParty">
               </p-sortIcon>
             </th>
             <th class="sub-heading" pSortableColumn="soldToPartyName">Sold To Party Name <p-sortIcon
