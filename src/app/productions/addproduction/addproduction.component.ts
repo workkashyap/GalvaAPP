@@ -197,7 +197,6 @@ export class AddproductionComponent implements OnInit {
             totothers: 0,
           };
           me.randomData();
-
         }
 
       });
@@ -303,10 +302,12 @@ export class AddproductionComponent implements OnInit {
       this.productionsService.productionData.dotplastic + this.productionsService.productionData.watermark + this.productionsService.productionData.blister +
       this.productionsService.productionData.jigdamage + this.productionsService.productionData.otheR1 + this.productionsService.productionData.otheR2 +
       this.productionsService.productionData.otheR3 + this.productionsService.productionData.otheR4 +
-      this.productionsService.productionData.plating + this.productionsService.productionData.moulding + this.productionsService.productionData.mechfail +
+      this.productionsService.productionData.mechfail +
       this.productionsService.productionData.tooldef + this.productionsService.productionData.others + this.productionsService.productionData.shadevar +
-      this.productionsService.productionData.platingpeel + this.productionsService.productionData.flowmark + this.productionsService.productionData.chemicalmark +
-      this.productionsService.productionData.tottooldef + this.productionsService.productionData.totothers;
+      this.productionsService.productionData.platingpeel + this.productionsService.productionData.flowmark + this.productionsService.productionData.chemicalmark;
+
+    //this.productionsService.productionData.plating +  this.productionsService.productionData.moulding +this.productionsService.productionData.tottooldef +   +
+    // this.productionsService.productionData.totothers
     this.countQty();
     /*if (this.productionsService.productionData.rejectionqty == qty) {
       return false;
@@ -314,10 +315,24 @@ export class AddproductionComponent implements OnInit {
       return true;
     }*/
   }
+  sumoffields() {
+    this.productionsService.productionData.plating = (this.productionsService.productionData.pinhole + this.productionsService.productionData.skipplating + this.productionsService.productionData.whitemark
+      + this.productionsService.productionData.dotplastic + this.productionsService.productionData.crburning + this.productionsService.productionData.copperburning + this.productionsService.productionData.nickle
+      + this.productionsService.productionData.roughness + this.productionsService.productionData.blister + this.productionsService.productionData.watermark + this.productionsService.productionData.shadevar +
+      this.productionsService.productionData.platingpeel + this.productionsService.productionData.chemicalmark);
+
+    this.productionsService.productionData.moulding = (this.productionsService.productionData.silver + this.productionsService.productionData.dent + this.productionsService.productionData.handmouldingrej
+      + this.productionsService.productionData.mouldingrej + this.productionsService.productionData.patchmark + this.productionsService.productionData.pitting + this.productionsService.productionData.flowmark);
+
+    this.productionsService.productionData.tottooldef = (this.productionsService.productionData.tooldef + this.productionsService.productionData.jigdamage);
+
+    this.productionsService.productionData.totothers = (this.productionsService.productionData.warpage + this.productionsService.productionData.scratchmark + this.productionsService.productionData.otheR1 + this.productionsService.productionData.otheR2);
+  }
   onComplete(form: NgForm) {
     this.validQtyError = false;
-
-    console.log("this.productionsService.productionData", this.productionsService.productionData);
+    this.sumoffields();
+    //console.log("this.productionsService.productionData", this.productionsService.productionData);
+    //return;
 
     if (this.actionvalue === "Save") {
 

@@ -13,7 +13,7 @@
               <div class="row ">
                 <div class="col-md-10">
                   <h5 class="card-title-md">Sales Customer wise Summary
-                  </h5> 
+                  </h5>
                 </div>
 
               </div>
@@ -69,16 +69,17 @@
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20" >
+      <p-table [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
 
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 3rem">
-            </th> 
+            </th>
             <th>
             </th>
             <th>
-              <input pInputText type="text" (input)="loadper($event.target.value , dt)" (input)="dt.filter($event.target.value, 'soldToPartyName', 'contains')"
+              <input pInputText type="text" (input)="loadper($event.target.value , dt)"
+                (input)="dt.filter($event.target.value, 'soldToPartyName', 'contains')"
                 placeholder="Search by Party Name" class="p-column-filter">
             </th>
             <th>
@@ -92,7 +93,7 @@
               Sold to Customer <p-sortIcon field="soldToParty"></p-sortIcon>
             </th>
             <th pSortableColumn="soldToPartyName" pResizableColumn>
-              Sold To Party Name <p-sortIcon field="soldToPartyName"></p-sortIcon>
+              Sold To Customer Name <p-sortIcon field="soldToPartyName"></p-sortIcon>
             </th>
             <th pSortableColumn="netsale" pResizableColumn>
               Net Sale (In Lacs) <p-sortIcon field="netsale"></p-sortIcon>
