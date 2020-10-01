@@ -14,6 +14,8 @@
                 <div class="col-md-10">
                   <h5 class="card-title-md">Sales Customer wise Summary
                   </h5>
+
+
                 </div>
 
               </div>
@@ -60,7 +62,11 @@
                 </div>
                 <div class="col-md-2 ">
                   <button class="btn btn-primary mt-2" (click)="loadData()">View</button>
+                  &nbsp;
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button>
                 </div>
+
               </div>
             </div>
             <!-- </form> -->
@@ -69,7 +75,7 @@
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
+      <p-table [columns]="cols" [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
 
         <ng-template pTemplate="header">
           <tr>
@@ -80,7 +86,7 @@
             <th>
               <input pInputText type="text" (input)="loadper($event.target.value , dt)"
                 (input)="dt.filter($event.target.value, 'soldToPartyName', 'contains')"
-                placeholder="Search by Party Name" class="p-column-filter">
+                placeholder="Search by Customer Name" class="p-column-filter">
             </th>
             <th>
               <button class="btn btn-success">{{totalNetSale | number:'1.2-2'}}</button>

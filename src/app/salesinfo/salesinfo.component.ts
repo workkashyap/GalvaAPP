@@ -69,10 +69,9 @@ export class SalesinfoComponent implements OnInit {
 
 
     this.cols = [
-      { field: 'action', header: '+' },
-      { field: 'netsale', header: 'Netsale' },
       { field: 'soldToParty', header: 'Sold To Customer' },
       { field: 'soldToPartyName', header: 'Sold To Customer Name' },
+      { field: 'netsale', header: 'Netsale (In Lacs)' },
     ];
     this.plantservice
       .sgetPlantData(me.currentUser.id)

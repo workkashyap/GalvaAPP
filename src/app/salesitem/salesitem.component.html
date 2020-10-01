@@ -58,7 +58,9 @@
                   </div>
                 </div>
                 <div class="col-md-2 ">
-                  <button class="btn btn-primary mt-2" (click)="loadData()">View</button>
+                  <button class="btn btn-primary mt-2" (click)="loadData()">View</button> &nbsp;
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button>
                 </div>
               </div>
             </div>
@@ -68,7 +70,7 @@
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
-      <p-table [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
+      <p-table [columns]="cols" [value]="salesDetailInfo" dataKey="id" #dt [paginator]="true" [rows]="20">
 
         <ng-template pTemplate="header">
           <tr>
