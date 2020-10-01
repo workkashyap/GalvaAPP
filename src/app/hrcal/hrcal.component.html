@@ -45,10 +45,14 @@
                       </p-calendar>
                     </div>
                   </div>
+
                 </div>
                 <div class="col-md-2">
+                  <button (click)="refreshDropdown()" class="btn btn-danger mt-2">
+                    <i class="fa fa-refresh"></i> </button>
+                  &nbsp;&nbsp;
                   <select class="custom-select  mt-2" name="month" (change)="selectedAh($event.target.value)"
-                    #Month='ngModel' [(ngModel)]='selectedah'>
+                    #Month='ngModel' [(ngModel)]='selectedah' style="width: 63%;">
                     <option value="All">All</option>
                     <option value="08 - Hrs">08-Hrs</option>
                     <option value="11 - Hrs">11-Hrs</option>
@@ -148,7 +152,7 @@
                   <td>
                     <button class="btn bg-tool-def mt-2  w-100">{{incentivetotal}}</button>
                   </td>
-                  
+
                 </tr>
                 <tr>
                   <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field" pResizableColumn>

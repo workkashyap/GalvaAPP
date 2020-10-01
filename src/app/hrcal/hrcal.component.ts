@@ -166,6 +166,17 @@ export class HrcalComponent implements OnInit {
 
       });
   }
+  refreshDropdown() {
+    let me = this;
+    this.asservice
+      .getallHRsumcont(me.Fromdate, me.Todate, 'All')
+      .toPromise()
+      .then(res => {
+        me.asservice.attendancesummary = res as Attendancesummary[];
+        me.selectedPlant = me.asservice.attendancesummary[0].companyFName;
+        me.getData();
+      });
+  }
   selectedAh(ev) {
     this.selectedah = ev;
     this.getData();
@@ -215,14 +226,28 @@ export class HrcalComponent implements OnInit {
             hrcal.totalDays = 0;
           }
 
-          if (hrcal.totalDays <= 90) {
+          if (hrcal.totalDays <= 89) {
             hrcal.incentive = 0;
-          } else if (hrcal.totalDays >= 91 && hrcal.totalDays <= 180) {
+          } else if (hrcal.totalDays >= 90 && hrcal.totalDays <= 179) {
             hrcal.incentive = 10;
-          } else if (hrcal.totalDays >= 181 && hrcal.totalDays <= 270) {
+          } else if (hrcal.totalDays >= 180 && hrcal.totalDays <= 269) {
             hrcal.incentive = 15;
-          } else if (hrcal.totalDays >= 271) {
+          } else if (hrcal.totalDays >= 270 && hrcal.totalDays <= 364) {
             hrcal.incentive = 20;
+          } else if (hrcal.totalDays >= 365 && hrcal.totalDays <= 394) {
+            hrcal.incentive = 25;
+          } else if (hrcal.totalDays >= 395 && hrcal.totalDays <= 424) {
+            hrcal.incentive = 30;
+          } else if (hrcal.totalDays >= 425 && hrcal.totalDays <= 454) {
+            hrcal.incentive = 35;
+          } else if (hrcal.totalDays >= 455 && hrcal.totalDays <= 484) {
+            hrcal.incentive = 40;
+          } else if (hrcal.totalDays >= 485 && hrcal.totalDays <= 514) {
+            hrcal.incentive = 45;
+          } else if (hrcal.totalDays >= 515 && hrcal.totalDays <= 544) {
+            hrcal.incentive = 50;
+          } else if (hrcal.totalDays >= 545 && hrcal.totalDays <= 575) {
+            hrcal.incentive = 55;
           }
           hrcal.p_day_hrs = 8 * (hrcal.pdays + hrcal.wopdays);
           //ot_hrs
