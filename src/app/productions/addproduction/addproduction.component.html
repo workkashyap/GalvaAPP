@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control" type='text' id="shift" name="shift" #shift="ngModel"
-                                        [(ngModel)]="productionsService.productionData.shift" />
+                                        [(ngModel)]="productionsService.productionData.shift" maxlength="1" />
                                     </div>
                                   </div>
                                 </div>
@@ -796,7 +796,7 @@
                                     </div>
                                     <div class="col-md-8">
                                       <input class="form-control" type='date' id="pstngdate" name="pstngdate"
-                                        #pstngdate="ngModel"
+                                        #pstngdate="ngModel" [readonly]="productionsService.productionData.id > 0"
                                         [(ngModel)]="productionsService.productionData.pstngdate" />
                                     </div>
                                   </div>

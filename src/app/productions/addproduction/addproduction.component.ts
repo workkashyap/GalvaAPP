@@ -147,7 +147,7 @@ export class AddproductionComponent implements OnInit {
             roundno: "",
             qty: "0",
             plantcode: me.selectedcode,
-            shift: "",
+            shift: "A",
             itemcode: "",
             itemname: "",
             itemname2: null,
