@@ -50,7 +50,7 @@
                 <div class="col-md-2" style="padding: unset;">
                   <button (click)="refreshDropdown()" class="btn btn-danger mt-2" style="margin-right: 34px;">
                     <i class="fa fa-refresh"></i> </button>
-                   
+
                   <select class="custom-select  mt-2" name="month" (change)="selectedAh($event.target.value)"
                     #Month='ngModel' [(ngModel)]='selectedah' style="width: 52%;">
                     <option value="All">All</option>
@@ -170,7 +170,10 @@
                     <span *ngIf="col.field=='doj' " style="font-size: 11px;">
                       {{rowData[col.field] | date :'dd-MM-y'}}
                     </span>
-                    <span *ngIf="col.field !='doj' " style="font-size: 11px;">
+                    <span *ngIf="col.field=='incentivetotal' " style="font-size: 11px;">
+                      {{rowData[col.field] |  number:'1.2-2' }}
+                    </span>
+                    <span *ngIf="col.field !='doj' && col.field!='incentivetotal' " style="font-size: 11px;">
                       {{rowData[col.field]}}
                     </span>
                   </td>

@@ -153,7 +153,8 @@ export class HrcalComponent implements OnInit {
       { field: "basic", header: "Basic" },
       { field: "ot_pay", header: "OT Pay" },
       { field: "total_pay", header: "Total Pay" },
-      { field: "incentivetotal", header: "Total Incentive " },
+      { field: "incentivetotal", header: "Total Incentive" },
+      { field: "attendance_bonus", header: "Attendance Bonus" },
     ];
 
     this.asservice
@@ -217,7 +218,9 @@ export class HrcalComponent implements OnInit {
             hrcal.wopOvertime = 0;
           }
           hrcal.total_wkd_hrs = hrcal.totalHours + hrcal.povertime + hrcal.wopOvertime;
-
+          if (!hrcal.total_wkd_hrs) {
+            hrcal.total_wkd_hrs = 0
+          }
           if (hrcal.hpOvertime == null) {
             hrcal.hpOvertime = 0;
           }
@@ -225,6 +228,7 @@ export class HrcalComponent implements OnInit {
           if (!hrcal.totalDays) {
             hrcal.totalDays = 0;
           }
+          hrcal.incentive = 0;
 
           if (hrcal.totalDays <= 89) {
             hrcal.incentive = 0;
@@ -249,6 +253,8 @@ export class HrcalComponent implements OnInit {
           } else if (hrcal.totalDays >= 545 && hrcal.totalDays <= 575) {
             hrcal.incentive = 55;
           }
+
+
           hrcal.p_day_hrs = 8 * (hrcal.pdays + hrcal.wopdays);
           //ot_hrs
           hrcal.ot_hrs = hrcal.total_wkd_hrs - hrcal.p_day_hrs;
@@ -265,9 +271,17 @@ export class HrcalComponent implements OnInit {
           hrcal.incentivetotal = hrcal.total_wkd_hrs * hrcal.incentive;
           hrcal.incentivetotal = Math.round(hrcal.incentivetotal);
 
+          hrcal.incentivetotal = (hrcal.incentivetotal / 8);
+
           //tpresent
           hrcal.tpresent = hrcal.pdays + hrcal.wopdays + hrcal.hpdays;
           // me.hrcalservice.hrcalList.push(hrcal);
+
+          hrcal.attendance_bonus = 0;
+          if (hrcal.tpresent >= 26) {
+            hrcal.attendance_bonus = 500;
+          }
+
         });
         me.sumOfvalues();
         me.loading = false;

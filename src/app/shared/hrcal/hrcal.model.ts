@@ -30,4 +30,6 @@ export class Hrcal {
   ot_pay:number;
   total_pay:number;
   incentivetotal:number;
+
+  attendance_bonus:number;
 }
