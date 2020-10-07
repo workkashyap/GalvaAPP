@@ -83,6 +83,14 @@ export class PurchaseService {
       this.rootUrl + '/purchasecalendars/getpurchaseSummary/' + date);
   }
   //end purchase summary
+
+  //purchase detail report
+
+  public getPurchaseDetailReport(plantcode, fromdate, todate): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchasecalendars/Total_Purchase_Detail/' + plantcode + '/' + fromdate + '/' + todate
+    );
+  }
 }
 
 

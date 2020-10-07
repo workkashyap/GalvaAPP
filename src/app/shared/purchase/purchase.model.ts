@@ -33,4 +33,6 @@ export class Purchase {
   grouping:string;
 
   totalPurchase:number;
+  materialQuantity:number;
+  vendorName:string;
 }

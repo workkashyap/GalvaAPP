@@ -1,0 +1,136 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="card-title-md">Purchase Detail Report</h5>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="row mt-2">
+                    <div class="col-md-2">
+                      <label>From</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel"
+                        [(ngModel)]="this.Fromdate" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                        [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row mt-2">
+                    <div class="col-md-2">
+                      <label>To</label>
+                    </div>
+                    <div class="col-md-9">
+                      <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="this.Todate"
+                        class="input-append date" dateFormat="yy-mm-dd" dataType="string" [showIcon]="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select class="custom-select mt-2" name="myselect" #mySelect="ngModel"
+                    [(ngModel)]="this.selectedPlant" (change)="selectedGrid($event.target.value)" style="width: 75%;">
+                    <option value="0">--Select Plant--</option>
+                    <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
+                      {{ pl.plantshortname }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-1" style="text-align: center;">
+                  <button class="btn btn-primary btn-sm mt-2" (click)="getPurchaseDetail()">View</button>
+                </div>
+                <div class="col-md-1">
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mt-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button></div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+      <p-table #dt [columns]="cols"
+        [style]="{'text-align': 'center', 'font-size': '0.7em', 'transform':'rotateX(180deg)'}" [responsive]="true"
+        selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej" [value]="dpservice.purchase"
+        [paginator]="true" [rows]="20" [resizableColumns]="true" class="ptable">
+
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <td colspan="2" style="width:200px">
+              <div class="input-group mb-1">
+                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                  (input)="loadper($event.target.value , dt)"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                <div class="input-group-append">
+                  <i class="fa fa-search input-group-text"></i>
+                </div>
+              </div>
+            </td>
+            <td style="width: 100px;"> </td>
+            <td style="width: 130px;"> </td>
+            <td style="width: 100px;"> </td>
+            <td style="width: 100px;"> </td>
+            <td style="width: 100px;"> </td>
+            <td style="width: 140px;"> </td>
+            <td style="width: 225px;"> </td>
+            <td style="width: 135px;"> </td>
+            <td style="width: 220px;"> </td>
+            <td style="width: 75px;"> </td>
+            <td style="width: 100px;">
+              <button class="btn btn-info custom-btn"> {{  materialValue | number :'1.2-2' }} </button>
+            </td>
+            <td style="width: 100px;">
+              <button class="btn btn-success custom-btn"> {{  materialQuantity | number :'1.2-2' }}
+              </button>
+            </td>
+
+            <td style="width: 75px;"> </td>
+            <td style="width: 175px;"> </td>
+            <td style="width: 80px;"> </td>
+            <td style="width: 125px;"> </td>
+
+
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              <span *ngIf="col.field=='acDocumentDate' || col.field=='vendorInvoiceDate'" style="font-size: 9px;">
+                {{rowData[col.field] | date :'dd-MM-y'}}
+              </span>
+              <span *ngIf="col.field !='acDocumentDate' && col.field!='vendorInvoiceDate'" style="font-size: 9px;">
+                {{rowData[col.field]}}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+
+  </div>
+</div>

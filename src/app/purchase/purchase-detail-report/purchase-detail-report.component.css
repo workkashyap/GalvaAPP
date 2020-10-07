@@ -1,0 +1,50 @@
+    .custom-col-2 {
+        /*flex: 0 0 38.666667%;
+        max-width: 28.966667%;
+        padding: unset;
+        margin: 2px;*/
+    }
+    .no-margin {
+        margin: unset;
+    }
+    .no-padding {
+        padding: unset;
+    }
+    .set-padding{
+        padding: 10px 5px;
+    }
+    
+  .tbl-th{
+    position: sticky;
+    background: blue;
+    color: white;
+    top: 0px;
+    z-index: 1;
+  }
+  
+.card-header {
+    padding: 0.2rem 1.25rem;
+}
+.card-body {
+    padding: 0px 1.25rem 0.2rem 1.25rem;
+}
+@media (min-width: 1200px){
+    .modal-xl {
+        max-width: 1355px;
+        margin: 1.25rem auto;
+    }
+  
+  }
+  .custom-btn {
+    font-size: 9px;
+    padding: 3px 3px;
+    width: 100%;
+}
+.ptable{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+}
+.ui-table table {
+    transform: rotateX(180deg);
+}
