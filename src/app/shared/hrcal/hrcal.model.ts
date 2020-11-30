@@ -27,6 +27,7 @@ export class Hrcal {
   p_day_hrs: number;
   incentive: number;
   basic:number;
+//  hra:number;
   ot_pay:number;
   total_pay:number;
   incentivetotal:number;

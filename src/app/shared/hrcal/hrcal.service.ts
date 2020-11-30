@@ -16,10 +16,10 @@ export class HrcalService {
 
   constructor(public http: HttpClient) { }
 
-  public getallData(from_date, to_date, company, selectedah): Observable<Hrcal[]> {
+  public getallData(from_date, to_date, company,location ,selectedah): Observable<Hrcal[]> {
     //for calendar click event
     return this.http.get<Hrcal[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRcalbycomprepo/' + from_date + '/' + to_date + '/' + company + '/All/' + selectedah
+      this.rootUrl + '/EMP_CONT_ATT/getallHRcalbycomprepo/' + from_date + '/' + to_date + '/' + company + '/' + location + '/' + selectedah
     );
   }
 

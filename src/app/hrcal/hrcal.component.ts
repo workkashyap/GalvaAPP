@@ -12,6 +12,7 @@ import { HrcalService } from '../shared/hrcal/hrcal.service';
 import { Hrcal } from '../shared/hrcal/hrcal.model';
 import { AttendancesummaryService } from '../shared/hr/attendancesummary.service';
 import { Attendancesummary } from '../shared/hr/attendancesummary.model';
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: "app-hrcal",
@@ -55,6 +56,7 @@ export class HrcalComponent implements OnInit {
   public Fromdate: string;
   public Todate: string;
   public selectedPlant: string;
+  public selectedloc: any = 'ALL';
 
   cols: any[];
 
@@ -81,6 +83,7 @@ export class HrcalComponent implements OnInit {
   p_day_hrs: number = 0;
   ot_hrs: number = 0;
   basic: number = 0;
+  hra: number = 0;
   ot_pay: number = 0;
   total_pay: number = 0;
   incentivetotal: number = 0;
@@ -90,6 +93,7 @@ export class HrcalComponent implements OnInit {
   month: any;
   public date: any;
   selectedah: any = 'All';
+
   constructor(
     public asservice: AttendancesummaryService,
     public hrcalservice: HrcalService,
@@ -121,6 +125,13 @@ export class HrcalComponent implements OnInit {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const current_month_startdate = this.datePipe.transform(firstDay, "yyyy-MM-dd");
 
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
+      .toPromise()
+      .then(res => {
+        me.plantservice.splantlist = res as Plant[];
+      });
+
     this.cols = [
       // { field: 'id', header: 'ID' },
       { field: "employeeCode", header: "Employee Code" },
@@ -151,6 +162,7 @@ export class HrcalComponent implements OnInit {
       { field: "p_day_hrs", header: "P Day Hrs" },
       { field: "ot_hrs", header: "OT Hrs" },
       { field: "basic", header: "Basic" },
+    //  { field: "hra", header: "HRA" },
       { field: "ot_pay", header: "OT Pay" },
       { field: "total_pay", header: "Total Pay" },
       { field: "incentivetotal", header: "Total Incentive" },
@@ -186,13 +198,18 @@ export class HrcalComponent implements OnInit {
     this.selectedPlant = ev;
     this.getData();
   }
+  selectedlocation(ev) {
+  this.selectedloc = ev;
+  this.getData();
+
+  }
   getData() {
     let me = this;
     this.filterenable = false;
     me.loading = true;
     me.hrcalservice.hrcalList = [];
     this.hrcalservice
-      .getallData(me.Fromdate, me.Todate, me.selectedPlant, this.selectedah)
+      .getallData(me.Fromdate, me.Todate, me.selectedPlant, this.selectedloc, this.selectedah)
       .toPromise()
       .then(res => {
         me.hrcalservice.hrcalList = res as Hrcal[];
@@ -260,6 +277,16 @@ export class HrcalComponent implements OnInit {
           hrcal.ot_hrs = hrcal.total_wkd_hrs - hrcal.p_day_hrs;
           //basic
           hrcal.basic = hrcal.rate * (hrcal.pdays + hrcal.wopdays);
+
+          //hra
+          // if (hrcal.basic > 8550)
+          // {
+          //   hrcal.hra = hrcal.basic - 8450;
+          // }
+          // else
+          // {
+          //   hrcal.hra =  8450 - hrcal.basic;
+          // }
           //ot_pay
           hrcal.ot_pay = (hrcal.ot_hrs / 8) * hrcal.rate;
           hrcal.ot_pay = Math.round(hrcal.ot_pay);
@@ -328,13 +355,13 @@ export class HrcalComponent implements OnInit {
     this.p_day_hrs = 0;
     this.ot_hrs = 0;
     this.basic = 0;
+    this.hra = 0;
     this.ot_pay = 0;
     this.total_pay = 0;
     this.incentivetotal = 0;
 
     if (this.filterenable == true) {
-      console.log("this.filterenable", this.filterenable);
-      console.log("this.filterItemrejarray", this.filterItemrejarray);
+     
 
       this.filterItemrejarray.forEach(element => {
 
@@ -354,6 +381,7 @@ export class HrcalComponent implements OnInit {
         this.p_day_hrs += element.p_day_hrs;
         this.ot_hrs += element.ot_hrs;
         this.basic += element.basic;
+      //  this.hra += element.hra;
         this.ot_pay += element.ot_pay;
         this.total_pay += element.total_pay;
         this.incentivetotal += element.incentivetotal;
@@ -378,6 +406,7 @@ export class HrcalComponent implements OnInit {
       this.p_day_hrs += element.p_day_hrs;
       this.ot_hrs += element.ot_hrs;
       this.basic += element.basic;
+   //   this.hra += element.hra;
       this.ot_pay += element.ot_pay;
       this.total_pay += element.total_pay;
       this.incentivetotal += element.incentivetotal;

@@ -10,9 +10,14 @@
           <div class="card card-primary card-outline">
             <div class="card-header">
               <div class="row">
-                <div class="col-md-12">
-                  <h5 class="card-title-md">HrCal Detail</h5>
+                <div class="col-md-6">
+                  <h5 class="card-title-md">HR Report</h5>
                 </div>
+                <div class="col-md-6" style="text-align: right;" >
+                  <button class="btn btn-primary mt-2" (click)="getData()">View</button>
+                  &nbsp;
+                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
+                    <i class="fa fa-file-excel-o"></i> Export</button></div>
               </div>
 
             </div>
@@ -48,7 +53,7 @@
 
                 </div>
                 <div class="col-md-2" style="padding: unset;">
-                  <button (click)="refreshDropdown()" class="btn btn-danger mt-2" style="margin-right: 34px;">
+                  <button (click)="refreshDropdown()" class="btn btn-danger mt-2" style="margin-right: 24px;">
                     <i class="fa fa-refresh"></i> </button>
 
                   <select class="custom-select  mt-2" name="month" (change)="selectedAh($event.target.value)"
@@ -76,11 +81,19 @@
                       {{cmpny.companyFName}}</option>
                   </select>
                 </div>
-                <div class="col-md-2" style="text-align: center;">
-                  <button class="btn btn-primary mt-2" (click)="getData()">View</button>
-                  &nbsp;
-                  <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
-                    <i class="fa fa-file-excel-o"></i> Export</button></div>
+                <div class="col-md-2">
+                  <select class="custom-select mt-2"  *ngIf="plantservice" name="myselectloc" #mySelectloc
+                    (change)="selectedlocation($event.target.value)" >
+                    <option value="All">
+                      All Company
+                    </option>
+                    <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                      {{ pl.plantshortname }}
+                    </option>
+                  </select>
+      
+                </div>
+             
               </div>
             </div>
             <!-- </form> -->
@@ -143,6 +156,9 @@
                   <td>
                     <button class="btn bg-others_value mt-2  w-100">{{basic}}</button>
                   </td>
+                  <!-- <td>
+                    <button class="btn bg-others_value mt-2  w-100">{{hra}}</button>
+                  </td> -->
                   <td>
                     <button class="btn bg-hr mt-2  w-100">{{ot_pay}}</button>
                   </td>
