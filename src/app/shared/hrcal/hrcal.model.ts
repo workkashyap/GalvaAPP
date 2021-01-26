@@ -23,14 +23,17 @@ export class Hrcal {
   wopOvertime: number;
   povertime: number;
   total_wkd_hrs: number;
-  ot_hrs:number;
+  ot_hrs: number;
   p_day_hrs: number;
   incentive: number;
-  basic:number;
-//  hra:number;
-  ot_pay:number;
-  total_pay:number;
-  incentivetotal:number;
+  basic: number;
+  present_day_pay: number;
+  hra: number;
+  conveyance: number;
+  ot_pay: number;
+  total_pay: number;
+  total_pay2: number;
+  incentivetotal: number;
 
-  attendance_bonus:number;
+  attendance_bonus: number;
 }

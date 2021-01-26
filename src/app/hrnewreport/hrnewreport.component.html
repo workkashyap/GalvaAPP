@@ -1,0 +1,208 @@
+<!-- Site wrapper -->
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="card-title-md">HR New Report</h5>
+                  </div>
+                  <div class="col-md-6" style="text-align: right;" >
+                    <button class="btn btn-primary mt-2" (click)="getData()">View</button>
+                    &nbsp;
+                    <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success mt-2">
+                      <i class="fa fa-file-excel-o"></i> Export</button></div>
+                </div>
+  
+              </div>
+              <div class="card-header">
+                <div class="row">
+                  <!--<div class="col-md-2 mt-2">
+                    
+                  </div>-->
+                  <div class="col-md-3" style="text-align: center;">
+                    <div class="row mt-2">
+                      <div class="col-md-2">
+                        <label>From</label>
+                      </div>
+                      <div class="col-md-10">
+                        <p-calendar aria-placeholder="From Date" name="fromdate" #fromdate="ngModel"
+                          [(ngModel)]="this.Fromdate" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                          [showIcon]="true">
+                        </p-calendar>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3" style="text-align: center;">
+                    <div class="row mt-2">
+                      <div class="col-md-2">
+                        <label>To</label>
+                      </div>
+                      <div class="col-md-10" style="text-align: left;">
+                        <p-calendar aria-placeholder="To Date" name="todate" #todate="ngModel" [(ngModel)]="this.Todate"
+                          class="input-append date" dateFormat="yy-mm-dd" dataType="string" [showIcon]="true">
+                        </p-calendar>
+                      </div>
+                    </div>
+  
+                  </div>
+                  <div class="col-md-2" style="padding: unset;">
+                    <button (click)="refreshDropdown()" class="btn btn-danger mt-2" style="margin-right: 24px;">
+                      <i class="fa fa-refresh"></i> </button>
+  
+                    <select class="custom-select  mt-2" name="month" (change)="selectedAh($event.target.value)"
+                      #Month='ngModel' [(ngModel)]='selectedah' style="width: 52%;">
+                      <option value="All">All</option>
+                      <option value="08 - Hrs">08-Hrs</option>
+                      <option value="11 - Hrs">11-Hrs</option>
+                      <option value="12 - Hrs">12-Hrs</option>
+                      <option value="13 - Hrs">13-Hrs</option>
+                      <option value="14 - Hrs">14-Hrs</option>
+                      <option value="15 - Hrs">15-Hrs</option>
+                      <option value="16 - Hrs">16-Hrs</option>
+                      <option value="17 - Hrs">17-Hrs</option>
+                      <option value="18 - Hrs">18-Hrs</option>
+                      <option value="19 - Hrs">19-Hrs</option>
+                      <option value="20 - Hrs">20-Hrs</option>
+                      <option value="21 - Hrs">21-Hrs</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <select class="custom-select mt-2" name="myselect" #mySelect="ngModel"
+                      [(ngModel)]="this.selectedPlant" (change)="selectedGrid($event.target.value)">
+                      <option value="All">All</option>
+                      <option value="{{cmpny.companyFName}}" *ngFor="let cmpny of this.asservice.attendancesummary">
+                        {{cmpny.companyFName}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <select class="custom-select mt-2"  *ngIf="plantservice" name="myselectloc" #mySelectloc
+                      (change)="selectedlocation($event.target.value)" >
+                      <option value="All">
+                        All Company
+                      </option>
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                        {{ pl.plantshortname }}
+                      </option>
+                    </select>
+        
+                  </div>
+               
+                </div>
+              </div>
+              <!-- </form> -->
+              <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+              <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedItemrej"
+                [value]="hrcalservice.hrcalList" [paginator]="true" [rows]="20" [resizableColumns]="true">
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <td colspan="2" style="width: 158px;">
+                      <div class="input-group mb-1 mt-2">
+                        <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                          (input)="loadper($event.target.value , dt)"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')">
+                        <div class="input-group-append">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width: 80px;"></td>
+                    <td>
+                      <button class="btn bg-success mt-2  w-100">{{totalHours}}</button>
+                    </td>
+                    <!-- <td>
+                      <button class="btn bg-info mt-2  w-100">{{wopOvertime}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-danger mt-2  w-100">{{hpOvertime}}</button>
+                    </td> -->
+                    <td>
+                      <button class="btn bg-dark mt-2  w-100">{{povertime}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-warning mt-2  w-100">{{total_wkd_hrs}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-primary mt-2  w-100">{{pdays}}</button>
+                    </td>
+                    <!-- <td>
+                      <button class="btn bg-other mt-2  w-100">{{wopdays}}</button>
+                    </td> -->
+                    <td>
+                      <button class="btn bg-action-plan mt-2  w-100">{{hpdays}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-moulded mt-2  w-100">{{tpresent}}</button>
+                    </td>
+                    <td></td>
+                    <td>
+                      <button class="btn bg-capital mt-2  w-100">{{incentive}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-planting-per mt-2  w-100">{{p_day_hrs}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-othersqty mt-2  w-100">{{ot_hrs}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-others_value mt-2  w-100">{{basic}}</button>
+                    </td>
+                    <!-- <td>
+                      <button class="btn bg-others_value mt-2  w-100">{{hra}}</button>
+                    </td> -->
+                    <td>
+                      <button class="btn bg-hr mt-2  w-100">{{ot_pay}}</button>
+                    </td>
+                    <td>
+                      <button class="btn bg-compliance mt-2  w-100">{{total_pay}}</button>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <button class="btn bg-tool-def mt-2  w-100">{{incentivetotal}}</button>
+                    </td>
+  
+                  </tr>
+                  <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field" pResizableColumn>
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+                      </p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns" class="ui-resizable-column">
+                      <span *ngIf="col.field=='doj' " style="font-size: 11px;">
+                        {{rowData[col.field] | date :'dd-MM-y'}}
+                      </span>
+                      <span *ngIf="col.field=='incentivetotal' " style="font-size: 11px;">
+                        {{rowData[col.field] |  number:'1.2-2' }}
+                      </span>
+                      <span *ngIf="col.field !='doj' && col.field!='incentivetotal' " style="font-size: 11px;">
+                        {{rowData[col.field]}}
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+  
+      </section>
+  
+    </div>
+  </div>
