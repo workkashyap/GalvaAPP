@@ -9,6 +9,7 @@ export class Hrcal {
   companyFName: string;
   departmentFName: string;
   designationsName: string;
+  uanno: string;
   totalHours: number;
   edays: number;
   totalDays: number;
@@ -34,6 +35,7 @@ export class Hrcal {
   total_pay: number;
   total_pay2: number;
   incentivetotal: number;
+  pf: number;
 
   attendance_bonus: number;
 }

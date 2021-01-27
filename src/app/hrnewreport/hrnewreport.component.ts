@@ -91,6 +91,7 @@ export class HrnewreportComponent implements OnInit {
   total_pay: number = 0;
   total_pay2: number = 0;
   incentivetotal: number = 0;
+  pf: number = 0;
 
   monthName: any;
   public monthNames: any;
@@ -139,8 +140,21 @@ export class HrnewreportComponent implements OnInit {
     this.cols = [
       // { field: 'id', header: 'ID' },
       { field: "employeeCode", header: "Employee Code" },
+      { field: "uanno", header: "UAN Number" },
       { field: "employeeName", header: "Employee Name" },
-      { field: "employementType", header: "Category" },
+      { field: "companyFName", header: "Contractor" },
+      { field: "departmentFName", header: "Department" },
+      { field: "rate", header: "Rate" },
+      { field: "p_day_hrs", header: "P-Hrs" },
+      { field: "ot_hrs", header: "OT Hrs" },
+      { field: "pdays", header: "P-Days" },
+      { field: "basic", header: "Basic" },
+      { field: "hra", header: "HRA" },
+      { field: "conveyance", header: "Conveyance" },
+      { field: "ot_pay", header: "OT Pay" },
+      { field: "pf", header: "PF" },
+      { field: "total_pay", header: "Total Pay" },
+      //{ field: "employementType", header: "Category" },
       //{ field: "doj", header: "Doj" },
       // { field: "gender", header: "Gender" },
       //{ field: "locationName", header: "Location" },
@@ -149,31 +163,21 @@ export class HrnewreportComponent implements OnInit {
       // { field: "designationsName", header: "Designations" },
       //{ field: "totalDays", header: "No of Days As on" },
 
-      { field: "totalHours", header: "P-days Hrs" },
+      //{ field: "totalHours", header: "P-days Hrs" },
       //{ field: "wopOvertime", header: "WOP Hrs" },
       //{ field: "hpOvertime", header: "HP-Hrs" },
-      { field: "povertime", header: "P-OT" },
+      //{ field: "povertime", header: "P-OT" },
 
-      { field: "total_wkd_hrs", header: "Total Wkd Hrs" },
-
-      { field: "pdays", header: "P Days" },
+      //{ field: "total_wkd_hrs", header: "Total Wkd Hrs" },
       //{ field: "wopdays", header: "WOP Days" },
-      { field: "hpdays", header: "HP Days" },
-      { field: "tpresent", header: "Total Present" },
-      { field: "rate", header: "Rate" },
+      //{ field: "hpdays", header: "HP Days" },
+      //{ field: "tpresent", header: "Total Present" },
 
-      { field: "incentive", header: "Incentive" },
-      { field: "p_day_hrs", header: "P Day Hrs" },
-      { field: "ot_hrs", header: "OT Hrs" },
-      { field: "present_day_pay", header: "Present Day Pay" },
-      { field: "ot_pay", header: "OT Pay" },
-      { field: "total_pay", header: "Total Pay" },
-      { field: "basic", header: "Basic" },
-      { field: "hra", header: "HRA" },
-      { field: "conveyance", header: "Conveyance" },
-      { field: "total_pay2", header: "Total Pay 2" },
-      { field: "incentivetotal", header: "Total Incentive" },
-      { field: "attendance_bonus", header: "Attendance Bonus" },
+      //{ field: "incentive", header: "Incentive" },
+      //{ field: "present_day_pay", header: "Present Day Pay" },
+      //{ field: "total_pay2", header: "Total Pay 2" },
+      //{ field: "incentivetotal", header: "Total Incentive" },
+      //{ field: "attendance_bonus", header: "Attendance Bonus" },
     ];
 
     this.asservice
@@ -302,6 +306,10 @@ export class HrnewreportComponent implements OnInit {
               hrcal.conveyance = 0;
             }
           }
+
+          //pf
+          hrcal.pf = hrcal.basic * (13/100);
+          hrcal.pf = Math.round(hrcal.pf);
           //hra
           // if (hrcal.basic > 8550)
           // {
@@ -315,7 +323,7 @@ export class HrnewreportComponent implements OnInit {
           hrcal.ot_pay = (hrcal.ot_hrs / 8) * hrcal.rate;
           hrcal.ot_pay = Math.round(hrcal.ot_pay);
           //total_pay
-          hrcal.total_pay = hrcal.present_day_pay + hrcal.ot_pay;
+          hrcal.total_pay = hrcal.present_day_pay + hrcal.ot_pay + hrcal.pf;
           hrcal.total_pay = Math.round(hrcal.total_pay);
 
           //incentivetotal
@@ -351,7 +359,8 @@ export class HrnewreportComponent implements OnInit {
         c.employeeCode.toString().includes(ev.toString()) ||
         c.employeeName.toString().includes(ev.toString()) ||
         c.doj.toString().includes(ev.toString()) ||
-        c.employementType.toString().includes(ev.toString())
+        c.employementType.toString().includes(ev.toString()) ||
+        c.uanno.toString().includes(ev.toString())
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;
@@ -386,6 +395,7 @@ export class HrnewreportComponent implements OnInit {
     this.total_pay = 0;
     this.total_pay2 = 0;
     this.incentivetotal = 0;
+    this.pf = 0;
 
     if (this.filterenable == true) {
      
@@ -415,6 +425,7 @@ export class HrnewreportComponent implements OnInit {
         this.total_pay += element.total_pay;
         this.total_pay2 += element.total_pay2;
         this.incentivetotal += element.incentivetotal;
+        this.pf += element.pf;
       });
       return;
     }
@@ -443,6 +454,7 @@ export class HrnewreportComponent implements OnInit {
       this.total_pay += element.total_pay;
       this.total_pay2 += element.total_pay2;
       this.incentivetotal += element.incentivetotal;
+      this.pf += element.pf;
     });
   }
 }
