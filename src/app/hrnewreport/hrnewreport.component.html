@@ -103,7 +103,7 @@
                 [value]="hrcalservice.hrcalList" [paginator]="true" [rows]="20" [resizableColumns]="true">
                 <ng-template pTemplate="header" let-columns>
                   <tr>
-                    <td colspan="2" style="width: 158px;">
+                    <td colspan="2" style="width: 200px;">
                       <div class="input-group mb-1 mt-2">
                         <input type="text" class="form-control" pInputText placeholder="Global Filter"
                           (input)="loadper($event.target.value , dt)"
@@ -113,7 +113,7 @@
                         </div>
                       </div>
                     </td>
-                    <td style="width: 80px;"></td>
+                    <td style="width: 120px;"></td>
                     <!--<td>
                       <button class="btn bg-success mt-2  w-100">{{totalHours}}</button>
                     </td>
