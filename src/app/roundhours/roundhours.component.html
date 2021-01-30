@@ -7,10 +7,28 @@
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <h5>Round Loading Hourly Follow Chart</h5>
+                        <div class="col-sm-2">
+                            <h6>Round Loading Hourly Report</h6>
                         </div>
-                        <div class="col-sm-2" style="text-align: right;"></div>
+                        <!-- <div class="col-md-2">
+                            <select class="form-control" name="ptype"
+                              id="ptype" >
+                              <option value="Chrome">Chrome</option>
+                              <option value="Satin">Satin</option>
+                            </select>
+                       </div> -->
+                            <div class="col-md-2">
+                                
+                                <p-calendar aria-placeholder="Date" #fromdate name="fromdate" #fromdate="ngModel"
+                                [(ngModel)]="this.date" class="input-append date" dateFormat="yy-mm-dd" dataType="string"
+                                [showIcon]="true">
+                              </p-calendar>
+                             
+                            </div>
+                           
+                            <div class="col-md-2">
+                                <button (click)="OndateChange(fromdate.value)" class="btn btn-info">View</button>
+                           </div>
                         <div class="col-sm-2" style="text-align: right;">
                             <div class="input-group custome-gs mb-2">
                                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
@@ -37,9 +55,9 @@
                 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 
                 <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
-                    [responsive]="true" selectionMode="single" [style]="{'width':'100%'}"
+                    [responsive]="true" selectionMode="single" 
                     [(selection)]="selectedItemrej" [value]="roundHours" [paginator]="false" [rows]="20"
-                    [resizableColumns]="true" sortField="pstng_date" [sortOrder]="-1">
+                    [resizableColumns]="true" >
 
                     <ng-template pTemplate="header" let-columns>
 

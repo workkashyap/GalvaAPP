@@ -15,6 +15,7 @@ export class RoundhoursService {
   public date: string;
   public plant: number;
   public rtype: string;
+  public ptype: string;
 
 
   constructor(public http: HttpClient) { }
@@ -27,6 +28,13 @@ export class RoundhoursService {
       this.rootUrl + "/roundHours"
     );
   }
+
+  public roundHoursListbydate(date): Observable<Roundhours[]> {
+    return this.http.get<Roundhours[]>(
+      this.rootUrl + "/roundHours/loadroundbydate/" + date
+    );
+  }
+
   public getRoundHour(date, plant, rtype): any {
     return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant + "/" + rtype).toPromise()
       .then(res => {

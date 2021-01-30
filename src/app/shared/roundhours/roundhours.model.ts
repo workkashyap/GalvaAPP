@@ -34,5 +34,6 @@ export class Roundhours {
   shiftcname?: string;
   shiftbname?: string;
   rtype?: string;
+  ptype?: string;
   edit?: boolean = false;
 }

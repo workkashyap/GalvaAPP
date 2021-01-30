@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
-import { DatePipe } from "@angular/common";
-import { NgForm } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
 import { RoundhoursService } from 'src/app/shared/roundhours/roundhours.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
@@ -11,19 +11,25 @@ import { LoginService } from 'src/app/shared/login/login.service';
 import { parse } from 'querystring';
 
 @Component({
-  selector: "app-addroundhour",
-  templateUrl: "./addroundhour.component.html",
-  styleUrls: ["./addroundhour.component.css"],
+  selector: 'app-addroundhour',
+  templateUrl: './addroundhour.component.html',
+  styleUrls: ['./addroundhour.component.css'],
   providers: [DatePipe]
 })
 export class AddroundhourComponent implements OnInit {
   public currentUser: User;
 
   public selectedcode: string;
-  rtype: string = "Production";
+  rtype = 'Production';
+  ptype = 'Chrome';
   public date: string;
   public actionvalue: string;
   public loading = false;
+
+  public roundTotal: number;
+  public proType: string;
+  public insType: string;
+
   constructor(
     private toastr: ToastrService,
     private route: Router,
@@ -38,9 +44,21 @@ export class AddroundhourComponent implements OnInit {
 
   ngOnInit() {
     const me = this;
-    this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    console.log("cDate", this.date);
-
+    this.date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    console.log('cDate', this.date);
+    this.proType = this.ptype;
+    this.insType = this.rtype;
+    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 300;
+    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 250;
+    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 275;
+    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 220;
+    } else {
+      this.roundTotal = 175;
+    }
     this.plantservice
       .sgetPlantData(me.currentUser.id)
       .toPromise()
@@ -58,21 +76,22 @@ export class AddroundhourComponent implements OnInit {
     const me = this;
 
     if (me.rhService.date && me.rhService.plant && me.rhService.rtype) {
-      this.rhService.date = this.datePipe.transform(this.rhService.date, "yyyy-MM-dd");
+      this.rhService.date = this.datePipe.transform(this.rhService.date, 'yyyy-MM-dd');
       this.date = this.rhService.date;
       this.rtype = this.rhService.rtype;
+      this.ptype = this.rhService.ptype;
       this.selectedcode = this.rhService.plant.toString();
-      console.log("s", this.rhService.plant.toString());
+      console.log('s', this.rhService.plant.toString());
       me.rhService.getRoundHour(me.rhService.date, me.rhService.plant, me.rhService.rtype);
-      //this.selectedcode = this.rhService.roundhourInfo.plant.toString(8);
-      //this.rtype = this.rhService.roundhourInfo.rtype;
+      // this.selectedcode = this.rhService.roundhourInfo.plant.toString(8);
+      // this.rtype = this.rhService.roundhourInfo.rtype;
 
     } else {
       me.rhService.roundhourInfo = {
         id: 0,
-        shifta: "A",
-        shiftb: "B",
-        shiftc: "C",
+        shifta: 'A',
+        shiftb: 'B',
+        shiftc: 'C',
         r7to8: 0,
         r8to9: 0,
         r9to10: 0,
@@ -98,11 +117,12 @@ export class AddroundhourComponent implements OnInit {
         r5to6: 0,
         r6to7: 0,
         plant: 0,
-        shiftaname: "",
-        rtype: "",
-        shiftbname: "",
-        shiftcname: "",
-        pstng_date: "",
+        shiftaname: '',
+        rtype: '',
+        ptype: '',
+        shiftbname: '',
+        shiftcname: '',
+        pstng_date: '',
       };
     }
   }
@@ -112,42 +132,43 @@ export class AddroundhourComponent implements OnInit {
     }
   }
   onComplete(form: NgForm) {
-    //console.log("form", this.productionsService.productionData);
+    // console.log("form", this.productionsService.productionData);
     this.loading = true;
     this.rhService.roundhourInfo.plant = parseInt(this.selectedcode);
     this.rhService.roundhourInfo.rtype = this.rtype;
+    this.rhService.roundhourInfo.ptype = this.ptype;
 
-    if (this.actionvalue === "Save") {
+    if (this.actionvalue === 'Save') {
 
-      this.rhService.roundhourInfo.pstng_date = this.datePipe.transform(this.date, "yyyy-MM-dd");
+      this.rhService.roundhourInfo.pstng_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
       if (this.rhService.roundhourInfo.id > 0) {
-        console.log("update data", this.rhService.roundhourInfo);
+        console.log('update data', this.rhService.roundhourInfo);
         this.rhService.updateRoundHour(this.rhService.roundhourInfo.id).subscribe(res => {
           this.resetForm(form);
           this.loading = false;
 
           this.toastr.success(
-            "Successfully Updated.",
-            "Round Hours"
+            'Successfully Updated.',
+            'Round Hours'
           );
-          this.route.navigate(["./roundhours"]);
+          this.route.navigate(['./roundhours']);
         }, err => {
           console.log(err);
           this.loading = false;
 
         });
       } else {
-        this.rhService.roundhourInfo.pstng_date = this.datePipe.transform(this.date, "yyyy-MM-dd");
+        this.rhService.roundhourInfo.pstng_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
         this.loading = false;
 
         this.rhService.saveRoundHour().subscribe(res => {
           this.resetForm(form);
           this.toastr.success(
-            "Successfully Saved.",
-            "Round Hours"
+            'Successfully Saved.',
+            'Round Hours'
           );
-          this.route.navigate(["./roundhours"]);
+          this.route.navigate(['./roundhours']);
         }, err => {
           console.log(err);
           this.loading = false;
@@ -182,12 +203,43 @@ export class AddroundhourComponent implements OnInit {
 
   }
   onSaveClick() {
-    this.actionvalue = "Save";
+    this.actionvalue = 'Save';
   }
   onCancelClick() {
-    this.actionvalue = "Cancel";
+    this.actionvalue = 'Cancel';
   }
   backtoProduction() {
-    this.route.navigate(["./roundhours"]);
+    this.route.navigate(['./roundhours']);
   }
+  onTypeChange(val) {
+    this.proType = val;
+   
+    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 300;
+    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 250;
+    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 275;
+    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 220;
+    } else {
+      this.roundTotal = 175;
+    }
+  }
+  onTypePChange(val) {
+    this.insType = val;
+   
+    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 300;
+    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
+        this.roundTotal = 250;
+    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 275;
+    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
+        this.roundTotal = 220;
+    } else {
+      this.roundTotal = 175;
+    }
+   
+}
 }

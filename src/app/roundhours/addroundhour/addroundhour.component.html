@@ -21,13 +21,23 @@
                       <div class="row ">
                         <div class="col-md-5">
                           <h6 class="card-title-md">Production Round Loading Follow -Up Chart </h6>
-                          <p class="card-title-md">Target for the month 172 round per day </p>
+                          <p class="card-title-md">Target for the month {{ this.roundTotal }} round per day </p>
                         </div>
+                        
+                        <div class="col-md-2">
+                          <select class="form-control" name="ptype" [(ngModel)]="ptype" #ptype2="ngModel"
+                            id="ptype" (change)='onTypeChange($event.target.value)'>
+                            <option value="Chrome">Chrome</option>
+                            <option value="Satin">Satin</option>
+                          </select>
+                        </div>
+
                         <div class="col-md-2">
                           <select class="form-control" name="rtype" [(ngModel)]="rtype" #rtype2="ngModel"
-                            id="rtype">
+                            id="rtype" (change)='onTypePChange($event.target.value)'>
                             <option value="Production">Production</option>
                             <option value="Inspection">Inspection</option>
+                            <option value="Jigging">Jigging</option>
                           </select>
                         </div>
                         <div class="col-md-2">
