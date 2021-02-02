@@ -22,6 +22,7 @@ export class AddroundhourComponent implements OnInit {
   public selectedcode: string;
   rtype = 'Production';
   ptype = 'Chrome';
+  plant: number;
   public date: string;
   public actionvalue: string;
   public loading = false;
@@ -46,19 +47,8 @@ export class AddroundhourComponent implements OnInit {
     const me = this;
     this.date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     console.log('cDate', this.date);
-    this.proType = this.ptype;
-    this.insType = this.rtype;
-    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
-        this.roundTotal = 300;
-    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
-        this.roundTotal = 250;
-    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 275;
-    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 220;
-    } else {
-      this.roundTotal = 175;
-    }
+
+
     this.plantservice
       .sgetPlantData(me.currentUser.id)
       .toPromise()
@@ -69,6 +59,31 @@ export class AddroundhourComponent implements OnInit {
       }, error => {
         this.getInItval();
       });
+
+
+    if (this.rhService.ptype.length > 0) {
+        this.proType = this.rhService.ptype;
+        this.insType = this.rhService.rtype;
+        this.plant = this.rhService.plant;
+        } else {
+          this.proType = this.ptype;
+          this.insType = this.rtype;
+          this.plant = 1010;
+        }
+
+   
+    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.plant === 1010 ) {
+        this.roundTotal = 300;
+    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.plant === 1010 ) {
+        this.roundTotal = 250;
+    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.plant === 1010 ) {
+        this.roundTotal = 275;
+    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.plant === 1010 ) {
+        this.roundTotal = 220;
+    } else {
+      this.roundTotal = 175;
+    }
+
 
 
   }
@@ -191,7 +206,7 @@ export class AddroundhourComponent implements OnInit {
   }
   compliance() {
     const total = this.getTotal();
-    return Math.round((total / 160) * 100);
+    return Math.round((total / this.roundTotal) * 100);
   }
   getTotalC() {
     return this.rhService.roundhourInfo.r23to24 + this.rhService.roundhourInfo.r24to1 + this.rhService.roundhourInfo.r1to2 + this.rhService.roundhourInfo.r2to3 + this.rhService.roundhourInfo.r3to4 + this.rhService.roundhourInfo.r4to5 + this.rhService.roundhourInfo.r5to6 + this.rhService.roundhourInfo.r6to7;
@@ -213,7 +228,7 @@ export class AddroundhourComponent implements OnInit {
   }
   onTypeChange(val) {
     this.proType = val;
-   
+
     if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
         this.roundTotal = 300;
     } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
@@ -228,7 +243,7 @@ export class AddroundhourComponent implements OnInit {
   }
   onTypePChange(val) {
     this.insType = val;
-   
+
     if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1010') {
         this.roundTotal = 300;
     } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
@@ -240,6 +255,11 @@ export class AddroundhourComponent implements OnInit {
     } else {
       this.roundTotal = 175;
     }
-   
+
+}
+onTypePlantChange(val) {
+      if (val !== '1010') {
+        this.roundTotal = 175;
+      }
 }
 }

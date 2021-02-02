@@ -41,7 +41,7 @@
                           </select>
                         </div>
                         <div class="col-md-2">
-                          <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                          <select class="form-control" (change)='onTypePlantChange($event.target.value)'  name="plantcode" #plantcode="ngModel" id="plantcode"
                             [(ngModel)]="selectedcode">
                             <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                               {{ pl.plantshortname }}

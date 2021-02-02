@@ -120,7 +120,7 @@ export class RoundhoursComponent implements OnInit {
     this.rhservice.date = data.pstng_date;
     this.rhservice.plant = data.plant;
     this.rhservice.rtype = data.rtype;
-
+    this.rhservice.ptype = data.ptype;
     this.route.navigate(['./addroundhour']);
 
   }
@@ -129,6 +129,7 @@ export class RoundhoursComponent implements OnInit {
     this.rhservice.date = null;
     this.rhservice.plant = null;
     this.rhservice.rtype = null;
+    this.rhservice.ptype = null;
     // this.iservice.uid = this.currentUser.id;
     this.route.navigate(['./addroundhour']);
   }
