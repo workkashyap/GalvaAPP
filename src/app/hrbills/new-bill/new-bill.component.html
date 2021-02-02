@@ -1,0 +1,281 @@
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 ml-1">
+            <div class="col-sm-6">
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+                <li class="breadcrumb-item active">New Bill</li>
+              </ol>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+  
+  
+            <!-- /.card -->
+            <section class="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <div class="row ">
+                          <div class="col-md-11">
+                            <h3 class="card-title-md">New Bill</h3>
+                          </div>
+                          <div class="col-md-1">
+                            <Button (click)="backtoJobWorkMaterial()" class="btn btn-primary btn-block mb-3">Back</Button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6">  
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="monthyear">Month-Year</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type="text" id="monthyear" name="monthyear" #monthyear="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.monthyear" />
+                                  </div>
+                                </div>
+                              </div>
+  
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="contractor">Contractor</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <select class="custom-select mt-2" name="myselect" #mySelect="ngModel"
+                                    [(ngModel)]="hrbillsService.hrbillsData.contractor" (change)="selectedGrid($event.target.value)">
+                                    <option value="Gujarat Manpower">Gujarat Manpower</option>
+                                    <option value="Nikita Securities">Nikita Securities</option>
+                                    <option value="Sapna Manpower">Sapna Manpower</option>
+                                    <option value="SIS Vapi">SIS Vapi</option>
+                                    <option value="Sunny Enterprise">Sunny Enterprise</option>
+                                    <option value="Vishal Enterprise">Vishal Enterprise</option>
+                                    <option value="White Feathers Vapi">White Feathers Vapi</option>
+                                    <option value="White Feathers">White Feathers</option>
+                                    <!--<option value="{{cmpny.companyFName}}" *ngFor="let cmpny of this.asservice.attendancesummary">
+                                    {{cmpny.companyFName}}</option> -->
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+  
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="basic">Basic</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type="number" id="basic" name="basic"
+                                      #basic="ngModel" [(ngModel)]="hrbillsService.hrbillsData.basic" />
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="hra">HRA</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type="number" id="hra" name="hra"
+                                      #hra="ngModel" [(ngModel)]="hrbillsService.hrbillsData.hra" />
+                                  </div>
+                                </div>
+                              </div>
+  
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="conveyence">Conveyance</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="conveyence" name="conveyence" #conveyence="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.conveyence" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="supervicercharge">Supervisor Charge</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="supervicercharge" name="supervicercharge" #supervicercharge="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.supervicercharge" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="adcharge1">Additional Charges 1</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="adcharge1" name="adcharge1" #adcharge1="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.adcharge1" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="adcharge2">Additional Charges 2</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="adcharge2" name="adcharge2" #adcharge2="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.adcharge2" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="adcharge3">Additional Charges 3</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="adcharge3" name="adcharge3" #adcharge3="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.adcharge3" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="total">Total</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="total" name="total" #total="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.total" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="pftot">PF Total</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="pftot" name="pftot" #pftot="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.pftot" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="gsttot">GST Total</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="gsttot" name="gsttot" #gsttot="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.gsttot" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="nettotal">Net Total</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='number' id="nettotal" name="nettotal" #nettotal="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.nettotal" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-md-2  text-center">
+                                    <label for="createddate">Date Created</label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <input class="form-control" type='date' id="createddate" name="createddate" #createddate="ngModel"
+                                      [(ngModel)]="hrbillsService.hrbillsData.createddate" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <!-- /.card-body -->
+  
+                        <div class="card-footer">
+                          <div class="row">
+                            <div class="col-md-5 text-center"></div>
+                            <div class="col-md-2 ">
+                              <button type="submit" (click)="onSaveClick()" class="btn btn-danger  float-left px-3">
+                                Save
+                              </button>
+                              <button type="submit" (click)="onCancelClick()" class="btn btn-success float-right">
+                                Cancel
+                              </button>
+                            </div>
+                            <div class="col-md-5 text-center"></div>
+                          </div>
+                        </div>
+                      </form>
+                      <!-- </form> -->
+                    </div>
+                    <!-- /.card -->
+  
+                    <!-- /.card -->
+                  </div>
+                  <!--/.col (left) -->
+                  <!--/.col (right) -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.container-fluid -->
+            </section>
+            <!-- /.col -->
+            <div class="mx-2">
+              <div></div>
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </section>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

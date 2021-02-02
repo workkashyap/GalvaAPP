@@ -1,0 +1,96 @@
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row ">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+              <Button (click)="addNewMaterial()" class="btn btn-primary btn-block mb-3">Add New Bill</Button>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-9">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
+                <li class="breadcrumb-item active">Hrbills</li>
+              </ol>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="mx-2">
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <h3 class="card-title-md">
+                        HR Bills
+                      </h3>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="input-group custome-gs mb-2">
+                        <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')">
+                        <div class="input-group-append">
+                          <i class="fa fa-search input-group-text"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+  
+                  <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                    [responsive]="true" selectionMode="single" [(selection)]="selectedItemrej"
+                    [value]="hrbillsService.hrbillsList" [paginator]="true" [rows]="20" [resizableColumns]="true">
+  
+                    <ng-template pTemplate="header" let-columns>
+  
+                      <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field"
+                          pResizableColumn>
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                            ariaLabelDesc="Activate to sort in descending order"
+                            ariaLabelAsc="Activate to sort in ascending order">
+                          </p-sortIcon>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr [pSelectableRow]="rowData">
+                        <td *ngFor="let col of columns" class="ui-resizable-column">
+                          <span *ngIf="col.field=='view'">
+                            <button class="btn btn-primary  btn-sm cs-btn" (click)="opendetail(rowData.id)">
+                              <fa name="eye"></fa>
+                            </button>
+                          </span>
+                          <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </section>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
