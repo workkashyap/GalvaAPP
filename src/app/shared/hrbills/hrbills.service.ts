@@ -26,6 +26,14 @@ export class HrbillsService {
         this.hrbillsList = res as hrbills[];
       });
   }
+
+  public getallDatahrbill(monthyear, name) {
+    //for calendar click event
+    
+    return this.http
+      .get(this.rootUrl + '/hrbills/loadhrbill/' + monthyear + '/' + name);
+     
+  }
   public getDataById(id): any {
     return this.http.get<hrbills[]>(this.rootUrl + '/hrbills/' + id);
   }

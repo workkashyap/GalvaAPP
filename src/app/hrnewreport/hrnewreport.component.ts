@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "src/app/shared/login/User.model";
-import { Inbox } from "src/app/shared/inbox/inbox.model";
-import { ActionplanService } from "src/app/shared/inbox/actionplan.service";
-import { LoginService } from "src/app/shared/login/login.service";
-import { InboxService } from "src/app/shared/inbox/inbox.service";
-import { DatePipe } from "@angular/common";
+import { User } from 'src/app/shared/login/User.model';
+import { Inbox } from 'src/app/shared/inbox/inbox.model';
+import { ActionplanService } from 'src/app/shared/inbox/actionplan.service';
+import { LoginService } from 'src/app/shared/login/login.service';
+import { InboxService } from 'src/app/shared/inbox/inbox.service';
+import { DatePipe } from '@angular/common';
 
-import { UserService } from "src/app/shared/user/user.service";
-import { PlantService } from "src/app/shared/plant/plant.service";
+import { UserService } from 'src/app/shared/user/user.service';
+import { PlantService } from 'src/app/shared/plant/plant.service';
 import { HrcalService } from '../shared/hrcal/hrcal.service';
 import { Hrcal } from '../shared/hrcal/hrcal.model';
 import { AttendancesummaryService } from '../shared/hr/attendancesummary.service';
 import { Attendancesummary } from '../shared/hr/attendancesummary.model';
 import { Plant } from '../shared/plant/plant.model';
+import { HrbillsService } from '../shared/hrbills/hrbills.service';
+import { hrbills } from '../shared/hrbills/hrbills.model';
 
 @Component({
-  selector: "app-hrnewreport",
-  templateUrl: "./hrnewreport.component.html",
-  styleUrls: ["./hrnewreport.component.css"],
+  selector: 'app-hrnewreport',
+  templateUrl: './hrnewreport.component.html',
+  styleUrls: ['./hrnewreport.component.css'],
   providers: [DatePipe],
   styles: [
     `
@@ -58,7 +60,7 @@ export class HrnewreportComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
   public selectedloc: any = 'ALL';
-
+  public monthYear: string;
   cols: any[];
 
   selectedItemrej: Hrcal;
@@ -68,37 +70,38 @@ export class HrnewreportComponent implements OnInit {
   iv: number;
   filterenable = false;
 
-  totalHours: number = 0;
-  wopOvertime: number = 0;
-  hpOvertime: number = 0;
-  povertime: number = 0;
+  totalHours = 0;
+  wopOvertime = 0;
+  hpOvertime = 0;
+  povertime = 0;
 
-  total_wkd_hrs: number = 0;
+  total_wkd_hrs = 0;
 
-  pdays: number = 0;
-  wopdays: number = 0;
-  hpdays: number = 0;
-  tpresent: number = 0;
+  pdays = 0;
+  wopdays = 0;
+  hpdays = 0;
+  tpresent = 0;
 
-  incentive: number = 0;
-  p_day_hrs: number = 0;
-  ot_hrs: number = 0;
-  present_day_pay: number = 0;
-  basic: number = 0;
-  hra: number = 0;
-  conveyance: number = 0;
-  ot_pay: number = 0;
-  total_pay: number = 0;
-  total_pay2: number = 0;
-  incentivetotal: number = 0;
-  pf: number = 0;
+  incentive = 0;
+  p_day_hrs = 0;
+  ot_hrs = 0;
+  present_day_pay = 0;
+  basic = 0;
+  hra = 0;
+  conveyance = 0;
+  ot_pay = 0;
+  total_pay = 0;
+  total_pay2 = 0;
+  incentivetotal = 0;
+  pf = 0;
 
   monthName: any;
   public monthNames: any;
   month: any;
   public date: any;
   selectedah: any = 'All';
-
+  datearr: string[];
+  public hrbillsList: hrbills[] = [];
   constructor(
     public asservice: AttendancesummaryService,
     public hrcalservice: HrcalService,
@@ -106,17 +109,18 @@ export class HrnewreportComponent implements OnInit {
     public service: InboxService,
     public uservice: UserService,
     private datePipe: DatePipe,
-    public plantservice: PlantService
+    public plantservice: PlantService,
+    public hrbillservice: HrbillsService
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-    this.cDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     // this.selectedPlant = "Gujarat";
     this.monthNames = ['--', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
   }
   ngOnInit() {
-    let me = this;
+    const me = this;
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
 
@@ -125,10 +129,13 @@ export class HrnewreportComponent implements OnInit {
     this.monthName = this.monthNames[this.month];
     const year = new Date().getFullYear();
     const month = this.monthName;
+
+    
+
     const a = '1-' + month + '-' + year;
     const date = new Date(a);
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    const current_month_startdate = this.datePipe.transform(firstDay, "yyyy-MM-dd");
+    const current_month_startdate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
 
     this.plantservice
       .sgetPlantData(me.currentUser.id)
@@ -139,45 +146,45 @@ export class HrnewreportComponent implements OnInit {
 
     this.cols = [
       // { field: 'id', header: 'ID' },
-      { field: "employeeCode", header: "Employee Code" },
-      { field: "uanno", header: "UAN Number" },
-      { field: "employeeName", header: "Employee Name" },
-      { field: "companyFName", header: "Contractor" },
-      { field: "departmentFName", header: "Department" },
-      { field: "rate", header: "Rate" },
-      { field: "p_day_hrs", header: "P-Hrs" },
-      { field: "ot_hrs", header: "OT Hrs" },
-      { field: "pdays", header: "P-Days" },
-      { field: "basic", header: "Basic" },
-      { field: "hra", header: "HRA" },
-      { field: "conveyance", header: "Conveyance" },
-      { field: "ot_pay", header: "OT Pay" },
-      { field: "pf", header: "PF" },
-      { field: "total_pay", header: "Total Pay" },
-      //{ field: "employementType", header: "Category" },
-      //{ field: "doj", header: "Doj" },
+      { field: 'employeeCode', header: 'Employee Code' },
+      { field: 'uanno', header: 'UAN Number' },
+      { field: 'employeeName', header: 'Employee Name' },
+      { field: 'companyFName', header: 'Contractor' },
+      { field: 'departmentFName', header: 'Department' },
+      { field: 'rate', header: 'Rate' },
+      { field: 'p_day_hrs', header: 'P-Hrs' },
+      { field: 'ot_hrs', header: 'OT Hrs' },
+      { field: 'pdays', header: 'P-Days' },
+      { field: 'basic', header: 'Basic' },
+      { field: 'hra', header: 'HRA' },
+      { field: 'conveyance', header: 'Conveyance' },
+      { field: 'ot_pay', header: 'OT Pay' },
+      { field: 'pf', header: 'PF' },
+      { field: 'total_pay', header: 'Total Pay' },
+      // { field: "employementType", header: "Category" },
+      // { field: "doj", header: "Doj" },
       // { field: "gender", header: "Gender" },
-      //{ field: "locationName", header: "Location" },
+      // { field: "locationName", header: "Location" },
       // { field: "companyFName", header: "Company" },
-      //{ field: "departmentFName", header: "Department" },
+      // { field: "departmentFName", header: "Department" },
       // { field: "designationsName", header: "Designations" },
-      //{ field: "totalDays", header: "No of Days As on" },
+      // { field: "totalDays", header: "No of Days As on" },
 
-      //{ field: "totalHours", header: "P-days Hrs" },
-      //{ field: "wopOvertime", header: "WOP Hrs" },
-      //{ field: "hpOvertime", header: "HP-Hrs" },
-      //{ field: "povertime", header: "P-OT" },
+      // { field: "totalHours", header: "P-days Hrs" },
+      // { field: "wopOvertime", header: "WOP Hrs" },
+      // { field: "hpOvertime", header: "HP-Hrs" },
+      // { field: "povertime", header: "P-OT" },
 
-      //{ field: "total_wkd_hrs", header: "Total Wkd Hrs" },
-      //{ field: "wopdays", header: "WOP Days" },
-      //{ field: "hpdays", header: "HP Days" },
-      //{ field: "tpresent", header: "Total Present" },
+      // { field: "total_wkd_hrs", header: "Total Wkd Hrs" },
+      // { field: "wopdays", header: "WOP Days" },
+      // { field: "hpdays", header: "HP Days" },
+      // { field: "tpresent", header: "Total Present" },
 
-      //{ field: "incentive", header: "Incentive" },
-      //{ field: "present_day_pay", header: "Present Day Pay" },
-      //{ field: "total_pay2", header: "Total Pay 2" },
-      //{ field: "incentivetotal", header: "Total Incentive" },
-      //{ field: "attendance_bonus", header: "Attendance Bonus" },
+      // { field: "incentive", header: "Incentive" },
+      // { field: "present_day_pay", header: "Present Day Pay" },
+      // { field: "total_pay2", header: "Total Pay 2" },
+      // { field: "incentivetotal", header: "Total Incentive" },
+      // { field: "attendance_bonus", header: "Attendance Bonus" },
     ];
 
     this.asservice
@@ -191,7 +198,9 @@ export class HrnewreportComponent implements OnInit {
       });
   }
   refreshDropdown() {
-    let me = this;
+    const me = this;
+    this.datearr = me.Fromdate.split('-');
+    this.monthYear = this.datearr[0] + '-'  + this.datearr[1];
     this.asservice
       .getallHRsumcont(me.Fromdate, me.Todate, 'All')
       .toPromise()
@@ -200,6 +209,9 @@ export class HrnewreportComponent implements OnInit {
         me.selectedPlant = me.asservice.attendancesummary[0].companyFName;
         me.getData();
       });
+
+    
+   
   }
   selectedAh(ev) {
     this.selectedah = ev;
@@ -208,17 +220,33 @@ export class HrnewreportComponent implements OnInit {
   selectedGrid(ev) {
     this.selectedPlant = ev;
     this.getData();
+
+    this.datearr = this.Fromdate.split('-');
+    this.monthYear = this.datearr[0] + '-'  + this.datearr[1];
+    
+    this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
   }
   selectedlocation(ev) {
   this.selectedloc = ev;
   this.getData();
 
+
+  }
+
+  getSelectedhrBill(date, contractor) {
+    this.hrbillservice.getallDatahrbill(date, contractor).subscribe(res => {
+      this.hrbillsList = res as hrbills[];
+    });
+    
+    
   }
   getData() {
-    let me = this;
+    const me = this;
     this.filterenable = false;
     me.loading = true;
     me.hrcalservice.hrcalList = [];
+    this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
+    
     this.hrcalservice
       .getallData(me.Fromdate, me.Todate, me.selectedPlant, this.selectedloc, this.selectedah)
       .toPromise()
@@ -247,12 +275,12 @@ export class HrnewreportComponent implements OnInit {
           }
           hrcal.total_wkd_hrs = hrcal.totalHours + hrcal.povertime + hrcal.wopOvertime;
           if (!hrcal.total_wkd_hrs) {
-            hrcal.total_wkd_hrs = 0
+            hrcal.total_wkd_hrs = 0;
           }
           if (hrcal.hpOvertime == null) {
             hrcal.hpOvertime = 0;
           }
-          //incentive
+          // incentive
           if (!hrcal.totalDays) {
             hrcal.totalDays = 0;
           }
@@ -284,33 +312,31 @@ export class HrnewreportComponent implements OnInit {
 
 
           hrcal.p_day_hrs = 8 * (hrcal.pdays + hrcal.wopdays);
-          //ot_hrs
+          // ot_hrs
           hrcal.ot_hrs = hrcal.total_wkd_hrs - hrcal.p_day_hrs;
-          //present day pay
+          // present day pay
           hrcal.present_day_pay = hrcal.rate * (hrcal.pdays + hrcal.wopdays);
           hrcal.total_pay2 = hrcal.present_day_pay;
-          //basic, hra, conveyance
-          if(hrcal.present_day_pay < 8450) {
+          // basic, hra, conveyance
+          if (hrcal.present_day_pay < 8450) {
             hrcal.basic = hrcal.present_day_pay;
             hrcal.hra = 0;
-            hrcal.conveyance= 0;
-          }
-          else{
+            hrcal.conveyance = 0;
+          } else {
             hrcal.basic = 8450;
             hrcal.hra = hrcal.present_day_pay - hrcal.basic;
-            if(hrcal.hra > 3380) {
-              hrcal.conveyance = hrcal.hra - 3380; 
+            if (hrcal.hra > 3380) {
+              hrcal.conveyance = hrcal.hra - 3380;
               hrcal.hra = 3380;
-            }
-            else{
+            } else {
               hrcal.conveyance = 0;
             }
           }
 
-          //pf
-          hrcal.pf = hrcal.basic * (13/100);
+          // pf
+          hrcal.pf = hrcal.basic * (13 / 100);
           hrcal.pf = Math.round(hrcal.pf);
-          //hra
+          // hra
           // if (hrcal.basic > 8550)
           // {
           //   hrcal.hra = hrcal.basic - 8450;
@@ -319,20 +345,20 @@ export class HrnewreportComponent implements OnInit {
           // {
           //   hrcal.hra =  8450 - hrcal.basic;
           // }
-          //ot_pay
+          // ot_pay
           hrcal.ot_pay = (hrcal.ot_hrs / 8) * hrcal.rate;
           hrcal.ot_pay = Math.round(hrcal.ot_pay);
-          //total_pay
+          // total_pay
           hrcal.total_pay = hrcal.present_day_pay + hrcal.ot_pay + hrcal.pf;
           hrcal.total_pay = Math.round(hrcal.total_pay);
 
-          //incentivetotal
+          // incentivetotal
           hrcal.incentivetotal = hrcal.total_wkd_hrs * hrcal.incentive;
           hrcal.incentivetotal = Math.round(hrcal.incentivetotal);
 
           hrcal.incentivetotal = (hrcal.incentivetotal / 8);
 
-          //tpresent
+          // tpresent
           hrcal.tpresent = hrcal.pdays + hrcal.wopdays + hrcal.hpdays;
           // me.hrcalservice.hrcalList.push(hrcal);
 
@@ -397,8 +423,8 @@ export class HrnewreportComponent implements OnInit {
     this.incentivetotal = 0;
     this.pf = 0;
 
-    if (this.filterenable == true) {
-     
+    if (this.filterenable === true) {
+
 
       this.filterItemrejarray.forEach(element => {
 
@@ -414,7 +440,7 @@ export class HrnewreportComponent implements OnInit {
         this.hpdays += element.hpdays;
         this.tpresent += element.tpresent;
 
-        this.incentive += element.incentive
+        this.incentive += element.incentive;
         this.p_day_hrs += element.p_day_hrs;
         this.ot_hrs += element.ot_hrs;
         this.basic += element.basic;
@@ -443,7 +469,7 @@ export class HrnewreportComponent implements OnInit {
       this.hpdays += element.hpdays;
       this.tpresent += element.tpresent;
 
-      this.incentive += element.incentive
+      this.incentive += element.incentive;
       this.p_day_hrs += element.p_day_hrs;
       this.ot_hrs += element.ot_hrs;
       this.basic += element.basic;

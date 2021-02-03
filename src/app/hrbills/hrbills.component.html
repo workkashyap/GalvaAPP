@@ -14,6 +14,7 @@
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
                 <li class="breadcrumb-item active">Hrbills</li>
+                
               </ol>
             </div>
             <!-- /.col -->
@@ -53,7 +54,7 @@
                 <div class="card-body">
   
                   <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
-                    [responsive]="true" selectionMode="single" [(selection)]="selectedItemrej"
+                    [responsive]="true" selectionMode="single" 
                     [value]="hrbillsService.hrbillsList" [paginator]="true" [rows]="20" [resizableColumns]="true">
   
                     <ng-template pTemplate="header" let-columns>
