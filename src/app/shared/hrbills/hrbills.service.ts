@@ -10,6 +10,7 @@ import { HttpClient } from "@angular/common/http";
 export class HrbillsService {
   public hrbillsData: hrbills;
   public hrbillsList: hrbills[] = [];
+  public hrbillsSumData: hrbills;
 
   readonly rootUrl = environment.apiUrl;
   public id: number;
