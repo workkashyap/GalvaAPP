@@ -40,7 +40,7 @@ export class HrbillsService {
   }
 
   public insertbill(): any {
-    return this.http.post(this.rootUrl + "/hrbills", this.hrbillsData);
+    return this.http.post(this.rootUrl + "/hrbills", this.hrbillsSumData);
   }
 
   public updatebill(id): any {

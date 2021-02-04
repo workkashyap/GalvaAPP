@@ -239,7 +239,7 @@ export class HrnewreportComponent implements OnInit {
       nettotal: this.nettotal,
       createddate: this.cDate,
       otpay: this.ot_pay,
-      agency: this.agency
+      agency: (this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3) *8/100
     };
   }
 
@@ -250,7 +250,7 @@ export class HrnewreportComponent implements OnInit {
   insertRecord(form: NgForm) {
     this.hrbillservice.insertbill().subscribe(
       res => {
-            this.toastr.success('Submitted Successfully', 'FORM');
+            this.toastr.success('Submitted Successfully', 'Bills Report');
           },
           err => {
             console.log(err);
@@ -265,8 +265,12 @@ export class HrnewreportComponent implements OnInit {
     this.gsttot = this.total * 18 / 100;
     this.nettotal = this.total + this.gsttot;
     // this.resetForm();
-    console.log(this.agency);
-  }
+    this.hrbillservice.hrbillsSumData.agency = this.agency; 
+    this.hrbillservice.hrbillsSumData.total = this.total; 
+    this.hrbillservice.hrbillsSumData.gsttot = this.gsttot; 
+    this.hrbillservice.hrbillsSumData.nettotal = this.nettotal; 
+
+   }
 
   refreshDropdown() {
     const me = this;
