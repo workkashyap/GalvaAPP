@@ -230,9 +230,9 @@ export class HrnewreportComponent implements OnInit {
       hra: this.hra,
       conveyence: this.conveyance,
       supervicercharge: 0,
-      adcharge1: this.additionalcharges1,
-      adcharge2: this.additionalcharges2,
-      adcharge3: this.additionalcharges3,
+      adcharge1: 0,
+      adcharge2: 0,
+      adcharge3: 0,
       total: this.total,
       pftot: this.pf,
       gsttot: this.gsttot,
@@ -264,7 +264,7 @@ export class HrnewreportComponent implements OnInit {
     this.total = this.t + this.agency + this.pftot;
     this.gsttot = this.total * 18 / 100;
     this.nettotal = this.total + this.gsttot;
-    this.resetForm();
+    // this.resetForm();
     console.log(this.agency);
   }
 
