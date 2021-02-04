@@ -15,6 +15,6 @@ export class hrbills {
     nettotal: number;
     createddate: string;
     otpay: number;
-    agency: number;
+    agency?: number;
   }
   

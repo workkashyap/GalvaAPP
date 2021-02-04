@@ -61,9 +61,11 @@ export class HrnewreportComponent implements OnInit {
   additionalcharges2 = 0;
   additionalcharges3 = 0;
   agency = 0;
-  pftotal = 0;
-  gsttotal = 0;
+  pftot = 0;
+  gsttot = 0;
   nettotal = 0;
+  otpay =0;
+  t=0;
 
 
 
@@ -175,7 +177,7 @@ export class HrnewreportComponent implements OnInit {
       { field: 'basic', header: 'Basic' },
       { field: 'hra', header: 'HRA' },
       { field: 'conveyance', header: 'Conveyance' },
-      { field: 'ot_pay', header: 'OT Pay' },
+      { field: 'otpay', header: 'OT Pay' },
       { field: 'pf', header: 'PF' },
       { field: 'total_pay', header: 'Total Pay' },
       // { field: "employementType", header: "Category" },
@@ -232,11 +234,11 @@ export class HrnewreportComponent implements OnInit {
       adcharge2: 0,
       adcharge3: 0,
       total: 0,
-      pftot: 0,
+      pftot: this.pf,
       gsttot: 0,
       nettotal: 0,
       createddate: this.cDate,
-      otpay: 0,
+      otpay: this.ot_pay,
       agency: 0
     };
   }
@@ -257,11 +259,12 @@ export class HrnewreportComponent implements OnInit {
   }
 
   sum() {
-    this.total =  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
-    this.agency = this.total * 8 / 100;
-    this.pftotal = this.agency + this.pf;
-    this.gsttotal = this.pftotal * 18 / 100;
-    this.nettotal = this.pftotal + this.gsttotal;
+    this.t =  this.basic + this.hra + this.conveyance + this.otpay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
+    this.agency = this.t * 8 / 100;
+    this.total = this.t + this.agency + this.pftot;
+    this.gsttot = this.total * 18 / 100;
+    this.nettotal = this.total + this.gsttot;
+    console.log(this.agency);
   }
 
   refreshDropdown() {
