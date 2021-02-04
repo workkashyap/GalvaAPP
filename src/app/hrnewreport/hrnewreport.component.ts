@@ -5,6 +5,8 @@ import { ActionplanService } from 'src/app/shared/inbox/actionplan.service';
 import { LoginService } from 'src/app/shared/login/login.service';
 import { InboxService } from 'src/app/shared/inbox/inbox.service';
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 
 import { UserService } from 'src/app/shared/user/user.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
@@ -15,6 +17,7 @@ import { Attendancesummary } from '../shared/hr/attendancesummary.model';
 import { Plant } from '../shared/plant/plant.model';
 import { HrbillsService } from '../shared/hrbills/hrbills.service';
 import { hrbills } from '../shared/hrbills/hrbills.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-hrnewreport',
@@ -51,6 +54,19 @@ import { hrbills } from '../shared/hrbills/hrbills.model';
 })
 
 export class HrnewreportComponent implements OnInit {
+  
+  total: number =0;
+  supervisorcharge: number = 0;
+  additionalcharges1: number = 0;
+  additionalcharges2: number = 0;
+  additionalcharges3: number = 0;
+  agency : number =0;
+  pftotal : number =0;
+  gsttotal : number =0;
+  nettotal: number =0;
+
+
+
   public currentUser: User;
   public loading = false;
   public cDate: string;
@@ -110,7 +126,8 @@ export class HrnewreportComponent implements OnInit {
     public uservice: UserService,
     private datePipe: DatePipe,
     public plantservice: PlantService,
-    public hrbillservice: HrbillsService
+    public hrbillservice: HrbillsService,
+    public toastr: ToastrService
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
     this.cDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -197,6 +214,32 @@ export class HrnewreportComponent implements OnInit {
 
       });
   }
+
+  onSubmit(form :NgForm){
+    console.log(form.value);
+    this.insertRecord(form);
+  }
+  insertRecord(form:NgForm)
+  {
+    this.hrbillservice.insertbill().subscribe(
+      res => {
+            this.toastr.success('Submitted Successfully','FORM');
+          },
+          err => {
+            console.log(err);
+            }
+    )
+  }
+ 
+  sum()
+  {
+    this.total=  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3 
+    this.agency= this.total *8 /100;
+    this.pftotal = this.agency + this.pf;
+    this.gsttotal = this.pftotal * 18/100;
+    this.nettotal = this.pftotal + this.gsttotal;
+  }
+
   refreshDropdown() {
     const me = this;
     this.datearr = me.Fromdate.split('-');

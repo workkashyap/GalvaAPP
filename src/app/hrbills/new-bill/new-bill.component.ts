@@ -43,87 +43,88 @@ export class NewBillComponent implements OnInit {
     if (form != null) {
       form.form.reset();
     }
-    if (me.hrbillsService.id) {
-      me.hrbillsService.getDataById(me.hrbillsService.id)
-        .toPromise()
-        .then((res: any) => {
-          this.hrbillsService.hrbillsData = res; //as Hrbills[];
-          this.hrbillsService.hrbillsData.createddate = this.datePipe.transform(this.hrbillsService.hrbillsData.createddate, "yyyy-MM-dd");
-        });
+  //   if (me.hrbillsService.id) {
+  //     me.hrbillsService.getDataById(me.hrbillsService.id)
+  //       .toPromise()
+  //       .then((res: any) => {
+  //         this.hrbillsService.hrbillsData = res; //as Hrbills[];
+  //         this.hrbillsService.hrbillsData.createddate = this.datePipe.transform(this.hrbillsService.hrbillsData.createddate, "yyyy-MM-dd");
+  //       });
 
-    } else {
-      me.hrbillsService.hrbillsData = {
-        id: 0,
-        monthyear: "2021-01",
-        contractor: " ",
-        basic: 0,
-        hra: 0,
-        conveyence: 0,
-        supervicercharge: 0,
-        adcharge1: 0,
-        adcharge2: 0,
-        adcharge3: 0,
-        total: 0,
-        pftot: 0,
-        gsttot: 0,
-        nettotal: 0,
-        createddate: me.cDate
-      };
-    }
-  }
-  onComplete(form: NgForm) {
-    if (this.actionvalue === "Save") {
-      this.loading = true;
-      if (this.hrbillsService.hrbillsData.id > 0) {
+  //   } else {
+  //     me.hrbillsService.hrbillsData = {
+  //       id: 0,
+  //       monthyear: "2021-01",
+  //       contractor: " ",
+  //       basic: 0,
+  //       hra: 0,
+  //       conveyence: 0,
+  //       supervicercharge: 0,
+  //       adcharge1: 0,
+  //       adcharge2: 0,
+  //       adcharge3: 0,
+  //       total: 0,
+  //       pftot: 0,
+  //       gsttot: 0,
+  //       nettotal: 0,
+  //       createddate: me.cDate
+  //     };
+  //   }
+  // }
+  // onComplete(form: NgForm) {
+  //   if (this.actionvalue === "Save") {
+  //     this.loading = true;
+  //     if (this.hrbillsService.hrbillsData.id > 0) {
 
-        this.hrbillsService.updatebill(this.hrbillsService.hrbillsData.id).subscribe(
-          res => {
-            this.resetForm(form);
-            this.toastr.success(
-              "Successfully Saved Record.",
-              "Item Data"
-            );
-            this.route.navigate(["./hrbills"]);
-            // this.ngOnInit();
-            // this.service.refreshList();
-          },
-          err => {
-            console.log(err);
-          }
-        );
-      } else {
-        this.hrbillsService.insertbill().subscribe(
-          res => {
-            this.resetForm(form);
-            this.toastr.success(
-              "Successfully  Record Updated.",
-              "Item Data"
-            );
-            this.route.navigate(["./hrbills"]);
-            // this.ngOnInit();
-            // this.service.refreshList();
-          },
-          err => {
-            console.log(err);
-          }
-        );
+  //       this.hrbillsService.updatebill(this.hrbillsService.hrbillsData.id).subscribe(
+  //         res => {
+  //           this.resetForm(form);
+  //           this.toastr.success(
+  //             "Successfully Saved Record.",
+  //             "Item Data"
+  //           );
+  //           this.route.navigate(["./hrbills"]);
+  //           // this.ngOnInit();
+  //           // this.service.refreshList();
+  //         },
+  //         err => {
+  //           console.log(err);
+  //         }
+  //       );
+  //     } else {
+  //       this.hrbillsService.insertbill().subscribe(
+  //         res => {
+  //           this.resetForm(form);
+  //           this.toastr.success(
+  //             "Successfully  Record Updated.",
+  //             "Item Data"
+  //           );
+  //           this.route.navigate(["./hrbills"]);
+  //           // this.ngOnInit();
+  //           // this.service.refreshList();
+  //         },
+  //         err => {
+  //           console.log(err);
+  //         }
+  //       );
 
-      }
-      this.loading = false;
-    } else {
-      this.backtoJobWorkMaterial();
-    }
-  }
+  //     }
+  //     this.loading = false;
+  //   } else {
+  //     this.backtoJobWorkMaterial();
+  //   }
+  // }
 
-  onSaveClick() {
-    this.actionvalue = "Save";
-  }
-  onCancelClick() {
-    this.actionvalue = "Cancel";
-  }
-  backtoJobWorkMaterial() {
-    this.iservice.uid = this.currentUser.id;
-    this.route.navigate(["./hrbills"]);
-  }
+  // onSaveClick() {
+  //   this.actionvalue = "Save";
+  // }
+  // onCancelClick() {
+  //   this.actionvalue = "Cancel";
+  // }
+  // backtoJobWorkMaterial() {
+  //   this.iservice.uid = this.currentUser.id;
+  //   this.route.navigate(["./hrbills"]);
+  // }
 
+  }
 }

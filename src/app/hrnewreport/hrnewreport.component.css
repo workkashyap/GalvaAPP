@@ -40,3 +40,8 @@
     font-size: 8px;
     padding: .3rem .0rem;
   }
+  @media screen and (min-width: 676px) {
+    .modal-dialog {
+      max-width: 1000px; /* New width for default modal */
+    }
+}
