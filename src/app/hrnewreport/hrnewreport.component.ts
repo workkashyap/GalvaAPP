@@ -54,16 +54,16 @@ import { NgForm } from '@angular/forms';
 })
 
 export class HrnewreportComponent implements OnInit {
-  
-  total: number =0;
-  supervisorcharge: number = 0;
-  additionalcharges1: number = 0;
-  additionalcharges2: number = 0;
-  additionalcharges3: number = 0;
-  agency : number =0;
-  pftotal : number =0;
-  gsttotal : number =0;
-  nettotal: number =0;
+
+  total = 0;
+  supervisorcharge = 0;
+  additionalcharges1 = 0;
+  additionalcharges2 = 0;
+  additionalcharges3 = 0;
+  agency = 0;
+  pftotal = 0;
+  gsttotal = 0;
+  nettotal = 0;
 
 
 
@@ -147,7 +147,7 @@ export class HrnewreportComponent implements OnInit {
     const year = new Date().getFullYear();
     const month = this.monthName;
 
-    
+
 
     const a = '1-' + month + '-' + year;
     const date = new Date(a);
@@ -214,13 +214,14 @@ export class HrnewreportComponent implements OnInit {
 
       });
 
-      this.resetForm();
+    this.resetForm();
   }
-  resetForm(form?: NgForm){
-    if(form!=null)
+  resetForm(form?: NgForm) {
+    if (form != null) {
       form.resetForm();
+    }
     this.hrbillservice.hrbillsSumData = {
-      id:0,
+      id: 0,
       monthyear: this.monthYear,
       contractor: this.selectedPlant,
       basic: this.basic,
@@ -236,32 +237,30 @@ export class HrnewreportComponent implements OnInit {
       nettotal: 0,
       createddate: this.cDate,
       otpay: 0,
-      agency: 0 
-    }
+      agency: 0
+    };
   }
 
-  onSubmit(form :NgForm){
+  onSubmit(form: NgForm) {
     console.log(form.value);
     this.insertRecord(form);
   }
-  insertRecord(form:NgForm)
-  {
+  insertRecord(form: NgForm) {
     this.hrbillservice.insertbill().subscribe(
       res => {
-            this.toastr.success('Submitted Successfully','FORM');
+            this.toastr.success('Submitted Successfully', 'FORM');
           },
           err => {
             console.log(err);
             }
-    )
+    );
   }
- 
-  sum()
-  {
-    this.total=  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3 
-    this.agency= this.total *8 /100;
+
+  sum() {
+    this.total =  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
+    this.agency = this.total * 8 / 100;
     this.pftotal = this.agency + this.pf;
-    this.gsttotal = this.pftotal * 18/100;
+    this.gsttotal = this.pftotal * 18 / 100;
     this.nettotal = this.pftotal + this.gsttotal;
   }
 
@@ -278,8 +277,8 @@ export class HrnewreportComponent implements OnInit {
         me.getData();
       });
 
-    
-   
+
+
   }
   selectedAh(ev) {
     this.selectedah = ev;
@@ -291,12 +290,13 @@ export class HrnewreportComponent implements OnInit {
 
     this.datearr = this.Fromdate.split('-');
     this.monthYear = this.datearr[0] + '-'  + this.datearr[1];
-    
+
     this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
   }
   selectedlocation(ev) {
   this.selectedloc = ev;
   this.getData();
+  
 
 
   }
@@ -305,8 +305,8 @@ export class HrnewreportComponent implements OnInit {
     this.hrbillservice.getallDatahrbill(date, contractor).subscribe(res => {
       this.hrbillsList = res as hrbills[];
     });
-    
-    
+
+
   }
   getData() {
     const me = this;
@@ -314,7 +314,7 @@ export class HrnewreportComponent implements OnInit {
     me.loading = true;
     me.hrcalservice.hrcalList = [];
     this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
-    
+
     this.hrcalservice
       .getallData(me.Fromdate, me.Todate, me.selectedPlant, this.selectedloc, this.selectedah)
       .toPromise()
@@ -550,5 +550,10 @@ export class HrnewreportComponent implements OnInit {
       this.incentivetotal += element.incentivetotal;
       this.pf += element.pf;
     });
+  }
+
+  getsummary() {
+    this.resetForm();
+   
   }
 }
