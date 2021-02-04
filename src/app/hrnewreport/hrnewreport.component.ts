@@ -554,6 +554,5 @@ export class HrnewreportComponent implements OnInit {
 
   getsummary() {
     this.resetForm();
-   
   }
 }
