@@ -40,66 +40,66 @@
            <div class="col-md-4">
             <div class="form-group">
                 Basic
-              <input type="number" class="form-control" name="basic" [(ngModel)]="basic" required>
+              <input type="number" class="form-control" name="basic" [(ngModel)]="hrbillservice.hrbillsSumData.basic" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               HRA
-              <input type="number" class="form-control" name="hra" [(ngModel)]="hra" required>
+              <input type="number" class="form-control" name="hra" [(ngModel)]="hrbillservice.hrbillsSumData.hra" required>
             </div>
             <div class="form-group">
               Conveyance
-              <input type="number" class="form-control" name="conveyance" [(ngModel)]="conveyance" required>
+              <input type="number" class="form-control" name="conveyance" [(ngModel)]="hrbillservice.hrbillsSumData.conveyance" required>
             </div>
             <div class="form-group">
               OT Pay
-              <input type="number" class="form-control" name="ot_pay" [(ngModel)]="ot_pay" required>
+              <input type="number" class="form-control" name="ot_pay" [(ngModel)]="hrbillservice.hrbillsSumData.ot_pay" required>
            </div>
           </div>
           <div class="col-md-4">
            <div class="form-group">
               <label class="text-primary">Supervisor Charge</label>
-              <input type="number" class="form-control" name="supervisorcharge" (change)="sum()" [(ngModel)]="supervisorcharge" required>
+              <input type="number" class="form-control" name="supervisorcharge" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.supervisorcharge" required>
             </div>
             <div class="form-group">
               <label class="text-primary">Additional Charges 1</label>
-              <input type="number" class="form-control" name="additionalcharges1" (change)="sum()" [(ngModel)]="additionalcharges1" required>
+              <input type="number" class="form-control" name="additionalcharges1" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.additionalcharges1" required>
             </div>
             <div class="form-group">
               <label class="text-primary">Additional Charges 2</label>
-              <input type="number" class="form-control" name="additionalcharges2" (change)="sum()" [(ngModel)]="additionalcharges2" required>
+              <input type="number" class="form-control" name="additionalcharges2" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.additionalcharges2" required>
             </div>
             <div class="form-group">
               <label class="text-primary">Additional Charges 3</label>
-              <input type="number" class="form-control" name="additionalcharges3" (change)="sum()" [(ngModel)]="additionalcharges3" required>
+              <input type="number" class="form-control" name="additionalcharges3" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.additionalcharges3" required>
             </div>
             <div class="form-group">
               <label class="text-danger">Total</label>
-              <input type="number" class="form-control" name="total" [(ngModel)]="total" required>
+              <input type="number" class="form-control" name="total" [(ngModel)]="hrbillservice.hrbillsSumData.total" required>
             </div>
           </div>
            <div class="col-md-4">
             <div class="form-group">
              Agency 8%
-              <input type="number" class="form-control" name="agency" (change)="sum()" [(ngModel)]="agency" required>
+              <input type="number" class="form-control" name="agency" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.agency" required>
             </div>
             <div class="form-group">
               PF
-              <input type="number" class="form-control" name="pf" (change)="sum()" [(ngModel)]="pf" required>
+              <input type="number" class="form-control" name="pf" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.pf" required>
             </div>
             <div class="form-group">
               <label class="text-danger">Total</label>
-              <input type="number" class="form-control" (change)="sum()" name="pftotal" [(ngModel)]="pftotal" required>
+              <input type="number" class="form-control" (change)="sum()" name="pftotal" [(ngModel)]="hrbillservice.hrbillsSumData.pftotal" required>
             </div>
             <div class="form-group">
              GST 18%
-              <input type="number" class="form-control" (change)="sum()" name="gsttotal" [(ngModel)]="gsttotal" required>
+              <input type="number" class="form-control" (change)="sum()" name="gsttotal" [(ngModel)]="hrbillservice.hrbillsSumData.gsttotal" required>
               <input type="hidden" class="form-control" name="cDate" (change)="sum()" [(ngModel)]="cDate" required>
 
             </div>
             <div class="form-group">
               <label class="text-danger">Net TOTAL</label>
               <input type="number" class="form-control" (change)="sum()" name="nettotal" [(ngModel)]="nettotal" required>
-            </div>
+            </div> -->
           </div>
          </div>
       </div>

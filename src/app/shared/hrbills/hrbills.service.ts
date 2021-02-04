@@ -50,4 +50,6 @@ export class HrbillsService {
   public deletebill(id): any {
     return this.http.delete(this.rootUrl + "/hrbills/" + id);
   }
+
+  
 }  

@@ -213,6 +213,31 @@ export class HrnewreportComponent implements OnInit {
         this.getData();
 
       });
+
+      this.resetForm();
+  }
+  resetForm(form?: NgForm){
+    if(form!=null)
+      form.resetForm();
+    this.hrbillservice.hrbillsSumData = {
+      id:0,
+      monthyear: this.monthYear,
+      contractor: this.selectedPlant,
+      basic: this.basic,
+      hra: this.hra,
+      conveyence: this.conveyance,
+      supervicercharge: 0,
+      adcharge1: 0,
+      adcharge2: 0,
+      adcharge3: 0,
+      total: 0,
+      pftot: 0,
+      gsttot: 0,
+      nettotal: 0,
+      createddate: this.cDate,
+      otpay: 0,
+      agency: 0 
+    }
   }
 
   onSubmit(form :NgForm){
