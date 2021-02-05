@@ -97,7 +97,7 @@ export class AddroundhourComponent implements OnInit {
       this.ptype = this.rhService.ptype;
       this.selectedcode = this.rhService.plant.toString();
       console.log('s', this.rhService.plant.toString());
-      me.rhService.getRoundHour(me.rhService.date, me.rhService.plant, me.rhService.rtype);
+      me.rhService.getRoundHour(me.rhService.date, me.rhService.plant, me.rhService.rtype, me.rhService.ptype);
       // this.selectedcode = this.rhService.roundhourInfo.plant.toString(8);
       // this.rtype = this.rhService.roundhourInfo.rtype;
 

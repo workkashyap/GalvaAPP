@@ -43,13 +43,13 @@
                             <h3 class="card-title-md">New Bill</h3>
                           </div>
                           <div class="col-md-1">
-                            <Button (click)="backtoJobWorkMaterial()" class="btn btn-primary btn-block mb-3">Back</Button>
+                            <Button  class="btn btn-primary btn-block mb-3">Back</Button>
                           </div>
                         </div>
                       </div>
                       <!-- /.card-header -->
                       <!-- form start -->
-                      <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                      <form #form="ngForm" autocomplete="off" >
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-6">  
@@ -72,7 +72,7 @@
                                   </div>
                                   <div class="col-md-9">
                                     <select class="custom-select mt-2" name="myselect" #mySelect="ngModel"
-                                    [(ngModel)]="hrbillsService.hrbillsData.contractor" (change)="selectedGrid($event.target.value)">
+                                    [(ngModel)]="hrbillsService.hrbillsData.contractor" >
                                     <option value="Gujarat Manpower">Gujarat Manpower</option>
                                     <option value="Nikita Securities">Nikita Securities</option>
                                     <option value="Sapna Manpower">Sapna Manpower</option>
@@ -242,10 +242,10 @@
                           <div class="row">
                             <div class="col-md-5 text-center"></div>
                             <div class="col-md-2 ">
-                              <button type="submit" (click)="onSaveClick()" class="btn btn-danger  float-left px-3">
+                              <button type="submit"  class="btn btn-danger  float-left px-3">
                                 Save
                               </button>
-                              <button type="submit" (click)="onCancelClick()" class="btn btn-success float-right">
+                              <button type="submit"  class="btn btn-success float-right">
                                 Cancel
                               </button>
                             </div>

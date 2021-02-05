@@ -35,8 +35,8 @@ export class RoundhoursService {
     );
   }
 
-  public getRoundHour(date, plant, rtype): any {
-    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant + "/" + rtype).toPromise()
+  public getRoundHour(date, plant, rtype,  ptype): any {
+    return this.http.get(this.rootUrl + "/roundHours/purchasegrouptotal/" + date + "/" + plant + "/" + rtype + "/" + ptype).toPromise()
       .then(res => {
         const roundhourInfo = res as Roundhours;
         if (roundhourInfo && roundhourInfo != null) {
