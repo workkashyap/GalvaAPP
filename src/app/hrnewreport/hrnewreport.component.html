@@ -12,8 +12,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <h5 class="card-title-md">HR New Report </h5>
-                    <h6>{{this.hrbillsList[0]?.hra}}</h6>
-                 
+                  
                   </div>
                   <div class="col-md-6" style="text-align: right;" >
                     <button class="btn btn-info mt-2" data-toggle="modal" data-target="#hrSummaryModal" (click)="getsummary()">Summary</button>
@@ -38,9 +37,11 @@
       <div class="modal-body">
          <div class="row">
            <div class="col-md-4">
+            
             <div class="form-group">
                 Basic
               <input type="number" class="form-control" name="basic" [(ngModel)]="hrbillservice.hrbillsSumData.basic" required>
+              <input type="hidden" class="form-control"  name="id" [(ngModel)]="hrbillservice.hrbillsSumData.id" >
             </div>
             <div class="form-group">
               HRA
@@ -74,7 +75,7 @@
             </div>
             <div class="form-group">
               <label class="text-danger">Total</label>
-              <input type="number" class="form-control" value={{this.t}} required>
+              <input type="number" class="form-control" value={{t}} required>
             </div>
           </div>
            <div class="col-md-4">
@@ -104,6 +105,7 @@
          </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="loadbill()">Load Bill</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
       </div>

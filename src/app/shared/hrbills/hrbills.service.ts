@@ -28,12 +28,10 @@ export class HrbillsService {
       });
   }
 
-  public getallDatahrbill(monthyear, name) {
-    //for calendar click event
-    
-    return this.http
-      .get(this.rootUrl + '/hrbills/loadhrbill/' + monthyear + '/' + name);
-     
+ 
+
+  getallDatahrbill(monthyear, name) {
+    return this.http.get<hrbills>(this.rootUrl + '/hrbills/loadhrbill/' + monthyear + '/' + name);
   }
   public getDataById(id): any {
     return this.http.get<hrbills[]>(this.rootUrl + '/hrbills/' + id);
@@ -44,7 +42,7 @@ export class HrbillsService {
   }
 
   public updatebill(id): any {
-    return this.http.put(this.rootUrl + "/hrbills/" + id, this.hrbillsData);
+    return this.http.put(this.rootUrl + "/hrbills/" + id, this.hrbillsSumData);
   }
 
   public deletebill(id): any {

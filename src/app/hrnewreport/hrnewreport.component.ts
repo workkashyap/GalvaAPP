@@ -64,8 +64,8 @@ export class HrnewreportComponent implements OnInit {
   pftot = 0;
   gsttot = 0;
   nettotal = 0;
-  otpay =0;
-  t=0;
+  otpay = 0;
+  t = 0;
 
 
 
@@ -119,7 +119,7 @@ export class HrnewreportComponent implements OnInit {
   public date: any;
   selectedah: any = 'All';
   datearr: string[];
-  public hrbillsList: hrbills[] = [];
+  public hrBillId: number;
   constructor(
     public asservice: AttendancesummaryService,
     public hrcalservice: HrcalService,
@@ -177,33 +177,10 @@ export class HrnewreportComponent implements OnInit {
       { field: 'basic', header: 'Basic' },
       { field: 'hra', header: 'HRA' },
       { field: 'conveyance', header: 'Conveyance' },
-      { field: 'otpay', header: 'OT Pay' },
+      { field: 'ot_pay', header: 'OT Pay' },
       { field: 'pf', header: 'PF' },
       { field: 'total_pay', header: 'Total Pay' },
-      // { field: "employementType", header: "Category" },
-      // { field: "doj", header: "Doj" },
-      // { field: "gender", header: "Gender" },
-      // { field: "locationName", header: "Location" },
-      // { field: "companyFName", header: "Company" },
-      // { field: "departmentFName", header: "Department" },
-      // { field: "designationsName", header: "Designations" },
-      // { field: "totalDays", header: "No of Days As on" },
 
-      // { field: "totalHours", header: "P-days Hrs" },
-      // { field: "wopOvertime", header: "WOP Hrs" },
-      // { field: "hpOvertime", header: "HP-Hrs" },
-      // { field: "povertime", header: "P-OT" },
-
-      // { field: "total_wkd_hrs", header: "Total Wkd Hrs" },
-      // { field: "wopdays", header: "WOP Days" },
-      // { field: "hpdays", header: "HP Days" },
-      // { field: "tpresent", header: "Total Present" },
-
-      // { field: "incentive", header: "Incentive" },
-      // { field: "present_day_pay", header: "Present Day Pay" },
-      // { field: "total_pay2", header: "Total Pay 2" },
-      // { field: "incentivetotal", header: "Total Incentive" },
-      // { field: "attendance_bonus", header: "Attendance Bonus" },
     ];
 
     this.asservice
@@ -239,18 +216,36 @@ export class HrnewreportComponent implements OnInit {
       nettotal: this.nettotal,
       createddate: this.cDate,
       otpay: this.ot_pay,
-      agency: (this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3) *8/100
+      agency: (this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3) * 8 / 100
     };
   }
 
+
+
+
   onSubmit(form: NgForm) {
-    console.log(form.value);
+   console.log(this.hrbillservice.hrbillsSumData.id);
+   if (this.hrbillservice.hrbillsSumData.id === 0) {
     this.insertRecord(form);
+   } else {
+    this.updaterecord(form);
+    }
   }
   insertRecord(form: NgForm) {
     this.hrbillservice.insertbill().subscribe(
       res => {
-            this.toastr.success('Submitted Successfully', 'Bills Report');
+            this.toastr.success('Saved Successfully', 'Bills Report');
+          },
+          err => {
+            console.log(err);
+            }
+    );
+  }
+
+  updaterecord(form: NgForm) {
+    this.hrbillservice.updatebill(this.hrbillservice.hrbillsSumData.id).subscribe(
+      res => {
+            this.toastr.success('Updated Successfully', 'Bills Report');
           },
           err => {
             console.log(err);
@@ -259,16 +254,15 @@ export class HrnewreportComponent implements OnInit {
   }
 
   sum() {
-    this.t =  this.basic + this.hra + this.conveyance + this.otpay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
+    this.t =  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
     this.agency = this.t * 8 / 100;
     this.total = this.t + this.agency + this.pftot;
     this.gsttot = this.total * 18 / 100;
     this.nettotal = this.total + this.gsttot;
-    // this.resetForm();
-    this.hrbillservice.hrbillsSumData.agency = this.agency; 
-    this.hrbillservice.hrbillsSumData.total = this.total; 
-    this.hrbillservice.hrbillsSumData.gsttot = this.gsttot; 
-    this.hrbillservice.hrbillsSumData.nettotal = this.nettotal; 
+    this.hrbillservice.hrbillsSumData.agency = this.agency;
+    this.hrbillservice.hrbillsSumData.total = this.total;
+    this.hrbillservice.hrbillsSumData.gsttot = this.gsttot;
+    this.hrbillservice.hrbillsSumData.nettotal = this.nettotal;
 
    }
 
@@ -299,19 +293,23 @@ export class HrnewreportComponent implements OnInit {
     this.datearr = this.Fromdate.split('-');
     this.monthYear = this.datearr[0] + '-'  + this.datearr[1];
 
-    this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
+   // this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
   }
   selectedlocation(ev) {
   this.selectedloc = ev;
   this.getData();
-  
+
 
 
   }
 
   getSelectedhrBill(date, contractor) {
     this.hrbillservice.getallDatahrbill(date, contractor).subscribe(res => {
-      this.hrbillsList = res as hrbills[];
+      this.hrbillservice.hrbillsSumData = res as hrbills;
+      // this.hrBillId = this.hrbillservice.hrbillsSumData.id;
+     // console.log(this.hrBillId) ;
+
+
     });
 
 
@@ -321,7 +319,7 @@ export class HrnewreportComponent implements OnInit {
     this.filterenable = false;
     me.loading = true;
     me.hrcalservice.hrcalList = [];
-    this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
+
 
     this.hrcalservice
       .getallData(me.Fromdate, me.Todate, me.selectedPlant, this.selectedloc, this.selectedah)
@@ -561,6 +559,14 @@ export class HrnewreportComponent implements OnInit {
   }
 
   getsummary() {
+//     this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
     this.resetForm();
+  }
+
+  loadbill() {
+    this.getSelectedhrBill(this.monthYear,  this.selectedPlant);
+    console.log(this.hrbillservice.hrbillsSumData.id);
+
+
   }
 }
