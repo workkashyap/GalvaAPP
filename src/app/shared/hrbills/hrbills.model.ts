@@ -9,6 +9,7 @@ export class hrbills {
     adcharge1: number;
     adcharge2: number;
     adcharge3: number;
+    subtotal: number;
     total: number;
     pftot: number;
     gsttot: number;

@@ -65,7 +65,7 @@ export class HrnewreportComponent implements OnInit {
   gsttot = 0;
   nettotal = 0;
   otpay = 0;
-  t = 0;
+  subtotal = 0;
 
 
 
@@ -195,30 +195,7 @@ export class HrnewreportComponent implements OnInit {
 
     this.resetForm();
   }
-  resetForm(form?: NgForm) {
-    if (form != null) {
-      form.resetForm();
-    }
-    this.hrbillservice.hrbillsSumData = {
-      id: 0,
-      monthyear: this.monthYear,
-      contractor: this.selectedPlant,
-      basic: this.basic,
-      hra: this.hra,
-      conveyence: this.conveyance,
-      supervicercharge: 0,
-      adcharge1: 0,
-      adcharge2: 0,
-      adcharge3: 0,
-      total: this.total,
-      pftot: this.pf,
-      gsttot: this.gsttot,
-      nettotal: this.nettotal,
-      createddate: this.cDate,
-      otpay: this.ot_pay,
-      agency: (this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3) * 8 / 100
-    };
-  }
+  
 
 
 
@@ -253,12 +230,46 @@ export class HrnewreportComponent implements OnInit {
     );
   }
 
+  resetForm(form?: NgForm) {
+    if (form != null) {
+      form.resetForm();
+    }
+    this.hrbillservice.hrbillsSumData = {
+      id: 0,
+      monthyear: this.monthYear,
+      contractor: this.selectedPlant,
+      basic: this.basic,
+      hra: this.hra,
+      conveyence: this.conveyance,
+      supervicercharge: 0,
+      adcharge1: 0,
+      adcharge2: 0,
+      adcharge3: 0,
+      subtotal : this.subtotal,
+      total: this.total,
+      pftot: this.pf,
+      gsttot: this.gsttot,
+      nettotal: this.nettotal,
+      createddate: this.cDate,
+      otpay: this.ot_pay,
+      agency: (this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3) * 8 / 100
+    };
+  }
+
   sum() {
-    this.t =  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
-    this.agency = this.t * 8 / 100;
-    this.total = this.t + this.agency + this.pftot;
-    this.gsttot = this.total * 18 / 100;
-    this.nettotal = this.total + this.gsttot;
+    this.supervisorcharge= this.hrbillservice.hrbillsSumData.supervicercharge;
+    this.additionalcharges1= this.hrbillservice.hrbillsSumData.adcharge1;
+    this.additionalcharges2= this.hrbillservice.hrbillsSumData.adcharge2;
+    this.additionalcharges3= this.hrbillservice.hrbillsSumData.adcharge3;
+
+    this.subtotal =  this.basic + this.hra + this.conveyance + this.ot_pay + this.supervisorcharge + this.additionalcharges1 + this.additionalcharges2 + this.additionalcharges3;
+    this.agency = Math.round((this.subtotal * 8 / 100)*100)/100;
+    this.total = this.subtotal + this.agency + this.pf;
+    this.gsttot = Math.round((this.total * 18 / 100)*100)/100;
+    this.nettotal = Math.round((this.total + this.gsttot)*100)/100;    
+    
+    
+    this.hrbillservice.hrbillsSumData.subtotal = this.subtotal;
     this.hrbillservice.hrbillsSumData.agency = this.agency;
     this.hrbillservice.hrbillsSumData.total = this.total;
     this.hrbillservice.hrbillsSumData.gsttot = this.gsttot;

@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
               <label class="text-danger">Total</label>
-              <input type="number" class="form-control" value={{t}} required>
+              <input type="number" class="form-control" name="subtotal" (change)="sum()" [(ngModel)]="hrbillservice.hrbillsSumData.subtotal"  required>
             </div>
           </div>
            <div class="col-md-4">
@@ -99,7 +99,7 @@
             </div>
             <div class="form-group">
               <label class="text-danger">Net TOTAL</label>
-              <input type="number" class="form-control" (change)="sum()" name="nettotal" [(ngModel)]="nettotal" required>
+              <input type="number" class="form-control" (change)="sum()" name="nettotal"  [(ngModel)]="hrbillservice.hrbillsSumData.nettotal" required>
             </div>
           </div>
          </div>
