@@ -28,6 +28,13 @@
 .card-body {
     padding: 0px 1.25rem 0.2rem 1.25rem;
 }
+.modal-header{
+  padding: 0px;
+}
+.modal-header .row{
+  height: auto;
+  width: 100%;
+}
 @media (min-width: 1200px){
     .modal-xl {
         max-width: 1355px;
