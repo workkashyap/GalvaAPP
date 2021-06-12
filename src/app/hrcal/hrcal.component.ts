@@ -269,6 +269,8 @@ export class HrcalComponent implements OnInit {
             hrcal.incentive = 50;
           } else if (hrcal.totalDays >= 545 && hrcal.totalDays <= 575) {
             hrcal.incentive = 55;
+          }else if (hrcal.totalDays >= 575) {
+            hrcal.incentive = 55;
           }
 
 
@@ -294,8 +296,11 @@ export class HrcalComponent implements OnInit {
           hrcal.total_pay = hrcal.basic + hrcal.ot_pay;
           hrcal.total_pay = Math.round(hrcal.total_pay);
 
-          //incentivetotal
-          hrcal.incentivetotal = hrcal.total_wkd_hrs * hrcal.incentive;
+          //incentivetotal -Old code
+          hrcal.incentivetotal = (hrcal.total_wkd_hrs - hrcal.povertime) * hrcal.incentive;
+          // change on 12-06-2021   
+          //hrcal.incentivetotal = hrcal.pdays * hrcal.incentive;
+          
           hrcal.incentivetotal = Math.round(hrcal.incentivetotal);
 
           hrcal.incentivetotal = (hrcal.incentivetotal / 8);
