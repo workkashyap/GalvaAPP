@@ -206,7 +206,7 @@ export class HomeComponent implements OnInit {
     const month = new Date().getMonth();
     const monthName = this.monthNames2[month];
     this.dpservice.dailyreportsummary = [];
-    this.dpservice.getprochartsummary(this.plantcode, 'M', monthName).then((res: any) => {
+    this.dpservice.getprochartsummary(this.plantcode, 'M', monthName,"").then((res: any) => {
       me.sumAllData();
     });
 

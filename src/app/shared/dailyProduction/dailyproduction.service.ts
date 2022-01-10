@@ -235,7 +235,7 @@ export class DailyproductionService {
     );
   }
 
-  public getprochartsummary(plantcode, type, month): any {
+  public getprochartsummary(plantcode, type, month, date): any {
     return this.http
       .get(
         this.rootUrl +
@@ -244,7 +244,9 @@ export class DailyproductionService {
         '/' +
         type +
         '/' +
-        month
+        month +
+        '/' +
+        date
       )
       .toPromise()
       .then(res => {
