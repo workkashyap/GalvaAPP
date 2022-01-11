@@ -175,7 +175,7 @@ export class DailyproductionService {
     );
   }
 
-  public getprochart(plantcode, type, month): Observable<DailyReportDisplay[]> {
+  public getprochart(plantcode, type, month, year): Observable<DailyReportDisplay[]> {
     return this.http.get<DailyReportDisplay[]>(
       this.rootUrl +
       '/DailyReportDisplay/getallchartdetail/' +
@@ -183,7 +183,9 @@ export class DailyproductionService {
       '/' +
       type +
       '/' +
-      month
+      month +
+      '/' +
+      year
     );
   }
 

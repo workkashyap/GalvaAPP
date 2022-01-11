@@ -4,6 +4,15 @@
       <div class="container-fluid">
         <div class="row  resonsive-css mb-2">
           <div class="col-sm-3">
+            <select class=" custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'   > 
+              >
+              <option value="2022">--Select Year--</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
             <select class=" custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel'
               [(ngModel)]='this.monthname'>
               >

@@ -30,16 +30,19 @@ export class ChartComponent implements OnInit {
   public Rejectper: number[] = [];
 
 
+  public year: string;
   public Month: string;
   public Week: string;
   public Day: string;
 
   public monthname: string;
+  public yearname: string;
   public typename: string;
 
   public cv: number;
   public loading = false;
   public monthNames: any;
+  public yearNames: any;
   public d: any;
   currentUser: User;
 
@@ -61,8 +64,10 @@ export class ChartComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
+    this.yearNames = ['2022', '2021', '2020'];
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
+    this.yearname = this.yearNames[this.d.getYear()];
     this.typename = 'PLATING';
     this.loadchart1();
   }
@@ -80,6 +85,13 @@ export class ChartComponent implements OnInit {
 
     this.selectedPlant();
 
+    if (this.myChart) this.myChart.destroy();
+    this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    this.loadchart1();
+  }
+  getselectedyear() {
+    this.year = this.yearname;
+    
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
@@ -355,8 +367,8 @@ export class ChartComponent implements OnInit {
       this.Month = 'a';
       // this.monthname = this.monthNames[this.d.getMonth()];
     }
-    this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname,"");
-    this.service.getprochart(this.service.plantcode, this.Month, this.monthname)
+    this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname,"A");
+    this.service.getprochart(this.service.plantcode, this.Month, this.monthname,this.year)
       .toPromise()
       .then(res => {
         this.selectedchart = res as DailyReportDisplay[];
