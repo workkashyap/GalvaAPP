@@ -298,13 +298,14 @@ export class HrcalComponent implements OnInit {
           hrcal.total_pay = Math.round(hrcal.total_pay);
 
           //incentivetotal -Old code
-          hrcal.incentivetotal = (hrcal.total_wkd_hrs - hrcal.povertime) * hrcal.incentive;
+        //  hrcal.incentivetotal = (hrcal.total_wkd_hrs - hrcal.povertime) * hrcal.incentive;
           // change on 12-06-2021   
-          //hrcal.incentivetotal = hrcal.pdays * hrcal.incentive;
+          hrcal.incentivetotal = hrcal.pdays * hrcal.incentive;
           
           hrcal.incentivetotal = Math.round(hrcal.incentivetotal);
 
-          hrcal.incentivetotal = (hrcal.incentivetotal / 8);
+          //hrcal.incentivetotal = (hrcal.incentivetotal / 8);
+
 
           // tpresent
           hrcal.tpresent = hrcal.pdays + hrcal.wopdays + hrcal.hpdays;
