@@ -332,7 +332,7 @@ export class CalendarComponent implements OnInit {
     const month = new Date(this.startdate).getMonth();
     const monthName = this.monthNames[month];
     this.dpservice.dailyreportsummary = [];
-    this.dpservice.getprochartsummary(this.selectedcode, "M", monthName).then((res: any) => {
+    this.dpservice.getprochartsummary(this.selectedcode, "M", monthName, this.startdate).then((res: any) => {
       this.dpservice.dailyreportsummary.forEach(drsummary => {
         if (drsummary.itemtype == this.typename) {
           this.rejper = drsummary.rejper;

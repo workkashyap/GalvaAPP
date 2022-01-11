@@ -470,8 +470,7 @@ export class HrnewreportComponent implements OnInit {
         c.employeeCode.toString().includes(ev.toString()) ||
         c.employeeName.toString().includes(ev.toString()) ||
         c.doj.toString().includes(ev.toString()) ||
-        c.employementType.toString().includes(ev.toString()) ||
-        c.uanno.toString().includes(ev.toString())
+        c.employementType.toString().includes(ev.toString())
       ) {
         this.filterItemrejarray.push(this.selectedItemrejarray[this.iv]);
         this.iv += 1;

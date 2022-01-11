@@ -355,7 +355,7 @@ export class ChartComponent implements OnInit {
       this.Month = 'a';
       // this.monthname = this.monthNames[this.d.getMonth()];
     }
-    this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname);
+    this.service.getprochartsummary(this.service.plantcode, this.Month, this.monthname,"");
     this.service.getprochart(this.service.plantcode, this.Month, this.monthname)
       .toPromise()
       .then(res => {
