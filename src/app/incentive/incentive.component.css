@@ -1,0 +1,9 @@
+.page-filter{
+    border-radius: 10px;
+    border: 3px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.page-filter-header{
+    color: rgba(1,41,205,0.7);
+}
