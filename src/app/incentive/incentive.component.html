@@ -1,0 +1,17 @@
+<div style="display: flex; flex-direction: column; height: 100%;">
+  <ag-grid-angular
+  style="width: 500px; height: 500px;"
+  class="ag-theme-alpine"
+  [rowData]="rowData | async"
+  [columnDefs]="columnDefs"
+  [pivotMode]="true"
+
+  [suppressAggFuncInHeader]="true"
+  [animateRows]="true"
+
+  [defaultColDef]="defaultColDef"
+  [autoGroupColumnDef]="autoGroupColumnDef"
+
+>
+</ag-grid-angular>
+</div> 
