@@ -4,6 +4,61 @@
     background: #f8f9fa;
 }
 
-.page-filter-header{
+.heading{
     color: rgba(1,41,205,0.7);
+}
+
+.highlight-2{
+    background: #f8f9fa;
+}
+
+.highlight{
+    background: rgba(1,41,205,0.7);
+}
+
+.card{
+    border-radius: 10px;
+    width: 66.66%;
+}
+
+.total-row{
+    background: rgba(1,41,205,0.9);
+    font-weight: bold;
+}
+
+.card-numbers{
+    font-size: 26px;
+}
+
+.total{
+    right: 7.5px;
+    width: 30%;
+}
+
+.total-numbers{
+    font-size: 58px;
+    line-height: 1.2;
+}
+
+.total-sub{
+    font-size: 14px;
+}
+
+.bg-1{
+    background: #E47A8A;
+}
+
+.bg-2{
+    background: #FF9472;
+}
+
+.bg-4{
+    background: #7762D0;
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .total-numbers{
+        font-size: 46px;
+    }
 }
