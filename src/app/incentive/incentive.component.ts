@@ -15,7 +15,7 @@ export class IncentiveComponent  {
 
   public year: string;
   public Month: string;
-  public x : number
+  public x: number;
   public index: string;
 
   public monthname: string;
@@ -35,7 +35,10 @@ export class IncentiveComponent  {
 
   public monthly: any;
   public today: any;
-  public datarow: any[] = []
+  public datarow: any[] = [];
+  
+  rowData: Observable<any[]>;
+  // public rowData: any;
 
   public columnDefs: ColDef[] = [
     { field: 'plant', rowGroup: true },
@@ -68,12 +71,13 @@ public autoGroupColumnDef: ColDef = {
 };
 
 
-constructor(private incentive:IncentiveService){
-  
+constructor(private incentive: IncentiveService) {
+  // tslint:disable-next-line: max-line-length
+   // this.rowData = this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/2022-03-01');
 }
 
-ngOnInit(){
-  this.incentive.rowD = []
+ngOnInit() {
+  this.incentive.rowD = [];
   this.monthly = [];
   this.datarow = [];
   this.today = [];
@@ -87,55 +91,60 @@ getselectedmonth() {
   this.Month = this.monthname;
 }
 
-getData(){
+getData() {
   this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
-  this.days = ['Sun', 'Mon','Tue','Wed','Thu','Fri','Sat'];
+  this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   this.d = new Date();
   this.monthname = this.monthNames[this.d.getMonth()];
   this.yearname = this.d.getFullYear();
-  this.day = this.days[this.d.getDay()]
+  this.day = this.days[this.d.getDay()];
   this.fullDate = this.d;
   this.date = this.d.getDate();
   this.x = this.monthNames.indexOf(this.monthname) + 1;
   this.index = this.x.toString();
-  this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data=>{
+  this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data => {
      this.monthly = data;
      console.log(this.monthly[1].value);
      this.rejValuesMonthly = this.getTotal(this.monthly);
-   }); 
-  this.incentive.getTodayRej(this.yearname, this.index, this.date).subscribe(data=>{
+   });
+  this.incentive.getTodayRej(this.yearname, this.index, this.date).subscribe(data => {
      this.today = data;
      this.rejValuesToday = this.getTotal(this.today);
   });
-  this.incentive.getAgGridData().subscribe(data=>{
-    this.incentive.rowD = this.datarow;
-  });
+  // this.incentive.getAgGridData().subscribe(data => {
+  //    this.rowData = data;
+  //    ;
+
+  // });
+  this.rowData = this.incentive.getAgGridData();
 }
 
-// constructor(private http: HttpClient) {
-//   this.monthly = this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdatasum/P/F/2022-03-01');
-//   this.rowData = this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + this.yearname + '-' + this.mon +'-01');
-// }
+//  constructor(private http: HttpClient) {
+// //   this.monthly = this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdatasum/P/F/2022-03-01');
+//    this.rowData = this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + this.yearname + '-' + this.mon + '-01');
+//  }
 
-onviewDetail(){
+onviewDetail() {
   this.getselectedmonth();
   this.x = this.monthNames.indexOf(this.Month) + 1;
   this.index = this.x.toString();
-  this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data=>{
+  this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data => {
     this.monthly = data;
     this.rejValuesMonthly = this.getTotal(this.monthly);
   });
 }
 
-getTotal(values){
-  this.rejValues = 0; 
+getTotal(values) {
+  this.rejValues = 0;
   for (let i = 0; i < values.length; i++) {
     this.rejValues = this.rejValues + values[i].value;
   }
   return this.rejValues;
 }
-  
+
+
+
 }
 
