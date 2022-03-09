@@ -1,260 +1,248 @@
 <div class="p-3">
-  <div class="page-filter d-flex w-100 p-2">
+  <div class="page-filter d-flex w-100 px-2 py-1">
     <div class="d-flex">
       <h4 class="font-weight-bold heading mb-0 align-self-center">Quality Control</h4>
     </div>
     <div class="ml-auto mr-md-5 mr-3">
-      <select class="custom-select" name="" id="">
+      <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
         <option value="">--Select Year--</option>
-        <option value="">2020</option>
-        <option value="">2021</option>
-        <option value="">2022</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
       </select>
     </div>
-    <div class="">
-      <select class="custom-select" name="" id="">
+    <div class="mr-md-5 mr-3">
+      <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
         <option value="">--Select Month--</option>
-        <option value="">Jan</option>
-        <option value="">Feb</option>
-        <option value="">Mar</option>
-        <option value="">Apr</option>
-        <option value="">May</option>
-        <option value="">Jun</option>
-        <option value="">Jul</option>
-        <option value="">Aug</option>
-        <option value="">Sep</option>
-        <option value="">Oct</option>
-        <option value="">Nov</option>
-        <option value="">Dec</option>
+        <option value="Jan">Jan</option>
+        <option value="Feb">Feb</option>
+        <option value="Mar">Mar</option>
+        <option value="Apr">Apr</option>
+        <option value="May">May</option>
+        <option value="Jun">Jun</option>
+        <option value="Jul">Jul</option>
+        <option value="Aug">Aug</option>
+        <option value="Sep">Sep</option>
+        <option value="Oct">Oct</option>
+        <option value="Nov">Nov</option>
+        <option value="Dec">Dec</option>
       </select>      
+    </div>
+    <div>
+      <button class="btn btn-primary " (click)="onviewDetail()">View</button>  
     </div>
   </div>
 </div>
 
-<div class="p-3">
-  <div class="row m-0 p-3">
-    <div class="col-md-6 p-0 position-relative mb-md-0 mb-5">
-      <div class="row m-0 mr-md-4">
-        <div class="col-4 p-0">
-          <h5 style="max-width: 200px;" class="heading text-center highlight text-white mb-0 p-1">Current Month</h5>
-        </div>
-        <div class="col-2 p-0">
-          <h5 class="mb-0 text-center heading p-1">Rej. %</h5>
-        </div>
-        <div class="col-2 p-0">
-          <h5 class="mb-0 text-center heading p-1">Rej. Value</h5>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4 position-relative">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Annantpur</h5>
-              </div>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
+<div class="px-3">
+  <div class="row m-0">
+    <div class="col-md-6 p-0 position-relative mb-md-0 mb-5 pr-md-4">
+      <div class="card flash highlight-2 border-10 p-3 m-auto">
+        <div class="row m-0 mb-2">
+          <div class="w-100 p-0 position-relative">
+            <div class="line position-absolute"></div>
+            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.monthname}}</h5>
           </div>
         </div>
-        <div class="card bg-2 total text-center position-absolute py-4">
-          <div class="d-flex flex-column">
-            <h3 class="mb-4 text-white font-weight-bold">Total</h3>
-            <p class="total-numbers text-white mb-0 font-weight-bold">35%</p>
-            <p class="total-sub text-white font-weight-bold mb-4">Rejection %</p>
-            <p class="total-numbers text-white mb-0 font-weight-bold">4.2</p>
-            <p class="total-sub mb-4 text-white font-weight-bold">Rejection Value</p>
+        <div class="row m-0">
+          <div class="col-3 p-0"></div>
+          <div class="col-3 p-0">
+            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+          </div>
+          <div class="col-3 p-0"></div>
+          <div class="col-3 p-0">
+            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
           </div>
         </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-1 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Chennai</h5>
+        <div class="row m-0">
+          <div class="grid-container w-100">
+            <div class="card border-10 bg-4 text-center m-1" *ngFor="let x of monthly">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column ml-3">
+                    <h6 class="mb-0 text-white company">{{x.plant.split(" ", 1)}}</h6>
+                    <h6 class="mb-0 text-white font-weight-bold text-center">{{x.plant.split(" ", 2).slice(1,2)}}</h6>
+                  </div>
+                </div>
+                <div class="col-6 p-0">
+                  <p class="card-numbers text-white mb-0">{{x.value}}</p>
+                </div>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Vapi</h5>
+            <div class="card border-10 bg-2 text-center m-1">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column ml-3">
+                    <h6 class="mb-0 mt-2 text-white font-weight-bold text-center">Total</h6>
+                  </div>
+                </div>
+                <div class="col-6 p-0">
+                  <p class="card-numbers text-white mb-0">{{rejValuesMonthly}}</p>
+                </div>
               </div>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-1 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Zaroli</h5>
-              </div>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width:110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">SHTP</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Vapi</h5>
-              </div>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-6 p-0 position-relative mb-md-0 mb-4">
-      <div class="row m-0 mr-md-4">
-        <div class="col-4 p-0">
-          <h5 style="max-width: 200px;" class="heading text-center highlight text-white mb-0 p-1">Today</h5>
+      <div class="card flash highlight-2 border-10 p-3 m-auto">
+        <div class="row m-0 mb-2">
+          <div class="w-100 p-0 position-relative">
+            <div class="line position-absolute"></div>
+            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.day}}, {{this.fullDate | date:'shortDate'}}</h5>
+          </div>
         </div>
-        <div class="col-2 p-0">
-          <h5 class="mb-0 text-center heading p-1">Rej. %</h5>
+        <div class="row m-0">
+          <div class="col-3 p-0"></div>
+          <div class="col-3 p-0">
+            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+          </div>
+          <div class="col-3 p-0"></div>
+          <div class="col-3 p-0">
+            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+          </div>
         </div>
-        <div class="col-2 p-0">
-          <h5 class="mb-0 text-center heading p-1">Rej. Value</h5>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4 position-relative">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Annantpur</h5>
+        <div class="row m-0">
+          <div class="grid-container w-100">
+            <div class="card border-10 bg-4 text-center m-1" *ngFor="let x of today">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column ml-3">
+                    <h6 class="mb-0 text-white company">{{x.plant.split(" ", 1)}}</h6>
+                    <h6 class="mb-0 text-white font-weight-bold text-center">{{x.plant.split(" ", 2).slice(1,2)}}</h6>
+                  </div>
+                </div>
+                <div class="col-6 p-0">
+                  <p class="card-numbers text-white mb-0">{{x.value}}</p>
+                </div>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
-          </div>
-        </div>
-        <div class="card bg-2 total text-center position-absolute py-4">
-          <div class="d-flex flex-column">
-            <h3 class="mb-4 text-white font-weight-bold">Total</h3>
-            <p class="total-numbers text-white mb-0 font-weight-bold">35%</p>
-            <p class="total-sub text-white font-weight-bold mb-4">Rejection %</p>
-            <p class="total-numbers text-white mb-0 font-weight-bold">4.2</p>
-            <p class="total-sub mb-4 text-white font-weight-bold">Rejection Value</p>
-          </div>
-        </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-1 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Chennai</h5>
+            <div class="card border-10 bg-2 text-center m-1">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column ml-3">
+                    <h6 class="mb-0 mt-2 text-white font-weight-bold text-center">Total</h6>
+                  </div>
+                </div>
+                <div class="col-6 p-0">
+                  <p class="card-numbers text-white mb-0">{{rejValuesToday}}</p>
+                </div>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
           </div>
         </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Vapi</h5>
+
+        <!-- <div class="row m-0">
+          <div class="col-4 p-0">
+            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.day}}, {{this.date | date:'shortDate'}}</h5>
+          </div>
+          <div class="col-2 p-0">
+            <h5 class="mb-0 text-center heading p-1">Rej. %</h5>
+          </div>
+          <div class="col-4 p-0">
+            <h5 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h5>
+          </div>
+        </div>
+        <div class="row m-0 my-2 position-relative">
+          <div class="card border-10 bg-4 text-center mb-0">
+            <div class="row m-0">
+              <div class="col-6 p-0">
+                <div style="width: 110px;" class="d-flex flex-column ml-3">
+                  <h6 class="mb-0 text-white company">GDPL</h6>
+                  <h6 class="mb-0 text-white font-weight-bold text-center">Annantpur</h6>
+                </div>
+              </div>
+              <div class="col-3 p-0">
+                <p class="card-numbers text-white mb-0">15</p>
+              </div>
+              <div class="col-6 p-0">
+                <p class="card-numbers text-white mb-0">0.45</p>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
+          </div>
+          <div class="card border-10 bg-2 total text-center position-absolute py-4">
+            <div class="d-flex flex-column">
+              <h3 class="mb-2 text-white font-weight-bold">Total</h3>
+              <p class="total-numbers text-white mb-0 font-weight-bold">35%</p>
+              <p class="total-sub text-white font-weight-bold mb-2">Rejection %</p>
+              <p class="total-numbers text-white mb-0 font-weight-bold">4.2</p>
+              <p class="total-sub mb-1 text-white font-weight-bold">Rej. Value (in lacs)</p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-1 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width: 110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">GDPL</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Zaroli</h5>
+        <div class="row m-0 mb-2">
+          <div class="card border-10 bg-1 text-center mb-0">
+            <div class="row m-0">
+              <div class="col-6 p-0">
+                <div style="width: 110px;" class="d-flex flex-column ml-3">
+                  <h6 class="mb-0 text-white company">GDPL</h6>
+                  <h6 class="mb-0 text-white font-weight-bold text-center">Chennai</h6>
+                </div>
+              </div>
+              <div class="col-3 p-0">
+                <p class="card-numbers text-white mb-0">15</p>
+              </div>
+              <div class="col-6 p-0">
+                <p class="card-numbers text-white mb-0">0.45</p>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
-            </div>
           </div>
         </div>
-      </div>
-      <div class="row m-0 my-2 mr-md-4">
-        <div class="card bg-4 text-center mb-0 py-2">
-          <div class="row m-0">
-            <div class="col-6 p-0">
-              <div style="width:110px;" class="d-flex flex-column ml-3">
-                <h6 class="mb-0 text-white">SHTP</h6>
-                <h5 class="mb-0 text-white font-weight-bold text-center">Vapi</h5>
+        <div class="row m-0 mb-2">
+          <div class="card border-10 bg-4 text-center mb-0">
+            <div class="row m-0">
+              <div class="col-6 p-0">
+                <div style="width: 110px;" class="d-flex flex-column ml-3">
+                  <h6 class="mb-0 text-white text-white company">GDPL</h6>
+                  <h6 class="mb-0 text-white font-weight-bold text-center">Vapi</h6>
+                </div>
+              </div>
+              <div class="col-3 p-0">
+                <p class="card-numbers text-white mb-0">15</p>
+              </div>
+              <div class="col-6 p-0">
+                <p class="card-numbers text-white mb-0">0.45</p>
               </div>
             </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">15</p>
-            </div>
-            <div class="col-3 p-0">
-              <p class="card-numbers text-white mb-0">0.45</p>
+          </div>
+        </div>
+        <div class="row m-0 mb-2">
+          <div class="card border-10 bg-1 text-center mb-0">
+            <div class="row m-0">
+              <div class="col-6 p-0">
+                <div style="width: 110px;" class="d-flex flex-column ml-3">
+                  <h6 class="mb-0 text-white company">GDPL</h6>
+                  <h6 class="mb-0 text-white font-weight-bold text-center">Zaroli</h6>
+                </div>
+              </div>
+              <div class="col-3 p-0">
+                <p class="card-numbers text-white mb-0">15</p>
+              </div>
+              <div class="col-6 p-0">
+                <p class="card-numbers text-white mb-0">0.45</p>
+              </div>
             </div>
           </div>
         </div>
+        <div class="row m-0 mb-2">
+          <div class="card border-10 bg-4 text-center mb-0">
+            <div class="row m-0">
+              <div class="col-6 p-0">
+                <div style="width:110px;" class="d-flex flex-column ml-3">
+                  <h6 class="mb-0 text-white company">SHTP</h6>
+                  <h6 class="mb-0 text-white font-weight-bold text-center">Vapi</h6>
+                </div>
+              </div>
+              <div class="col-3 p-0">
+                <p class="card-numbers text-white mb-0">15</p>
+              </div>
+              <div class="col-6 p-0">
+                <p class="card-numbers text-white mb-0">0.45</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -264,7 +252,7 @@
   <ag-grid-angular
   style="height: 330px;"
   class="ag-theme-alpine w-100"
-  [rowData]="rowData | async"
+  [rowData]="this.datarow | async"
   [columnDefs]="columnDefs"
   [pivotMode]="true"
 

@@ -1,6 +1,6 @@
 .page-filter{
     border-radius: 10px;
-    border: 3px solid rgba(1,41,205,0.5);
+    border: 2px solid rgba(1,41,205,0.5);
     background: #f8f9fa;
 }
 
@@ -12,13 +12,29 @@
     background: #f8f9fa;
 }
 
+.highlight-3{
+    background: #ffefd5;
+}
+
 .highlight{
     background: rgba(1,41,205,0.7);
 }
 
-.card{
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.flash{
+    width: 600px;
+}
+
+.border-10{
     border-radius: 10px;
-    width: 66.66%;
+}
+
+.card{
+     box-shadow: 0 0 5px rgb(0 0 0 / 13%), 0 3px 8px rgb(0 0 0 / 20%);
 }
 
 .total-row{
@@ -27,7 +43,11 @@
 }
 
 .card-numbers{
-    font-size: 26px;
+    font-size: 20px;
+}
+
+.company{
+    font-size: 12px;
 }
 
 .total{
@@ -36,12 +56,12 @@
 }
 
 .total-numbers{
-    font-size: 58px;
+    font-size: 70px;
     line-height: 1.2;
 }
 
 .total-sub{
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .bg-1{
@@ -56,9 +76,29 @@
     background: #7762D0;
 }
 
+.ag-theme-alpine{
+    --ag-foreground-color: rgba(1,41,205,0.7);
+    --ag-header-background-color: rgba(1,41,205,0.7);
+    --ag-secondary-foreground-color: white;
+}
+
+.line{
+    width: calc(100% - 240px);
+    height: 1px;
+    background: rgba(1,41,205,0.7);
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+}
 
 @media (min-width: 768px) and (max-width: 991px) {
     .total-numbers{
-        font-size: 46px;
+        font-size: 52px;
+    }
+}
+
+@media (max-width: 1240px) {
+    .flash{
+        width: 100%;
     }
 }
