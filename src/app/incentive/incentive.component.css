@@ -8,6 +8,10 @@
     color: rgba(1,41,205,0.7);
 }
 
+.rej-heading{
+    font-size: 12px;
+}
+
 .highlight-2{
     background: #f8f9fa;
 }
@@ -26,7 +30,7 @@
 }
 
 .flash{
-    width: 600px;
+    width: 500px;
 }
 
 .border-10{
@@ -35,6 +39,7 @@
 
 .card{
      box-shadow: 0 0 5px rgb(0 0 0 / 13%), 0 3px 8px rgb(0 0 0 / 20%);
+     border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .total-row{
@@ -56,8 +61,7 @@
 }
 
 .total-numbers{
-    font-size: 70px;
-    line-height: 1.2;
+    line-height: 0.8;
 }
 
 .total-sub{
@@ -69,7 +73,7 @@
 }
 
 .bg-2{
-    background: #FF9472;
+    background: #f08080;
 }
 
 .bg-4{
@@ -83,21 +87,15 @@
 }
 
 .line{
-    width: calc(100% - 240px);
+    width: calc(90%);
     height: 1px;
     background: rgba(1,41,205,0.7);
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .total-numbers{
-        font-size: 52px;
-    }
-}
-
-@media (max-width: 1240px) {
+@media (max-width: 1200px) {
     .flash{
         width: 100%;
     }

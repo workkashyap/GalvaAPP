@@ -77,7 +77,7 @@ constructor(private incentive: IncentiveService) {
 }
 
 ngOnInit() {
-  this.incentive.rowD = [];
+  // this.incentive.rowD = [];
   this.monthly = [];
   this.datarow = [];
   this.today = [];
@@ -106,7 +106,6 @@ getData() {
   this.index = this.x.toString();
   this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data => {
      this.monthly = data;
-     console.log(this.monthly[1].value);
      this.rejValuesMonthly = this.getTotal(this.monthly);
    });
   this.incentive.getTodayRej(this.yearname, this.index, this.date).subscribe(data => {
@@ -118,7 +117,7 @@ getData() {
   //    ;
 
   // });
-  this.rowData = this.incentive.getAgGridData();
+  this.rowData = this.incentive.getAgGridData(this.yearname, this.index);
 }
 
 //  constructor(private http: HttpClient) {
@@ -134,6 +133,7 @@ onviewDetail() {
     this.monthly = data;
     this.rejValuesMonthly = this.getTotal(this.monthly);
   });
+  this.rowData = this.incentive.getAgGridData(this.yearname, this.index);
 }
 
 getTotal(values) {
@@ -141,9 +141,9 @@ getTotal(values) {
   for (let i = 0; i < values.length; i++) {
     this.rejValues = this.rejValues + values[i].value;
   }
+  this. rejValues = Math.round(this.rejValues * 100) / 100
   return this.rejValues;
 }
-
 
 
 }

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class IncentiveService {
   
   readonly rootUrl = environment.apiUrl;
+  public url: string;
   constructor(private http: HttpClient) { }
 
   getMonthlyRej(year, month) {
@@ -19,17 +20,21 @@ export class IncentiveService {
     }
   }
 
-  getTodayRej(year, month, date) {
-    if (month.length > 1 && date.length > 1) {
-      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdatasum/P/S/' + year + '-' + month + '-' + date);
-    } else {
-      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdatasum/P/S/' + year + '-0' + month + '-0' + date);
+  getTodayRej(year, month, date:string) {
+    if (month.length > 1) {
+      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdatasum/P/S/' + year + '-' + month + '-' + date);  
     }
-
+    else{
+      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdatasum/P/S/' + year + '-0' + month + '-' + date);
+    }
   }
 
-  getAgGridData() {
-    return this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/2022-03-01');
+  getAgGridData(year, month) {
+    if (month.length > 1) {
+      return this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + year + '-' + month + '-01');
+    } else {
+      return this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + year + '-0' + month + '-01');
+    }
   }
 
   

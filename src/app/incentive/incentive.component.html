@@ -34,24 +34,39 @@
   </div>
 </div>
 
-<div class="px-3">
+<div class="px-3 my-3">
   <div class="row m-0">
     <div class="col-md-6 p-0 position-relative mb-md-0 mb-5 pr-md-4">
       <div class="card flash highlight-2 border-10 p-3 m-auto">
-        <div class="row m-0 mb-2">
-          <div class="w-100 p-0 position-relative">
-            <div class="line position-absolute"></div>
-            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.monthname}}</h5>
+        <div class="row m-0 mb-3 position-relative">
+          <div class="line position-absolute"></div>
+          <div class="col-6 p-0 pr-1">
+            <h5 style="max-width: 200px; height: 45.2px;" class="border-10 text-center highlight text-white mb-0 p-1 pt-2">{{this.monthname}} {{this.yearname}}</h5>
+          </div>
+          <div class="col-6 p-0 pl-1">
+            <div class="card border-10 bg-2 text-center m-0 p-1 ml-auto" style="max-width: 200px;">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <h5 class="mb-0 mt-1 text-white font-weight-bold text-center">Total</h5>
+                </div>
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column">
+                    <h5 class="text-white mb-0 font-weight-bold card-numbers total-numbers">{{rejValuesMonthly}}</h5>
+                    <h6 class="text-white mb-0">lacs</h6>
+                  </div>  
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row m-0">
           <div class="col-3 p-0"></div>
           <div class="col-3 p-0">
-            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
           </div>
           <div class="col-3 p-0"></div>
           <div class="col-3 p-0">
-            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
           </div>
         </div>
         <div class="row m-0">
@@ -59,25 +74,13 @@
             <div class="card border-10 bg-4 text-center m-1" *ngFor="let x of monthly">
               <div class="row m-0">
                 <div class="col-6 p-0">
-                  <div class="d-flex flex-column ml-3">
+                  <div class="d-flex flex-column">
                     <h6 class="mb-0 text-white company">{{x.plant.split(" ", 1)}}</h6>
                     <h6 class="mb-0 text-white font-weight-bold text-center">{{x.plant.split(" ", 2).slice(1,2)}}</h6>
                   </div>
                 </div>
                 <div class="col-6 p-0">
-                  <p class="card-numbers text-white mb-0">{{x.value}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="card border-10 bg-2 text-center m-1">
-              <div class="row m-0">
-                <div class="col-6 p-0">
-                  <div class="d-flex flex-column ml-3">
-                    <h6 class="mb-0 mt-2 text-white font-weight-bold text-center">Total</h6>
-                  </div>
-                </div>
-                <div class="col-6 p-0">
-                  <p class="card-numbers text-white mb-0">{{rejValuesMonthly}}</p>
+                  <p class="card-numbers text-white mb-0 font-weight-bold">{{x.value}}</p>
                 </div>
               </div>
             </div>
@@ -87,20 +90,35 @@
     </div>
     <div class="col-md-6 p-0 position-relative mb-md-0 mb-4">
       <div class="card flash highlight-2 border-10 p-3 m-auto">
-        <div class="row m-0 mb-2">
-          <div class="w-100 p-0 position-relative">
-            <div class="line position-absolute"></div>
-            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.day}}, {{this.fullDate | date:'shortDate'}}</h5>
+        <div class="row m-0 mb-3 position-relative">
+          <div class="line position-absolute"></div>
+          <div class="col-6 p-0 pr-1">
+            <h5 style="max-width: 200px; height: 45.2px;" class="border-10 text-center highlight text-white mb-0 p-1 pt-2">{{this.day}}, {{this.fullDate | date:'shortDate'}}</h5>
+          </div>
+          <div class="col-6 p-0 pl-1">
+            <div class="card border-10 bg-2 text-center m-0 p-1 ml-auto" style="max-width: 200px;">
+              <div class="row m-0">
+                <div class="col-6 p-0">
+                  <h5 class="mb-0 mt-1 text-white font-weight-bold text-center">Total</h5>
+                </div>
+                <div class="col-6 p-0">
+                  <div class="d-flex flex-column">
+                    <h5 class="text-white mb-0 font-weight-bold card-numbers total-numbers">{{rejValuesToday}}</h5>
+                    <h6 class="text-white mb-0">lacs</h6>
+                  </div>  
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row m-0">
           <div class="col-3 p-0"></div>
           <div class="col-3 p-0">
-            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
           </div>
           <div class="col-3 p-0"></div>
           <div class="col-3 p-0">
-            <h6 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h6>
+            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
           </div>
         </div>
         <div class="row m-0">
@@ -114,19 +132,7 @@
                   </div>
                 </div>
                 <div class="col-6 p-0">
-                  <p class="card-numbers text-white mb-0">{{x.value}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="card border-10 bg-2 text-center m-1">
-              <div class="row m-0">
-                <div class="col-6 p-0">
-                  <div class="d-flex flex-column ml-3">
-                    <h6 class="mb-0 mt-2 text-white font-weight-bold text-center">Total</h6>
-                  </div>
-                </div>
-                <div class="col-6 p-0">
-                  <p class="card-numbers text-white mb-0">{{rejValuesToday}}</p>
+                  <p class="card-numbers text-white mb-0 font-weight-bold">{{x.value}}</p>
                 </div>
               </div>
             </div>
