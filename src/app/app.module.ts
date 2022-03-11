@@ -90,6 +90,7 @@ import { HrbillsComponent } from './hrbills/hrbills.component';
 import { NewBillComponent } from './hrbills/new-bill/new-bill.component';
 import { IncentiveComponent } from './incentive/incentive.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { SalesrepoComponent } from './salesrepo/salesrepo.component';
 
 @NgModule({
   declarations: [
@@ -164,7 +165,8 @@ import { AgGridModule } from 'ag-grid-angular';
     HrnewreportComponent,
     HrbillsComponent,
     NewBillComponent,
-    IncentiveComponent
+    IncentiveComponent,
+    SalesrepoComponent
   ],
   imports: [
     BrowserModule,
@@ -504,6 +506,11 @@ import { AgGridModule } from 'ag-grid-angular';
       {
         path: 'incentive', 
         component: IncentiveComponent,
+        // canActivate: [AuthGuard],
+      },
+      {
+        path: 'salesrepo', 
+        component: SalesrepoComponent,
         // canActivate: [AuthGuard],
       },
       
