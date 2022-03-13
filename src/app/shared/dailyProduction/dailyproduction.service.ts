@@ -82,6 +82,12 @@ export class DailyproductionService {
     );
   }
 
+  public New_getRejectcalendar(id, date): Observable<Dailyproduction[]> {
+    return this.http.get<Dailyproduction[]>(
+      this.rootUrl + '/dailyproductions/New_Getallrejdata/' + id + '/Plating/' + date
+    );
+  }
+
   public getRejectdetail(
     plantcode,
     type,
@@ -242,6 +248,25 @@ export class DailyproductionService {
       .get(
         this.rootUrl +
         '/DailySummaryReport/getallchartsummary/' +
+        plantcode +
+        '/' +
+        type +
+        '/' +
+        month +
+        '/' +
+        date
+      )
+      .toPromise()
+      .then(res => {
+        this.dailyreportsummary = res as DailyReportSummary[];
+      });
+  }
+
+  public New_getprochartsummary(plantcode, type, month, date): any {
+    return this.http
+      .get(
+        this.rootUrl +
+        '/DailySummaryReport/New_getallchartsummary/' +
         plantcode +
         '/' +
         type +

@@ -91,6 +91,9 @@ import { NewBillComponent } from './hrbills/new-bill/new-bill.component';
 import { IncentiveComponent } from './incentive/incentive.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { SalesrepoComponent } from './salesrepo/salesrepo.component';
+import { QCalendarComponent } from './qcalendar/qcalendar.component';
+import { InnerRenderer } from './salesrepo/innerrenderer.component';
+// import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
   declarations: [
@@ -166,7 +169,9 @@ import { SalesrepoComponent } from './salesrepo/salesrepo.component';
     HrbillsComponent,
     NewBillComponent,
     IncentiveComponent,
-    SalesrepoComponent
+    SalesrepoComponent,
+    QCalendarComponent,
+    InnerRenderer
   ],
   imports: [
     BrowserModule,
@@ -506,18 +511,23 @@ import { SalesrepoComponent } from './salesrepo/salesrepo.component';
       {
         path: 'incentive', 
         component: IncentiveComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'salesrepo', 
         component: SalesrepoComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'qualitycalendar', 
+        component: QCalendarComponent,
+        canActivate: [AuthGuard],
       },
       
       { path: '**', redirectTo: '' },
     ]),
     ToastrModule.forRoot(),
-    AgGridModule,
+    AgGridModule.withComponents([InnerRenderer]),
     NgxLoadingModule.forRoot({}),
   ],
   providers: [],

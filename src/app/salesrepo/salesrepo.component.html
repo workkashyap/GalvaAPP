@@ -18,14 +18,20 @@
     <div class="card p-3 highlight-2 border-10 m-auto">
         <div class="overflow-scroll">
             <ag-grid-angular
-            style="height: 330px;"
+            style="height: 530px;"
             class="ag-theme-alpine w-100"
             [rowData]="rowData | async"
             [columnDefs]="columnDefs"
             [animateRows]="true"
             [pivotMode]="true"
             [groupMultiAutoColumn]="true"
+            [animateRows]="true"
+            [groupIncludeFooter]="true"
+            [sideBar]="sideBar"
+            [groupIncludeTotalFooter]="true"
+            (gridReady)="onGridReady($event)"
             [suppressAggFuncInHeader]="true"
+            [autoGroupColumnDef]="autoGroupColumnDef"
             [defaultColDef]="defaultColDef">
             </ag-grid-angular>
         </div> 
