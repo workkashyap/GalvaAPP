@@ -7,6 +7,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { InnerRenderer } from './innerrenderer.component';
+
 @Component({
   selector: 'app-salesrepo',
   templateUrl: './salesrepo.component.html',
@@ -57,8 +58,6 @@ export class SalesrepoComponent implements OnInit {
   ];
 
 
-  
-
   public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 120,
@@ -77,7 +76,6 @@ export class SalesrepoComponent implements OnInit {
   // };
 
   public autoGroupColumnDef: ColDef = {
-    headerName: 'Group',
     minWidth: 220,
     cellRendererParams: {
       suppressCount: true,
@@ -98,6 +96,13 @@ export class SalesrepoComponent implements OnInit {
     this.year = this.yearname;
     this.rowData = this.salesrepo.getAgGridData(this.year);
   }
+
   onGridReady(params: GridReadyEvent) {}
+  
+  getRowStyle = params => {
+    if (params.node.footer) {
+        return { background: 'PowderBlue' };
+    }
+};
 
 }

@@ -1,4 +1,4 @@
-/* .page-filter{
+.page-filter{
     border-radius: 10px;
     border: 2px solid rgba(1,41,205,0.5);
     background: #f8f9fa;
@@ -9,9 +9,8 @@
 }
 
 .ag-theme-alpine{
-    --ag-foreground-color: rgba(1,41,205,0.7);
     --ag-header-background-color: rgba(1,41,205,0.7);
-    --ag-secondary-foreground-color: white;
+    --ag-header-foreground-color: white;
 }
 
 .highlight-2{
@@ -20,7 +19,7 @@
 
 .border-10{
     border-radius: 10px;
-} */
+}
 
 .myClass
 {
