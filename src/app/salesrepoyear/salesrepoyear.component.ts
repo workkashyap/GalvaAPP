@@ -6,14 +6,15 @@ import { ColDef, GridReadyEvent, SideBarDef  } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
-import { InnerRenderer } from './innerrenderer.component';
+import { InnerRenderer } from '../salesrepo/innerrenderer.component';
+
 
 @Component({
   selector: 'app-salesrepo',
-  templateUrl: './salesrepo.component.html',
-  styleUrls: ['./salesrepo.component.css']
+  templateUrl: './salesrepoyear.component.html',
+  styleUrls: ['./salesrepoyear.component.css']
 })
-export class SalesrepoComponent implements OnInit {
+export class SalesrepoyearComponent implements OnInit {
 
   public d: any;
 
@@ -23,34 +24,35 @@ export class SalesrepoComponent implements OnInit {
   rowData: Observable<any[]>;
   public sideBar: SideBarDef | string | boolean | null = 'columns';
   public columnDefs: ColDef[] = [
-    {headerName: 'Month', field: 'monthName', enableRowGroup: true, rowGroup: true, hide: true },
-    {headerName: 'Branch', field: 'plantname', enableRowGroup: true , rowGroup: true,   hide: true },
-    {headerName: 'End Customers', field: 'endcustomer', aggFunc: params => {
+    {headerName: 'Month', field: 'monthName', type: 'leftAligned' , enableRowGroup: true, rowGroup: true, hide: true },
+    {headerName: 'Branch', field: 'plantname', type: 'leftAligned' , enableRowGroup: true , rowGroup: true },
+    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true , pivotComparator: this.MyYearPivotComparator },
+    {headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned',aggFunc: params => {
                                                             let sum = 0;
                                                             params.values.forEach(value => sum += value);
-                                                            return Math.round(sum * 100) / 100; }
+                                                            return Math.round(sum * 100) / 100;}
                                                           },
-    {headerName: 'Export Sales', field: 'exportsales', aggFunc: params => {
+    {headerName: 'Export Sales', field: 'exportsales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
                                                               return Math.round(sum * 100) / 100;}
                                                             },
-    {headerName: 'Rejection', field: 'rejection', aggFunc: params => {
+    {headerName: 'Rejection', field: 'rejection', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
                                                               return Math.round(sum * 100) / 100;}
                                                             },
-    {headerName: 'Net Sales', field: 'netsales', aggFunc: params => {
+    {headerName: 'Net Sales', field: 'netsales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
                                                               return Math.round(sum * 100) / 100;}
                                                             },
-    {headerName: 'Tool Sales', field: 'toolsale', aggFunc: params => {
+    {headerName: 'Tool Sales', field: 'toolsale', enableValue: true, type: 'rightAligned', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
                                                               return Math.round(sum * 100) / 100;}
                                                             },
-    {headerName: 'Other Sales', field: 'othersales', aggFunc: params => {
+    {headerName: 'Other Sales', field: 'othersales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
                                                               return Math.round(sum * 100) / 100;}
@@ -74,7 +76,10 @@ export class SalesrepoComponent implements OnInit {
   //   }
   
   // };
-
+  MyYearPivotComparator(a: string, b: string) {
+    const requiredOrder = ['2023','2022','2021','2020'];
+    return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
+  }
   public autoGroupColumnDef: ColDef = {
     minWidth: 220,
     cellRendererParams: {
@@ -85,16 +90,16 @@ export class SalesrepoComponent implements OnInit {
   };
 
   constructor(private salesrepo: SalesrepoService) { }
-
+  public groupDefaultExpanded = 1;
   ngOnInit() {
     this.d = new Date();
     this.yearname = this.d.getFullYear();
-    this.rowData = this.salesrepo.getAgGridData(this.yearname);
+    this.rowData = this.salesrepo.getAgGridDataall(this.yearname);
   }
 
   getselectedyear() {
     this.year = this.yearname;
-    this.rowData = this.salesrepo.getAgGridData(this.year);
+    this.rowData = this.salesrepo.getAgGridDataall(this.year);
   }
 
   onGridReady(params: GridReadyEvent) {}

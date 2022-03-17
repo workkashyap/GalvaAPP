@@ -43,7 +43,7 @@ export class IncentiveComponent  {
   public columnDefs: ColDef[] = [
     { field: 'plant', rowGroup: true },
     // { headerName: 'Total (in Lakhs)', aggFunc: this.getTotal , rowGroup: true },
-    { field: 'd_Date', pivot: true },
+    { field: 'day', pivot: true, enablePivot: true, sortable: true , pivotComparator: this.MyYearPivotComparator },
     {headerName: '' , field: 'value', aggFunc: 'sum' },
    // { field: 'rejectValue', aggFunc: 'sum' },
    // { field: 'year', rowGroup: true, hide: true },
@@ -144,7 +144,10 @@ getTotal(values) {
   this. rejValues = Math.round(this.rejValues * 100) / 100
   return this.rejValues;
 }
-
+ MyYearPivotComparator(a: string, b: string) {
+  const requiredOrder = ['1', '2', '3', '4', '5', '6', '7','8','9','10', '11', '12', '13' ,'14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+  return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
+}
 
 }
 

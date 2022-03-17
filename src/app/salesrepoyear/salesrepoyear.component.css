@@ -1,0 +1,27 @@
+.page-filter{
+    border-radius: 10px;
+    border: 2px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.heading{
+    color: rgba(1,41,205,0.7);
+}
+
+.ag-theme-alpine{
+    --ag-header-background-color: rgba(1,41,205,0.7);
+    --ag-header-foreground-color: white;
+}
+
+.highlight-2{
+    background: #f8f9fa;
+}
+
+.border-10{
+    border-radius: 10px;
+}
+
+.myClass
+{
+color:navy;
+}
