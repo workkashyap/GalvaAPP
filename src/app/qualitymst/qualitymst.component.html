@@ -35,7 +35,32 @@
                         <label for="itemname">Itemname:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control" type='text' id="itemname" name="itemname" [(ngModel)]="qualityservice.qualityData.itemname"/>
+                        <!-- <p-autoComplete [style]="{'width':'150px'}" [size]="20"
+                          [(ngModel)]="productionsService.productionData.itemname2" id="itemname2"
+                          name="itemname2" #itemname2="ngModel" [suggestions]="filteredCountries"
+                           (completeMethod)="filterCountry($event)"
+                          field="itemname" [dropdown]="false">
+                          <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                              <div>{{country.itemname}}</div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete> -->
+                        <p-autoComplete [(ngModel)]="qualityservice.qualityData.itemname" 
+                         [suggestions]="filteredCountries" 
+                         (completeMethod)="filterCountry($event)"
+                         id="itemname2" (onSelect)="valueM($event)"
+                                        name="itemname2" #itemname2="ngModel"
+                          [size]="30" [minlength]="1" placeholder="Items">
+                          <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                              <div>{{country.itemname}}</div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete>
+                        
+                        <!-- <input class="form-control" type='text' id="itemname" name="itemname"
+                          #itemname="ngModel" [(ngModel)]="productionsService.productionData.itemname" />-->
                       </div>
                     </div>
                 </div>

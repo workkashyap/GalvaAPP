@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from "@angular/common";
-import { ToastrService } from "ngx-toastr";
-import { ProductionsService } from "src/app/shared/productions/productions.service";
-import { Router } from "@angular/router";
-import { InboxService } from "src/app/shared/inbox/inbox.service";
-import { NgForm } from "@angular/forms";
+import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { ProductionsService } from 'src/app/shared/productions/productions.service';
+import { Router } from '@angular/router';
+import { InboxService } from 'src/app/shared/inbox/inbox.service';
+import { NgForm } from '@angular/forms';
 import { ItemmstsService } from 'src/app/shared/itemmsts/itemmsts.service';
-import { User } from "src/app/shared/login/User.model";
-import { LoginService } from "src/app/shared/login/login.service";
+import { User } from 'src/app/shared/login/User.model';
+import { LoginService } from 'src/app/shared/login/login.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
 import { QualityService } from '../shared/quality/quality.service';
@@ -16,7 +16,19 @@ import { QualityService } from '../shared/quality/quality.service';
   selector: 'app-qualitymst',
   templateUrl: './qualitymst.component.html',
   styleUrls: ['./qualitymst.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
+//   styles: [
+//     `
+//     :host >>> .ui-autocomplete .ui-autocomplete-input {
+//     width: 10% !important;
+//     height: 26px;
+//     padding: .15rem .65rem;
+//     font-size: 0.8rem;
+//   }
+//   :host :: input.ng-tns-c5-0.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
+//     padding: 0.2em;
+// }
+//   `]
 })
 export class QualitymstComponent implements OnInit {
 
@@ -26,11 +38,11 @@ export class QualitymstComponent implements OnInit {
   public insOrdeno: number;
   public actionvalue: string;
   public loading = false;
-  public validQtyError: boolean = false;
-  public validRejQtyError: boolean = false;
+  public validQtyError = false;
+  public validRejQtyError = false;
 
   filteredCountries: any[];
-
+  brands: string[] = ['Audi', 'BMW', 'Fiat', 'Ford', 'Honda', 'Jaguar', 'Mercedes', 'Renault', 'Volvo', 'VW'];
   constructor(
     private route: Router,
     private datePipe: DatePipe,
@@ -48,24 +60,24 @@ export class QualitymstComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.productionsService.productionData)
+    console.log(this.productionsService.productionData);
     const me = this;
-    this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
-    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
-      
+    const date = this.datePipe.transform(new Date(), 'ddMMyyyy');
+    
     me.qualityservice.qualityData = {
       insplot: 0,
       orderno: 0,
-      roundno: "",
+      roundno: '',
       InspQty: 0,
       InspValue: 0,
-      plantcode: "",
-      shift: "",
-      itemcode: "",
-      itemname: "",
-      size: "",
-      OrderType: "",
+      plantcode: '',
+      shift: '',
+      itemcode: '',
+      itemname: '',
+      size: '',
+      OrderType: '',
       okqty: 0,
       okvalue: 0,
       holdqty: 0,
@@ -150,18 +162,18 @@ export class QualitymstComponent implements OnInit {
   onComplete(form: NgForm) {
     this.validQtyError = false;
 
-    if (this.actionvalue === "Save") {
+    if (this.actionvalue === 'Save') {
 
       this.loading = true;
-      this.qualityservice.qualityData.createddate = this.datePipe.transform(this.date, "yyyy-MM-dd");
+      this.qualityservice.qualityData.createddate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
       this.qualityservice.saveQuality().subscribe(res => {
         this.resetForm(form);
         this.toastr.success(
-          "Successfully Saved.",
-          "Production"
+          'Successfully Saved.',
+          'Production'
         );
-        this.route.navigate(["./qualitymst"]);
+        this.route.navigate(['./qualitymst']);
       }, err => {
         console.log(err);
       });
@@ -169,15 +181,26 @@ export class QualitymstComponent implements OnInit {
   }
 
   onSaveClick() {
-    this.actionvalue = "Save";
-    console.log(this.qualityservice.qualityData)
+    this.actionvalue = 'Save';
+    console.log(this.qualityservice.qualityData);
   }
 
   back() {
     this.iservice.uid = this.currentUser.id;
-    this.route.navigate(["./qaulitymst"]);
+    this.route.navigate(['./qaulitymst']);
   }
-
+  filterCountry(event) {
+    // in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    const filtered: any[] = [];
+    const query = event.query;
+    for (let i = 0; i < this.itmService.itemmstsList.length; i++) {
+      const country = this.itmService.itemmstsList[i];
+      if (country.itemname.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+        filtered.push(country);
+      }
+    }
+    this.filteredCountries = filtered;
+  }
   countQty() {
      this.qualityservice.qualityData.InspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
   }
@@ -187,14 +210,17 @@ export class QualitymstComponent implements OnInit {
                          + this.qualityservice.qualityData.DE11Q + this.qualityservice.qualityData.DE12Q + this.qualityservice.qualityData.DE13Q + this.qualityservice.qualityData.DE14Q + this.qualityservice.qualityData.DE15Q + this.qualityservice.qualityData.DE16Q + this.qualityservice.qualityData.DE17Q + this.qualityservice.qualityData.DE18Q + this.qualityservice.qualityData.DE19Q + this.qualityservice.qualityData.DE20Q
                          + this.qualityservice.qualityData.DE21Q + this.qualityservice.qualityData.DE22Q + this.qualityservice.qualityData.DE23Q + this.qualityservice.qualityData.DE24Q + this.qualityservice.qualityData.DE25Q + this.qualityservice.qualityData.DE26Q + this.qualityservice.qualityData.DE27Q + this.qualityservice.qualityData.DE28Q + this.qualityservice.qualityData.DE29Q + this.qualityservice.qualityData.DE30Q
                          + this.qualityservice.qualityData.DE31Q + this.qualityservice.qualityData.DE32Q + this.qualityservice.qualityData.DE33Q + this.qualityservice.qualityData.DE34Q + this.qualityservice.qualityData.DE35Q + this.qualityservice.qualityData.DE36Q + this.qualityservice.qualityData.DE37Q + this.qualityservice.qualityData.DE38Q + this.qualityservice.qualityData.DE39Q + this.qualityservice.qualityData.DE40Q
-                         + this.qualityservice.qualityData.DE41Q + this.qualityservice.qualityData.DE42Q + this.qualityservice.qualityData.DE43Q + this.qualityservice.qualityData.DE44Q + this.qualityservice.qualityData.DE45Q + this.qualityservice.qualityData.DE46Q + this.qualityservice.qualityData.DE47Q + this.qualityservice.qualityData.DE48Q + this.qualityservice.qualityData.DE49Q + this.qualityservice.qualityData.DE50Q; 
+                         + this.qualityservice.qualityData.DE41Q + this.qualityservice.qualityData.DE42Q + this.qualityservice.qualityData.DE43Q + this.qualityservice.qualityData.DE44Q + this.qualityservice.qualityData.DE45Q + this.qualityservice.qualityData.DE46Q + this.qualityservice.qualityData.DE47Q + this.qualityservice.qualityData.DE48Q + this.qualityservice.qualityData.DE49Q + this.qualityservice.qualityData.DE50Q;
 
-     this.countQty();
+    this.countQty();
   }
 
-  totRejValue(){
-    this.qualityservice.qualityData.TotalRejValue = this.qualityservice.qualityData.SellPrice * this.qualityservice.qualityData.TotalRejQty; 
+  totRejValue() {
+    this.qualityservice.qualityData.TotalRejValue = this.qualityservice.qualityData.SellPrice * this.qualityservice.qualityData.TotalRejQty;
+  }
+  valueM(v) {
+      console.log(v);
+      this.qualityservice.qualityData.itemname = v.itemname;
+    }
   }
 
-
-}
