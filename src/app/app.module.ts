@@ -93,12 +93,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SalesrepoComponent } from './salesrepo/salesrepo.component';
 import { QCalendarComponent } from './qcalendar/qcalendar.component';
 import { InnerRenderer } from './salesrepo/innerrenderer.component';
-<<<<<<< HEAD
 import { InnerRendereryear } from './salesrepoyear/innerrendereryear.component';
 import { SalesrepoyearComponent } from './salesrepoyear/salesrepoyear.component';
-=======
 import { QualitymstComponent } from './qualitymst/qualitymst.component';
->>>>>>> ae8f961a53e9aa401085eb854b7513d8e65bce97
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
