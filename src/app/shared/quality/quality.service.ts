@@ -17,12 +17,30 @@ export class QualityService {
 
   constructor(public http: HttpClient) { }
 
+  public getallData() {
+    //for calendar click event
+    return this.http
+      .get(this.rootUrl + "/Qualities")
+      .toPromise()
+      .then(res => {
+        this.qualityList = res as Quality[];
+      });
+  }
+
   public qualitybyid(id): Observable<Quality[]> {
     return this.http.get<Quality[]>(this.rootUrl + "/Qualities/" + id);
   }
 
   public saveQuality(): any {
     return this.http.post(this.rootUrl + "/Qualities/", this.qualityData);
+  }
+
+  public updatequality(id): any {
+    return this.http.put(this.rootUrl + "/Qualities/" + id, this.qualityData)
+  }
+
+  public deletequality(id): any {
+    return this.http.delete(this.rootUrl + "/Qualities/" + id);
   }
 
 }

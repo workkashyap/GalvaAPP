@@ -85,22 +85,28 @@
                     </div>
                 </div>
                 <div class="form-group mx-1">
-                    <div class="row m-0">
-                      <div class="col-md-4 in-label">
-                        <label class="gr1" for="qty">Insp Quantity:</label>
-                      </div>
-                      <div class="col-md-8">
-                        <input class="form-control" type='text' id="qty" name="qty" [(ngModel)]="qualityservice.qualityData.InspQty" readonly/>
-                      </div>
+                  <div class="row m-0">
+                    <div class="col-md-4 in-label">
+                      <label class="gr2" for="stdprice">Std Price:</label>
                     </div>
-                </div>
+                    <div class="col-md-8">
+                      <input class="form-control grp-input-2" type='number' min="0" id="stdprice" name="stdprice" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.stdPrice"/>
+                    </div>
+                  </div>
+               </div>
                 <div class="form-group mx-1">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
                         <label for="plantcode">Plantcode:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control" type='text' id="plantcode" name="plantcode" [(ngModel)]="qualityservice.qualityData.plantcode"/>
+                        <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                                        [(ngModel)]="qualityservice.qualityData.plantcode"
+                                        (change)="plantcodeChange()">
+                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                          {{ pl.plantshortname }}
+                                        </option>
+                        </select>
                       </div>
                     </div>
                 </div>
@@ -130,7 +136,7 @@
                         <label for="type">Order Type:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control" type='text' id="type" name="type" [(ngModel)]="qualityservice.qualityData.OrderType"/>
+                        <input class="form-control" type='text' id="type" name="type" [(ngModel)]="qualityservice.qualityData.orderType"/>
                       </div>
                     </div>
                 </div> 
@@ -140,7 +146,7 @@
                         <label class="gr2" for="okqty">Ok Quantity:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="okqty" name="okqty" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.okqty"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="okqty" name="okqty" [ngClass]="{error:validQtyError}" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.okqty"/>
                       </div>
                     </div>
                 </div>
@@ -150,7 +156,7 @@
                         <label class="gr2" for="holdqty">Hold Quantity:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="holdqty" name="holdqty" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.holdqty" />
+                        <input class="form-control grp-input-2" type='number' min="0" id="holdqty" name="holdqty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.holdqty" />
                       </div>
                     </div>
                 </div>
@@ -160,7 +166,7 @@
                         <label class="gr2" for="buffingqty">Buffing Quantity:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="buffingqty" name="buffingqty" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.buffingqty"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="buffingqty" name="buffingqty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.buffingqty"/>
                       </div>
                     </div>
                 </div>
@@ -170,66 +176,64 @@
                         <label class="gr2" for="rejectionqty">Rejection Quantity:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="rejectionqty" name="rejectionqty" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.rejectionqty" readonly />
+                        <input class="form-control grp-input-2" type='number' min="0" id="rejectionqty" name="rejectionqty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.rejectionqty" readonly />
                       </div>
                     </div>
                 </div>
                 <div class="form-group mx-1">
-                    <div class="row m-0">
-                      <div class="col-md-4 in-label">
-                        <label class="gr2" for="stdprice">Std Price:</label>
-                      </div>
-                      <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="stdprice" name="stdprice"/>
-                      </div>
+                  <div class="row m-0">
+                    <div class="col-md-4 in-label">
+                      <label class="gr1" for="qty">Insp Quantity:</label>
                     </div>
+                    <div class="col-md-8">
+                      <input class="form-control" type='text' id="qty" name="qty" [ngClass]="{error:validQtyError}" [(ngModel)]="qualityservice.qualityData.inspQty" readonly/>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group mx-1">
+                <div class="form-group mx-1 invisible">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
                         <label class="gr2" for="sellprice">Sell Price:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="sellprice" name="sellprice" (change)="totRejValue()" [(ngModel)]="qualityservice.qualityData.SellPrice"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="sellprice" name="sellprice" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.sellPrice"/>
                       </div>
                     </div>
                 </div>
                 <div class="form-group mx-1">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
-                        <label class="gr2" for="totalrejqty">Total Rej Qty:</label>
+                        <label class="gr2" for="totrejqty">Total Rej Qty:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="totalrejqty" name="totalrejqty" (change)="totRejValue()" [(ngModel)]="qualityservice.qualityData.TotalRejQty"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="totrejqty" name="totrejqty" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.totRejQty" readonly/>
                       </div>
                     </div>
                 </div>
                 <div class="form-group mx-1">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
-                        <label class="gr2" for="totalrejvalue">Total Rej Value:</label>
+                        <label class="gr2" for="totrejvalue">Total Rej Value:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="totalrejvalue" name="totalrejvalue" [(ngModel)]="qualityservice.qualityData.TotalRejValue"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="totrejvalue" name="totrejvalue" [(ngModel)]="qualityservice.qualityData.totRejValue" readonly/>
                       </div>
                     </div>
                 </div>
                 <div class="form-group mx-1">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
-                        <label for="pstngdate">Pstng Date:</label>
+                        <label for="pstngdate">Posting Date:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control" type='date' id="pstngdate" name="pstngdate" #pstngdate="ngModel" [readonly]="qualityservice.qualityData.ID > 0"
+                        <input class="form-control" type='date' id="pstngdate" name="pstngdate" #pstngdate="ngModel" [readonly]="qualityservice.qualityData.id > 0"
                         [(ngModel)]="qualityservice.qualityData.pstngdate"/>
                       </div>
                     </div>
                 </div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
-                <div class="row m-0">
+                <div class="row m-0 mt-3">
                     <div class="col-md-4"></div>
                     <div class="col-md-8 text-right">
                         <button class="btn btn-danger mr-1" type="button" style="width: 150px;" data-toggle="modal" data-target="#addDeffect">Add Defects</button>
@@ -247,7 +251,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="moulding px-3 pt-3 mb-4 position-relative border-10">
-                            <p class="position-absolute grid-title bg-white px-2">moulding</p>
+                            <p class="position-absolute grid-title bg-white px-2">Moulding</p>
                             <div class="grid-container-2">
                                 <div class="form-group mx-1 mb-1">
                                     <div class="row m-0">
@@ -255,7 +259,7 @@
                                         <label class="" for="DE01Q">M Scratch:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE01Q" name="DE01Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE01Q"/>
+                                        <input class="form-control grp-input-2" [ngClass]="{'filled': qualityservice.qualityData.dE01Q !==0}" type='number' min="0" id="DE01Q" name="DE01Q" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE01Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -265,7 +269,7 @@
                                         <label class="" for="DE02Q">M Dent:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE02Q" name="DE02Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE02Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE02Q" name="DE02Q" [ngClass]="{'filled': qualityservice.qualityData.dE02Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE02Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -275,7 +279,7 @@
                                         <label class="" for="DE03Q">M Flow Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE03Q" name="DE03Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE03Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE03Q" name="DE03Q" [ngClass]="{'filled': qualityservice.qualityData.dE03Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE03Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -285,7 +289,7 @@
                                         <label class="" for="DE04Q">M Flash:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE04Q" name="DE04Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE04Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE04Q" name="DE04Q" [ngClass]="{'filled': qualityservice.qualityData.dE04Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE04Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -295,7 +299,7 @@
                                         <label class="" for="DE05Q">M Silver:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE05Q" name="DE05Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE05Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE05Q" name="DE05Q" [ngClass]="{'filled': qualityservice.qualityData.dE05Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE05Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -305,7 +309,7 @@
                                         <label class="" for="DE06Q">M Weld Line:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE06Q" name="DE06Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE06Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE06Q" name="DE06Q" [ngClass]="{'filled': qualityservice.qualityData.dE06Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE06Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -315,7 +319,7 @@
                                         <label class="" for="DE07Q">M Sink Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE07Q" name="DE07Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE07Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE07Q" name="DE07Q" [ngClass]="{'filled': qualityservice.qualityData.dE07Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE07Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -325,7 +329,7 @@
                                         <label class="" for="DE08Q">M Short Mould:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE08Q" name="DE08Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE08Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE08Q" name="DE08Q" [ngClass]="{'filled': qualityservice.qualityData.dE08Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE08Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -335,7 +339,7 @@
                                         <label class="" for="DE09Q">M Pit Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE09Q" name="DE09Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE09Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE09Q" name="DE09Q" [ngClass]="{'filled': qualityservice.qualityData.dE09Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE09Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -345,7 +349,7 @@
                                         <label class="" for="DE10Q">M Under Cut:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE10Q" name="DE10Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE10Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE10Q" name="DE10Q" [ngClass]="{'filled': qualityservice.qualityData.dE10Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE10Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -355,7 +359,7 @@
                                         <label class="" for="DE11Q">M Bulge:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE11Q" name="DE11Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE11Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE11Q" name="DE11Q" [ngClass]="{'filled': qualityservice.qualityData.dE11Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE11Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -365,7 +369,7 @@
                                         <label class="" for="DE12Q">M Warpage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE12Q" name="DE12Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE12Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE12Q" name="DE12Q" [ngClass]="{'filled': qualityservice.qualityData.dE12Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE12Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -375,7 +379,7 @@
                                         <label class="" for="DE13Q">M Damage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE13Q" name="DE13Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE13Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE13Q" name="DE13Q" [ngClass]="{'filled': qualityservice.qualityData.dE13Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE13Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -385,7 +389,7 @@
                                         <label class="" for="DE14Q">M Paper Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE14Q" name="DE14Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE14Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE14Q" name="DE14Q" [ngClass]="{'filled': qualityservice.qualityData.dE14Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE14Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -395,14 +399,14 @@
                                         <label class="" for="DE15Q">M Dust:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE15Q" name="DE15Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE15Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE15Q" name="DE15Q" [ngClass]="{'filled': qualityservice.qualityData.dE15Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE15Q"/>
                                       </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="jigging px-3 pt-3 mb-4 position-relative border-10">
-                            <p class="position-absolute grid-title bg-white px-2">jigging</p>
+                            <p class="position-absolute grid-title bg-white px-2">Jigging</p>
                             <div class="grid-container-2">
                                 <div class="form-group mx-1 mb-1">
                                     <div class="row m-0">
@@ -410,7 +414,7 @@
                                         <label class="" for="DE16Q">J Warpage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE16Q" name="DE16Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE16Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE16Q" name="DE16Q" [ngClass]="{'filled': qualityservice.qualityData.dE16Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE16Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -420,7 +424,7 @@
                                         <label class="" for="DE17Q">J Scratch:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE17Q" name="DE17Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE17Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE17Q" name="DE17Q" [ngClass]="{'filled': qualityservice.qualityData.dE17Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE17Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -430,7 +434,7 @@
                                         <label class="" for="DE18Q">J Jig Damage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE18Q" name="DE18Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE18Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE18Q" name="DE18Q" [ngClass]="{'filled': qualityservice.qualityData.dE18Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE18Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -440,7 +444,7 @@
                                         <label class="" for="DE19Q">J Nickel:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE19Q" name="DE19Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE19Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE19Q" name="DE19Q" [ngClass]="{'filled': qualityservice.qualityData.dE19Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE19Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -450,7 +454,7 @@
                                         <label class="" for="DE20Q">J Fallen Down:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE20Q" name="DE20Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE20Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE20Q" name="DE20Q" [ngClass]="{'filled': qualityservice.qualityData.dE20Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE20Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -460,14 +464,14 @@
                                         <label class="" for="DE21Q">J Snap Rip Bend:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE21Q" name="DE21Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE21Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE21Q" name="DE21Q" [ngClass]="{'filled': qualityservice.qualityData.dE21Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE21Q"/>
                                       </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="plating px-3 pt-3 mb-4 position-relative border-10">
-                            <p class="position-absolute grid-title bg-white px-2">plating</p>
+                            <p class="position-absolute grid-title bg-white px-2">Plating</p>
                             <div class="grid-container-2">
                                 <div class="form-group mx-1 mb-1">
                                     <div class="row m-0">
@@ -475,7 +479,7 @@
                                         <label class="" for="DE22Q">P Pitting:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE22Q" name="DE22Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE22Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE22Q" name="DE22Q" [ngClass]="{'filled': qualityservice.qualityData.dE22Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE22Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -485,7 +489,7 @@
                                         <label class="" for="DE23Q">P Pin Hole:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE23Q" name="DE23Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE23Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE23Q" name="DE23Q" [ngClass]="{'filled': qualityservice.qualityData.dE23Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE23Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -495,7 +499,7 @@
                                         <label class="" for="DE24Q">P Nickel:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE24Q" name="DE24Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE24Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE24Q" name="DE24Q" [ngClass]="{'filled': qualityservice.qualityData.dE24Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE24Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -505,7 +509,7 @@
                                         <label class="" for="DE25Q">P Patch Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE25Q" name="DE25Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE25Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE25Q" name="DE25Q" [ngClass]="{'filled': qualityservice.qualityData.dE25Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE25Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -515,7 +519,7 @@
                                         <label class="" for="DE26Q">P CR. Burning:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE26Q" name="DE26Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE26Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE26Q" name="DE26Q" [ngClass]="{'filled': qualityservice.qualityData.dE26Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE26Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -525,7 +529,7 @@
                                         <label class="" for="DE27Q">P Copper Burning:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE27Q" name="DE27Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE27Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE27Q" name="DE27Q" [ngClass]="{'filled': qualityservice.qualityData.dE27Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE27Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -535,7 +539,7 @@
                                         <label class="" for="DE28Q">P Skip Plating:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE28Q" name="DE28Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE28Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE28Q" name="DE28Q" [ngClass]="{'filled': qualityservice.qualityData.dE28Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE28Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -545,7 +549,7 @@
                                         <label class="" for="DE29Q">P Roughness:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE29Q" name="DE29Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE29Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE29Q" name="DE29Q" [ngClass]="{'filled': qualityservice.qualityData.dE29Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE29Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -555,7 +559,7 @@
                                         <label class="" for="DE30Q">P Water Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE30Q" name="DE30Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE30Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE30Q" name="DE30Q" [ngClass]="{'filled': qualityservice.qualityData.dE30Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE30Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -565,7 +569,7 @@
                                         <label class="" for="DE31Q">P White Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE31Q" name="DE31Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE31Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE31Q" name="DE31Q" [ngClass]="{'filled': qualityservice.qualityData.dE31Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE31Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -575,7 +579,7 @@
                                         <label class="" for="DE32Q">P Blisters:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE32Q" name="DE32Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE32Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE32Q" name="DE32Q" [ngClass]="{'filled': qualityservice.qualityData.dE32Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE32Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -585,7 +589,7 @@
                                         <label class="" for="DE33Q">P Dot Plastic:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE33Q" name="DE33Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE33Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE33Q" name="DE33Q" [ngClass]="{'filled': qualityservice.qualityData.dE33Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE33Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -595,7 +599,7 @@
                                         <label class="" for="DE34Q">P Dent:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE34Q" name="DE34Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE34Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE34Q" name="DE34Q" [ngClass]="{'filled': qualityservice.qualityData.dE34Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE34Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -605,7 +609,7 @@
                                         <label class="" for="DE35Q">P Shade Variation:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE35Q" name="DE35Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE35Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE35Q" name="DE35Q" [ngClass]="{'filled': qualityservice.qualityData.dE35Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE35Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -615,7 +619,7 @@
                                         <label class="" for="DE36Q">P Recipe Change:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE36Q" name="DE36Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE36Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE36Q" name="DE36Q" [ngClass]="{'filled': qualityservice.qualityData.dE36Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE36Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -625,7 +629,7 @@
                                         <label class="" for="DE37Q">P Scratch:</label>
                                       </div>
                                       <div class="col-md-8">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE37Q" name="DE37Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE37Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE37Q" name="DE37Q" [ngClass]="{'filled': qualityservice.qualityData.dE37Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE37Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -635,7 +639,7 @@
                                         <label class="" for="DE38Q">P Dull Shade:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE38Q" name="DE38Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE38Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE38Q" name="DE38Q" [ngClass]="{'filled': qualityservice.qualityData.dE38Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE38Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -645,7 +649,7 @@
                                         <label class="" for="DE39Q">P Pell Off:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE39Q" name="DE39Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE39Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE39Q" name="DE39Q" [ngClass]="{'filled': qualityservice.qualityData.dE39Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE39Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -655,7 +659,7 @@
                                         <label class="" for="DE40Q">P Chemical Mark:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE40Q" name="DE40Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE40Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE40Q" name="DE40Q" [ngClass]="{'filled': qualityservice.qualityData.dE40Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE40Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -665,7 +669,7 @@
                                         <label class="" for="DE41Q">P Damage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE41Q" name="DE41Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE41Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE41Q" name="DE41Q" [ngClass]="{'filled': qualityservice.qualityData.dE41Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE41Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -675,7 +679,7 @@
                                         <label class="" for="DE42Q">P Dust:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE42Q" name="DE42Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE42Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE42Q" name="DE42Q" [ngClass]="{'filled': qualityservice.qualityData.dE42Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE42Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -685,14 +689,14 @@
                                         <label class="" for="DE43Q">P Algi:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE43Q" name="DE43Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE43Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE43Q" name="DE43Q" [ngClass]="{'filled': qualityservice.qualityData.dE43Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE43Q"/>
                                       </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="other px-3 pt-3 mb-0 position-relative border-10">
-                            <p class="position-absolute grid-title bg-white px-2">other</p>
+                            <p class="position-absolute grid-title bg-white px-2">Other</p>
                             <div class="grid-container-2">
                                 <div class="form-group mx-1 mb-1">
                                     <div class="row m-0">
@@ -700,7 +704,7 @@
                                         <label class="" for="DE44Q">O Unload Scratch:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE44Q" name="DE44Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE44Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE44Q" name="DE44Q" [ngClass]="{'filled': qualityservice.qualityData.dE44Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE44Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -710,7 +714,7 @@
                                         <label class="" for="DE45Q">O Mechanical Failure:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE45Q" name="DE45Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE45Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE45Q" name="DE45Q" [ngClass]="{'filled': qualityservice.qualityData.dE45Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE45Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -720,7 +724,7 @@
                                         <label class="" for="DE46Q">O Damage:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE46Q" name="DE46Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE46Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE46Q" name="DE46Q" [ngClass]="{'filled': qualityservice.qualityData.dE46Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE46Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -730,7 +734,7 @@
                                         <label class="" for="DE47Q">O Power Failure:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE47Q" name="DE47Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE47Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE47Q" name="DE47Q" [ngClass]="{'filled': qualityservice.qualityData.dE47Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE47Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -740,7 +744,7 @@
                                         <label class="" for="DE48Q">O Fallen Down:</label>
                                       </div>
                                       <div class="col-md-8 d-flex align-items-center">
-                                        <input class="form-control grp-input-2" type='number' min="0" id="DE48Q" name="DE48Q" (change)="countRejQty()" [(ngModel)]="qualityservice.qualityData.DE48Q"/>
+                                        <input class="form-control grp-input-2" type='number' min="0" id="DE48Q" name="DE48Q" [ngClass]="{'filled': qualityservice.qualityData.dE48Q !==0}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.dE48Q"/>
                                       </div>
                                     </div>
                                 </div>
@@ -749,7 +753,7 @@
                     </div>
                     <div class="modal-footer px-3 py-2">
                         <!-- <button type="button" (click)="deleteDefects()" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" data-dismiss="modal" class="btn btn-primary">Add</button>
+                        <button type="button" (click)="addDefects()" data-dismiss="modal" class="btn btn-primary">Add</button>
                     </div>
                     </div>
                 </div>

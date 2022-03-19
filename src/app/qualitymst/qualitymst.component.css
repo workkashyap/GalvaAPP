@@ -36,6 +36,10 @@
     left: 100px;
 }
 
+.grid-container .form-group label{
+    font-size: 12px;
+}
+
 .modal-dialog{
     max-width: 1300px;
 }
@@ -63,4 +67,12 @@
 
 .other{
     border: 2px solid #28a745;
+}
+
+.invisible{
+    display: none;
+}
+
+.filled{
+    background: #ffa07a;
 }
