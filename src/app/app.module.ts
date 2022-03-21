@@ -93,7 +93,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SalesrepoComponent } from './salesrepo/salesrepo.component';
 import { QCalendarComponent } from './qcalendar/qcalendar.component';
 import { InnerRenderer } from './salesrepo/innerrenderer.component';
-import { InnerRendereryear } from './salesrepoyear/innerrendereryear.component';
+
 import { SalesrepoyearComponent } from './salesrepoyear/salesrepoyear.component';
 import { QualitymstComponent } from './qualitymst/qualitymst.component';
 import { QualityviewComponent } from './qualityview/qualityview.component';
@@ -541,7 +541,7 @@ import { QualityviewComponent } from './qualityview/qualityview.component';
         canActivate: [AuthGuard],
       },
       {
-        path: 'qualityview', 
+        path: 'qualityview',
         component: QualityviewComponent,
         canActivate: [AuthGuard],
       },

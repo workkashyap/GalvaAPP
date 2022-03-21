@@ -280,6 +280,7 @@ export class QualitymstComponent implements OnInit {
       this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.sellPrice;
       this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.sellPrice;
       this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.sellPrice;
+      // tslint:disable-next-line:max-line-length
       this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.sellPrice;
 
       this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.sellPrice;
@@ -292,7 +293,7 @@ export class QualitymstComponent implements OnInit {
       
     }
 
-    allCalculations(){
+    allCalculations() {
       if (this.qualityservice.qualityData.sellPrice === 0){
         this.countQty();
         this.countRejQty();
