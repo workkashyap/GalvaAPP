@@ -8,9 +8,14 @@
     color: rgba(1,41,205,0.7);
 }
 
-.ag-theme-alpine{
+.ag-theme-alpine {
     --ag-header-background-color: rgba(1,41,205,0.7);
     --ag-header-foreground-color: white;
+    font-size: 14px;
+}
+
+.ag-theme-alpine .ag-row {
+    font-size: 13px !important;
 }
 
 .highlight-2{
@@ -21,7 +26,6 @@
     border-radius: 10px;
 }
 
-.myClass
-{
+.myClass{
 color:navy;
 }

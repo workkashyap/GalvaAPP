@@ -27,8 +27,10 @@ export class IncentiveComponent  {
   public rejValues: number;
   public rejValuesToday: number;
   public rejValuesMonthly: number;
+  public numberOfDays: number;
 
   public monthNames: any;
+  public monthDays: number;
   public days: any;
   public d: any;
   public total: any;
@@ -56,13 +58,13 @@ export class IncentiveComponent  {
 
 public defaultColDef: ColDef = {
   flex: 1,
-  minWidth: 110,
+  minWidth: 70,
   sortable: true,
   resizable: true,
 };
 public autoGroupColumnDef: ColDef = {
-  headerName: 'Company',
-  minWidth: 220,
+  headerName: 'Company (Value in lacs)',
+  minWidth: 210,
   cellRendererParams: {
       suppressCount: true,
       checkbox: false,
@@ -107,6 +109,7 @@ getData() {
   this.incentive.getMonthlyRej(this.yearname, this.index).subscribe(data => {
      this.monthly = data;
      this.rejValuesMonthly = this.getTotal(this.monthly);
+     this.numberOfDays = this.daysInMOnth(this.d.getMonth() + 1, this.yearname);
    });
   this.incentive.getTodayRej(this.yearname, this.index, this.date).subscribe(data => {
      this.today = data;
@@ -141,10 +144,16 @@ getTotal(values) {
   for (let i = 0; i < values.length; i++) {
     this.rejValues = this.rejValues + values[i].value;
   }
-  this. rejValues = Math.round(this.rejValues * 100) / 100
+  this.rejValues = Math.round((this.rejValues / 100000) * 100) / 100;
   return this.rejValues;
 }
- MyYearPivotComparator(a: string, b: string) {
+
+daysInMOnth(x, y) {
+  this.monthDays =  new Date(y, x, 0).getDate();
+  return this.monthDays;
+}
+
+MyYearPivotComparator(a: string, b: string) {
   const requiredOrder = ['1', '2', '3', '4', '5', '6', '7','8','9','10', '11', '12', '13' ,'14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
   return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
 }

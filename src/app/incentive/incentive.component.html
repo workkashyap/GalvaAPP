@@ -34,25 +34,24 @@
   </div>
 </div>
 
-<div class="px-3 my-3">
+<div class="px-3 mb-3">
   <div class="row m-0">
-    <div class="col-md-6 p-0 position-relative mb-md-0 mb-5 pr-md-4">
-      <div class="card flash highlight-2 border-10 p-3 m-auto">
+    <div class="col-12 p-0 position-relative mb-md-0 px-md-4 px-1">
+      <div class="card w-100 highlight-2 border-10 p-3 m-auto">
         <div class="row m-0 mb-3 position-relative">
           <div class="line position-absolute"></div>
           <div class="col-6 p-0 pr-1">
-            <h5 style="max-width: 200px; height: 45.2px;" class="border-10 text-center highlight text-white mb-0 p-1 pt-2">{{this.monthname}} {{this.yearname}}</h5>
+            <h5 style="max-width: 200px; height: 45.2px;" class="border-10 text-center highlight font-weight-bold clay-1 text-white mb-0 p-1 pt-2">{{this.monthname}} {{this.yearname}}</h5>
           </div>
           <div class="col-6 p-0 pl-1">
-            <div class="card border-10 bg-2 text-center m-0 p-1 ml-auto" style="max-width: 200px;">
+            <div class="card border-10 bg-2 text-center m-0 p-1 ml-auto" style="max-width: 200px; height: 45.2px;">
               <div class="row m-0">
-                <div class="col-6 p-0">
+                <div class="col-4 p-0">
                   <h5 class="mb-0 mt-1 text-white font-weight-bold text-center">Total</h5>
                 </div>
-                <div class="col-6 p-0">
+                <div class="col-8 p-0">
                   <div class="d-flex flex-column">
-                    <h5 class="text-white mb-0 font-weight-bold card-numbers total-numbers">{{rejValuesMonthly}}</h5>
-                    <h6 class="text-white mb-0">lacs</h6>
+                    <h6 class="text-white mb-0 font-weight-bold mt-2 card-numbers total-numbers">{{rejValuesMonthly}} lacs</h6>
                   </div>  
                 </div>
               </div>
@@ -60,27 +59,28 @@
           </div>
         </div>
         <div class="row m-0">
-          <div class="col-3 p-0"></div>
-          <div class="col-3 p-0">
-            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
-          </div>
-          <div class="col-3 p-0"></div>
-          <div class="col-3 p-0">
-            <p class="mb-0 text-center rej-heading heading p-1 font-weight-bold">Rej. Value (in lacs)</p>
-          </div>
-        </div>
-        <div class="row m-0">
           <div class="grid-container w-100">
-            <div class="card border-10 bg-4 text-center m-1" *ngFor="let x of monthly">
-              <div class="row m-0">
-                <div class="col-6 p-0">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-0 text-white company">{{x.plant.split(" ", 1)}}</h6>
-                    <h6 class="mb-0 text-white font-weight-bold text-center">{{x.plant.split(" ", 2).slice(1,2)}}</h6>
-                  </div>
+            <div class="card border-10 bg-4 text-center p-3 m-3" *ngFor="let x of monthly">
+              <div class="row m-0 pb-2 border-b">
+                <div class="col-5 p-0">
+                  <h6 class="mb-0 text-left font-weight-bold border-r">{{x.plant}}</h6>
                 </div>
-                <div class="col-6 p-0">
-                  <p class="card-numbers text-white mb-0 font-weight-bold">{{x.value}}</p>
+                <div class="col-7 p-0">
+                  <h6 class="mb-0 font-weight-bold">Total = {{x.value / 100000 | number : '1.2-2'}} lacs</h6>
+                </div>
+              </div>
+              <div class="row m-0 my-2 mid-row">
+                <div class="col-6 p-0 d-flex p-2 target justify-content-center">
+                  <fa name="rocket mr-2"></fa>
+                  <p class="mb-0 font-weight-bold">Target = 15%</p>
+                </div>
+                <div class="col-6 p-0 p-2" [ngClass]="x.rejper > 15 ? 'perrej-r' : 'perrej-g'">
+                  <p class="mb-0 font-weight-bold">Rej. % = {{x.rejper}}%</p>
+                </div>
+              </div>
+              <div class="row m-0 mb-2 avgtot p-1">
+                <div class="col-12 p-0">
+                  <p class="mb-0 font-weight-bold">Avg. Total = {{x.value / 100000 / this.numberOfDays | number : '1.2-2'}} lacs</p>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 p-0 position-relative mb-md-0 mb-4">
+    <!-- <div class="col-md-6 p-0 position-relative mb-md-0 mb-4">
       <div class="card flash highlight-2 border-10 p-3 m-auto">
         <div class="row m-0 mb-3 position-relative">
           <div class="line position-absolute"></div>
@@ -138,134 +138,29 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="row m-0">
-          <div class="col-4 p-0">
-            <h5 style="max-width: 200px;" class="heading border-10 text-center highlight text-white mb-0 p-1">{{this.day}}, {{this.date | date:'shortDate'}}</h5>
-          </div>
-          <div class="col-2 p-0">
-            <h5 class="mb-0 text-center heading p-1">Rej. %</h5>
-          </div>
-          <div class="col-4 p-0">
-            <h5 class="mb-0 text-center heading p-1">Rej. Value (in lacs)</h5>
-          </div>
-        </div>
-        <div class="row m-0 my-2 position-relative">
-          <div class="card border-10 bg-4 text-center mb-0">
-            <div class="row m-0">
-              <div class="col-6 p-0">
-                <div style="width: 110px;" class="d-flex flex-column ml-3">
-                  <h6 class="mb-0 text-white company">GDPL</h6>
-                  <h6 class="mb-0 text-white font-weight-bold text-center">Annantpur</h6>
-                </div>
-              </div>
-              <div class="col-3 p-0">
-                <p class="card-numbers text-white mb-0">15</p>
-              </div>
-              <div class="col-6 p-0">
-                <p class="card-numbers text-white mb-0">0.45</p>
-              </div>
-            </div>
-          </div>
-          <div class="card border-10 bg-2 total text-center position-absolute py-4">
-            <div class="d-flex flex-column">
-              <h3 class="mb-2 text-white font-weight-bold">Total</h3>
-              <p class="total-numbers text-white mb-0 font-weight-bold">35%</p>
-              <p class="total-sub text-white font-weight-bold mb-2">Rejection %</p>
-              <p class="total-numbers text-white mb-0 font-weight-bold">4.2</p>
-              <p class="total-sub mb-1 text-white font-weight-bold">Rej. Value (in lacs)</p>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0 mb-2">
-          <div class="card border-10 bg-1 text-center mb-0">
-            <div class="row m-0">
-              <div class="col-6 p-0">
-                <div style="width: 110px;" class="d-flex flex-column ml-3">
-                  <h6 class="mb-0 text-white company">GDPL</h6>
-                  <h6 class="mb-0 text-white font-weight-bold text-center">Chennai</h6>
-                </div>
-              </div>
-              <div class="col-3 p-0">
-                <p class="card-numbers text-white mb-0">15</p>
-              </div>
-              <div class="col-6 p-0">
-                <p class="card-numbers text-white mb-0">0.45</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0 mb-2">
-          <div class="card border-10 bg-4 text-center mb-0">
-            <div class="row m-0">
-              <div class="col-6 p-0">
-                <div style="width: 110px;" class="d-flex flex-column ml-3">
-                  <h6 class="mb-0 text-white text-white company">GDPL</h6>
-                  <h6 class="mb-0 text-white font-weight-bold text-center">Vapi</h6>
-                </div>
-              </div>
-              <div class="col-3 p-0">
-                <p class="card-numbers text-white mb-0">15</p>
-              </div>
-              <div class="col-6 p-0">
-                <p class="card-numbers text-white mb-0">0.45</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0 mb-2">
-          <div class="card border-10 bg-1 text-center mb-0">
-            <div class="row m-0">
-              <div class="col-6 p-0">
-                <div style="width: 110px;" class="d-flex flex-column ml-3">
-                  <h6 class="mb-0 text-white company">GDPL</h6>
-                  <h6 class="mb-0 text-white font-weight-bold text-center">Zaroli</h6>
-                </div>
-              </div>
-              <div class="col-3 p-0">
-                <p class="card-numbers text-white mb-0">15</p>
-              </div>
-              <div class="col-6 p-0">
-                <p class="card-numbers text-white mb-0">0.45</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0 mb-2">
-          <div class="card border-10 bg-4 text-center mb-0">
-            <div class="row m-0">
-              <div class="col-6 p-0">
-                <div style="width:110px;" class="d-flex flex-column ml-3">
-                  <h6 class="mb-0 text-white company">SHTP</h6>
-                  <h6 class="mb-0 text-white font-weight-bold text-center">Vapi</h6>
-                </div>
-              </div>
-              <div class="col-3 p-0">
-                <p class="card-numbers text-white mb-0">15</p>
-              </div>
-              <div class="col-6 p-0">
-                <p class="card-numbers text-white mb-0">0.45</p>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
-<div class="overflow-scroll p-3">
-  <ag-grid-angular
-  style="height: 330px;"
-  class="ag-theme-alpine w-100"
-  [rowData]="rowData | async"
-  [columnDefs]="columnDefs"
-  [pivotMode]="true"
-
-  [suppressAggFuncInHeader]="true"
-  [animateRows]="true"
-
-  [defaultColDef]="defaultColDef"
-  [autoGroupColumnDef]="autoGroupColumnDef">
-  </ag-grid-angular>
-</div> 
+<div class="px-3 mb-3">
+  <div class="row m-0 px-md-4 px-1">
+    <div class="card w-100 highlight-2 border-10 m-auto">
+      <div class="overflow-scroll p-3">
+        <ag-grid-angular
+        style="height: 330px;"
+        class="ag-theme-alpine w-100"
+        [rowData]="rowData | async"
+        [columnDefs]="columnDefs"
+        [pivotMode]="true"
+      
+        [suppressAggFuncInHeader]="true"
+        [animateRows]="true"
+      
+        [defaultColDef]="defaultColDef"
+        [autoGroupColumnDef]="autoGroupColumnDef">
+        </ag-grid-angular>
+      </div> 
+    </div>
+  </div>
+</div>
