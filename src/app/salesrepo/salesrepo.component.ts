@@ -23,37 +23,43 @@ export class SalesrepoComponent implements OnInit {
   rowData: Observable<any[]>;
   public sideBar: SideBarDef | string | boolean | null = 'columns';
   public columnDefs: ColDef[] = [
-    {headerName: 'Month', field: 'monthName', enableRowGroup: true, rowGroup: true, hide: true },
-    {headerName: 'Branch', field: 'plantname', enableRowGroup: true , rowGroup: true,   hide: true },
+    {headerName: 'Month', field: 'monthName', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
+    {headerName: 'Branch', field: 'plantname', enableRowGroup: true,  rowGroup: true, hide: true, cellStyle: {fontSize: '13px', marginLeft: '0px'} },
     {headerName: 'End Customers', field: 'endcustomer', aggFunc: params => {
                                                             let sum = 0;
                                                             params.values.forEach(value => sum += value);
-                                                            return Math.round(sum * 100) / 100; }
+                                                            return Math.round(sum * 100) / 100; },
+                                                            cellStyle: {fontSize: '13px'}
                                                           },
     {headerName: 'Export Sales', field: 'exportsales', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'}
                                                             },
     {headerName: 'Rejection', field: 'rejection', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'}
                                                             },
     {headerName: 'Net Sales', field: 'netsales', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'}
                                                             },
     {headerName: 'Tool Sales', field: 'toolsale', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'}
                                                             },
     {headerName: 'Other Sales', field: 'othersales', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'}
                                                             },
   ];
 
@@ -101,8 +107,8 @@ export class SalesrepoComponent implements OnInit {
   
   getRowStyle = params => {
     if (params.node.footer) {
-        return { background: 'PowderBlue' };
-    }
+        return { background: 'PowderBlue', fontWeight: 'bolder'};
+    }    
 };
 
 }
