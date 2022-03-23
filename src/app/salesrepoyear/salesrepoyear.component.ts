@@ -24,38 +24,44 @@ export class SalesrepoyearComponent implements OnInit {
   rowData: Observable<any[]>;
   public sideBar: SideBarDef | string | boolean | null = 'columns';
   public columnDefs: ColDef[] = [
-    {headerName: 'Month', field: 'monthName', type: 'leftAligned' , enableRowGroup: true, rowGroup: true, hide: true },
-    {headerName: 'Branch', field: 'plantname', type: 'leftAligned' , enableRowGroup: true , rowGroup: true },
-    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true , pivotComparator: this.MyYearPivotComparator },
+    {headerName: 'Month', field: 'monthName', type: 'leftAligned' , enableRowGroup: true, rowGroup: true, hide: true,  cellStyle: {fontSize: '13px'}  },
+    {headerName: 'Branch', field: 'plantname', type: 'leftAligned' , enableRowGroup: true , rowGroup: true,  cellStyle: {fontSize: '13px'} },
+    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true , pivotComparator: this.MyYearPivotComparator,  cellStyle: {fontSize: '13px'} },
     {headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned',aggFunc: params => {
                                                             let sum = 0;
                                                             params.values.forEach(value => sum += value);
-                                                            return Math.round(sum * 100) / 100;}
+                                                            return Math.round(sum * 100) / 100;},
+                                                            cellStyle: {fontSize: '13px'} 
                                                           },
     {headerName: 'Export Sales', field: 'exportsales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'} 
                                                             },
     {headerName: 'Rejection', field: 'rejection', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'} 
                                                             },
     {headerName: 'Net Sales', field: 'netsales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'} 
                                                             },
     {headerName: 'Tool Sales', field: 'toolsale', enableValue: true, type: 'rightAligned', aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'} 
                                                             },
     {headerName: 'Other Sales', field: 'othersales', enableValue: true, type: 'rightAligned' ,aggFunc: params => {
                                                               let sum = 0;
                                                               params.values.forEach(value => sum += value);
-                                                              return Math.round(sum * 100) / 100;}
+                                                              return Math.round(sum * 100) / 100;},
+                                                              cellStyle: {fontSize: '13px'} 
                                                             },
   ];
 
@@ -106,8 +112,8 @@ export class SalesrepoyearComponent implements OnInit {
   
   getRowStyle = params => {
     if (params.node.footer) {
-        return { background: 'PowderBlue' };
-    }
+        return { background: 'PowderBlue', fontWeight: 'bolder'};
+    }    
 };
 
 }
