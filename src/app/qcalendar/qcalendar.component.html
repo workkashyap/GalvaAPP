@@ -1,63 +1,71 @@
 <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-4">
-              <h5>Quality Calendar (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)
-              </h5>
-            </div>
-            <div class="col-sm-4">
-              <h5 style="margin-top: 5px;">
-                OK Value Target greater than {{company_per}}
-                <!--Rejection Target Less than 15%*-->
-              </h5>
-            </div>
-            <div class="col-sm-4">
-              <!--<ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Quality Calendar</li>
-              </ol>-->
-              <div class="row" style="text-align: center;">
-                <div class="col-md-6">
-                  <select class="form-control" *ngIf="plantservice" name="myselect" #mySelect
-                    (change)="selectedGrid($event.target.value)" style="height: calc(2.10rem);padding: 5px 13px 6px 9px;">
+    <div class="content-wrapper mt-0">
+      <div class="p-3">
+        <div class="page-filter d-flex flex-wrap w-100 justify-content-center px-2 py-1">
+          <div class="d-flex order-1 mb-md-0 mb-2">
+            <h4 class="font-weight-bold heading align-self-center mb-0">Quality Calendar (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)</h4>
+          </div>
+          <div class="m-md-auto order-lg-2 order-5 mb-2">
+             <h5 class="mb-0 mt-md-0 mt-sm-2 mt-0">OK Value Target greater than {{company_per}}</h5>
+          </div>
+          <div class="d-flex ml-sm-auto order-lg-3 order-2 mb-md-0 mb-2">
+            <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                    (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
                     <!-- <option value="0">--Select--</option> -->
                     <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                       {{ pl.plantshortname }}
                     </option>
-                  </select>
-                </div>
-                <div class="col-md-4" style="padding: unset !important;">
-                  <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
-                    style="border-radius: 5px 0px 0px 5px">Previous</button>
-                  <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
-                    style="border-radius: 0px 5px 5px 0px;">Next</button>
-                </div>
-                <div class="col-md-2" style="padding: unset !important;">
-                  <button class="btn btn-primary " (click)="loaddata()" style="padding: 2px 10px 3px 10px;"><i
-                      class="fa fa-refresh" aria-hidden="true"></i></button>
-                </div>
-              </div>
-            </div>
+            </select> 
           </div>
-        </div><!-- /.container-fluid -->
-      </section>
+          <div class="ml-2 order-lg-4 order-3 mb-md-0 mb-2" style="padding: unset !important;">
+            <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
+              style="border-radius: 5px 0px 0px 5px">Previous</button>
+            <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
+              style="border-radius: 0px 5px 5px 0px;">Next</button>
+          </div>
+          <div class="ml-2 order-lg-5 order-4 mb-md-0 mb-2">
+            <button class="btn btn-primary px-2" (click)="loaddata()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
   
       <!-- Main content -->
       <section class="content">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 px-md-4">
             <div class="mx-2">
-              <div class="card card-primary card-outline">
-                <div class="card-header ">
+              <div class="card border-10">
+                <div class="card-header">
                   <!--  card-tools -->
                   <div class="form-inline" *ngIf="this.dpservice.dailyreportsummary" style="margin: auto;">
                     <div *ngFor="let tot of this.dpservice.dailyreportsummary" style="text-align: center;">
-                      <div *ngIf="tot.itemtype==this.typename" class="row">
-                        <div class="col-md-12">
+                      <div *ngIf="tot.itemtype==this.typename" class="row m-0">
+                        <div class="d-flex flex-wrap justify-content-center w-100">
+                          <button class="btn btn-custom my-1 text-white font-weight-bold summary-bg mr-3" (click)="extraVal(7)">Summary</button>
+                          <button class="btn btn-custom my-1 text-white blue-bg mr-3" (click)="extraVal(1)">Insp. Value =
+                            <b>{{ tot.producevalue }}</b>
+                            Lacs</button>
+                            <button class="btn btn-custom my-1 text-white green-bg mr-3" (click)="extraVal(2)">Ok Value =
+                              <b>{{ tot.okvalue }}</b> Lacs &nbsp;&nbsp; Ok % = <b>{{tot.okper}}</b>
+                            </button>
+                            <button class="btn btn-custom my-1 text-white red-bg mr-3" (click)="extraVal(5)">Rej. Value =
+                              <b>{{ tot.rejectvalue }}</b>
+                              Lacs</button>
+                            <button class="btn btn-custom my-1 text-white red-bg mr-3" (click)="extraVal(6)">Reject % =
+                              <b>{{ tot.rejper }}</b></button>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-center w-100">
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                            Plating Val. = <b>{{ tot.platingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
+                            Plating % = <b>{{ tot.platingper  |  number:'1.2-2' }}</b>
+                          </button>
+                          <button class="btn btn-custom my-1 text-white pink-bg">
+                            Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
+                            Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
+                          </button> 
+                        </div>
+                        <!-- <div class="col-md-12">
                           <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
                           <button class="btn btn-custom text-dark bg-info" (click)="extraVal(1)">Insp. Value =
                             <b>{{ tot.producevalue }}</b>
@@ -86,9 +94,7 @@
                             Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs
                             Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
                           </button>
-  
-                         
-                        </div>
+                        </div> -->
   
                       </div>
                     </div>
@@ -113,7 +119,7 @@
                   <!-- /.mail-box-messages -->
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer p-0">
+                <div class="card-footer p-2">
   
                 </div>
               </div>

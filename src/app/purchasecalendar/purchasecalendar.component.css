@@ -23,9 +23,6 @@ li.breadcrumb-item {
   text-align: right;
 }
 @media only screen and (max-width: 600px) {
-  .btn-group {
-    padding-left: unset;
-  }
   .margin-top {
     margin-top: 12px;
   }
@@ -39,9 +36,6 @@ li.breadcrumb-item {
   
   .fc-toolbar {
     padding: 15px 20px 10px;
-  }
-  .no-padding{
-    /*padding: unset;*/
   }
   .btn-custom-td {
     font-size: 9px;
@@ -57,18 +51,10 @@ li.breadcrumb-item {
   .no-margin {
     margin: unset;
   }
-  .custom-col-3{
-    /*flex: 0 0 24%;
-    max-width: 24%;
-    margin: 1px;*/
-  }
   .set-select-plant{
    width: 75%;    
    float: left;
    margin-right: 10px;
-  }
-  .refresh-btn{
-    width: 20%;
   }
   .custom-col-2 {
     flex: 0 0 49%;
@@ -97,23 +83,6 @@ li.breadcrumb-item {
   }
   .card-title {
     margin-bottom: 10px;
-  }
-  .btn-custom {
-    /*padding: 5px 5px 5px 5px;*/
-    margin: 3.3px;
-    font-size: 13px;
-  }
-  .btn-custom-in-grp {
-    padding: 5px 5px 5px 5px;
-    font-size: 13px;
-  }
-  .btn-custom-refresh {
-    padding: 5px 5px 5px 5px;
-    margin: 3.3px;
-    font-size: 12px;
-  }
-  .group-btn-c{
-    padding: 0.20rem 0.3rem;
   }
   .my-calender>.fc-header-toolbar{
     display: none !important;
@@ -171,4 +140,169 @@ a.tip:hover span {
   position: absolute;
   top: 10px;
   text-decoration: none;
+}
+
+.page-filter{
+  border-radius: 10px;
+  border: 2px solid rgba(1,41,205,0.5);
+  background: #f8f9fa;
+}
+
+.heading{
+  color: rgba(1,41,205,0.7);
+}
+
+.ag-theme-alpine {
+  --ag-header-background-color: rgba(1,41,205,0.7);
+  --ag-header-foreground-color: white;
+  font-size: 14px;
+}
+
+.highlight-2, .card{
+  background: #f8f9fa;
+}
+
+.border-10{
+  border-radius: 10px;
+}
+
+.content-wrapper{
+  background: white !important;
+}
+
+.card-header{
+  border-bottom: 1px solid rgba(1,41,205,0.7);
+}
+
+.summary-bg{
+  border-radius: 10px;
+  background: #ffa089;
+  box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -4px -4px 4px 0 rgba(255,127,80, 0.85),
+              inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.blue-bg{
+  border-radius: 10px;
+  background: rgba(1,41,205,0.5);
+  box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -4px -4px 4px 0 rgba(51, 83, 214, 0.5),
+              inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.pink-bg{
+  border-radius: 10px;
+  background: #E36488;
+  box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(142, 52, 68, 0.5),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.green-bg{
+  background: #77dd77;
+  border-radius: 10px;
+  box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -4px -4px 4px 0 rgba(28, 172, 120, 0.85),
+              inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.red-bg{
+  background: #ff6961;
+  border-radius: 10px;
+  box-shadow: 5px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -4px -4px 4px 0 rgba(234,60,83, 0.85),
+              inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.purple-bg{
+  border-radius: 10px;
+  background: #9370db;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(102, 103, 171, 0.5),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.dk-green-bg{
+  border-radius: 10px;
+  background: #00563f;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(28, 53, 45, 0.5),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.brown-bg{
+  border-radius: 10px;
+  background: #654321;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(61, 43, 31, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.lime-bg{
+  border-radius: 10px;
+  background: #b2ec5d;
+  box-shadow: 2px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(50, 205, 50, 0.5),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.magenta-bg{
+  border-radius: 10px;
+  background: #cf71af;
+  box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(142, 58, 89, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.navy-bg{
+  border-radius: 10px;
+  background: #324ab2;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(0, 56, 168, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.teal-bg{
+  border-radius: 10px;
+  background: #a0d6b4;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(95, 158, 160, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.olive-bg{
+  border-radius: 10px;
+  background: #9ab973;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(140, 158, 94, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.orange-bg{
+  border-radius: 10px;
+  background: #f28500;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(205, 85, 0, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.maroon-bg{
+  border-radius: 10px;
+  background: #b94e48;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(112, 28, 28, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.gold-bg{
+  border-radius: 10px;
+  background: #fcc200;
+  box-shadow: 3px 3px 6px 0 rgba(102, 103, 171, .85),
+              inset -3px -3px 6px 0 rgba(218, 145, 0, .85),
+              inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+
+.card-header .btn{
+  line-height: 1.0;
 }
