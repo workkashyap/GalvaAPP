@@ -87,6 +87,24 @@ export class DailyproductionService {
       this.rootUrl + '/dailyproductions/New_Getallrejdata/' + id + '/Plating/' + date
     );
   }
+  public New_getRejectdetail(
+    plantcode,
+    type,
+    fromdate,
+    todate
+  ): Observable<Itemwiserej[]> {
+    return this.http.get<Itemwiserej[]>(
+      this.rootUrl +
+      '/itemwiserejs/new_rejectdetaildata/' +
+      plantcode +
+      '/' +
+      type +
+      '/' +
+      fromdate +
+      '/' +
+      todate
+    );
+  }
 
   public getRejectdetail(
     plantcode,

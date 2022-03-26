@@ -253,7 +253,7 @@ export class QCalendarComponent implements OnInit {
     this.selected_eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
     this.loading = true;
     this.selectedtype = 'NULL';
-    this.dpservice.getRejectdetail(this.selectedcode, 'NULL', this.selected_eventdate, this.selected_eventdate)
+    this.dpservice.New_getRejectdetail(this.selectedcode, 'NULL', this.selected_eventdate, this.selected_eventdate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
@@ -373,7 +373,7 @@ export class QCalendarComponent implements OnInit {
     const endDate = this.datePipe.transform(this.lDate, 'yyyy-MM-dd');
     this.loading = true;
     this.selectedtype = 'NULL';
-    this.dpservice.getRejectdetail(this.selectedcode, 'NULL', firstDate, endDate)
+    this.dpservice.New_getRejectdetail(this.selectedcode, 'NULL', firstDate, endDate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
