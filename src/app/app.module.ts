@@ -97,6 +97,8 @@ import { InnerRenderer } from './salesrepo/innerrenderer.component';
 import { SalesrepoyearComponent } from './salesrepoyear/salesrepoyear.component';
 import { QualitymstComponent } from './qualitymst/qualitymst.component';
 import { QualityviewComponent } from './qualityview/qualityview.component';
+import { PurchaserepoComponent } from './purchaserepo/purchaserepo.component';
+import { PurchaserepoyearComponent } from './purchaserepoyear/purchaserepoyear.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
@@ -178,7 +180,9 @@ import { QualityviewComponent } from './qualityview/qualityview.component';
     QCalendarComponent,
     InnerRenderer,
     QualitymstComponent,
-    QualityviewComponent
+    QualityviewComponent,
+    PurchaserepoComponent,
+    PurchaserepoyearComponent
   ],
   imports: [
     BrowserModule,
@@ -543,6 +547,16 @@ import { QualityviewComponent } from './qualityview/qualityview.component';
       {
         path: 'qualityview',
         component: QualityviewComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'purchaserepo',
+        component: PurchaserepoComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'purchaserepoyear',
+        component: PurchaserepoyearComponent,
         canActivate: [AuthGuard],
       },
       

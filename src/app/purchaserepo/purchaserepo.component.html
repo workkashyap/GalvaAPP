@@ -1,0 +1,41 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-1">
+      <div class="d-flex">
+        <h4 class="font-weight-bold heading mb-0 align-self-center">Purchase Report MoM (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)</h4>
+      </div>
+      <div class="ml-auto mr-md-5 mr-3">
+        <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
+          <option value="">--Select Year--</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+        </select>
+      </div>
+    </div>
+</div>
+
+<div class="p-3">
+  <div class="card p-3 highlight-2 border-10 m-auto">
+    <div class="overflow-scroll">
+      <ag-grid-angular
+      style="height: 530px;"
+      class="ag-theme-alpine w-100"
+      [rowData]="rowData | async"
+      [columnDefs]="columnDefs"
+      [groupMultiAutoColumn]="true"
+      [pivotMode]="true"
+      [animateRows]="true"
+      [getRowStyle]="getRowStyle"
+      [groupIncludeFooter]="true"
+      [sideBar]="sideBar"
+      [groupIncludeTotalFooter]="true"
+      (gridReady)="onGridReady($event)"
+      [suppressAggFuncInHeader]="true"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [defaultColDef]="defaultColDef">
+      </ag-grid-angular>
+    </div> 
+ </div>
+</div>
+
+

@@ -88,6 +88,7 @@ export class SalesrepoyearComponent implements OnInit {
   }
   public autoGroupColumnDef: ColDef = {
     minWidth: 220,
+    pinned: 'left',
     cellRendererParams: {
       suppressCount: true,
        checkbox: false,

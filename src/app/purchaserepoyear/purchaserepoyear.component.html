@@ -1,0 +1,34 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-1">
+      <div class="d-flex">
+        <h4 class="font-weight-bold heading mb-0 align-self-center">Purchase Report YoY (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)</h4>
+      </div>
+    </div>
+</div>
+
+<div class="p-3">
+  <div class="card p-3 highlight-2 border-10 m-auto">
+    <div class="overflow-scroll">
+      <ag-grid-angular
+      style="height: 530px;"
+      class="ag-theme-alpine w-100"
+      [rowData]="rowData | async"
+      [columnDefs]="columnDefs"
+      [groupMultiAutoColumn]="true"
+      [pivotMode]="true"
+      [animateRows]="true"
+      [getRowStyle]="getRowStyle"
+      [groupIncludeFooter]="true"
+      [suppressExpandablePivotGroups]="true"
+      [sideBar]="sideBar"
+      [groupIncludeTotalFooter]="true"
+      (gridReady)="onGridReady($event)"
+      [suppressAggFuncInHeader]="true"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [defaultColDef]="defaultColDef">
+      </ag-grid-angular>
+    </div> 
+ </div>
+</div>
+
+

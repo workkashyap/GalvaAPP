@@ -65,6 +65,7 @@ public defaultColDef: ColDef = {
 public autoGroupColumnDef: ColDef = {
   headerName: 'Company (Value in lacs)',
   minWidth: 210,
+  pinned: 'left',
   cellRendererParams: {
       suppressCount: true,
       checkbox: false,

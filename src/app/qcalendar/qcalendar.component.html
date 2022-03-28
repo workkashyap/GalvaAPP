@@ -6,7 +6,7 @@
           <div class="d-flex order-1 mb-md-0 mb-2">
             <h4 class="font-weight-bold heading align-self-center mb-0">Quality Calendar (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)</h4>
           </div>
-          <div class="m-md-auto order-lg-2 order-5 mb-2">
+          <div class="m-md-auto order-lg-2 order-6 mb-2">
              <h5 class="mb-0 mt-md-0 mt-sm-2 mt-0">OK Value Target greater than {{company_per}}</h5>
           </div>
           <div class="d-flex ml-sm-auto order-lg-3 order-2 mb-md-0 mb-2">
@@ -18,13 +18,30 @@
                     </option>
             </select> 
           </div>
-          <div class="ml-2 order-lg-4 order-3 mb-md-0 mb-2" style="padding: unset !important;">
+          <div class="d-flex ml-2 order-lg-4 order-3 mb-md-0 mb-2">
+            <select class="custom-select">
+              <option value="">All</option>
+              <option value="">ZASM</option>
+              <option value="">ZCRM</option>
+              <option value="">ZDCM</option>
+              <option value="">ZDCR</option>
+              <option value="">ZMLD</option>
+              <option value="">ZMLG</option>
+              <option value="">ZPKG</option>
+              <option value="">ZPTG</option>
+              <option value="">ZRWK</option>
+              <option value="">ZSAT</option>
+              <option value="">ZWCM</option>
+              <option value="">ZWCR</option>
+            </select>
+          </div>
+          <div class="ml-2 order-lg-5 order-4 mb-md-0 mb-2" style="padding: unset !important;">
             <button class="btn btn-primary btn-custom-in-grp" (click)="Previous()"
               style="border-radius: 5px 0px 0px 5px">Previous</button>
             <button class="btn btn-primary  btn-custom-in-grp " (click)="Next()"
               style="border-radius: 0px 5px 5px 0px;">Next</button>
           </div>
-          <div class="ml-2 order-lg-5 order-4 mb-md-0 mb-2">
+          <div class="ml-2 order-lg-6 order-5 mb-md-0 mb-2">
             <button class="btn btn-primary px-2" (click)="loaddata()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -57,13 +74,21 @@
                         </div>
                         <div class="d-flex flex-wrap justify-content-center w-100">
                           <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                            Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
+                            Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
+                          </button>
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
                             Plating Val. = <b>{{ tot.platingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
                             Plating % = <b>{{ tot.platingper  |  number:'1.2-2' }}</b>
                           </button>
-                          <button class="btn btn-custom my-1 text-white pink-bg">
-                            Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
-                            Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
-                          </button> 
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                            Jigging Val. = <b>{{ tot.jigingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
+                            Jigging % = <b>{{ tot.jigingper  |  number:'1.2-2' }}</b>
+                          </button>
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                            Other Val. = <b>{{ tot.othervalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
+                            Other % = <b>{{ tot.otherper  |  number:'1.2-2' }}</b>
+                          </button>   
                         </div>
                         <!-- <div class="col-md-12">
                           <button class="btn btn-custom text-dark bg-summary" (click)="extraVal(7)">Summary</button>
