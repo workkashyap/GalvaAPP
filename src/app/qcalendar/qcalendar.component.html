@@ -19,20 +19,20 @@
             </select> 
           </div>
           <div class="d-flex ml-2 order-lg-4 order-3 mb-md-0 mb-2">
-            <select class="custom-select">
-              <option value="">All</option>
-              <option value="">ZASM</option>
-              <option value="">ZCRM</option>
-              <option value="">ZDCM</option>
-              <option value="">ZDCR</option>
-              <option value="">ZMLD</option>
-              <option value="">ZMLG</option>
-              <option value="">ZPKG</option>
-              <option value="">ZPTG</option>
-              <option value="">ZRWK</option>
-              <option value="">ZSAT</option>
-              <option value="">ZWCM</option>
-              <option value="">ZWCR</option>
+            <select class="custom-select" (change)="getOrderType()" name="Ordertype" #Ordertype='ngModel' [(ngModel)]='this.orderType'>
+              <option value="All">All</option>
+              <option value="ZASM">ZASM</option>
+              <option value="ZCRM">ZCRM</option>
+              <option value="ZDCM">ZDCM</option>
+              <option value="ZDCR">ZDCR</option>
+              <option value="ZMLD">ZMLD</option>
+              <option value="ZMLG">ZMLG</option>
+              <option value="ZPKG">ZPKG</option>
+              <option value="ZPTG">ZPTG</option>
+              <option value="ZRWK">ZRWK</option>
+              <option value="ZSAT">ZSAT</option>
+              <option value="ZWCM">ZWCM</option>
+              <option value="ZWCR">ZWCR</option>
             </select>
           </div>
           <div class="ml-2 order-lg-5 order-4 mb-md-0 mb-2" style="padding: unset !important;">
@@ -57,7 +57,7 @@
                   <!--  card-tools -->
                   <div class="form-inline" *ngIf="this.dpservice.dailyreportsummary" style="margin: auto;">
                     <div *ngFor="let tot of this.dpservice.dailyreportsummary" style="text-align: center;">
-                      <div *ngIf="tot.itemtype==this.typename" class="row m-0">
+                      <div *ngIf="tot.itemtype==this.orderType" class="row m-0">
                         <div class="d-flex flex-wrap justify-content-center w-100">
                           <button class="btn btn-custom my-1 text-white font-weight-bold summary-bg mr-3" (click)="extraVal(7)">Summary</button>
                           <button class="btn btn-custom my-1 text-white blue-bg mr-3" (click)="extraVal(1)">Insp. Value =
@@ -73,19 +73,19 @@
                               <b>{{ tot.rejper }}</b></button>
                         </div>
                         <div class="d-flex flex-wrap justify-content-center w-100">
-                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3" (click)="extraVal(8)">
                             Moulding Val. = <b>{{ tot.mouldingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
                             Moulding % = <b>{{ tot.mouldingper  |  number:'1.2-2' }}</b>
                           </button>
-                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3" (click)="extraVal(9)">
                             Plating Val. = <b>{{ tot.platingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
                             Plating % = <b>{{ tot.platingper  |  number:'1.2-2' }}</b>
                           </button>
-                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3" (click)="extraVal(10)">
                             Jigging Val. = <b>{{ tot.jigingvalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
                             Jigging % = <b>{{ tot.jigingper  |  number:'1.2-2' }}</b>
                           </button>
-                          <button class="btn btn-custom my-1 text-white pink-bg mr-3">
+                          <button class="btn btn-custom my-1 text-white pink-bg mr-3" (click)="extraVal(11)">
                             Other Val. = <b>{{ tot.othervalue  |  number:'1.2-2' }}</b> Lacs &nbsp;&nbsp;
                             Other % = <b>{{ tot.otherper  |  number:'1.2-2' }}</b>
                           </button>   
@@ -298,7 +298,7 @@
                   <ng-template pTemplate="header" let-columns>
                     <!-- header button section -->
                     <tr *ngIf="btnLabel">
-                      <td  style="width:15%;">
+                      <td  style="width:130px;">
                         <div class="input-group mb-2 ">
                           <input type="text" pInputText placeholder="Global Filter"
                             (input)="loadper($event.target.value , dt)"
@@ -309,20 +309,20 @@
                         </div>
                       </td>
                       <!--not for summary -->
-                      <td style="width:140px;">
-                        <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mb-2">
+                      <td style="width:150px;">
+                        <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-sm btn-custom text-white green-bg">
                           <i class="fa fa-file-excel-o"></i> Export</button>
                       </td>
   
   
                       <!--not for reject% and summary click event -->
                       <td *ngIf="btnLabel!='6' && btnLabel!='7'" style=" width:140px;">
-                        <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
+                        <button class="btn btn-sm btn-custom text-white blue-bg" *ngIf="btnLabel=='1'"
                           style="float: right;">Insp.
                           Qty: {{ inspectionQtysum | number:'1.2-2'}}
                         </button>
   
-                        <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
+                        <button class="btn btn-sm btn-custom text-white green-bg" *ngIf="btnLabel=='2'"
                           style="float: right;">Ok
                           Qty: {{ okQtySum | number:'1.2-2'}}
                         </button>
@@ -336,8 +336,24 @@
                           Qty: {{ buffingQtySum | number:'1.2-2'}}
                         </button>
   
-                        <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
+                        <button class="btn btn-sm btn-custom text-white red-bg" *ngIf="btnLabel=='5'"
                           style="float: right;">Reject Qty: {{ rejectQtysum  | number:'1.2-2'  }}
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='8'"
+                          style="float: right;">Moulding Value: {{ mouldingvsum  | number:'1.2-2'  }} lacs
+                        </button>
+                        
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='9'"
+                          style="float: right;">Plating Value: {{ platingvsum  | number:'1.2-2'  }} lacs
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='10'"
+                          style="float: right;">Jigging Value: {{ jigingvsum  | number:'1.2-2'  }} lacs
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='11'"
+                          style="float: right;">Other Value: {{ othervsum  | number:'1.2-2'  }} lacs
                         </button>
   
                       </td>
@@ -345,12 +361,12 @@
   
                       <!--not for summary click event -->
                       <td style="width:140px;" *ngIf="btnLabel!='7'">
-                        <button class="btn btn-sm  text-dark bg-info mb-2" *ngIf="btnLabel=='1'"
+                        <button class="btn btn-sm btn-custom text-white blue-bg" *ngIf="btnLabel=='1'"
                           style="float: right;">Total
                           Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
                         </button>
   
-                        <button class="btn btn-sm  text-dark bg-success mb-2" *ngIf="btnLabel=='2'"
+                        <button class="btn btn-sm btn-custom text-white green-bg" *ngIf="btnLabel=='2'"
                           style="float: right;">Ok
                           Value: {{ okvalueSum | number:'1.2-2'}} Lacs
                         </button>
@@ -364,36 +380,52 @@
                           Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
                         </button>
   
-                        <button class="btn btn-sm text-dark bg-danger mb-2" *ngIf="btnLabel=='5'"
-                          style="float: right;">Total Reject: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
+                        <button class="btn btn-sm btn-custom text-white red-bg" *ngIf="btnLabel=='5'"
+                          style="float: right;">Reject Value: {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
   
-                        <button class="btn btn-sm text-dark bg-warning mb-2" *ngIf="btnLabel=='6'"
+                        <button class="btn btn-sm btn-custom text-white red-bg" *ngIf="btnLabel=='6'"
                           style="float: right;">Reject %: {{ rejperPerSum2 | number:'1.1-2'  }} </button>
+                        
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='8'"
+                        style="float: right;">Moulding %: {{ mouldingpersum  | number:'1.2-2'  }}
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='9'"
+                        style="float: right;">Plating %: {{ platingpersum  | number:'1.2-2'  }}
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='10'"
+                        style="float: right;">Jigging %: {{ jigingpersum  | number:'1.2-2'  }}
+                        </button>
+
+                        <button class="btn btn-sm btn-custom text-white pink-bg" *ngIf="btnLabel=='11'"
+                        style="float: right;">Other %: {{ otherpersum  | number:'1.2-2'  }}
+                        </button>
                       </td>
                       <!--not for summary click event -->
   
                       <!--only for summary -->
-                      <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                        <button class="btn btn-sm  text-dark bg-info mb-2" style="float: right;">Total
+                      <td style="width:140px;" class="pr-1" *ngIf="btnLabel=='7'">
+                        <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">Total
                           Insp.: {{ inspectionvsum | number:'1.2-2'}} Lacs
                         </button>
                       </td>
-                      <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                        <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok
+                      <td style="width:125px;" class="pr-1" *ngIf="btnLabel=='7'">
+                        <button class="btn btn-sm btn-custom text-white green-bg" style="float: right;">Ok
                           Val.: {{ okvalueSum | number:'1.2-2'}} Lacs
                         </button>
                       </td>
-                      <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                        <button class="btn btn-sm  text-dark bg-success mb-2" style="float: right;">Ok %:
+                      <td style="width:85px;" class="pr-2" *ngIf="btnLabel=='7'">
+                        <button class="btn btn-sm btn-custom text-white green-bg" style="float: right;">Ok %:
                           {{ okperSum | number:'1.2-2'}}
                         </button>
                       </td>
-                      <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                        <button class="btn btn-sm text-dark bg-danger mb-2" style="float: right;">Total Reject:
+                      <td style="width:140px;" class="pr-1" *ngIf="btnLabel=='7'">
+                        <button class="btn btn-sm btn-custom text-white red-bg" style="float: right;">Total Reject:
                           {{ rejectvsum | number:'1.2-2'  }} Lacs </button>
                       </td>
-                      <td *ngIf="btnLabel=='7'" style=" width:180px;">
-                        <button class="btn btn-sm text-dark bg-warning mb-2" style="float: right;">Reject %:
+                      <td style="width:100px;" class="pr-1" *ngIf="btnLabel=='7'">
+                        <button class="btn btn-sm btn-custom text-white red-bg" style="float: right;">Reject %:
                           {{ rejperPerSum2 | number:'1.1-2'  }} </button>
                       </td>
                       <!--end for summary -->

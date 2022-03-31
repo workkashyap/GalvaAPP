@@ -18,5 +18,13 @@ export class DailyReportSummary {
     holdqty:number;
     buffingvalue:number;
     buffingqty:number;
+    platingvalue:number;
+    platingper:number;
+    mouldingvalue:number;
+    mouldingper:number;
+    jigingvalue:number;
+    jigingper:number;
+    othervalue:number;
+    otherper:number;
   }
   

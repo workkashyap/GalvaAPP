@@ -39,6 +39,8 @@ export class QCalendarComponent implements OnInit {
   noRecord: any;
   public rejectvsum: any;
   public rejectQtysum: any;
+  public orderType: string;
+  public type: string;
 
   buffingvalueSum: any;
   buffingQtySum: any;
@@ -57,7 +59,32 @@ export class QCalendarComponent implements OnInit {
   selectedItemrejarray: Itemwiserej[] = [];
   filterItemrejarray: Itemwiserej[] = [];
   iv: number;
-  rejper = 0;
+
+  rejper: number;
+  okper: number;
+  okvalue: number;
+  producevalue: number;
+  okqty: number;
+  produceqty: number;
+  rejectqty: number;
+  rejectvalue: number;
+  platingvalue: number;
+  platingper: number;
+  mouldingvalue: number;
+  mouldingper: number;
+  jigingvalue: number;
+  jigingper: number;
+  othervalue: number;
+  otherper: number;
+
+  platingvsum: number;
+  platingpersum: number;
+  mouldingvsum: number;
+  mouldingpersum: number;
+  jigingvsum: number;
+  jigingpersum: number;
+  othervsum: number;
+  otherpersum: number;
 
   public inspectionvsum: any;
   public inspectionQtysum: any;
@@ -85,7 +112,7 @@ export class QCalendarComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
-
+    this.orderType = 'All';
     this.typename = 'PLATING';
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -170,7 +197,7 @@ export class QCalendarComponent implements OnInit {
         me.loading = false;
         if (res) {
           me.dpservice
-            .New_getRejectcalendar(me.selectedcode, me.startdate)
+            .New_getRejectcalendar(me.selectedcode, me.orderType, me.startdate)
             .toPromise()
             .then(res => {
               me.dpservice.dailyprodlist = res as Dailyproduction[];
@@ -252,8 +279,8 @@ export class QCalendarComponent implements OnInit {
     $('#basicExampleModal').modal('show');
     this.selected_eventdate = this.datePipe.transform(model.event.start, 'yyyy-MM-dd');
     this.loading = true;
-    this.selectedtype = 'NULL';
-    this.dpservice.New_getRejectdetail(this.selectedcode, 'NULL', this.selected_eventdate, this.selected_eventdate)
+    this.selectedtype = 'All';
+    this.dpservice.New_getRejectdetail(this.selectedcode, this.selectedtype, this.selected_eventdate, this.selected_eventdate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
@@ -264,7 +291,7 @@ export class QCalendarComponent implements OnInit {
   loaddata() {
     const me = this;
     this.dpservice
-      .New_getRejectcalendar(this.selectedcode, this.startdate)
+      .New_getRejectcalendar(this.selectedcode, this.orderType, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
@@ -275,13 +302,43 @@ export class QCalendarComponent implements OnInit {
   }
   loadchart1() {
     this.rejper = 0;
+    this.okper = 0;
+    this.okvalue = 0;
+    this.producevalue = 0;
+    this.okqty = 0;
+    this.produceqty = 0;
+    this.rejectqty = 0;
+    this.rejectvalue = 0;
+    this.platingvalue = 0;
+    this.platingper = 0;
+    this.mouldingvalue = 0;
+    this.mouldingper = 0;
+    this.jigingvalue = 0;
+    this.jigingper = 0;
+    this.othervalue = 0;
+    this.otherper = 0;
     const month = new Date(this.startdate).getMonth();
     const monthName = this.monthNames[month];
     this.dpservice.dailyreportsummary = [];
-    this.dpservice.New_getprochartsummary(this.selectedcode, 'M', monthName, this.startdate).then((res: any) => {
+    this.dpservice.New_getprochartsummary(this.selectedcode, this.orderType, monthName, this.startdate).then((res: any) => {
       this.dpservice.dailyreportsummary.forEach(drsummary => {
-        if (drsummary.itemtype === this.typename) {
+        if (drsummary.itemtype === this.orderType) {
           this.rejper = drsummary.rejper;
+          this.okper = drsummary.okper;
+          this.okvalue = drsummary.okvalue;
+          this.producevalue = drsummary.producevalue;
+          this.okqty = drsummary.okqty;
+          this.produceqty = drsummary.produceqty;
+          this.rejectqty = drsummary.rejectqty;
+          this.rejectvalue = drsummary.rejectvalue;
+          this.platingvalue = drsummary.platingvalue;
+          this.platingper = drsummary.platingper;
+          this.mouldingvalue = drsummary.mouldingvalue;
+          this.mouldingper = drsummary.mouldingper;
+          this.jigingvalue = drsummary.jigingvalue;
+          this.jigingper = drsummary.jigingper;
+          this.othervalue = drsummary.othervalue;
+          this.otherper = drsummary.otherper;
         }
       });
     });
@@ -297,7 +354,7 @@ export class QCalendarComponent implements OnInit {
       me.company_per = '87%';
     }
     this.dpservice
-      .New_getRejectcalendar(ev, this.startdate)
+      .New_getRejectcalendar(ev, this.orderType, this.startdate)
       .toPromise()
       .then(res => {
         this.dpservice.dailyprodlist = res as Dailyproduction[];
@@ -340,7 +397,7 @@ export class QCalendarComponent implements OnInit {
     ];
     if (val === 7) {
       this.cols.push({ field: 'inspection_value', header: 'Insp. Value' },
-        { field: 'okvalue', header: 'Ok Value' },
+        { field: 'okvalue', header: 'Ok Value'},
         { field: 'okper', header: 'Ok Value %' },
         { field: 'reject_value', header: 'Rej. Value' },
         { field: 'rejper', header: 'Reject %' },
@@ -363,6 +420,18 @@ export class QCalendarComponent implements OnInit {
       this.cols.push({ field: 'reject_value', header: 'Rej. Value' });
     } else if (val === 6) {
       this.cols.push({ field: 'rejper', header: 'Rej. %' });
+    } else if (val === 8) {
+      this.cols.push({ field: 'plating_value', header: 'Plating Value'});
+      this.cols.push({ field: 'platingper', header: 'Plating %'});
+    } else if (val === 9) {
+      this.cols.push({ field: 'moulding_value', header: 'Moulding Value'});
+      this.cols.push({ field: 'mouldingper', header: 'Moulding %'});
+    } else if (val === 10) {
+      this.cols.push({ field: 'jigingval', header: 'Jigging Value'});
+      this.cols.push({ field: 'jigingper', header: 'Jigging %'});
+    } else if (val === 11) {
+      this.cols.push({ field: 'othersqty', header: 'Other Quantity'});
+      this.cols.push({ field: 'othersvalue', header: 'Other Value'});
     } else {
       return;
     }
@@ -372,8 +441,8 @@ export class QCalendarComponent implements OnInit {
     const firstDate = this.datePipe.transform(this.sDate, 'yyyy-MM-dd');
     const endDate = this.datePipe.transform(this.lDate, 'yyyy-MM-dd');
     this.loading = true;
-    this.selectedtype = 'NULL';
-    this.dpservice.New_getRejectdetail(this.selectedcode, 'NULL', firstDate, endDate)
+    console.log("testing: " + this.orderType);
+    this.dpservice.New_getRejectdetail(this.selectedcode, this.orderType, firstDate, endDate)
       .toPromise()
       .then(res => {
         this.dpservice.itemwiserejlist = res as Itemwiserej[];
@@ -412,54 +481,90 @@ export class QCalendarComponent implements OnInit {
     this.okQtySum = 0;
     this.okperSum = 0;
 
+    this.platingvsum = 0;
+    this.platingpersum =0;
+    this.mouldingvsum = 0;
+    this.mouldingpersum =0;
+    this.jigingvsum = 0;
+    this.jigingpersum =0;
+    this.othervsum = 0;
+    this.otherpersum =0;
+
     this.rejperPerSum = 0;
     this.rejperPerSum2 = 0;
     if (this.filterenable === true) {
-      for (const rq of this.filterItemrejarray) {
-        this.rejectvsum += rq.reject_value;
-        this.rejectQtysum += rq.reject_qty;
+      // for (const rq of this.filterItemrejarray) {
+      //   this.rejectvsum += rq.reject_value;
+      //   this.rejectQtysum += rq.reject_qty;
 
-        this.inspectionvsum += rq.inspection_value;
-        this.inspectionQtysum += rq.inspection_qty;
+      //   this.inspectionvsum += rq.inspection_value;
+      //   this.inspectionQtysum += rq.inspection_qty;
 
-        this.holdvalueSum += rq.holdvalue;
-        this.holdQtySum += rq.holdqty;
+      //   this.holdvalueSum += rq.holdvalue;
+      //   this.holdQtySum += rq.holdqty;
 
-        this.buffingvalueSum += rq.buffingvalue;
-        this.buffingQtySum += rq.buffingqty;
+      //   this.buffingvalueSum += rq.buffingvalue;
+      //   this.buffingQtySum += rq.buffingqty;
 
-        this.okvalueSum += rq.okvalue;
-        this.okQtySum += rq.okqty;
-        this.okperSum += rq.okper;
+      //   this.okvalueSum += rq.okvalue;
+      //   this.okQtySum += rq.okqty;
+      //   this.okperSum += rq.okper;
 
-        this.rejperPerSum += rq.rejper;
-      }
-      this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
+      //   this.rejperPerSum += rq.rejper;
+      // }
+      this.okperSum = this.okper; //(this.okperSum / this.dpservice.itemwiserejlist.length);
       this.rejperPerSum2 = this.rejper; // (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
+      this.okvalueSum = this.okvalue;
+      this.inspectionvsum = this.producevalue;
+      this.okQtySum = this.okqty;
+      this.inspectionQtysum = this.produceqty;
+      this.rejectvsum = this.rejectvalue;
+      this.rejectQtysum = this.rejectqty;
+      this.platingvsum = this.platingvalue;
+      this.platingpersum = this.platingper;
+      this.mouldingvsum = this.mouldingvalue;
+      this.mouldingpersum = this.mouldingper;
+      this.jigingvsum = this.jigingvalue;
+      this.jigingpersum = this.jigingper;
+      this.othervsum = this.othervalue;
+      this.otherpersum = this.otherper;
       return;
     }
 
-    for (const rq of this.dpservice.itemwiserejlist) {
-      this.rejectvsum += rq.reject_value;
-      this.rejectQtysum += rq.reject_qty;
+    // for (const rq of this.dpservice.itemwiserejlist) {
+    //   this.rejectvsum += rq.reject_value;
+    //   this.rejectQtysum += rq.reject_qty;
 
-      this.inspectionvsum += rq.inspection_value;
-      this.inspectionQtysum += rq.inspection_qty;
+    //   this.inspectionvsum += rq.inspection_value;
+    //   this.inspectionQtysum += rq.inspection_qty;
 
-      this.holdvalueSum += rq.holdvalue;
-      this.holdQtySum += rq.holdqty;
+    //   this.holdvalueSum += rq.holdvalue;
+    //   this.holdQtySum += rq.holdqty;
 
-      this.buffingvalueSum += rq.buffingvalue;
-      this.buffingQtySum += rq.buffingqty;
+    //   this.buffingvalueSum += rq.buffingvalue;
+    //   this.buffingQtySum += rq.buffingqty;
 
-      this.okvalueSum += rq.okvalue;
-      this.okQtySum += rq.okqty;
-      this.okperSum += rq.okper;
+    //   this.okvalueSum += rq.okvalue;
+    //   this.okperSum += rq.okper;
 
-      this.rejperPerSum += rq.rejper;
-    }
-    this.okperSum = (this.okperSum / this.dpservice.itemwiserejlist.length);
+    //   this.rejperPerSum += rq.rejper;
+    // }
+    this.okperSum = this.okper; //(this.okperSum / this.dpservice.itemwiserejlist.length);
     this.rejperPerSum2 = this.rejper; // (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
+    this.okvalueSum = this.okvalue;
+    this.inspectionvsum = this.producevalue;
+    this.okQtySum = this.okqty;
+    this.inspectionQtysum = this.produceqty;
+    this.rejectvsum = this.rejectvalue;
+    this.rejectQtysum = this.rejectqty;
+    this.platingvsum = this.platingvalue;
+    this.platingpersum = this.platingper;
+    this.mouldingvsum = this.mouldingvalue;
+    this.mouldingpersum = this.mouldingper;
+    this.jigingvsum = this.jigingvalue;
+    this.jigingpersum = this.jigingper;
+    this.othervsum = this.othervalue;
+    this.otherpersum = this.otherper
   }
   /*rejectvaluesum() {
     this.rejectvsum = 0;
@@ -521,5 +626,25 @@ export class QCalendarComponent implements OnInit {
       });
     }
     // return this.selected_plantname;
+  }
+
+  getOrderType() {
+    this.type = this.orderType;
+    const me = this;
+    this.selectedPlanName();
+    if (me.selectedcode === '1010') {
+      me.company_per = '85%';
+    } else {
+      me.company_per = '87%';
+    }
+    this.dpservice
+      .New_getRejectcalendar(this.selectedcode, this.type, this.startdate)
+      .toPromise()
+      .then(res => {
+        this.dpservice.dailyprodlist = res as Dailyproduction[];
+        this.countRejrecord();
+        me.loadchart1();
+        this.loading = false;
+      });
   }
 }

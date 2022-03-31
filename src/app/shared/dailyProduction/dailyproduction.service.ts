@@ -82,28 +82,21 @@ export class DailyproductionService {
     );
   }
 
-  public New_getRejectcalendar(id, date): Observable<Dailyproduction[]> {
-    return this.http.get<Dailyproduction[]>(
-      this.rootUrl + '/dailyproductions/New_Getallrejdata/' + id + '/Plating/' + date
-    );
+  public New_getRejectcalendar(id, type, date): Observable<Dailyproduction[]> {
+    if(type === 'All') {
+      return this.http.get<Dailyproduction[]>(this.rootUrl + '/dailyproductions/New_Getallrejdata_all/' + id + '/' + type +'/' + date);
+    }else {
+      return this.http.get<Dailyproduction[]>(this.rootUrl + '/dailyproductions/New_Getallrejdata/' + id + '/' + type +'/' + date);
+    }
   }
+
   public New_getRejectdetail(
     plantcode,
     type,
     fromdate,
     todate
   ): Observable<Itemwiserej[]> {
-    return this.http.get<Itemwiserej[]>(
-      this.rootUrl +
-      '/itemwiserejs/new_rejectdetaildata/' +
-      plantcode +
-      '/' +
-      type +
-      '/' +
-      fromdate +
-      '/' +
-      todate
-    );
+    return this.http.get<Itemwiserej[]>(this.rootUrl + '/itemwiserejs/new_rejectdetaildata/' + plantcode + '/' + type + '/' + fromdate + '/' + todate);
   }
 
   public getRejectdetail(
