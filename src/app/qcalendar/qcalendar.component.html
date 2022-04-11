@@ -432,7 +432,7 @@
                     </tr>
                     <!-- regular date section -->
                     <tr *ngIf="!btnLabel">
-                      <td colspan="2" style=" width:275px;">
+                      <td colspan="2" style=" width:160px;">
                         <div class="input-group mb-2">
                           <input type="text" pInputText placeholder="Global Filter"
                             (input)="loadper($event.target.value , dt)"
@@ -442,24 +442,24 @@
                           </div>
                         </div>
                       </td>
-                      <td style=" width:140px;"> </td>
-                      <td style=" width:140px;"> </td>
+                      <td style=" width:80px;"> </td>
+                      <td style=" width:80px;"> </td>
                       <td style=" width:140px;">
-                        <button class="btn text-dark bg-danger btn-custom-td">
-                          Total Reject: {{ rejectvsum  | number:'1.2-2'  }} Lacs </button>
+                        <button class="btn btn-sm btn-custom text-white red-bg">
+                          Total Reject: {{ rejectDailySum | number:'1.2-2'  }} Lacs </button>
                       </td>
                       <td style=" width:140px;">
-                        <button class="btn  text-dark bg-info btn-custom-td">
-                          Total Insp.: {{ inspectionvsum  | number:'1.2-2'}} Lacs
+                        <button class="btn btn-sm btn-custom text-white blue-bg">
+                          Total Insp.: {{ inspDailySum  | number:'1.2-2'}} Lacs
                         </button>
                       </td>
                       <td style=" width:140px;">
-                        <button class="btn text-dark bg-primary btn-custom-td">
+                        <button class="btn btn-sm btn-custom text-white pink-bg">
                           Hold Value: {{ holdvalueSum | number:'1.2-2'}} Lacs
                         </button>
                       </td>
                       <td style=" width:140px;">
-                        <button class="btn text-dark bg-dark btn-custom-td">
+                        <button class="btn btn-sm btn-custom text-white pink-bg">
                           Buff. Value: {{ buffingvalueSum | number:'1.2-2'}} Lacs
                         </button>
                       </td>

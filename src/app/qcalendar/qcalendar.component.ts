@@ -39,6 +39,8 @@ export class QCalendarComponent implements OnInit {
   noRecord: any;
   public rejectvsum: any;
   public rejectQtysum: any;
+  public rejectDailySum: any;
+  public inspDailySum: any;
   public orderType: string;
   public type: string;
 
@@ -490,28 +492,21 @@ export class QCalendarComponent implements OnInit {
     this.othervsum = 0;
     this.otherpersum =0;
 
+    this.inspDailySum = 0;
+    this.rejectDailySum = 0;
+
     this.rejperPerSum = 0;
     this.rejperPerSum2 = 0;
     if (this.filterenable === true) {
-      // for (const rq of this.filterItemrejarray) {
-      //   this.rejectvsum += rq.reject_value;
-      //   this.rejectQtysum += rq.reject_qty;
+       for (const rq of this.filterItemrejarray) {
+         this.rejectDailySum += rq.reject_value;
+         this.inspDailySum += rq.inspection_value;
+         this.holdvalueSum += rq.holdvalue;
+         this.holdQtySum += rq.holdqty;
+         this.buffingvalueSum += rq.buffingvalue;
+         this.buffingQtySum += rq.buffingqty;
 
-      //   this.inspectionvsum += rq.inspection_value;
-      //   this.inspectionQtysum += rq.inspection_qty;
-
-      //   this.holdvalueSum += rq.holdvalue;
-      //   this.holdQtySum += rq.holdqty;
-
-      //   this.buffingvalueSum += rq.buffingvalue;
-      //   this.buffingQtySum += rq.buffingqty;
-
-      //   this.okvalueSum += rq.okvalue;
-      //   this.okQtySum += rq.okqty;
-      //   this.okperSum += rq.okper;
-
-      //   this.rejperPerSum += rq.rejper;
-      // }
+       }
       this.okperSum = this.okper; //(this.okperSum / this.dpservice.itemwiserejlist.length);
       this.rejperPerSum2 = this.rejper; // (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
       this.okvalueSum = this.okvalue;
@@ -531,24 +526,14 @@ export class QCalendarComponent implements OnInit {
       return;
     }
 
-    // for (const rq of this.dpservice.itemwiserejlist) {
-    //   this.rejectvsum += rq.reject_value;
-    //   this.rejectQtysum += rq.reject_qty;
-
-    //   this.inspectionvsum += rq.inspection_value;
-    //   this.inspectionQtysum += rq.inspection_qty;
-
-    //   this.holdvalueSum += rq.holdvalue;
-    //   this.holdQtySum += rq.holdqty;
-
-    //   this.buffingvalueSum += rq.buffingvalue;
-    //   this.buffingQtySum += rq.buffingqty;
-
-    //   this.okvalueSum += rq.okvalue;
-    //   this.okperSum += rq.okper;
-
-    //   this.rejperPerSum += rq.rejper;
-    // }
+     for (const rq of this.dpservice.itemwiserejlist) {
+       this.rejectDailySum += rq.reject_value;
+       this.inspDailySum += rq.inspection_value;
+       this.holdvalueSum += rq.holdvalue;
+       this.holdQtySum += rq.holdqty;
+       this.buffingvalueSum += rq.buffingvalue;
+       this.buffingQtySum += rq.buffingqty;
+     }
     this.okperSum = this.okper; //(this.okperSum / this.dpservice.itemwiserejlist.length);
     this.rejperPerSum2 = this.rejper; // (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
     this.okvalueSum = this.okvalue;
