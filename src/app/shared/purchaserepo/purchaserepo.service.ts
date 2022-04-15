@@ -15,7 +15,7 @@ export class PurchaserepoService {
   getData(year) {
     return this.http.get<any[]>(this.rootUrl + '/purchaseheaders/getpurchaserepo/' + year + '-01-01');
   }
-  getDataall(year) {
-    return this.http.get<any[]>(this.rootUrl + '/purchaseheaders/getpurchaserepo/all');
+  getDataall(year, plant) {
+    return this.http.get<any[]>(this.rootUrl + '/purchaseheaders/getpurchaserepoplant/' + plant + '/all');
   }
 }

@@ -40,6 +40,7 @@ export class QCalendarComponent implements OnInit {
   public rejectvsum: any;
   public rejectQtysum: any;
   public rejectDailySum: any;
+  public okDailySum: any;
   public inspDailySum: any;
   public orderType: string;
   public type: string;
@@ -274,8 +275,7 @@ export class QCalendarComponent implements OnInit {
       { field: 'rejper', header: 'Rej %' },
       { field: 'reject_value', header: 'Reject Value' },
       { field: 'inspection_value', header: 'Insp. Value' },
-      { field: 'holdvalue', header: 'Hold Value' },
-      { field: 'buffingvalue', header: 'Buff. Value' }
+      { field: 'okvalue', header: 'Ok Value' }
     ];
     this.btnLabel = ''; this.monthName = '';
     $('#basicExampleModal').modal('show');
@@ -466,7 +466,6 @@ export class QCalendarComponent implements OnInit {
     // }
   }
   sumAllData() {
-    console.log('hie');
     this.rejectvsum = 0;
     this.rejectQtysum = 0;
 
@@ -494,6 +493,7 @@ export class QCalendarComponent implements OnInit {
 
     this.inspDailySum = 0;
     this.rejectDailySum = 0;
+    this.okDailySum = 0;
 
     this.rejperPerSum = 0;
     this.rejperPerSum2 = 0;
@@ -501,7 +501,7 @@ export class QCalendarComponent implements OnInit {
        for (const rq of this.filterItemrejarray) {
          this.rejectDailySum += rq.reject_value;
          this.inspDailySum += rq.inspection_value;
-         this.holdvalueSum += rq.holdvalue;
+         this.okDailySum += rq.okvalue;
          this.holdQtySum += rq.holdqty;
          this.buffingvalueSum += rq.buffingvalue;
          this.buffingQtySum += rq.buffingqty;
@@ -510,6 +510,7 @@ export class QCalendarComponent implements OnInit {
       this.okperSum = this.okper; //(this.okperSum / this.dpservice.itemwiserejlist.length);
       this.rejperPerSum2 = this.rejper; // (this.rejperPerSum / this.dpservice.itemwiserejlist.length)
       this.okvalueSum = this.okvalue;
+      console.log(this.okDailySum);
       this.inspectionvsum = this.producevalue;
       this.okQtySum = this.okqty;
       this.inspectionQtysum = this.produceqty;
@@ -529,7 +530,7 @@ export class QCalendarComponent implements OnInit {
      for (const rq of this.dpservice.itemwiserejlist) {
        this.rejectDailySum += rq.reject_value;
        this.inspDailySum += rq.inspection_value;
-       this.holdvalueSum += rq.holdvalue;
+       this.okDailySum += rq.okvalue;
        this.holdQtySum += rq.holdqty;
        this.buffingvalueSum += rq.buffingvalue;
        this.buffingQtySum += rq.buffingqty;

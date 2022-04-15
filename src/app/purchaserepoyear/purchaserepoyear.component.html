@@ -1,8 +1,17 @@
 <div class="p-3">
-    <div class="page-filter d-flex w-100 px-2 py-1">
+    <div class="page-filter d-flex w-100 px-2 py-1 justify-content-between">
       <div class="d-flex">
         <h4 class="font-weight-bold heading mb-0 align-self-center">Purchase Report YoY (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)</h4>
       </div>
+      <div class="d-flex ml-sm-auto order-lg-3 order-2 mb-md-0 mb-2">
+        <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+                <!-- <option value="0">--Select--</option> -->
+                <option value="">All</option>
+                <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                  {{ pl.plantshortname }}
+                </option>
+        </select> 
     </div>
 </div>
 
@@ -16,6 +25,7 @@
       [columnDefs]="columnDefs"
       [groupMultiAutoColumn]="true"
       [pivotMode]="true"
+      [gridOptions]="gridOptions"
       [animateRows]="true"
       [getRowStyle]="getRowStyle"
       [groupIncludeFooter]="true"

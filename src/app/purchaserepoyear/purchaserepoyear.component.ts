@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Grid, GridOptions } from 'ag-grid-community';
 import { PurchaserepoService } from '../shared/purchaserepo/purchaserepo.service';
+import { PlantService } from '../shared/plant/plant.service';
+import { User } from '../shared/login/User.model';
+import { LoginService } from '../shared/login/login.service';
 import { ColDef, GridReadyEvent, SideBarDef  } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { InnerRenderer } from '../salesrepo/innerrenderer.component';
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: 'app-purchaserepoyear',
@@ -15,9 +20,15 @@ import { InnerRenderer } from '../salesrepo/innerrenderer.component';
 export class PurchaserepoyearComponent implements OnInit {
 
   public d: any;
+  public currentUser: User;
 
   public yearname: string;
   public year: string;
+  public plantcode: string;
+  public plant: string;
+  public selectedcode: string;
+  public selected_plantname: string;
+  public loading = false;
 
   rowData: Observable<any[]>;
   public sideBar: SideBarDef | string | boolean | null = 'columns';
@@ -51,6 +62,10 @@ export class PurchaserepoyearComponent implements OnInit {
     },
   };
 
+  public gridOptions: GridOptions = {
+    pivotColumnGroupTotals: 'before',
+  };
+
   MyYearPivotComparator(a: string, b: string) {
     const requiredOrder = ['2023','2022','2021','2020'];
     return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
@@ -66,17 +81,37 @@ export class PurchaserepoyearComponent implements OnInit {
     return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
   }
 
-  constructor(private purchaserepo: PurchaserepoService) {}
-
-  ngOnInit() {
-    this.d = new Date();
-    this.yearname = this.d.getFullYear();
-    this.rowData = this.purchaserepo.getDataall(this.yearname);
+  constructor(private purchaserepo: PurchaserepoService, public plantservice: PlantService, public lservice: LoginService,) {
+    this.plantcode = 'all';
+    this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }
 
-  getselectedyear() {
-    this.year = this.yearname;
-    this.rowData = this.purchaserepo.getDataall(this.year);
+  ngOnInit() {
+    const me =this;
+    this.d = new Date();
+    this.yearname = this.d.getFullYear();
+    this.rowData = this.purchaserepo.getDataall(this.yearname, this.plantcode);
+    this.plantservice
+      .sgetPlantData(me.currentUser.id)
+      .toPromise()
+      .then(res => {
+        me.plantservice.splantlist = res as Plant[];
+        console.log('splantlist', me.plantservice.splantlist);
+        me.selectedcode = me.plantservice.splantlist[0].plantcode;
+        me.selected_plantname = me.plantservice.splantlist[0].plantshortname;
+        me.loading = false;
+      });
+  }
+
+  selectedGrid(ev) {
+    if(ev === '') {
+      this.selectedcode = 'all';
+    }else{
+      this.selectedcode = ev;
+    }
+    const me = this;
+    this.rowData = this.purchaserepo.getDataall(this.yearname, this.selectedcode);
+    console.log(this.selectedcode);
   }
 
   onGridReady(params: GridReadyEvent) {}
