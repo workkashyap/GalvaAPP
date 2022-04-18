@@ -1,0 +1,75 @@
+.page-filter{
+    border-radius: 10px;
+    border: 2px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.heading{
+    color: rgba(1,41,205,0.7);
+}
+
+.ag-theme-alpine {
+    --ag-header-background-color: rgba(1,41,205,0.7);
+    --ag-header-foreground-color: white;
+    font-size: 14px;
+}
+
+.highlight-2, .card{
+    background: #f8f9fa;
+}
+
+.border-10{
+    border-radius: 10px;
+}
+
+.content-wrapper{
+    background: white !important;
+}
+
+.card-header{
+    border-bottom: 1px solid rgba(1,41,205,0.7);
+}
+
+.summary-bg{
+    border-radius: 10px;
+    background: #ffa089;
+    box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -4px -4px 4px 0 rgba(255,127,80, 0.85),
+                inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.blue-bg{
+    border-radius: 10px;
+    background: rgba(1,41,205,0.5);
+    box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -4px -4px 4px 0 rgba(51, 83, 214, 0.5),
+                inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.pink-bg{
+    border-radius: 10px;
+    background: #E36488;
+    box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -3px -3px 6px 0 rgba(142, 52, 68, 0.5),
+                inset 3px 3px 6px 0 rgba(255, 255, 255, 0.5);
+}
+
+.green-bg{
+    background: #77dd77;
+    border-radius: 10px;
+    box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -4px -4px 4px 0 rgba(28, 172, 120, 0.85),
+                inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.red-bg{
+    background: #ff6961;
+    border-radius: 10px;
+    box-shadow: 5px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -4px -4px 4px 0 rgba(234,60,83, 0.85),
+                inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
+.card-header .btn{
+    line-height: 1.0;
+}

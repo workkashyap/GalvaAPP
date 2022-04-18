@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PurchaserepoService } from '../shared/purchaserepo/purchaserepo.service';
 import { ColDef, GridReadyEvent, SideBarDef  } from 'ag-grid-community';
+import { Grid, GridOptions } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
@@ -22,9 +23,10 @@ export class PurchaserepoComponent implements OnInit {
   rowData: Observable<any[]>;
   public sideBar: SideBarDef | string | boolean | null = 'columns';
   public columnDefs: ColDef[] = [
-    {headerName: 'Month', field: 'monthname', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
-    {headerName: 'Branch', field: 'plantShortName', enableRowGroup: true,  rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
-    {headerName: 'Sub Grouping', field: 'subGrouping', pivot: true, enablePivot: true, sortable: true, cellStyle: {fontSize: '13px'} },
+    {headerName: 'Purchase Category', field: 'subGrouping', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
+    // {headerName: 'Branch', field: 'plantShortName', enableRowGroup: true,  rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
+    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true, pivotComparator: this.MyYearPivotComparator, cellStyle: {fontSize: '13px'}},
+    {headerName: 'Month', field: 'monthname', pivot: true, enablePivot: true, sortable: true, pivotComparator: this.MyYearPivotComparator2, cellStyle: {fontSize: '13px'} },
     {headerName: '', field: 'totalPurchase', aggFunc: params => {
                                                         let sum = 0;
                                                         params.values.forEach(value => sum += value);
@@ -49,6 +51,20 @@ export class PurchaserepoComponent implements OnInit {
        innerRenderer: InnerRenderer,
     },
   };
+
+  public gridOptions: GridOptions = {
+    pivotColumnGroupTotals: 'before',
+  };
+
+  MyYearPivotComparator(a: string, b: string) {
+    const requiredOrder = ['2023','2022','2021','2020'];
+    return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
+  }
+
+  MyYearPivotComparator2(a: string, b: string) {
+    const requiredOrder = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
+  }
 
   constructor(private purchaserepo: PurchaserepoService) { }
 
