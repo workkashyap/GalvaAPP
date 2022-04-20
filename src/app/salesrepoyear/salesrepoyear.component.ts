@@ -22,11 +22,11 @@ export class SalesrepoyearComponent implements OnInit {
   public year: string;
 
   rowData: Observable<any[]>;
-  public sideBar: SideBarDef | string | boolean | null = 'columns';
+  public sideBar: SideBarDef | string | boolean | null = 'filters';
   public columnDefs: ColDef[] = [
     {headerName: 'Month', field: 'monthName', type: 'leftAligned' , enableRowGroup: true, rowGroup: true, hide: true,  cellStyle: {fontSize: '13px'}  },
     {headerName: 'Branch', field: 'plantname', type: 'leftAligned' , enableRowGroup: true , rowGroup: true,  cellStyle: {fontSize: '13px'} },
-    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true , pivotComparator: this.MyYearPivotComparator,  cellStyle: {fontSize: '13px'} },
+    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true , filter: true, pivotComparator: this.MyYearPivotComparator,  cellStyle: {fontSize: '13px'} },
     {headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned',aggFunc: params => {
                                                             let sum = 0;
                                                             params.values.forEach(value => sum += value);
@@ -70,6 +70,7 @@ export class SalesrepoyearComponent implements OnInit {
     flex: 1,
     minWidth: 120,
     sortable: true,
+    floatingFilter: true,
     resizable: true,
   };
 

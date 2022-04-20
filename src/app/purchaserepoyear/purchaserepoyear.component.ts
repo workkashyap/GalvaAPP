@@ -31,11 +31,11 @@ export class PurchaserepoyearComponent implements OnInit {
   public loading = false;
 
   rowData: Observable<any[]>;
-  public sideBar: SideBarDef | string | boolean | null = 'columns';
+  public sideBar: SideBarDef | string | boolean | null = 'filters';
   public columnDefs: ColDef[] = [
     {headerName: 'Purchase Category', field: 'subGrouping', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
     // {headerName: 'Branch', field: 'plantShortName', enableRowGroup: true,  rowGroup: true, hide: true, cellStyle: {fontSize: '13px'} },
-    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true, pivotComparator: this.MyYearPivotComparator, cellStyle: {fontSize: '13px'}},
+    {headerName: 'Year', field: 'year', pivot: true, enablePivot: true, sortable: true, filter: true, pivotComparator: this.MyYearPivotComparator, cellStyle: {fontSize: '13px'}},
     {headerName: 'Month', field: 'monthname', pivot: true, enablePivot: true, sortable: true, pivotComparator: this.MyYearPivotComparator2, cellStyle: {fontSize: '13px'} },
     {headerName: '', field: 'totalPurchase', aggFunc: params => {
                                                         let sum = 0;
@@ -48,6 +48,7 @@ export class PurchaserepoyearComponent implements OnInit {
   public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 120,
+    floatingFilter: true,
     sortable: true,
     resizable: true,
   };
