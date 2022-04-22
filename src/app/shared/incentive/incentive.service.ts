@@ -31,9 +31,9 @@ export class IncentiveService {
 
   getAgGridData(year, month) {
     if (month.length > 1) {
-      return this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + year + '-' + month + '-01');
+      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdata/' + year + '-' + month + '-01');
     } else {
-      return this.http.get<any[]>('http://103.236.154.122:2222/api/dailyproductions/Getallrejdata/' + year + '-0' + month + '-01');
+      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdata/' + year + '-0' + month + '-01');
     }
   }
 
