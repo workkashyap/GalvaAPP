@@ -27,6 +27,7 @@
                         <div class="col-md-2">
                           <select class="form-control" name="ptype" [(ngModel)]="ptype" #ptype2="ngModel"
                             id="ptype" (change)='onTypeChange($event.target.value)'>
+                            <option value="---">---</option>
                             <option value="Chrome">Chrome</option>
                             <option value="Satin">Satin</option>
                           </select>
@@ -35,6 +36,7 @@
                         <div class="col-md-2">
                           <select class="form-control" name="rtype" [(ngModel)]="rtype" #rtype2="ngModel"
                             id="rtype" (change)='onTypePChange($event.target.value)'>
+                            <option value="---">---</option>
                             <option value="Production">Production</option>
                             <option value="Inspection">Inspection</option>
                             <option value="Jigging">Jigging</option>

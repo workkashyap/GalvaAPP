@@ -20,8 +20,8 @@ export class AddroundhourComponent implements OnInit {
   public currentUser: User;
 
   public selectedcode: string;
-  rtype = 'Production';
-  ptype = 'Chrome';
+  rtype = '---';
+  ptype = '---';
   plant: number;
   public date: string;
   public actionvalue: string;
@@ -61,28 +61,28 @@ export class AddroundhourComponent implements OnInit {
       });
 
 
-    if (this.rhService.ptype.length > 0) {
-        this.proType = this.rhService.ptype;
-        this.insType = this.rhService.rtype;
-        this.plant = this.rhService.plant;
-        } else {
-          this.proType = this.ptype;
-          this.insType = this.rtype;
-          this.plant = 1010;
-        }
+     if (this.rhService.ptype.length > 0) {
+         this.proType = this.rhService.ptype;
+         this.insType = this.rhService.rtype;
+         this.plant = this.rhService.plant;
+         } else {
+           this.proType = this.ptype;
+           this.insType = this.rtype;
+           this.plant = 1010;
+         }
 
    
-    if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.plant === 1010 ) {
-        this.roundTotal = 300;
-    } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.plant === 1010 ) {
-        this.roundTotal = 250;
-    } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.plant === 1010 ) {
-        this.roundTotal = 275;
-    } else if (this.proType === 'Satin' && this.insType === 'Production' && this.plant === 1010 ) {
-        this.roundTotal = 220;
-    } else {
-      this.roundTotal = 175;
-    }
+    // if (this.proType === 'Chrome' && this.insType === 'Jigging' && this.plant === 1010 ) {
+    //     this.roundTotal = 300;
+    // } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.plant === 1010 ) {
+    //     this.roundTotal = 250;
+    // } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.plant === 1010 ) {
+    //     this.roundTotal = 275;
+    // } else if (this.proType === 'Satin' && this.insType === 'Production' && this.plant === 1010 ) {
+    //     this.roundTotal = 220;
+    // } else {
+    //   this.roundTotal = 175;
+    // }
 
 
 
@@ -234,9 +234,13 @@ export class AddroundhourComponent implements OnInit {
     } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
         this.roundTotal = 250;
     } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 275;
+        this.roundTotal = 260;
     } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 220;
+        this.roundTotal = 250;
+    } else if (this.proType === 'Satin' || this.proType === 'Chrome' && this.insType === 'Inspection' && this.selectedcode === '1020') {
+      this.roundTotal = 240;
+    } else if (this.proType === 'Satin' || this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1020') {
+      this.roundTotal = 240;
     } else {
       this.roundTotal = 175;
     }
@@ -249,9 +253,13 @@ export class AddroundhourComponent implements OnInit {
     } else if (this.proType === 'Satin' && this.insType === 'Jigging' && this.selectedcode === '1010') {
         this.roundTotal = 250;
     } else if (this.proType === 'Chrome' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 275;
+        this.roundTotal = 260;
     } else if (this.proType === 'Satin' && this.insType === 'Production' && this.selectedcode === '1010') {
-        this.roundTotal = 220;
+        this.roundTotal = 250;
+    } else if (this.proType === 'Satin' || this.proType === 'Chrome' && this.insType === 'Inspection' && this.selectedcode === '1020') {
+      this.roundTotal = 240;
+    } else if (this.proType === 'Satin' || this.proType === 'Chrome' && this.insType === 'Jigging' && this.selectedcode === '1020') {
+      this.roundTotal = 240;
     } else {
       this.roundTotal = 175;
     }
