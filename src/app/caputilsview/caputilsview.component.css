@@ -1,0 +1,22 @@
+.page-filter{
+    border-radius: 10px;
+    border: 2px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.heading{
+    color: rgba(1,41,205,0.7);
+}
+
+.border-10{
+    border-radius: 10px;
+}
+
+.card{
+     box-shadow: 0 0 5px rgb(0 0 0 / 13%), 0 3px 8px rgb(0 0 0 / 20%);
+     border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.highlight-2{
+    background: #f8f9fa;
+}

@@ -100,6 +100,10 @@ import { QualityviewComponent } from './qualityview/qualityview.component';
 import { PurchaserepoComponent } from './purchaserepo/purchaserepo.component';
 import { PurchaserepoyearComponent } from './purchaserepoyear/purchaserepoyear.component';
 import { QcalendarmldgComponent } from './qcalendarmldg/qcalendarmldg.component';
+import { AuditComponent } from './audit/audit.component';
+import { AuditviewComponent } from './auditview/auditview.component';
+import { CaputilsComponent } from './caputils/caputils.component';
+import { CaputilsviewComponent } from './caputilsview/caputilsview.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
@@ -184,7 +188,11 @@ import { QcalendarmldgComponent } from './qcalendarmldg/qcalendarmldg.component'
     QualityviewComponent,
     PurchaserepoComponent,
     PurchaserepoyearComponent,
-    QcalendarmldgComponent
+    QcalendarmldgComponent,
+    AuditComponent,
+    AuditviewComponent,
+    CaputilsComponent,
+    CaputilsviewComponent
   ],
   imports: [
     BrowserModule,
@@ -564,6 +572,26 @@ import { QcalendarmldgComponent } from './qcalendarmldg/qcalendarmldg.component'
       {
         path: 'purchaserepoyear',
         component: PurchaserepoyearComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'audit',
+        component: AuditComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'auditview',
+        component: AuditviewComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'caputils',
+        component: CaputilsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'caputilsview',
+        component: CaputilsviewComponent,
         canActivate: [AuthGuard],
       },
       

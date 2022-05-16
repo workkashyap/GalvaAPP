@@ -1,0 +1,70 @@
+<div class="p-3">
+    <div class="card highlight-2 border-10 p-3">
+        <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+            <div class="page-filter d-flex w-100 px-2 py-1">
+                <div class="d-flex">
+                    <h4 class="font-weight-bold heading mb-0 align-self-center">Audit</h4>
+                </div>
+                <button type="submit" (click)="onSaveClick()" class="btn btn-success px-3 ml-auto"> Save</button>
+                <button (click)="back()" class="btn btn-primary px-3 ml-3">Back</button>
+            </div>
+            <div class="grid-container my-3 w-100">
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="auditdate">Audit Date:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control" type='date' id="auditdate" name="auditdate" #auditdate="ngModel" [readonly]="auditservice.auditData.id > 0"
+                        [(ngModel)]="auditservice.auditData.audit_date"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="plantcode">Plantcode:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <select class="form-control" name="plantcode" #plantcode="ngModel" id="plantcode"
+                                        [(ngModel)]="auditservice.auditData.plantcode"
+                                        (change)="plantcodeChange()">
+                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                          {{ pl.plantshortname }}
+                                        </option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="customer">Customer:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control" type="text" id="customer" name="customer" [(ngModel)]="auditservice.auditData.customer"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="result">Result:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <!-- <select class="custom-select" type='number' id="result" name="result" [(ngModel)]="auditservice.auditData.result">
+                          <option value="">--Select--</option>
+                          <option value="0">0</option>
+                          <option value="3">3</option>
+                          <option value="5">5</option>
+                        </select> -->
+                        <select class="custom-select" type='text' id="result" name="result" [(ngModel)]="auditservice.auditData.result" (change)="valueChange()">
+                            <option *ngFor="let c of resColor" [ngValue]="c.id">{{c.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>   
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="px-5 py-4">
+    <div class="card highlight-2 border-10 p-3">
+        <div class="page-filter d-flex w-100 px-2 py-1">
+            <div class="d-flex">
+                <h4 class="font-weight-bold heading mb-0 align-self-center">Audit View</h4>
+            </div>
+            <div class="input-group custome-gs ml-auto" style="max-width: 250px;">
+                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                <div class="input-group-append">
+                  <i class="fa fa-search input-group-text"></i>
+                </div>
+            </div>
+            <button (click)="addNewMaterial()" class="btn btn-primary px-3 ml-3">Add New Item</button>
+        </div>
+        <div class="p-3">
+            <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                  [responsive]="true" selectionMode="single" [(selection)]="selectedAudit"
+                  [value]="auditservice.auditList" [paginator]="true" [rows]="10" [resizableColumns]="true">
+
+                  <ng-template pTemplate="header" let-columns>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field"
+                        pResizableColumn>
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+                        </p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                      <td *ngFor="let col of columns" class="ui-resizable-column">
+                        <span *ngIf="col.field=='view'">
+                          <button class="btn btn-primary  btn-sm cs-btn" (click)="opendetail(rowData.id)">
+                            <fa name="pencil"></fa>
+                          </button> &nbsp;
+                          <!-- <button class="btn btn-secondary btn-sm cs-btn" (click)="deleteSelected(rowData.id)">
+                            <fa name="trash"></fa>
+                          </button> -->
+                        </span>
+                        <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+        </div>
+    </div>
+</div>

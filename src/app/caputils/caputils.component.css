@@ -1,0 +1,78 @@
+.page-filter{
+    border-radius: 10px;
+    border: 2px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.heading{
+    color: rgba(1,41,205,0.7);
+}
+
+.border-10{
+    border-radius: 10px;
+}
+
+.card{
+     box-shadow: 0 0 5px rgb(0 0 0 / 13%), 0 3px 8px rgb(0 0 0 / 20%);
+     border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.highlight-2{
+    background: #f8f9fa;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.grid-container-2{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+
+.grid-title{
+    top: -15px;
+    left: 100px;
+}
+
+.grid-container .form-group label{
+    font-size: 12px;
+}
+
+.modal-dialog{
+    max-width: 1300px;
+}
+
+.modal .form-group label{
+    font-size: 9px;
+}
+
+.modal .form-group input{
+    height: 20px;
+}
+
+
+.moulding{
+    border: 2px solid #ffc107;
+}
+
+.jigging{
+    border: 2px solid #dc3545;
+}
+
+.plating{
+    border: 2px solid #007bff;
+}
+
+.other{
+    border: 2px solid #28a745;
+}
+
+.invisible{
+    display: none;
+}
+
+.filled{
+    background: #ffa07a;
+}
