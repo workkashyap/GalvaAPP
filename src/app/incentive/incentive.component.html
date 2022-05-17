@@ -36,7 +36,7 @@
 
 <div class="px-3 mb-3">
   <div class="row m-0">
-    <div class="col-12 p-0 position-relative mb-md-0 px-md-4 px-1">
+    <!-- <div class="col-12 p-0 position-relative mb-md-0 px-md-4 px-1">
       <div class="card w-100 highlight-2 border-10 px-3 py-2 m-auto">
         <div class="line position-absolute"></div>
         <div class="row m-0 mb-3 position-relative" style="height: 35px;">
@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- <div class="col-md-6 p-0 position-relative mb-md-0 mb-4">
       <div class="card flash highlight-2 border-10 p-3 m-auto">
         <div class="row m-0 mb-3 position-relative">
@@ -148,12 +148,12 @@
     <div class="card w-100 highlight-2 border-10 m-auto">
       <div class="overflow-scroll p-3">
         <ag-grid-angular
-        style="height: 380px;"
+        style="height: 500px;"
         class="ag-theme-alpine w-100"
         [rowData]="rowData | async"
         [columnDefs]="columnDefs"
         [pivotMode]="true"
-      
+        [gridOptions]="gridOptions"
         [suppressAggFuncInHeader]="true"
         [animateRows]="true"
       
