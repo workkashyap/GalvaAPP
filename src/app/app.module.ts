@@ -104,6 +104,8 @@ import { AuditComponent } from './audit/audit.component';
 import { AuditviewComponent } from './auditview/auditview.component';
 import { CaputilsComponent } from './caputils/caputils.component';
 import { CaputilsviewComponent } from './caputilsview/caputilsview.component';
+import { RejectionreviewComponent } from './rejectionreview/rejectionreview.component';
+import { RejectionreviewviewComponent } from './rejectionreviewview/rejectionreviewview.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
@@ -192,7 +194,9 @@ import { CaputilsviewComponent } from './caputilsview/caputilsview.component';
     AuditComponent,
     AuditviewComponent,
     CaputilsComponent,
-    CaputilsviewComponent
+    CaputilsviewComponent,
+    RejectionreviewComponent,
+    RejectionreviewviewComponent
   ],
   imports: [
     BrowserModule,
@@ -592,6 +596,16 @@ import { CaputilsviewComponent } from './caputilsview/caputilsview.component';
       {
         path: 'caputilsview',
         component: CaputilsviewComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'rejectionreview',
+        component: RejectionreviewComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'rejectionreviewview',
+        component: RejectionreviewviewComponent,
         canActivate: [AuthGuard],
       },
       

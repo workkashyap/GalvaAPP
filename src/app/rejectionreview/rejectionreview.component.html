@@ -1,0 +1,164 @@
+<div class="p-3">
+    <div class="card highlight-2 border-10 p-3">
+        <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+            <div class="page-filter d-flex w-100 px-2 py-1">
+                <div class="d-flex">
+                    <h4 class="font-weight-bold heading mb-0 align-self-center">Audit</h4>
+                </div>
+                <button type="submit" (click)="onSaveClick()" class="btn btn-success px-3 ml-auto"> Save</button>
+                <button (click)="back()" class="btn btn-primary px-3 ml-3">Back</button>
+            </div>
+            <div class="grid-container my-3 w-100">
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="reviewdate">Review Date:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control" type='date' id="reviewdate" name="reviewdate" #reviewdate="ngModel" [readonly]="rejectionreviewservice.rejectionreviewData.id > 0"
+                        [(ngModel)]="rejectionreviewservice.rejectionreviewData.reviewdate"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="plant">Plantcode:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <select class="form-control" name="plant" #plant="ngModel" id="plant"
+                                        [(ngModel)]="rejectionreviewservice.rejectionreviewData.plant"
+                                        (change)="plantcodeChange()">
+                                        <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                          {{ pl.plantshortname }}
+                                        </option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="reasonForReview">Reason For Review:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <select class="custom-select" type='text' id="reasonForReview" name="reasonForReview" [(ngModel)]="rejectionreviewservice.rejectionreviewData.reasonForReview">
+                          <option value="">--Select--</option>
+                          <option value="Hold Part Inspection Receive from Production">Hold Part Inspection Receive from Production</option>
+                          <option value="Buffing Parts Inspection receive from production">Buffing Parts Inspection receive from production</option>
+                          <option value="Customer Return Review">Customer Return Review</option>
+                          <option value="Rework Parts Inspection">Rework Parts Inspection</option>
+                          <option value="Mechanical Faliure parts inspection">Mechanical Faliure parts inspection</option>
+                        </select>
+                      </div>
+                    </div>
+                </div> 
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="itemname">Material Name:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <!-- <p-autoComplete [style]="{'width':'150px'}" [size]="20"
+                          [(ngModel)]="productionsService.productionData.itemname2" id="itemname2"
+                          name="itemname2" #itemname2="ngModel" [suggestions]="filteredCountries"
+                           (completeMethod)="filterCountry($event)"
+                          field="itemname" [dropdown]="false">
+                          <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                              <div>{{country.itemname}}</div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete> -->
+                        <p-autoComplete [(ngModel)]="rejectionreviewservice.rejectionreviewData.materialName" 
+                         [suggestions]="filteredCountries" 
+                         (completeMethod)="filterCountry($event)"
+                         id="itemname2" (onSelect)="valueM($event)"
+                                        name="itemname2" #itemname2="ngModel"
+                          [size]="30" [minlength]="1" placeholder="Items">
+                          <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                              <div>{{country.itemname}}</div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete>
+                        
+                        <!-- <input class="form-control" type='text' id="itemname" name="itemname"
+                          #itemname="ngModel" [(ngModel)]="productionsService.productionData.itemname" />-->
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="materialCode">Material Code:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control" type="text" id="materialCode" name="materialCode" [(ngModel)]="rejectionreviewservice.rejectionreviewData.materialCode"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="inspectedParts">Inspected Parts:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="inspectedParts" name="inspectedParts" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.inspectedParts"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="okParts">Ok Parts:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="okParts" name="okParts" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.okParts"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="sellPrice">Sell Price:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="sellPrice" name="sellPrice" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.sellPrice"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="okValue">Ok Value:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="okValue" name="okValue" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.okValue"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="inspectValue">Inspected Value:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="inspectValue" name="inspectValue" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.inspectValue"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label class="gr2" for="rejectValue">Rejected Value:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control grp-input-2" type='number' min="0" id="rejectValue" name="rejectValue" [ngClass]="{error:validQtyError}" [(ngModel)]="rejectionreviewservice.rejectionreviewData.rejectValue"/>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
