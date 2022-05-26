@@ -26,6 +26,15 @@ export class ItemmstsService {
         this.itemmstsList = res as itemmsts[];
       });
   }
+  public getallDataQ() {
+    //for calendar click event
+    return this.http
+      .get(this.rootUrl + "/itemmsts/getAllItem/item")
+      .toPromise()
+      .then(res => {
+        this.itemmstsList = res as itemmsts[];
+      });
+  }
   public getDataById(id): any {
     return this.http.get<itemmsts[]>(this.rootUrl + '/itemmsts/' + id);
   }
