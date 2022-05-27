@@ -42,7 +42,7 @@ export class RejectionreviewComponent implements OnInit {
     private toastr: ToastrService) {
       const me = this;
       this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-      this.itmService.getallData();
+      this.itmService.getallDataQ();
      }
 
   ngOnInit() {

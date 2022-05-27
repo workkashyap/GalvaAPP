@@ -56,7 +56,7 @@ export class QualitymstComponent implements OnInit {
       const me = this;
       this.lservice.currentUser.subscribe(x => (this.currentUser = x));
 
-      this.itmService.getallData();
+      this.itmService.getallDataQ();
      }
 
   ngOnInit() {
