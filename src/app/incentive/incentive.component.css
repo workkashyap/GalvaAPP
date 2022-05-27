@@ -147,10 +147,8 @@
 }
 
 .ag-theme-alpine{
-    --ag-foreground-color: rgba(1,41,205,0.7);
-    --ag-header-background-color: rgba(1,41,205,0.7);
-    --ag-secondary-foreground-color: white;
-    font-size: 14px;
+    --ag-header-background-color: rgba(1,41,205,0.5);
+    font-size: 16px;
 }
 
 .line{

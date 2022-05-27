@@ -31,9 +31,25 @@ export class IncentiveService {
 
   getAgGridData(year, month) {
     if (month.length > 1) {
-      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdata/' + year + '-' + month + '-01');
+      if (month === '1' || month === '3' || month === '5' || month === '7' || month === '8' || month === '10' || month === '12') {
+        return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-' + month + '-01/' + year + '-' + month + '-31');
+      }
+      else if (month === '4' || month === '6' || month === '9' || month === '11') {
+        return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-' + month + '-01/' + year + '-' + month + '-30');  
+      }
+      else {
+        return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-' + month + '-01/' + year + '-' + month + '-28');
+      }
     } else {
-      return this.http.get<any[]>(this.rootUrl + '/dailyproductions/Getallrejdata/' + year + '-0' + month + '-01');
+        if (month === '1' || month === '3' || month === '5' || month === '7' || month === '8' || month === '10' || month === '12') {
+          return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-0' + month + '-01/' + year + '-' + month + '-31');
+        }
+        else if (month === '4' || month === '6' || month === '9' || month === '11') {
+          return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-0' + month + '-01/' + year + '-' + month + '-30');  
+        }
+        else {
+          return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-0' + month + '-01/' + year + '-' + month + '-28');
+        }
     }
   }
 
