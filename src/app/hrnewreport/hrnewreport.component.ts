@@ -79,6 +79,8 @@ export class HrnewreportComponent implements OnInit {
   public selectedPlant: string;
   public selectedloc: any = 'ALL';
   public monthYear: string;
+  public year2: number;
+  public month2: number;
   cols: any[];
 
   selectedItemrej: Hrcal;
@@ -330,6 +332,7 @@ export class HrnewreportComponent implements OnInit {
     this.filterenable = false;
     me.loading = true;
     me.hrcalservice.hrcalList = [];
+    
 
 
     this.hrcalservice
@@ -403,20 +406,58 @@ export class HrnewreportComponent implements OnInit {
           hrcal.present_day_pay = hrcal.rate * (hrcal.pdays + hrcal.wopdays);
           hrcal.total_pay2 = hrcal.present_day_pay;
           // basic, hra, conveyance
-          if (hrcal.present_day_pay < 8450) {
-            hrcal.basic = hrcal.present_day_pay;
-            hrcal.hra = 0;
-            hrcal.conveyance = 0;
-          } else {
-            hrcal.basic = 8450;
-            hrcal.hra = hrcal.present_day_pay - hrcal.basic;
-            if (hrcal.hra > 3380) {
-              hrcal.conveyance = hrcal.hra - 3380;
-              hrcal.hra = 3380;
-            } else {
+          this.year2 = Number(this.Fromdate.slice(0,4));
+          this.month2 = Number(this.Fromdate.slice(5,7));
+
+          if(this.Fromdate.includes('2022') && this.month2 > 5) {
+            if (hrcal.present_day_pay < 9152) {
+              hrcal.basic = hrcal.present_day_pay;
+              hrcal.hra = 0;
               hrcal.conveyance = 0;
+            } else {
+              hrcal.basic = 9152;
+              hrcal.hra = hrcal.present_day_pay - hrcal.basic;
+              if (hrcal.hra > 4550) {
+                hrcal.conveyance = hrcal.hra - 4550;
+                hrcal.hra = 4550;
+              } else {
+                hrcal.conveyance = 0;
+              }
             }
           }
+          else if(this.year2 > 2022) {
+            if (hrcal.present_day_pay < 9152) {
+              hrcal.basic = hrcal.present_day_pay;
+              hrcal.hra = 0;
+              hrcal.conveyance = 0;
+            } else {
+              hrcal.basic = 9152;
+              hrcal.hra = hrcal.present_day_pay - hrcal.basic;
+              if (hrcal.hra > 4550) {
+                hrcal.conveyance = hrcal.hra - 4550;
+                hrcal.hra = 4550;
+              } else {
+                hrcal.conveyance = 0;
+              }
+            }
+          }
+          else {
+            if (hrcal.present_day_pay < 8450) {
+              hrcal.basic = hrcal.present_day_pay;
+              hrcal.hra = 0;
+              hrcal.conveyance = 0;
+            } else {
+              hrcal.basic = 8450;
+              hrcal.hra = hrcal.present_day_pay - hrcal.basic;
+              if (hrcal.hra > 3380) {
+                hrcal.conveyance = hrcal.hra - 3380;
+                hrcal.hra = 3380;
+              } else {
+                hrcal.conveyance = 0;
+              }
+            }
+          }
+          
 
           // pf
           hrcal.pf = hrcal.basic * (13 / 100);
