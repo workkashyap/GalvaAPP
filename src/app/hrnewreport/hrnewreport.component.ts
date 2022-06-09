@@ -409,7 +409,7 @@ export class HrnewreportComponent implements OnInit {
           this.year2 = Number(this.Fromdate.slice(0,4));
           this.month2 = Number(this.Fromdate.slice(5,7));
 
-          if(this.Fromdate.includes('2022') && this.month2 > 5) {
+          if(this.Fromdate.includes('2022') && this.month2 > 4) {
             if (hrcal.present_day_pay < 9152) {
               hrcal.basic = hrcal.present_day_pay;
               hrcal.hra = 0;

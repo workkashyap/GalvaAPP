@@ -1,0 +1,26 @@
+<div class="p-3">
+    <div class="card highlight-2 border-10 p-3">
+        <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+            <div class="page-filter d-flex w-100 px-2 py-1">
+                <div class="d-flex">
+                    <h4 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Worker Update</h4>
+                </div>
+                <button type="submit" (click)="onSaveClick()" class="btn btn-success px-3 ml-auto"> Save</button>
+                <button (click)="back()" class="btn btn-primary px-3 ml-3">Back</button>
+            </div>
+            <div class="grid-container my-3 w-100">
+                <div class="form-group mx-1">
+                    <div class="row m-0">
+                      <div class="col-md-4 in-label">
+                        <label for="actualround">Actual Round:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <input class="form-control" type='number' id="actualround" name="actualround" #actualround="ngModel"
+                        [(ngModel)]="caputilsservice.caputilsData.actualround"/>
+                      </div>
+                    </div>
+                </div>  
+            </div>
+        </form>
+    </div>
+</div>

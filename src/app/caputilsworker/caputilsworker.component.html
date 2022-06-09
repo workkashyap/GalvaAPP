@@ -1,0 +1,104 @@
+<div class="px-5 py-4">
+    <div class="card highlight-2 border-10 p-3">
+        <div class="page-filter d-flex w-100 px-2 py-1">
+            <div class="d-flex">
+                <h4 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Worker View</h4>
+            </div>
+            <div class="input-group custome-gs ml-auto" style="max-width: 250px;">
+                <input type="text" class="form-control" pInputText placeholder="Global Filter"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                <div class="input-group-append">
+                  <i class="fa fa-search input-group-text"></i>
+                </div>
+            </div>
+            <div class="ml-2">
+                <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
+                  <option value="">--Select Month--</option>
+                  <option value="Jan">Jan</option>
+                  <option value="Feb">Feb</option>
+                  <option value="Mar">Mar</option>
+                  <option value="Apr">Apr</option>
+                  <option value="May">May</option>
+                  <option value="Jun">Jun</option>
+                  <option value="Jul">Jul</option>
+                  <option value="Aug">Aug</option>
+                  <option value="Sep">Sep</option>
+                  <option value="Oct">Oct</option>
+                  <option value="Nov">Nov</option>
+                  <option value="Dec">Dec</option>
+                </select>      
+            </div>
+        </div>
+        <div class="p-3">
+            <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
+                  [responsive]="true" selectionMode="single" [(selection)]="selectedCaputils"
+                  [value]="caputilsservice.caputilsList" [paginator]="true" [rows]="10" [resizableColumns]="true">
+
+                  <ng-template pTemplate="header" let-columns>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field"
+                        pResizableColumn>
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+                        </p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                      <td *ngFor="let col of columns" class="ui-resizable-column">
+                        <span *ngIf="col.field=='view'">
+                          <button class="btn btn-primary  btn-sm cs-btn" (click)="opendetail(rowData.id)">
+                            <fa name="pencil"></fa>
+                          </button> &nbsp;
+                          <!-- <button class="btn btn-secondary btn-sm cs-btn" (click)="deleteSelected(rowData.id)">
+                            <fa name="trash"></fa>
+                          </button> -->
+                        </span>
+                        <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" autocomplete="off" (submit)="onComplete(form)">
+                    <div class="page-filter d-flex w-100 px-2 py-1">
+                        <div class="d-flex">
+                            <h4 class="font-weight-bold heading mb-0 align-self-center">Actual Round Update</h4>
+                        </div>
+                        <button type="submit" (click)="onSaveClick()" class="btn btn-success px-3 ml-auto"> Save</button>
+                    </div>
+                    <div class="grid-container my-3 w-100">
+                        <div class="form-group mx-1">
+                            <div class="row m-0">
+                              <div class="col-md-4 in-label">
+                                <label for="actualround">Actual Round:</label>
+                              </div>
+                              <div class="col-md-8">
+                                <input class="form-control" type='number' id="actualround" name="actualround" #actualround="ngModel"
+                                [(ngModel)]="caputilsservice.caputilsData.actualround"/>
+                              </div>
+                            </div>
+                        </div>  
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+</div>

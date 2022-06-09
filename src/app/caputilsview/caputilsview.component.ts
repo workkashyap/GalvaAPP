@@ -35,8 +35,7 @@ export class CaputilsviewComponent implements OnInit {
       { field: "entrydate", header: "Entry Date" },
       { field: "plantcode", header: "Plant" },
       { field: "linetype", header: "Line Type" },
-      { field: "plantround", header: "Plant Round" },
-      { field: "actualround", header: "Actual Round" },
+      { field: "plantround", header: "Plan Round" },
 
     ];
     this.caputilsservice.getallData();

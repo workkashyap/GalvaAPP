@@ -37,6 +37,7 @@ export class SalescalendarComponent implements OnInit {
   basicamtinr: number = 0;
   totalvalue: number = 0;
   modalType: number = 0;
+  bas: number = 0;
   public sDate: Date;
   public lDate: Date;
   public dailyprodlist: Dailyproduction[] = [];
@@ -274,6 +275,11 @@ export class SalescalendarComponent implements OnInit {
       .toPromise()
       .then(res => {
         this.dpservice.salesdetail = res as Salesdetail[];
+        this.dpservice.dailyprodlist.forEach(element => {
+          if(element.date === this.selected_eventdate+"T00:00:00" && element.title.includes("Net Sales")) {
+            this.bas = Number(element.title.slice(10,16));
+          }
+        });
         this.sumgetsale(false);
         this.loading = false;
       });

@@ -27,6 +27,25 @@ export class CaputilsService {
       });
   }
 
+  public getallDataMonth(month) {
+    //for calendar click event/
+    if (month.length > 1) {
+      return this.http
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-" + month + "-12")
+      .toPromise()
+      .then(res => {
+        this.caputilsList = res as Caputils[];
+      });
+    } else {
+      return this.http
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-0" + month + "-12")
+      .toPromise()
+      .then(res => {
+        this.caputilsList = res as Caputils[];
+      });
+    }
+  }
+
   public caputilsbyid(id): Observable<Caputils[]> {
     return this.http.get<Caputils[]>(this.rootUrl + "/caputils/" + id);
   }

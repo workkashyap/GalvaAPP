@@ -12,13 +12,14 @@ import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
 import { CaputilsService } from '../shared/caputils/caputils.service';
 
+
 @Component({
-  selector: 'app-caputils',
-  templateUrl: './caputils.component.html',
-  styleUrls: ['./caputils.component.css'],
+  selector: 'app-caputilsworkerupdate',
+  templateUrl: './caputilsworkerupdate.component.html',
+  styleUrls: ['./caputilsworkerupdate.component.css'],
   providers: [DatePipe],
 })
-export class CaputilsComponent implements OnInit {
+export class CaputilsworkerupdateComponent implements OnInit {
 
   public currentUser: User;
   public selectedcode: any;
@@ -36,14 +37,14 @@ export class CaputilsComponent implements OnInit {
     public lservice: LoginService,
     public plantservice: PlantService,
     public caputilsservice: CaputilsService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService) { 
       const me = this;
       this.lservice.currentUser.subscribe(x => (this.currentUser = x));
       this.itmService.getallData();
-     }
+    }
 
-     ngOnInit() {
-      const me = this;
+  ngOnInit() {
+    const me = this;
       this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
   
       const date = this.datePipe.transform(new Date(), "ddMMyyyy");
@@ -73,76 +74,77 @@ export class CaputilsComponent implements OnInit {
               plantcode: '',
               linetype: '',
               plantround: 0,
+              actualround: 0,
             };
           }
   
         });
       this.resetForm();
+  }
+
+  plantcodeChange() {
+    this.selectedcode = this.caputilsservice.caputilsData.plantcode;
+  }
+
+  resetForm(form?: NgForm) {
+    if (form != null) {
+      form.form.reset();
     }
+  }
+
+  onComplete(form: NgForm) {
+    this.validQtyError = false;
+
+      if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0) {
+        this.toastr.error(
+          "Save Failed.",
+          "Add Required Fields."
+        );
+      }else{
+        if (this.actionvalue === 'Save') {
   
-    plantcodeChange() {
-      this.selectedcode = this.caputilsservice.caputilsData.plantcode;
-    }
+          this.loading = true;
   
-    resetForm(form?: NgForm) {
-      if (form != null) {
-        form.form.reset();
-      }
-    }
-  
-    onComplete(form: NgForm) {
-      this.validQtyError = false;
-  
-        if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0) {
-          this.toastr.error(
-            "Save Failed.",
-            "Add Required Fields."
-          );
-        }else{
-          if (this.actionvalue === 'Save') {
+          if (this.caputilsservice.caputilsData.id > 0) {
+            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
     
-            this.loading = true;
-    
-            if (this.caputilsservice.caputilsData.id > 0) {
-              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
-      
-              this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
-                this.resetForm(form);
-                this.toastr.success(
-                  "Successfully Updated.",
-                  "Production"
-                );
-                this.route.navigate(["./caputilsview"]);
-              }, err => {
-                console.log(err);
-              });
-            }else{
-              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-              this.caputilsservice.savecaputils().subscribe(res => {
-                console.log(this.caputilsservice.caputilsData);
-                this.resetForm(form);
-                this.toastr.success(
-                  'Successfully Saved.',
-                  'Production'
-                );
-                this.route.navigate(['./caputilsview']);
-              }, err => {
-                console.log(err);
-              });
-            } 
+            this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
+              this.resetForm(form);
+              this.toastr.success(
+                "Successfully Updated.",
+                "Production"
+              );
+              this.route.navigate(["./caputilsworker"]);
+            }, err => {
+              console.log(err);
+            });
           }else{
-            this.back();
-          }
+            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+            this.caputilsservice.savecaputils().subscribe(res => {
+              console.log(this.caputilsservice.caputilsData);
+              this.resetForm(form);
+              this.toastr.success(
+                'Successfully Saved.',
+                'Production'
+              );
+              this.route.navigate(['./caputilsworker']);
+            }, err => {
+              console.log(err);
+            });
+          } 
+        }else{
+          this.back();
         }
-    }
-  
-    onSaveClick() {
-      this.actionvalue = 'Save';
-    }
-  
-    back() {
-      this.iservice.uid = this.currentUser.id;
-      this.route.navigate(['./caputilsview']);
-    }
+      }
+  }
+
+  onSaveClick() {
+    this.actionvalue = 'Save';
+  }
+
+  back() {
+    this.iservice.uid = this.currentUser.id;
+    this.route.navigate(['./caputilsworker']);
+  }
 
 }

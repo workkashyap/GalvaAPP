@@ -423,11 +423,11 @@ export class QCalendarComponent implements OnInit {
     } else if (val === 6) {
       this.cols.push({ field: 'rejper', header: 'Rej. %' });
     } else if (val === 8) {
-      this.cols.push({ field: 'plating_value', header: 'Plating Value'});
-      this.cols.push({ field: 'platingper', header: 'Plating %'});
+      this.cols.push({ field: 'plating_value', header: 'Moulding Value'});
+      this.cols.push({ field: 'platingper', header: 'Moulding %'});
     } else if (val === 9) {
-      this.cols.push({ field: 'moulding_value', header: 'Moulding Value'});
-      this.cols.push({ field: 'mouldingper', header: 'Moulding %'});
+      this.cols.push({ field: 'moulding_value', header: 'Plating Value'});
+      this.cols.push({ field: 'mouldingper', header: 'Plating %'});
     } else if (val === 10) {
       this.cols.push({ field: 'jigingval', header: 'Jigging Value'});
       this.cols.push({ field: 'jigingper', header: 'Jigging %'});
