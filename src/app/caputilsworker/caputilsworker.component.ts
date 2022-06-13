@@ -24,6 +24,7 @@ export class CaputilsworkerComponent implements OnInit {
   public loading = false;
   public monthname: string;
   public selectedcode: any;
+  public plantcode: any;
   public date: string;
   public Month: string;
   public x: number;
@@ -58,6 +59,7 @@ export class CaputilsworkerComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
+    this.plantcode = 1010
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
     this.x = this.monthNames.indexOf(this.monthname) + 1;
@@ -71,7 +73,7 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "actualround", header: "Actual Round" },
 
     ];
-    this.caputilsservice.getallDataMonth(this.index);
+    this.caputilsservice.getallDataMonth(this.index, this.plantcode);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
@@ -220,11 +222,16 @@ export class CaputilsworkerComponent implements OnInit {
     this.route.navigate(["./caputilsworkerupdate"]);
   }
 
+  selectedGrid(ev) {
+    this.selectedcode = ev;
+    this.caputilsservice.getallDataMonth(this.index, this.selectedcode);
+  }
+
   getselectedmonth() {
     this.Month = this.monthname;
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
-    this.caputilsservice.getallDataMonth(this.index);
+    this.caputilsservice.getallDataMonth(this.index, this.selectedcode);
   }
 
 }
