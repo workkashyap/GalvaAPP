@@ -20,6 +20,8 @@ export class IncentiveComponent  {
   public index: string;
 
   public monthname: string;
+  public monthtoday: string;
+  public monthTemp: string;
   public yearname: string;
   public day: string;
   public date: string;
@@ -744,6 +746,8 @@ getData() {
   this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   this.d = new Date();
   this.monthname = this.monthNames[this.d.getMonth()];
+  this.monthtoday = this.monthNames[this.d.getMonth()];
+  this.monthTemp = this.monthNames[this.d.getMonth()];
   this.dateno = this.d.getDate();
   this.yearname = this.d.getFullYear();
   this.day = this.days[this.d.getDay()];
@@ -777,99 +781,200 @@ getData() {
 
 
 onview(){
-  if (this.dateno === 1) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs1);
+  if (this.monthtoday === this.Month) {
+    if (this.dateno === 1) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs1);
+    }
+    else if (this.dateno === 2) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs2);
+    }
+    else if (this.dateno === 3) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs3);
+    }
+    else if (this.dateno === 4) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs4);
+    }
+    else if (this.dateno === 5) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs5);
+    }
+    else if (this.dateno === 6) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs6);
+    }
+    else if (this.dateno === 7) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs7);
+    }
+    else if (this.dateno === 8) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs8);
+    }
+    else if (this.dateno === 9) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs9);
+    }
+    else if (this.dateno === 10) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs10);
+    }
+    else if (this.dateno === 11) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs11);
+    }
+    else if (this.dateno === 12) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs12);
+    }
+    else if (this.dateno === 13) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs13);
+    }
+    else if (this.dateno === 14) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs14);
+    }
+    else if (this.dateno === 15) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs15);
+    }
+    else if (this.dateno === 16) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs16);
+    }
+    else if (this.dateno === 17) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs17);
+    }
+    else if (this.dateno === 18) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs18);
+    }
+    else if (this.dateno === 19) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs19);
+    }
+    else if (this.dateno === 20) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs20);
+    }
+    else if (this.dateno === 21) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs21);
+    }
+    else if (this.dateno === 22) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs22);
+    }
+    else if (this.dateno === 23) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs23);
+    }
+    else if (this.dateno === 24) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs24);
+    }
+    else if (this.dateno === 25) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs25);
+    }
+    else if (this.dateno === 26) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs26);
+    }
+    else if (this.dateno === 27) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs27);
+    }
+    else if (this.dateno === 28) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs28);
+    }
+    else if (this.dateno === 29) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs29);
+    }
+    else if (this.dateno === 30) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs30);
+    }
+    else{
+      this.gridOptions.api.setColumnDefs(this.columnDefs31);
+    }
   }
-  else if (this.dateno === 2) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs2);
+  else if (this.monthname === this.monthTemp) {
+    if (this.dateno === 1) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs1);
+    }
+    else if (this.dateno === 2) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs2);
+    }
+    else if (this.dateno === 3) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs3);
+    }
+    else if (this.dateno === 4) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs4);
+    }
+    else if (this.dateno === 5) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs5);
+    }
+    else if (this.dateno === 6) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs6);
+    }
+    else if (this.dateno === 7) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs7);
+    }
+    else if (this.dateno === 8) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs8);
+    }
+    else if (this.dateno === 9) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs9);
+    }
+    else if (this.dateno === 10) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs10);
+    }
+    else if (this.dateno === 11) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs11);
+    }
+    else if (this.dateno === 12) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs12);
+    }
+    else if (this.dateno === 13) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs13);
+    }
+    else if (this.dateno === 14) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs14);
+    }
+    else if (this.dateno === 15) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs15);
+    }
+    else if (this.dateno === 16) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs16);
+    }
+    else if (this.dateno === 17) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs17);
+    }
+    else if (this.dateno === 18) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs18);
+    }
+    else if (this.dateno === 19) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs19);
+    }
+    else if (this.dateno === 20) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs20);
+    }
+    else if (this.dateno === 21) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs21);
+    }
+    else if (this.dateno === 22) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs22);
+    }
+    else if (this.dateno === 23) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs23);
+    }
+    else if (this.dateno === 24) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs24);
+    }
+    else if (this.dateno === 25) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs25);
+    }
+    else if (this.dateno === 26) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs26);
+    }
+    else if (this.dateno === 27) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs27);
+    }
+    else if (this.dateno === 28) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs28);
+    }
+    else if (this.dateno === 29) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs29);
+    }
+    else if (this.dateno === 30) {
+      this.gridOptions.api.setColumnDefs(this.columnDefs30);
+    }
+    else{
+      this.gridOptions.api.setColumnDefs(this.columnDefs31);
+    }
   }
-  else if (this.dateno === 3) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs3);
-  }
-  else if (this.dateno === 4) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs4);
-  }
-  else if (this.dateno === 5) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs5);
-  }
-  else if (this.dateno === 6) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs6);
-  }
-  else if (this.dateno === 7) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs7);
-  }
-  else if (this.dateno === 8) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs8);
-  }
-  else if (this.dateno === 9) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs9);
-  }
-  else if (this.dateno === 10) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs10);
-  }
-  else if (this.dateno === 11) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs11);
-  }
-  else if (this.dateno === 12) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs12);
-  }
-  else if (this.dateno === 13) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs13);
-  }
-  else if (this.dateno === 14) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs14);
-  }
-  else if (this.dateno === 15) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs15);
-  }
-  else if (this.dateno === 16) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs16);
-  }
-  else if (this.dateno === 17) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs17);
-  }
-  else if (this.dateno === 18) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs18);
-  }
-  else if (this.dateno === 19) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs19);
-  }
-  else if (this.dateno === 20) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs20);
-  }
-  else if (this.dateno === 21) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs21);
-  }
-  else if (this.dateno === 22) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs22);
-  }
-  else if (this.dateno === 23) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs23);
-  }
-  else if (this.dateno === 24) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs24);
-  }
-  else if (this.dateno === 25) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs25);
-  }
-  else if (this.dateno === 26) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs26);
-  }
-  else if (this.dateno === 27) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs27);
-  }
-  else if (this.dateno === 28) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs28);
-  }
-  else if (this.dateno === 29) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs29);
-  }
-  else if (this.dateno === 30) {
-    this.gridOptions.api.setColumnDefs(this.columnDefs30);
-  }
-  else{
+  else {
     this.gridOptions.api.setColumnDefs(this.columnDefs31);
   }
+  
 }
 
 onviewDetail() {
@@ -881,6 +986,7 @@ onviewDetail() {
     this.rejValuesMonthly = this.getTotal(this.monthly);
   });
   this.rowData = this.incentive.getAgGridData(this.yearname, this.index);
+  this.onview();
 }
 
 getTotal(values) {
