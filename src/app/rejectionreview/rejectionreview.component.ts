@@ -106,6 +106,7 @@ export class RejectionreviewComponent implements OnInit {
   valueM(v) {
     this.rejectionreviewservice.rejectionreviewData.materialName = v.itemname;
     this.rejectionreviewservice.rejectionreviewData.materialCode = v.itemcode.toString();
+    this.rejectionreviewservice.rejectionreviewData.sellPrice = v.price;
   }
 
   plantcodeChange() {

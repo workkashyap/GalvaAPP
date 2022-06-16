@@ -66,7 +66,7 @@ export class CaputilsworkerComponent implements OnInit {
     this.index = this.x.toString();
     this.cols = [
       { field: "view", header: "Action" },
-      { field: "entrydate", header: "Entry Date" },
+      { field: "entrydate", header: "Production Date" },
       { field: "plantcode", header: "Plant" },
       { field: "linetype", header: "Line Type" },
       { field: "plantround", header: "Plan Round" },
