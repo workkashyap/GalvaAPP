@@ -29,6 +29,15 @@ export class IncentiveService {
     }
   }
 
+  getAllPlantReport(year, month) {
+    if (month.length > 1) {
+      return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIntRejection/' + year + '-' + month + '-01');  
+    }
+    else{
+      return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIntRejection/' + year + '-0' + month + '-01');
+    }
+  }
+
   getAgGridData(year, month) {
     if (month.length > 1) {
       if (month === '1' || month === '3' || month === '5' || month === '7' || month === '8' || month === '10' || month === '12') {
@@ -50,6 +59,15 @@ export class IncentiveService {
         else {
           return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIncentiveReport/' + year + '-0' + month + '-01/' + year + '-' + month + '-28');
         }
+    }
+  }
+
+  getAllPlantReportDetail(year, month) {
+    if (month.length > 1) {
+      return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIntRejection_detail/' + year + '-' + month + '-01');  
+    }
+    else{
+      return this.http.get<any[]>(this.rootUrl + '/Qualities/GetIntRejection_detail/' + year + '-0' + month + '-01');
     }
   }
 

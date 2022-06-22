@@ -108,6 +108,7 @@ import { RejectionreviewComponent } from './rejectionreview/rejectionreview.comp
 import { RejectionreviewviewComponent } from './rejectionreviewview/rejectionreviewview.component';
 import { CaputilsworkerComponent } from './caputilsworker/caputilsworker.component';
 import { CaputilsworkerupdateComponent } from './caputilsworkerupdate/caputilsworkerupdate.component';
+import { IncentivereportComponent } from './incentivereport/incentivereport.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
@@ -200,7 +201,8 @@ import { CaputilsworkerupdateComponent } from './caputilsworkerupdate/caputilswo
     RejectionreviewComponent,
     RejectionreviewviewComponent,
     CaputilsworkerComponent,
-    CaputilsworkerupdateComponent
+    CaputilsworkerupdateComponent,
+    IncentivereportComponent
   ],
   imports: [
     BrowserModule,
@@ -620,6 +622,11 @@ import { CaputilsworkerupdateComponent } from './caputilsworkerupdate/caputilswo
       {
         path: 'caputilsworkerupdate',
         component: CaputilsworkerupdateComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'incentivereport',
+        component: IncentivereportComponent,
         canActivate: [AuthGuard],
       },
       
