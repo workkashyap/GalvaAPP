@@ -12,6 +12,15 @@
                 </div>
             </div>
             <div class="ml-2">
+              <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                      (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+                      <!-- <option value="0">--Select--</option> -->
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                        {{ pl.plantshortname }}
+                      </option>
+              </select> 
+            </div>
+            <div class="ml-2">
                 <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
                   <option value="">--Select Month--</option>
                   <option value="Jan">Jan</option>
@@ -58,7 +67,8 @@
                             <fa name="trash"></fa>
                           </button> -->
                         </span>
-                        <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field=='entrydate'">{{rowData[col.field] | date: 'yyyy-MM-dd'}}</span>
+                        <span *ngIf="col.field!='entrydate'">{{rowData[col.field]}}</span>
                       </td>
                     </tr>
                   </ng-template>

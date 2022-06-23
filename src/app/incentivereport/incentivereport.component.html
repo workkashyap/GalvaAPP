@@ -1,0 +1,313 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-1">
+      <div class="d-flex">
+        <h4 class="font-weight-bold heading mb-0 align-self-center">Incentive Report</h4>
+      </div>
+      <div class="ml-auto mr-md-5 mr-3">
+        <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
+          <option value="">--Select Year--</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+        </select>
+      </div>
+      <div class="mr-md-5 mr-3">
+        <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
+          <option value="">--Select Month--</option>
+          <option value="Jan">Jan</option>
+          <option value="Feb">Feb</option>
+          <option value="Mar">Mar</option>
+          <option value="Apr">Apr</option>
+          <option value="May">May</option>
+          <option value="Jun">Jun</option>
+          <option value="Jul">Jul</option>
+          <option value="Aug">Aug</option>
+          <option value="Sep">Sep</option>
+          <option value="Oct">Oct</option>
+          <option value="Nov">Nov</option>
+          <option value="Dec">Dec</option>
+        </select>      
+      </div>
+      <div class="mr-3">
+        <button class="btn btn-primary" (click)="onviewDetail()">View</button>  
+      </div>
+    </div>
+</div>
+
+<div class="px-lg-5 px-3 mb-3">
+    <div class="row mx-lg-5 mx-0 my-0">
+    <div class="px-4 py-3 w-100">
+        <div class="row m-0">
+            <div class="card w-100 highlight-2 border-10 px-1 py-2 m-auto">
+                <div class="line position-absolute"></div>
+                <div class="row m-0 mb-3 position-relative" style="height: 35px;">
+                    <div class="col-6 p-0 pr-1">
+                        <h2 style="max-width: 200px; height: 35px;" class="text-center font-weight-bold heading mb-0 p-1">{{this.monthname}} {{this.yearname}}</h2>
+                    </div>
+                </div>
+                <div class="row my-1 mx-lg-5 px-0 px-lg-5 mx-0">
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">{{this.allPlant[0].internalRejection | number : '1.2-2'}} lacs</h4>
+                                    <h6 class="text-white m-b-0">Total Rejection</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-ban card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+            
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">{{this.allPlant[0].internalRejectionFinal | number : '1.2-2'}} lacs</h4>
+                                    <h6 class="text-white m-b-0">Rej. After Re-work</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-filter card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+            
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">{{this.allPlant[0].totalSales | number : '1.2-2'}} lacs</h4>
+                                    <h6 class="text-white m-b-0">Total Sales</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-line-chart card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+            
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="grid-container2 m-auto mb-1">
+                        <div class="card border-10 bg-4 text-center p-3 mx-3 mt-3 mb-0">
+                            <div class="row m-0 pb-2 border-b">
+                                <div class="col-5 p-0">
+                                  <h4 class="mb-0 text-left font-weight-bold">All Plants</h4>
+                                </div>
+                                <div class="col-7 p-0">
+                                  <h4 class="mb-0 text-right font-weight-bold">button</h4>
+                                </div>
+                              </div>
+                              <div class="row m-0 my-2 avgtot p-1">
+                                <div class="col-12 p-0">
+                                  <p class="mb-0 font-weight-bold">Total Rejection = {{this.allPlant[0].internalRejection | number : '1.2-2'}} lacs</p>
+                                </div>
+                              </div>
+                              <div class="row m-0 mb-2 avgtot p-1">
+                                <div class="col-12 p-0">
+                                  <p class="mb-0 font-weight-bold">Rej. After Re-work = {{this.allPlant[0].internalRejectionFinal | number : '1.2-2'}} lacs</p>
+                                </div>
+                              </div>
+                              <div class="row m-0 mb-2 avgtot p-1">
+                                <div class="col-12 p-0">
+                                  <p class="mb-0 font-weight-bold">Total Sales = {{this.allPlant[0].totalSales | number : '1.2-2'}} lacs</p>
+                                </div>
+                              </div>
+                              <div class="row m-0 mb-2 mid-row">
+                                <div class="col-6 p-0 d-flex p-2 target justify-content-center">
+                                  <p class="mb-0 font-weight-bold">Rej. % = {{this.allPlant[0].rejper}}</p>
+                                </div>
+                                <div class="col-6 p-0 p-2" [ngClass]="this.allPlant[0].rejmarks> 15 ? 'perrej-r' : 'perrej-g'">
+                                  <p class="mb-0 font-weight-bold">Marks = {{this.allPlant[0].rejmarks}}</p>
+                                </div>
+                              </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row mb-1 mx-lg-5 px-0 px-lg-5 mx-0">
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">{{this.allPlant[0].rejper}}%</h4>
+                                    <h6 class="text-white m-b-0">Rejection %</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-pie-chart card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+            
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">{{this.allPlant[0].rejmarks}}</h4>
+                                    <h6 class="text-white m-b-0">Marks</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-bullseye card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+            
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
+                            <div class="card-block">
+                                <div class="row align-items-end">
+                                <div class="col-8">
+                                    <h4 class="text-white">For More Details</h4>
+                                    <h6 class="text-white m-b-0">Click here!</h6><br>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <i class="fa fa-eye card2-icon" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-white m-b-0">
+                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row col-md-11">
+        <div class="col-md-6">
+          <h5>Detail Incentive Report</h5>
+        </div>
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <div class="modal-body">
+        <div class="px-lg-5 px-0 mx-lg-5 mx-0 mb-3">
+            <div class="row px-md-4 mx-lg-5 mx-0 px-1">
+              <div class="card w-100 highlight-2 border-10 m-auto">
+                <div class="overflow-scroll p-3">
+                  <ag-grid-angular
+                  style="height: 500px;"
+                  class="ag-theme-alpine w-100"
+                  [rowData]="rowData | async"
+                  [gridOptions]="gridOptions"
+                  [suppressAggFuncInHeader]="true"
+                  [animateRows]="true"
+                  [defaultColDef]="defaultColDef"
+                  [autoGroupColumnDef]="autoGroupColumnDef">
+                  </ag-grid-angular>
+                </div> 
+              </div>
+            </div>
+        </div>
+      <!-- <div class="row m-0">
+        <div class="col-12 p-0 position-relative mb-md-0 px-md-4 px-1">
+            <div class="card w-100 highlight-2 border-10 px-3 py-2 m-auto"> -->
+              <!-- <div class="line position-absolute"></div>
+              <div class="row m-0 mb-3 position-relative" style="height: 35px;">
+                <div class="col-6 p-0 pr-1">
+                  <h5 style="max-width: 200px; height: 35px;" class="border-10 text-center highlight font-weight-bold clay-1 text-white mb-0 p-1">{{this.monthname}} {{this.yearname}}</h5>
+                </div>
+                <div class="col-6 p-0 pl-1">
+                  <div class="card border-10 bg-2 text-center m-0 p-1 ml-auto" style="max-width: 200px; height: 35px;">
+                    <div class="row m-0">
+                      <div class="col-4 p-0">
+                        <h5 class="mb-0 text-white font-weight-bold text-center">Total</h5>
+                      </div>
+                      <div class="col-8 p-0">
+                        <div class="d-flex flex-column">
+                          <h6 class="text-white mb-0 font-weight-bold mt-1 card-numbers total-numbers">{{rejValuesMonthly}} lacs</h6>
+                        </div>  
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <!-- <div class="row m-0">
+                <div class="grid-container w-100 mb-1">
+                  <div class="card border-10 bg-4 text-center p-3 mx-3 mt-3 mb-0" *ngFor="let x of monthly">
+                    <div class="row m-0 pb-2 border-b">
+                      <div class="col-5 p-0">
+                        <h6 class="mb-0 text-left font-weight-bold border-r">{{x.plant}}</h6>
+                      </div>
+                      <div class="col-7 p-0">
+                        <h6 class="mb-0 font-weight-bold">Total = {{x.value / 100000 | number : '1.2-2'}} lacs</h6>
+                      </div>
+                    </div>
+                    <div class="row m-0 my-2 mid-row">
+                      <div class="col-6 p-0 d-flex p-2 target justify-content-center">
+                        <fa name="rocket mr-2"></fa>
+                        <p class="mb-0 font-weight-bold">Target = 15%</p>
+                      </div>
+                      <div class="col-6 p-0 p-2" [ngClass]="x.rejper > 15 ? 'perrej-r' : 'perrej-g'">
+                        <p class="mb-0 font-weight-bold">Rej. % = {{x.rejper}}%</p>
+                      </div>
+                    </div>
+                    <div class="row m-0 mb-2 avgtot p-1">
+                      <div class="col-12 p-0">
+                        <p class="mb-0 font-weight-bold">Avg. Total = {{x.value / 100000 / this.numberOfDays | number : '1.2-2'}} lacs</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>

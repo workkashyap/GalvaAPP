@@ -28,7 +28,7 @@
         <option value="Dec">Dec</option>
       </select>      
     </div>
-    <div>
+    <div class="mr-3">
       <button class="btn btn-primary " (click)="onviewDetail()">View</button>  
     </div>
   </div>
@@ -151,11 +151,10 @@
         style="height: 500px;"
         class="ag-theme-alpine w-100"
         [rowData]="rowData | async"
-        [columnDefs]="columnDefs"
         [gridOptions]="gridOptions"
         [suppressAggFuncInHeader]="true"
         [animateRows]="true"
-      
+        (cellMouseOut) = onview();
         [defaultColDef]="defaultColDef"
         [autoGroupColumnDef]="autoGroupColumnDef">
         </ag-grid-angular>

@@ -42,7 +42,8 @@
                             <fa name="trash"></fa>
                           </button> -->
                         </span>
-                        <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field=='entrydate'">{{rowData[col.field] | date: 'yyyy-MM-dd'}}</span>
+                        <span *ngIf="col.field!='entrydate'">{{rowData[col.field]}}</span>
                       </td>
                     </tr>
                   </ng-template>

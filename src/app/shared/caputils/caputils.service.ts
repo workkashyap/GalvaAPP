@@ -27,18 +27,18 @@ export class CaputilsService {
       });
   }
 
-  public getallDataMonth(month) {
+  public getallDataMonth(month, plant) {
     //for calendar click event/
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-" + month + "-12")
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
         this.caputilsList = res as Caputils[];
       });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-0" + month + "-12")
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-0" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
         this.caputilsList = res as Caputils[];
