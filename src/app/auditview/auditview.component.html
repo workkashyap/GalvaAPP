@@ -42,7 +42,8 @@
                             <fa name="trash"></fa>
                           </button> -->
                         </span>
-                        <span *ngIf="col.field!='view'">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field=='result'" [ngStyle]="{'background-color':getColor(rowData[col.field]), 'color':'transparent'}">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field!='result'">{{rowData[col.field]}}</span>
                       </td>
                     </tr>
                   </ng-template>

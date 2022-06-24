@@ -23,6 +23,18 @@ export class AuditviewComponent implements OnInit {
   selectedAudit: AuditService;
   cols: any;
 
+  getColor(result){
+    switch (result) {
+      case 5:
+        return 'green';
+      case 3:
+        return 'yellow';
+      case 0:
+        return 'red';
+    }
+
+  }
+
   constructor(
     private toastr: ToastrService,
     public lservice: LoginService,
@@ -42,6 +54,7 @@ export class AuditviewComponent implements OnInit {
       { field: "result", header: "Result" },
     ];
     this.auditservice.getallData();
+    console.log(this.auditservice.auditList);
     this.loading = false;
   }
 
