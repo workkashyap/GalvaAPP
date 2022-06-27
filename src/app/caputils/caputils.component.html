@@ -16,7 +16,7 @@
                       </div>
                       <div class="col-md-8">
                         <input class="form-control" type='date' id="entrydate" name="entrydate" #entrydate="ngModel" [readonly]="caputilsservice.caputilsData.id > 0"
-                        [(ngModel)]="caputilsservice.caputilsData.entrydate"/>
+                        (change)="dateChange()" [(ngModel)]="caputilsservice.caputilsData.entrydate"/>
                       </div>
                     </div>
                 </div>

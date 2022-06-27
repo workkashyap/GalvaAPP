@@ -16,7 +16,7 @@
                       </div>
                       <div class="col-md-8">
                         <input class="form-control" type='date' id="auditdate" name="auditdate" #auditdate="ngModel" [readonly]="auditservice.auditData.id > 0"
-                        [(ngModel)]="auditservice.auditData.audit_date"/>
+                        (change)="dateChange()" [(ngModel)]="auditservice.auditData.audit_date"/>
                       </div>
                     </div>
                 </div>

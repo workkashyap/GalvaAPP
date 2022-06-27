@@ -23,6 +23,7 @@ export class CaputilsComponent implements OnInit {
   public currentUser: User;
   public selectedcode: any;
   public date: string;
+  public selecteddate: any;
   public actionvalue: string;
   public loading = false;
   public validQtyError = false;
@@ -69,7 +70,7 @@ export class CaputilsComponent implements OnInit {
               });
           } else {
             me.caputilsservice.caputilsData = {
-              entrydate: me.date,
+              entrydate: this.date,
               plantcode: '',
               linetype: '',
               plantround: 0,
@@ -82,6 +83,10 @@ export class CaputilsComponent implements OnInit {
   
     plantcodeChange() {
       this.selectedcode = this.caputilsservice.caputilsData.plantcode;
+    }
+
+    dateChange() {
+      this.selecteddate = this.caputilsservice.caputilsData.entrydate;
     }
   
     resetForm(form?: NgForm) {
@@ -117,7 +122,7 @@ export class CaputilsComponent implements OnInit {
                 console.log(err);
               });
             }else{
-              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.selecteddate, 'yyyy-MM-dd');
               this.caputilsservice.savecaputils().subscribe(res => {
                 console.log(this.caputilsservice.caputilsData);
                 this.resetForm(form);

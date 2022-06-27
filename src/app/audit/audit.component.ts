@@ -22,6 +22,7 @@ export class AuditComponent implements OnInit {
 
   public currentUser: User;
   public selectedcode: any;
+  public selecteddate: any;
   public selectedvalue: any;
   public date: string;
   public insOrdeno: number;
@@ -77,7 +78,7 @@ export class AuditComponent implements OnInit {
             });
         } else {
           me.auditservice.auditData = {
-            audit_date: me.date,
+            audit_date: this.date,
             plantcode: '',
             customer: '',
           };
@@ -89,6 +90,10 @@ export class AuditComponent implements OnInit {
 
   plantcodeChange() {
     this.selectedcode = this.auditservice.auditData.plantcode;
+  }
+
+  dateChange() {
+    this.selecteddate = this.auditservice.auditData.audit_date;
   }
 
   valueChange() {
@@ -128,7 +133,7 @@ export class AuditComponent implements OnInit {
               console.log(err);
             });
           }else{
-            this.auditservice.auditData.audit_date = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+            this.auditservice.auditData.audit_date = this.datePipe.transform(this.selecteddate, 'yyyy-MM-dd');
             console.log(this.auditservice.auditData.audit_date);
             this.auditservice.saveaudit().subscribe(res => {
               console.log(this.auditservice.auditData);
