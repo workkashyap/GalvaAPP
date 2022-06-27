@@ -133,7 +133,7 @@ export class AuditComponent implements OnInit {
               console.log(err);
             });
           }else{
-            this.auditservice.auditData.audit_date = this.datePipe.transform(this.selecteddate, 'yyyy-MM-dd');
+            this.auditservice.auditData.audit_date = this.datePipe.transform(this.auditservice.auditData.audit_date, 'yyyy-MM-dd');
             console.log(this.auditservice.auditData.audit_date);
             this.auditservice.saveaudit().subscribe(res => {
               console.log(this.auditservice.auditData);

@@ -102,7 +102,7 @@
                               </div>
                               <div class="col-md-8">
                                 <input class="form-control" type='number' id="actualround" name="actualround" #actualround="ngModel"
-                                [(ngModel)]="caputilsservice.caputilsData.actualround"/>
+                                (change)="perCalc()" [(ngModel)]="caputilsservice.caputilsData.actualround"/>
                               </div>
                             </div>
                         </div>  

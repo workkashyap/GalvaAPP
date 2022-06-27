@@ -122,7 +122,7 @@ export class CaputilsComponent implements OnInit {
                 console.log(err);
               });
             }else{
-              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.selecteddate, 'yyyy-MM-dd');
+              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, 'yyyy-MM-dd');
               this.caputilsservice.savecaputils().subscribe(res => {
                 console.log(this.caputilsservice.caputilsData);
                 this.resetForm(form);

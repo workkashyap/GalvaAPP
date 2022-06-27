@@ -71,6 +71,7 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "linetype", header: "Line Type" },
       { field: "plantround", header: "Plan Round" },
       { field: "actualround", header: "Actual Round" },
+      { field: "percomplete", header: "Round %" }
 
     ];
     this.caputilsservice.getallDataMonth(this.index, this.plantcode);
@@ -173,6 +174,10 @@ export class CaputilsworkerComponent implements OnInit {
   back() {
     this.iservice.uid = this.currentUser.id;
     this.route.navigate(['./caputilsworker']);
+  }
+
+  perCalc() {
+    this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100; 
   }
 
   opendetail(id) {

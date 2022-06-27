@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Incentive } from '../shared/incentive/incentive.model'
 import { Grid, GridOptions } from 'ag-grid-community';
 import { Observable } from 'rxjs';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
@@ -44,7 +45,8 @@ export class IncentivereportComponent implements OnInit {
   public monthly: any;
   public today: any;
   public allPlant: any;
-  public datarow: any[] = [];
+  public reportRej: number;
+  public reportSales: number;
   
   rowData: Observable<any[]>;
 
@@ -78,7 +80,6 @@ export class IncentivereportComponent implements OnInit {
 
   ngOnInit() {
     this.monthly = [];
-    this.datarow = [];
     this.today = [];
     this.allPlant = [];
     this.getData();
@@ -125,6 +126,28 @@ export class IncentivereportComponent implements OnInit {
   
     // });
     this.rowData = this.incentive.getAllPlantReportDetail(this.yearname, this.index);
+    this.reportRej = 0;
+    this.reportSales = 0;
+    this.rowData.forEach(element => {
+      for(const x in element) {
+        if(element[x].type === "Rejection"){
+          if(element[x].over_All_Company_Rej.includes("Sales Return")) {
+            this.reportRej = this.reportRej + (-element[x].value);
+            console.log(this.reportRej);
+          }
+          else{
+            this.reportRej = this.reportRej + element[x].value;
+            console.log(this.reportRej);
+          } 
+        }
+        else {
+          console.log("Sales" + element[x].value);
+          this.reportSales = this.reportSales + element[x].value;
+          console.log(this.reportSales);
+        }
+      }
+    });
+
   }
 
   getTotal(values) {

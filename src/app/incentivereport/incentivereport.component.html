@@ -47,7 +47,7 @@
                 </div>
                 <div class="row my-1 mx-lg-5 px-0 px-lg-5 mx-0">
                     <div class="col-md-4">
-                        <div class="card my-1 bg-primary update-card">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
                                 <div class="col-8">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card my-1 bg-primary update-card">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
                                 <div class="col-8">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card my-1 bg-primary update-card">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
                                 <div class="col-8">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="row mb-1 mx-lg-5 px-0 px-lg-5 mx-0">
                     <div class="col-md-4">
-                        <div class="card my-1 bg-primary update-card">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
                                 <div class="col-8">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card my-1 bg-primary update-card">
+                        <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
                                 <div class="col-8">
@@ -233,6 +233,23 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
     <div class="modal-body">
         <div class="px-lg-5 px-0 mx-lg-5 mx-0 mb-3">
+            <div class="row px-md-4 mx-lg-5 mx-0 px-1 mb-3">
+              <div class="col-4">
+                <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">Total
+                  Rejection: {{ reportRej | number:'1.2-2'}} Lacs
+                </button>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">Total
+                  Sales: {{ reportSales | number:'1.2-2'}} Lacs
+                </button>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">Total
+                  Marks: {{ this.allPlant[0].rejmarks}}/30
+                </button>
+              </div>            
+            </div>
             <div class="row px-md-4 mx-lg-5 mx-0 px-1">
               <div class="card w-100 highlight-2 border-10 m-auto">
                 <div class="overflow-scroll p-3">
