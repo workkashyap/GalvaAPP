@@ -12,6 +12,14 @@
     border-radius: 10px;
 }
 
+.blue-bg{
+    border-radius: 10px;
+    background: rgba(1,41,205,0.5);
+    box-shadow: 3px 2px 6px 0 rgba(102, 103, 171, .85),
+                inset -4px -4px 4px 0 rgba(51, 83, 214, 0.5),
+                inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
+}
+
 .card{
      box-shadow: 0 0 5px rgb(0 0 0 / 13%), 0 3px 8px rgb(0 0 0 / 20%);
      border: 1px solid rgba(0, 0, 0, 0.125);

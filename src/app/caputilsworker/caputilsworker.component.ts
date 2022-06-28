@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { ProductionsService } from 'src/app/shared/productions/productions.service';
 import { Router } from '@angular/router';
 import { InboxService } from 'src/app/shared/inbox/inbox.service';
@@ -11,6 +12,8 @@ import { LoginService } from 'src/app/shared/login/login.service';
 import { PlantService } from 'src/app/shared/plant/plant.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
 import { CaputilsService } from '../shared/caputils/caputils.service';
+import { ContentObserver } from '@angular/cdk/observers';
+import { Caputils2 } from '../shared/caputils/caputils2.model';
 
 @Component({
   selector: 'app-caputilsworker',
@@ -24,12 +27,14 @@ export class CaputilsworkerComponent implements OnInit {
   public loading = false;
   public monthname: string;
   public selectedcode: any;
+  public yearname: string;
   public plantcode: any;
   public date: string;
   public Month: string;
   public x: number;
   public index: string;
   public actionvalue: string;
+  public avgPer: any;
   public validQtyError = false;
 
   public monthNames: any;
@@ -37,6 +42,7 @@ export class CaputilsworkerComponent implements OnInit {
 
   selectedCaputils: CaputilsService;
   cols: any;
+  percaputils: Observable<Caputils2[]>;
 
   constructor(
     private route: Router,
@@ -62,6 +68,7 @@ export class CaputilsworkerComponent implements OnInit {
     this.plantcode = 1010
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
+    this.yearname = this.d.getFullYear();
     this.x = this.monthNames.indexOf(this.monthname) + 1;
     this.index = this.x.toString();
     this.cols = [
@@ -74,9 +81,13 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "percomplete", header: "Round %" }
 
     ];
-    this.caputilsservice.getallDataMonth(this.index, this.plantcode);
+    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.plantcode);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode)
+    console.log(this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode));
+
+    
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
@@ -229,14 +240,16 @@ export class CaputilsworkerComponent implements OnInit {
 
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.caputilsservice.getallDataMonth(this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode);
   }
 
   getselectedmonth() {
     this.Month = this.monthname;
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
-    this.caputilsservice.getallDataMonth(this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode);
   }
 
 }

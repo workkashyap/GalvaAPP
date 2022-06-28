@@ -71,7 +71,7 @@ export class CaputilsComponent implements OnInit {
           } else {
             me.caputilsservice.caputilsData = {
               entrydate: this.date,
-              plantcode: '',
+              plantcode: '1010',
               linetype: '',
               plantround: 0,
             };

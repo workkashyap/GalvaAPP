@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Caputils } from "./caputils.model";
+import { Caputils2 } from "./caputils2.model";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 
@@ -11,6 +12,8 @@ export class CaputilsService {
 
   public caputilsData: Caputils;
   public caputilsList: Caputils[] = [];
+  public caputils2: Caputils2[] = [];
+  public caputils2Data: Caputils2;
 
   readonly rootUrl = environment.apiUrl;
   public id: number;
@@ -27,21 +30,39 @@ export class CaputilsService {
       });
   }
 
-  public getallDataMonth(month, plant) {
+  public getallDataMonth(year, month, plant) {
     //for calendar click event/
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-" + month + "-12/" + plant)
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
         this.caputilsList = res as Caputils[];
       });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/2022-0" + month + "-12/" + plant)
+      .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-0" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
         this.caputilsList = res as Caputils[];
+      });
+    }
+  }
+
+  public getAvgPer(year, month, plant) {
+    if (month.length > 1) {
+      return this.http
+      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant)
+      .toPromise()
+      .then(res => {
+        this.caputils2 = res as Caputils2[];
+      });
+    } else {
+      return this.http
+      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant)
+      .toPromise()
+      .then(res => {
+        this.caputils2 = res as Caputils2[];
       });
     }
   }

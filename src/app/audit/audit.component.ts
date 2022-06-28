@@ -79,7 +79,7 @@ export class AuditComponent implements OnInit {
         } else {
           me.auditservice.auditData = {
             audit_date: this.date,
-            plantcode: '',
+            plantcode: '1010',
             customer: '',
           };
         }
