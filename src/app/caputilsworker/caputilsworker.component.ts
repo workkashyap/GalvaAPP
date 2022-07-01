@@ -241,7 +241,7 @@ export class CaputilsworkerComponent implements OnInit {
   selectedGrid(ev) {
     this.selectedcode = ev;
     this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode);
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
   }
 
   getselectedmonth() {
@@ -249,7 +249,7 @@ export class CaputilsworkerComponent implements OnInit {
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
     this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode);
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
   }
 
 }

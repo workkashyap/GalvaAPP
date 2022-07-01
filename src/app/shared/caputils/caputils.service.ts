@@ -12,7 +12,7 @@ export class CaputilsService {
 
   public caputilsData: Caputils;
   public caputilsList: Caputils[] = [];
-  public caputils2: Caputils2[] = [];
+  public caputils2: Caputils2 [] = [] ;
   public caputils2Data: Caputils2;
 
   readonly rootUrl = environment.apiUrl;
@@ -38,6 +38,7 @@ export class CaputilsService {
       .toPromise()
       .then(res => {
         this.caputilsList = res as Caputils[];
+       
       });
     } else {
       return this.http
@@ -55,14 +56,15 @@ export class CaputilsService {
       .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
-        this.caputils2 = res as Caputils2[];
+        this.caputils2 = res as Caputils2 [];
+        console.log(this.caputils2[0].percaputil);
       });
     } else {
       return this.http
       .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant)
       .toPromise()
       .then(res => {
-        this.caputils2 = res as Caputils2[];
+        this.caputils2 = res as Caputils2 [];
       });
     }
   }
