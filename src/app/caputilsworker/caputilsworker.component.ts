@@ -27,11 +27,13 @@ export class CaputilsworkerComponent implements OnInit {
   public loading = false;
   public monthname: string;
   public selectedcode: any;
+  public year: string;
   public yearname: string;
   public plantcode: any;
   public date: string;
   public Month: string;
   public x: number;
+  public isReadOnly: boolean;
   public index: string;
   public actionvalue: string;
   public avgPer: any;
@@ -91,6 +93,7 @@ export class CaputilsworkerComponent implements OnInit {
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
+    this.isReadOnly = false;
 
     this.plantservice
         .sgetPlantData(me.currentUser.id)
@@ -110,6 +113,11 @@ export class CaputilsworkerComponent implements OnInit {
               .then((res: any) => {
                 this.caputilsservice.caputilsData = res; //as Productions[];
                 this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+                if(this.caputilsservice.caputilsData.actualround > 0) {
+                  this.isReadOnly = true;
+                }else {
+                  this.isReadOnly = false;
+                }
               });
           } else {
             me.caputilsservice.caputilsData = {
@@ -198,6 +206,7 @@ export class CaputilsworkerComponent implements OnInit {
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
+    this.isReadOnly = false;
 
     this.plantservice
         .sgetPlantData(me.currentUser.id)
@@ -217,6 +226,11 @@ export class CaputilsworkerComponent implements OnInit {
               .then((res: any) => {
                 this.caputilsservice.caputilsData = res; //as Productions[];
                 this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+                if(this.caputilsservice.caputilsData.actualround > 0) {
+                  this.isReadOnly = true;
+                }else {
+                  this.isReadOnly = false;
+                };
               });
           } else {
             me.caputilsservice.caputilsData = {
@@ -240,6 +254,12 @@ export class CaputilsworkerComponent implements OnInit {
 
   selectedGrid(ev) {
     this.selectedcode = ev;
+    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+  }
+
+  getselectedyear() {
+    this.year = this.yearname;
     this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
     this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
   }

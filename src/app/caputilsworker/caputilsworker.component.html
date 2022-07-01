@@ -21,6 +21,14 @@
               </select> 
             </div>
             <div class="ml-2">
+              <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
+                <option value="">--Select Year--</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="ml-2">
                 <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
                   <option value="">--Select Month--</option>
                   <option value="Jan">Jan</option>
@@ -106,7 +114,7 @@
                                 <label for="actualround">Actual Round:</label>
                               </div>
                               <div class="col-md-8">
-                                <input class="form-control" type='number' id="actualround" name="actualround" #actualround="ngModel"
+                                <input [readonly]="isReadOnly" class="form-control" type='number' id="actualround" name="actualround" #actualround="ngModel"
                                 (change)="perCalc()" [(ngModel)]="caputilsservice.caputilsData.actualround"/>
                               </div>
                             </div>

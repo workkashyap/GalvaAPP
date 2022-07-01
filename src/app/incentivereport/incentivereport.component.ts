@@ -126,27 +126,7 @@ export class IncentivereportComponent implements OnInit {
   
     // });
     this.rowData = this.incentive.getAllPlantReportDetail(this.yearname, this.index);
-    this.reportRej = 0;
-    this.reportSales = 0;
-    this.rowData.forEach(element => {
-      for(const x in element) {
-        if(element[x].type === "Rejection"){
-          if(element[x].over_All_Company_Rej.includes("Sales Return")) {
-            this.reportRej = this.reportRej + (-element[x].value);
-            console.log(this.reportRej);
-          }
-          else{
-            this.reportRej = this.reportRej + element[x].value;
-            console.log(this.reportRej);
-          } 
-        }
-        else {
-          console.log("Sales" + element[x].value);
-          this.reportSales = this.reportSales + element[x].value;
-          console.log(this.reportSales);
-        }
-      }
-    });
+    this.getSummary();
 
   }
 
@@ -157,6 +137,32 @@ export class IncentivereportComponent implements OnInit {
     }
     this.rejValues = Math.round((this.rejValues / 100000) * 100) / 100;
     return this.rejValues;
+  }
+
+  getSummary(){
+    this.reportRej = 0;
+    this.reportSales = 0;
+    this.rowData.forEach(element => {
+      for(const x in element) {
+        if(element[x].type === "Rejection"){
+          if(element[x].over_All_Company_Rej.includes("Sales Return")) {
+            console.log("Rej " + element[x].value);
+            this.reportRej = this.reportRej + (element[x].value);
+            console.log(this.reportRej);
+          }
+          else{
+            console.log("Rej " + element[x].value);
+            this.reportRej = this.reportRej + element[x].value;
+            console.log(this.reportRej);
+          } 
+        }
+        else {
+          console.log("Sales " + element[x].value);
+          this.reportSales = this.reportSales + element[x].value;
+          console.log(this.reportSales);
+        }
+      }
+    });
   }
   
   daysInMOnth(x, y) {
@@ -176,6 +182,7 @@ export class IncentivereportComponent implements OnInit {
       this.allPlant = data1;
    });
    this.rowData = this.incentive.getAllPlantReportDetail(this.yearname, this.index);
+   this.getSummary();
   }
 
   viewDetail() {
