@@ -17,14 +17,22 @@ export class AuditService {
 
   constructor(public http: HttpClient) { }
 
-  public getallData() {
-    //for calendar click event
-    return this.http
-      .get(this.rootUrl + "/auditsheets")
+  public getallData(year, month) {
+    if (month.length > 1) {
+      return this.http
+      .get(this.rootUrl + "/auditsheets/Getauditbydate/" + year + "-" + month + "-12")
       .toPromise()
       .then(res => {
         this.auditList = res as Audit[];
       });
+    } else {
+      return this.http
+      .get(this.rootUrl + "/auditsheets/Getauditbydate/" + year + "-0" + month + "-12")
+      .toPromise()
+      .then(res => {
+        this.auditList = res as Audit[];
+      });
+    }  
   }
 
   public auditbyid(id): Observable<Audit[]> {
