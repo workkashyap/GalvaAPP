@@ -80,6 +80,7 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "linetype", header: "Line Type" },
       { field: "plantround", header: "Plan Round" },
       { field: "actualround", header: "Actual Round" },
+      { field: "actualremark", header: "Actual Remark" },
       { field: "percomplete", header: "Round %" }
 
     ];
@@ -126,6 +127,7 @@ export class CaputilsworkerComponent implements OnInit {
               linetype: '',
               plantround: 0,
               actualround: 0,
+              actualremark: '',
             };
           }
   
@@ -142,7 +144,7 @@ export class CaputilsworkerComponent implements OnInit {
   onComplete(form: NgForm) {
     this.validQtyError = false;
 
-      if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0) {
+      if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 || this.caputilsservice.caputilsData.actualremark.length === 0) {
         this.toastr.error(
           "Save Failed.",
           "Add Required Fields."

@@ -74,6 +74,7 @@ export class CaputilsComponent implements OnInit {
               plantcode: '1010',
               linetype: '',
               plantround: 0,
+              planremark: '',
             };
           }
   
@@ -98,7 +99,7 @@ export class CaputilsComponent implements OnInit {
     onComplete(form: NgForm) {
       this.validQtyError = false;
   
-        if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0) {
+        if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 || this.caputilsservice.caputilsData.planremark.length === 0) {
           this.toastr.error(
             "Save Failed.",
             "Add Required Fields."

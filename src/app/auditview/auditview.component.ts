@@ -81,6 +81,7 @@ export class AuditviewComponent implements OnInit {
       { field: "audit_date", header: "Audit Date" },
       { field: "plantcode", header: "Plant" },
       { field: "customer", header: "Customer" },
+      { field: "marks", header: "Marks" },
       { field: "result", header: "Result" },
     ];
     await this.auditservice.getallData(this.yearname, this.index);

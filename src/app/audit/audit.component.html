@@ -63,7 +63,18 @@
                         </select>
                       </div>
                     </div>
-                </div>   
+                </div>
+                <div class="form-group mx-1">
+                  <div class="row m-0">
+                    <div class="col-md-4 in-label">
+                      <label for="marks">Marks(out of 100):</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input class="form-control" type='number' id="marks" name="marks" #marks="ngModel"
+                      [(ngModel)]="auditservice.auditData.marks"/>
+                    </div>
+                  </div>
+              </div>   
             </div>
         </form>
     </div>

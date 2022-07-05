@@ -81,6 +81,7 @@ export class AuditComponent implements OnInit {
             audit_date: this.date,
             plantcode: '1010',
             customer: '',
+            marks: 0,
           };
         }
 
@@ -113,6 +114,12 @@ export class AuditComponent implements OnInit {
         this.toastr.error(
           "Save Failed.",
           "Add Required Fields."
+        );
+      }
+      else if (this.auditservice.auditData.marks > 100) {
+        this.toastr.error(
+          "Save Failed.",
+          "Marks should not be more than 100."
         );
       }else{
         if (this.actionvalue === 'Save') {

@@ -4,4 +4,5 @@ export class Audit {
     plantcode?: string;
     customer?: string;
     result?: number;
+    marks?: number;
 }

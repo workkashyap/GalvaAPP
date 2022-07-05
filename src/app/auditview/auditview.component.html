@@ -73,6 +73,7 @@
                         <span *ngIf="col.field=='audit_date'">{{rowData[col.field] | date: 'yyyy-MM-dd'}}</span>
                         <span *ngIf="col.field=='plantcode'">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field=='customer'">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field=='marks'">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field=='result'" [ngStyle]="{'background-color':getColor(rowData[col.field]), 'color':'transparent'}">{{rowData[col.field]}}</span>
                       </td>
                     </tr>

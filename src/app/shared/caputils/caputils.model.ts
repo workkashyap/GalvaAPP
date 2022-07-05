@@ -6,4 +6,6 @@ export class Caputils {
     plantround?: number;
     actualround?: number;
     percomplete?: number;
+    planremark?: string;
+    actualremark?: string;
 }
