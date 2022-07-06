@@ -234,21 +234,31 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-body">
         <div class="px-lg-5 px-0 mx-lg-5 mx-0 mb-3">
             <div class="row px-md-4 mx-lg-5 mx-0 px-1 mb-3">
-              <div class="col-4">
-                <button class="btn btn-lg btn-custom text-white red-bg" style="float: right;">Total
+              <div class="col-3">
+                <button class="btn btn-md btn-custom text-white red-bg" style="float: right;">Total
                   Rejection: {{ reportRej | number:'1.2-2'}} Lacs
                 </button>
               </div>
-              <div class="col-4">
-                <button class="btn btn-lg btn-custom text-white green-bg" style="float: right;">Total
+              <div class="col-2">
+                <button class="btn btn-md btn-custom text-white green-bg" style="float: right;">Total
                   Sales: {{ reportSales | number:'1.2-2'}} Lacs
                 </button>
               </div>
-              <div class="col-4">
-                <button class="btn btn-lg btn-custom text-white green-bg" style="float: right;">Total
+              <div class="col-2">
+                <button class="btn btn-md btn-custom text-white green-bg" style="float: right;">Total
                   Marks:<br> {{ this.allPlant[0].rejmarks}}/30
                 </button>
-              </div>            
+              </div>
+              <div class="col-2">
+                <button class="btn btn-md btn-custom text-white blue-bg" style="float: right;">Total
+                  Audit:<br> 1500
+                </button>
+              </div> 
+              <div class="col-3">
+                <button class="btn btn-md btn-custom text-white blue-bg mx-0" style="float: right;">Total
+                  Capacity:<br> 1500
+                </button>
+              </div>             
             </div>
             <div class="row px-md-4 mx-lg-5 mx-0 px-1">
               <div class="card w-100 highlight-2 border-10 m-auto">
