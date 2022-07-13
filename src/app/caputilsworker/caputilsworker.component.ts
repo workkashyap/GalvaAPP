@@ -67,7 +67,7 @@ export class CaputilsworkerComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
-    this.plantcode = 1010
+    this.plantcode = 1010;
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
     this.yearname = this.d.getFullYear();
@@ -81,7 +81,7 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "plantround", header: "Plan Round" },
       { field: "actualround", header: "Actual Round" },
       { field: "actualremark", header: "Actual Remark" },
-      { field: "percomplete", header: "Round %" }
+      { field: "percomplete", header: "Uitilization %" }
 
     ];
     this.caputilsservice.getallDataMonth(this.yearname, this.index, this.plantcode);
@@ -144,7 +144,8 @@ export class CaputilsworkerComponent implements OnInit {
   onComplete(form: NgForm) {
     this.validQtyError = false;
 
-      if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 || this.caputilsservice.caputilsData.actualremark.length === 0) {
+    // tslint:disable-next-line: max-line-length
+    if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 ) {
         this.toastr.error(
           "Save Failed.",
           "Add Required Fields."
@@ -155,7 +156,7 @@ export class CaputilsworkerComponent implements OnInit {
           this.loading = true;
   
           if (this.caputilsservice.caputilsData.id > 0) {
-            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, 'yyyy-MM-dd');
     
             this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
               this.resetForm(form);

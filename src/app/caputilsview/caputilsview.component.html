@@ -11,6 +11,41 @@
                   <i class="fa fa-search input-group-text"></i>
                 </div>
             </div>
+            <div class="ml-2">
+              <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                      (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+                      <!-- <option value="0">--Select--</option> -->
+                      <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                        {{ pl.plantshortname }}
+                      </option>
+              </select> 
+            </div>
+            <div class="ml-2">
+              <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
+                <option value="">--Select Year--</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="ml-2">
+                <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel' [(ngModel)]='this.monthname'>
+                  <option value="">--Select Month--</option>
+                  <option value="Jan">Jan</option>
+                  <option value="Feb">Feb</option>
+                  <option value="Mar">Mar</option>
+                  <option value="Apr">Apr</option>
+                  <option value="May">May</option>
+                  <option value="Jun">Jun</option>
+                  <option value="Jul">Jul</option>
+                  <option value="Aug">Aug</option>
+                  <option value="Sep">Sep</option>
+                  <option value="Oct">Oct</option>
+                  <option value="Nov">Nov</option>
+                  <option value="Dec">Dec</option>
+                </select>      
+            </div>
+
             <button (click)="addNewMaterial()" class="btn btn-primary px-3 ml-3">Add New Item</button>
         </div>
         <div class="p-3">
