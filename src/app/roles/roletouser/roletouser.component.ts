@@ -76,7 +76,7 @@ export class RoletouserComponent implements OnInit {
     this.is_checked = false;
     if (this.allRoleAssigned) {
       for (this.i = 0; this.i < this.allRoleAssigned.length; this.i++) {
-        if (me.allRoleAssigned[me.i].userid == id) {
+        if (me.allRoleAssigned[me.i].userid === id) {
           row.myid = me.allRoleAssigned[me.i].id;
           me.is_checked = true;
           break;
@@ -132,7 +132,7 @@ export class RoletouserComponent implements OnInit {
       .then(res => {
         me.roles = res as Roles[];
         me.role_id = me.roles[0].id;
-        me.getData();
+        this.getData();
       });
   }
   rolepage() {
@@ -146,7 +146,7 @@ export class RoletouserComponent implements OnInit {
       .getpagesbyuser(me.role_id)
       .toPromise()
       .then(res => {
-        me.allRoleAssigned = res as Rolepages[];
+        this.allRoleAssigned = res as Rolepages[];
         me.loading = false;
 
       });

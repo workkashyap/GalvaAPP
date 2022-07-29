@@ -41,7 +41,7 @@ export class IncentivereportComponent implements OnInit {
   public d: any;
   public total: any;
   public temp: any[] = [];
-
+ public rowStyle: any;
   public monthly: any;
   public today: any;
   public allPlant: any;
@@ -73,7 +73,11 @@ export class IncentivereportComponent implements OnInit {
   public gridOptions: GridOptions = {
     columnDefs: this.columnDefs,
     // pivotRowTotals: 'before',
+    
+    
   };
+
+  
   
 
   constructor(private incentive: IncentiveService) { }
@@ -149,17 +153,23 @@ export class IncentivereportComponent implements OnInit {
             console.log("Rej " + element[x].value);
             this.reportRej = this.reportRej + (element[x].value);
             console.log(this.reportRej);
+            this.rowStyle = 'row-fail';
           }
           else{
             console.log("Rej " + element[x].value);
             this.reportRej = this.reportRej + element[x].value;
             console.log(this.reportRej);
+            this.rowStyle = 'row-fail';
+           
           } 
         }
         else {
+          
           console.log("Sales " + element[x].value);
           this.reportSales = this.reportSales + element[x].value;
           console.log(this.reportSales);
+          this.rowStyle = 'row-pass';
+         
         }
       }
     });

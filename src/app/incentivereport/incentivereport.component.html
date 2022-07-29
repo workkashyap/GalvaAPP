@@ -171,20 +171,36 @@
                         <div class="card my-1 bg-primary update-card" role="button" (click)="viewDetail()">
                             <div class="card-block">
                                 <div class="row align-items-end">
-                                <div class="col-8">
-                                    <h4 class="text-white">{{this.allPlant[0].rejmarks}}</h4>
-                                    <h6 class="text-white m-b-0">Marks</h6><br>
+                                <div class="col-3">
+                                    <h4 class="text-white">{{this.allPlant[0].rejmarks}}/30</h4>
+                                    <h6 class="text-white m-b-0">Rej.</h6><br>
+                                    
                                 </div>
-                                <div class="col-4 text-right">
+                                <div class="col-3">
+                                  <h4 class="text-white">{{ this.allPlant[0].auditmarks}}/5</h4>
+                                  <h6 class="text-white m-b-0">Audit</h6><br>
+                                  
+                                </div>
+                                <div class="col-3">
+                                  <h4 class="text-white">{{ this.allPlant[0].capmarks}}/20</h4>
+                                  <h6 class="text-white m-b-0">Capacity</h6><br>
+                                  
+                                </div>
+                                <div class="col-3 text-right">
                                     <i class="fa fa-bullseye card2-icon" aria-hidden="true"></i>
                                 </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <p class="text-white m-b-0">
-            
-                                <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month
-                                </p>
+                              <div class="row align-items-end">
+                                <div class="col-12">
+                                  <p class="text-white m-b-0">
+                                    <i class="fa fa-clock-o f-14 m-r-10" aria-hidden="true"></i> {{monthname}} Month &nbsp;&nbsp;&nbsp;
+                                   Total Marks {{this.allPlant[0].rejmarks + this.allPlant[0].auditmarks + this.allPlant[0].capmarks }}/55</p>
+                                  </div>
+                                
+
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -267,6 +283,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                   style="height: 500px;"
                   class="ag-theme-alpine w-100"
                   [rowData]="rowData | async"
+                  [rowClassRules]="rowStyle"
                   [gridOptions]="gridOptions"
                   [suppressAggFuncInHeader]="true"
                   [animateRows]="true"

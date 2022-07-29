@@ -14,7 +14,7 @@
             <div class="ml-2">
               <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
                       (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
-                      <!-- <option value="0">--Select--</option> -->
+                      <option value="ALL">ALL</option>
                       <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                         {{ pl.plantshortname }}
                       </option>
@@ -51,9 +51,9 @@
                 <button class="btn btn-sm btn-custom text-white blue-bg mr-2" style="float: right;">Total
                   Avg Plating Utilization: {{caputilsservice.caputils2[0].percaputil}}%
                 </button>
-                <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">
+                <!-- <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">
                     Incentive Marks: {{this.incmarks}}/10
-                </button>
+                </button> -->
             </div>
             <!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
             <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"

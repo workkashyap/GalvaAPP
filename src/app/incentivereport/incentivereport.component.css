@@ -223,3 +223,13 @@
         grid-template-columns: repeat(1,1fr);
     }   
 }
+
+.row-fail {
+    font-weight: bold;
+    background-color: #aa2e25 !important;
+  }
+  
+  .row-pass {
+    font-weight: bold;
+    background-color: #357a38 !important;
+  }
