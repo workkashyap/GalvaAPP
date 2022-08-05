@@ -66,6 +66,8 @@ export class CaputilsreportComponent implements OnInit {
   public avgPer: any;
   public validQtyError = false;
   public incmarks: number;
+  public typename: string;
+  public type: string;
 
   public monthNames: any;
   public d: any;
@@ -95,7 +97,8 @@ export class CaputilsreportComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
-    this.plantcode = 1010
+    this.plantcode = 1010;
+    this.typename = 'ALL';
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
     this.yearname = this.d.getFullYear();
@@ -112,11 +115,10 @@ export class CaputilsreportComponent implements OnInit {
       { field: "percomplete", header: "Utilization %" }
 
     ];
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.plantcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode)
-    console.log(this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode));
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode , this.typename);
     this.incmarks = 0;
 
     
@@ -285,22 +287,27 @@ export class CaputilsreportComponent implements OnInit {
 
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
   }
 
   getselectedyear() {
     this.year = this.yearname;
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode , this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
   }
 
   getselectedmonth() {
     this.Month = this.monthname;
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+  }
+  getselectedtype() {
+    this.type = this.typename;
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 
 }

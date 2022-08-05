@@ -50,6 +50,26 @@ export class CaputilsService {
     }
   }
 
+  public getallDataMonth_(year, month, plant, type) {
+    //for calendar click event/
+    if (month.length > 1) {
+      return this.http
+      .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-" + month + "-12/" + plant + '/' + type)
+      .toPromise()
+      .then(res => {
+        this.caputilsList = res as Caputils[];
+       
+      });
+    } else {
+      return this.http
+      .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-0" + month + "-12/" + plant + '/' + type)
+      .toPromise()
+      .then(res => {
+        this.caputilsList = res as Caputils[];
+      });
+    }
+  }
+
   public getAvgPer(year, month, plant) {
     if (month.length > 1) {
       return this.http
@@ -62,6 +82,25 @@ export class CaputilsService {
     } else {
       return this.http
       .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant)
+      .toPromise()
+      .then(res => {
+        this.caputils2 = res as Caputils2 [];
+      });
+    }
+  }
+
+  public getAvgPer_(year, month, plant, type) {
+    if (month.length > 1) {
+      return this.http
+      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant + '/' + type)
+      .toPromise()
+      .then(res => {
+        this.caputils2 = res as Caputils2 [];
+        console.log(this.caputils2[0].percaputil);
+      });
+    } else {
+      return this.http
+      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant + '/' + type)
       .toPromise()
       .then(res => {
         this.caputils2 = res as Caputils2 [];

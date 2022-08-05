@@ -4,13 +4,13 @@
             <div class="d-flex">
                 <h4 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Report</h4>
             </div>
-            <div class="input-group custome-gs ml-auto" style="max-width: 250px;">
+            <!-- <div class="input-group custome-gs ml-auto" style="max-width: 250px;">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
                   (input)="dt.filterGlobal($event.target.value, 'contains')">
                 <div class="input-group-append">
                   <i class="fa fa-search input-group-text"></i>
                 </div>
-            </div>
+            </div> -->
             <div class="ml-2">
               <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
                       (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
@@ -26,6 +26,13 @@
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="ml-2">
+              <select class="custom-select" (change)="getselectedtype()" name="Typename" #Typename='ngModel' [(ngModel)]='this.typename'>
+                <option value="ALL">ALL</option>
+                <option value="Chrome">Chrome</option>
+                <option value="Satin">Satin</option>
               </select>
             </div>
             <div class="ml-2">

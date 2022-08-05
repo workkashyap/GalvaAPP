@@ -195,7 +195,9 @@ export class QualitymstComponent implements OnInit {
 
   countQty() {
      this.qualityservice.qualityData.inspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
-  }
+     this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.sellPrice * this.qualityservice.qualityData.inspQty;
+  
+    }
 
   countRejQty() {
     this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q
@@ -273,7 +275,8 @@ export class QualitymstComponent implements OnInit {
 
       this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty; 
       this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
-
+      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.sellPrice * this.qualityservice.qualityData.inspQty;
+  
     }
 
     valuesSell(){

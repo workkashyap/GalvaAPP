@@ -29,6 +29,8 @@ export class CaputilsworkerComponent implements OnInit {
   public selectedcode: any;
   public year: string;
   public yearname: string;
+  public typename: string;
+  public type: string;
   public plantcode: any;
   public date: string;
   public Month: string;
@@ -55,6 +57,7 @@ export class CaputilsworkerComponent implements OnInit {
     public lservice: LoginService,
     public plantservice: PlantService,
     public caputilsservice: CaputilsService,
+    
     private toastr: ToastrService) {
       const me = this;
       this.lservice.currentUser.subscribe(x => (this.currentUser = x));
@@ -68,6 +71,7 @@ export class CaputilsworkerComponent implements OnInit {
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
     this.plantcode = 1010;
+    this.typename = 'ALL';
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
     this.yearname = this.d.getFullYear();
@@ -84,12 +88,11 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "percomplete", header: "Uitilization %" }
 
     ];
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.plantcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode, this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode)
-    console.log(this.caputilsservice.getAvgPer(this.yearname, this.index, this.plantcode));
-
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode, this.typename);
+    
     
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
@@ -257,22 +260,26 @@ export class CaputilsworkerComponent implements OnInit {
 
   selectedGrid(ev) {
     this.selectedcode = ev;
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 
   getselectedyear() {
     this.year = this.yearname;
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 
   getselectedmonth() {
     this.Month = this.monthname;
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
-    this.caputilsservice.getallDataMonth(this.yearname, this.index, this.selectedcode);
-    this.caputilsservice.getAvgPer(this.yearname, this.index, this.selectedcode);
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
-
+  getselectedtype() {
+    this.type = this.typename;
+    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+  }
 }

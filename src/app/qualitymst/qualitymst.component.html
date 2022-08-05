@@ -141,7 +141,19 @@
                         <label for="type">Order Type:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control" type='text' id="type" name="type" [(ngModel)]="qualityservice.qualityData.orderType"/>
+                          <select class="custom-select" required  name="type" #Ordertype='ngModel' [(ngModel)]='qualityservice.qualityData.orderType'>
+                            <option value="ZASM">ZASM</option>
+                            <option value="ZCRM">ZCRM</option>
+                            <option value="ZDCM">ZDCM</option>
+                            <option value="ZDCR">ZDCR</option>
+                            <option value="ZMLG">ZMLG</option>
+                            <option value="ZPKG">ZPKG</option>
+                            <option value="ZPTG">ZPTG</option>
+                            <option value="ZRWK">ZRWK</option>
+                            <option value="ZSAT">ZSAT</option>
+                            <option value="ZWCM">ZWCM</option>
+                            <option value="ZWCR">ZWCR</option>
+                          </select>
                       </div>
                     </div>
                 </div> 
