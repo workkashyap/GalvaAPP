@@ -252,7 +252,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="row px-md-4 mx-lg-5 mx-0 px-1 mb-3">
               <div class="col-3">
                 <button class="btn btn-sm btn-custom text-white red-bg" style="float: right;">Total
-                  Rejection: {{ reportRej | number:'1.2-2'}} Lacs
+                  Rejection: {{this.allPlant[0].internalRejectionFinal | number : '1.2-2'}} Lacs
                 </button>
               </div>
               <div class="col-2">

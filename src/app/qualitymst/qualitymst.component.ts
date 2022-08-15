@@ -194,9 +194,9 @@ export class QualitymstComponent implements OnInit {
   }
 
   countQty() {
-     this.qualityservice.qualityData.inspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
-     this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.sellPrice * this.qualityservice.qualityData.inspQty;
-  
+    this.qualityservice.qualityData.inspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
+    this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
+     
     }
 
   countRejQty() {
@@ -210,7 +210,7 @@ export class QualitymstComponent implements OnInit {
   }
 
   totRejValue() {
-    this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.sellPrice * this.qualityservice.qualityData.totRejQty;
+    this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.totRejQty;
   }
 
   valueM(v) {
@@ -219,6 +219,7 @@ export class QualitymstComponent implements OnInit {
       this.qualityservice.qualityData.plantcode = v.plant.toString();
       this.qualityservice.qualityData.size = v.ctype;
       this.qualityservice.qualityData.stdPrice = v.price;
+      this.qualityservice.qualityData.sellPrice = v.price;
       if (v.itemtype === "Chrome") {
         this.qualityservice.qualityData.orderType = "ZCRM";
       }else if (v.itemtype === "Moulding")  {
@@ -249,7 +250,7 @@ export class QualitymstComponent implements OnInit {
       this.randomData();
     }
 
-    addDefects(){
+    addDefects() {
       this.qualityservice.qualityData.mouldingRejQty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q +
                                                        this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q;
       
@@ -275,29 +276,30 @@ export class QualitymstComponent implements OnInit {
 
       this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty; 
       this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.sellPrice * this.qualityservice.qualityData.inspQty;
+      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
   
     }
 
     valuesSell(){
-      this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.sellPrice;
-      this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.sellPrice;
-      this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.sellPrice;
+      this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.stdPrice;
       // tslint:disable-next-line:max-line-length
-      this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.sellPrice;
-
-      this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.sellPrice;
-      this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.sellPrice;
-      this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.sellPrice;
-      this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.sellPrice;
+      this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.inspQty * this.qualityservice.qualityData.stdPrice;
+  
+      this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
+      this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
 
       this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty; 
-      this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.sellPrice;
+      this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
       
     }
 
     allCalculations() {
-      if (this.qualityservice.qualityData.sellPrice === 0){
+      if (this.qualityservice.qualityData.stdPrice === 0){
         this.countQty();
         this.countRejQty();
         this.addDefects();
@@ -319,7 +321,7 @@ export class QualitymstComponent implements OnInit {
     onComplete(form: NgForm) {
       this.validQtyError = false;
 
-      if (this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
+      if (this.qualityservice.qualityData.orderType.length == 0  || this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
         this.toastr.error(
           "Save Failed.",
           "Add Required Fields."
