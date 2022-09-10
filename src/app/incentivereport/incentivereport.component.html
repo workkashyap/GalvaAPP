@@ -257,7 +257,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
               </div>
               <div class="col-2">
                 <button class="btn btn-sm btn-custom text-white green-bg" style="float: right;">Total
-                  Sales: {{ reportSales | number:'1.2-2'}} Lacs
+                  Sales: {{this.allPlant[0].totalSales | number : '1.2-2'}} Lacs
                 </button>
               </div>
               <div class="col-2">

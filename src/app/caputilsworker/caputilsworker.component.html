@@ -121,7 +121,7 @@
                             <label for="actualround">Date:</label>
                           </div>
                           <div class="col-md-8">
-                            <input [readonly]="isReadOnly" class="form-control" type='string' id="edate" name="edate" #edate="ngModel"
+                            <input [readonly]="isReadOnly" disabled class="form-control" type='string' id="edate" name="edate" #edate="ngModel"
                              [(ngModel)]="caputilsservice.caputilsData.entrydate"/>
                           </div>
                         </div>
@@ -133,7 +133,7 @@
                             <label for="actualround">Plant:</label>
                           </div>
                           <div class="col-md-8">
-                            <input [readonly]="isReadOnly" class="form-control" type='number' id="plant" name="plant" #plant="ngModel"
+                            <input [readonly]="isReadOnly" disabled class="form-control" type='number' id="plant" name="plant" #plant="ngModel"
                              [(ngModel)]="caputilsservice.caputilsData.plantcode"/>
                           </div>
                         </div>
@@ -146,7 +146,7 @@
                         <label for="actualround">LineType:</label>
                       </div>
                       <div class="col-md-8">
-                        <input [readonly]="isReadOnly" class="form-control" type='text' id="ltype" name="ltype" #plant="ngModel"
+                        <input [readonly]="isReadOnly" disabled class="form-control" type='text' id="ltype" name="ltype" #plant="ngModel"
                          [(ngModel)]="caputilsservice.caputilsData.linetype"/>
                       </div>
                     </div>
@@ -157,7 +157,7 @@
                           <label for="actualround">Plan Round:</label>
                         </div>
                         <div class="col-md-8">
-                          <input [readonly]="isReadOnly" class="form-control" type='number' id="pround" name="pround" #pround="ngModel"
+                          <input [readonly]="isReadOnly" disabled class="form-control" type='number' id="pround" name="pround" #pround="ngModel"
                           (change)="perCalc()" [(ngModel)]="caputilsservice.caputilsData.plantround"/>
                         </div>
                       </div>

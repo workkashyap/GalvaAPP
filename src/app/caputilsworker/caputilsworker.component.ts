@@ -167,7 +167,10 @@ export class CaputilsworkerComponent implements OnInit {
                 "Successfully Updated.",
                 "Production"
               );
-              this.route.navigate(["./caputilsworker"]);
+              this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
+                this.route.navigate(['./caputilsworker']);
+            }); 
+             
             }, err => {
               console.log(err);
             });

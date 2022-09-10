@@ -87,7 +87,7 @@ export class CaputilsviewComponent implements OnInit {
           splantlist.forEach(splant => {
             me.plantservice.splantlist.push(splant);
           });
-          me.selectedcode = me.plantservice.splantlist[0].plantcode;
+          me.selectedcode = "ALL";
         });
 
     if (me.caputilsservice.id) {
