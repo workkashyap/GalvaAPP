@@ -111,9 +111,10 @@ import { CaputilsworkerupdateComponent } from './caputilsworkerupdate/caputilswo
 import { IncentivereportComponent } from './incentivereport/incentivereport.component';
 import { CaputilsreportComponent } from './caputilsreport/caputilsreport.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
+import { IncentivemarksComponent } from './incentivemarks/incentivemarks.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     LoginComponent,
     HeaderComponent,
@@ -204,8 +205,9 @@ import { CaputilsreportComponent } from './caputilsreport/caputilsreport.compone
     CaputilsworkerComponent,
     CaputilsworkerupdateComponent,
     IncentivereportComponent,
-    CaputilsreportComponent
-  ],
+    CaputilsreportComponent,
+      IncentivemarksComponent
+   ],
   imports: [
     BrowserModule,
     AutoCompleteModule,
@@ -629,6 +631,11 @@ import { CaputilsreportComponent } from './caputilsreport/caputilsreport.compone
       {
         path: 'incentivereport',
         component: IncentivereportComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'incentivemarks',
+        component: IncentivemarksComponent,
         canActivate: [AuthGuard],
       },
       {

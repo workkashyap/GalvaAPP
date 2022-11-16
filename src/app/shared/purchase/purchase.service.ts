@@ -17,7 +17,12 @@ export class PurchaseService {
   public purchasedetail: Purchasedetail[] = [];
   public purchase: Purchase[] = [];
   public purchaseLineDetail: Purchase[] = [];
-
+  maingrouplist: []
+  subgrouplist: []
+  subgroup:any
+  maingroup:any
+  groupid:any
+ 
 
   constructor(public http: HttpClient) { }
 
@@ -90,6 +95,30 @@ export class PurchaseService {
     return this.http.get<Purchase[]>(
       this.rootUrl + '/purchasecalendars/Total_Purchase_Detail/' + plantcode + '/' + fromdate + '/' + todate
     );
+  }
+  async getsubgroup() {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/getPurchaseSubGroup').subscribe(res => {
+      this.subgrouplist = res
+    });
+  }
+  async getmaingroup() {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/getPurchaseGroup').subscribe(res => {
+      this.maingrouplist = res
+    });
+  }
+   getsubGroupDetail(id){
+    return this.http.get<any>(this.rootUrl + '/PurchaseHeaders/'+id).subscribe(res => {
+      console.log(res.subGrouping)
+        this.subgroup = res.subGrouping
+        this.maingroup = res.grouping
+    });
+
+  }
+  putmaingroup() {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/UpdatePurchaseGroup/'+this.groupid+'/'+this.maingroup+'/'+this.subgroup).subscribe(res => {
+       console.log(res)
+       $("#basicExampleModal").modal("hide");
+    });
   }
 }
 

@@ -71,5 +71,7 @@ export class IncentiveService {
     }
   }
 
-  
+  getAllincentivemarks(){
+    return this.http.get<any[]>(this.rootUrl + '/purchaseheaders/getincentivemarks'); 
+  }
 }

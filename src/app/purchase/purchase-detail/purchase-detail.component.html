@@ -56,7 +56,8 @@
                 </div>
                 <div class="col-md-1">
                   <button type="button" label="EXCEL" (click)="dt.exportCSV()" class="btn btn-success btn-sm mt-2">
-                    <i class="fa fa-file-excel-o"></i> Export</button></div>
+                    <i class="fa fa-file-excel-o"></i> Export</button>
+                </div>
               </div>
             </div>
             <!-- </form> -->
@@ -82,7 +83,7 @@
             <td colspan="6">
             </td>
             <td>
-              <button class="btn btn-info">Total : {{  totalPurchase | number :'1.2-2' }} Lacs</button>
+              <button class="btn btn-info">Total : {{ totalPurchase | number :'1.2-2' }} Lacs</button>
             </td>
           </tr>
           <tr>
@@ -189,13 +190,36 @@
                     </td>
 
                   </tr>
+
+
                 </ng-template>
 
               </p-table>
+              <div style="width: 45%;" >
+                <label style="width: 30%;">MainGroup</label>
+                <select class="custom-select mt-2" name="maingroup" #maingroup="ngModel"
+                  [(ngModel)]="dpservice.maingroup" style="width: 70%;">
+                  <option value=null>--Select mainGroup--</option>
+                  <option *ngFor="let pl of dpservice.maingrouplist" value="{{pl.name}}">
+                    {{ pl.name }}
+                  </option>
+                </select>
+              </div>
+              <div style="width: 45%;margin-right: 5px;" >
+                <label style="width: 30%;">SubGroup</label>
+                <select class="custom-select mt-2" name="subgroup" #subgroup="ngModel" [(ngModel)]="dpservice.subgroup"
+                  style="width: 70%;">
+                  <option value=null>--Select subGroup--</option>
+                  <option *ngFor="let pl of dpservice.subgrouplist" value="{{pl.name}}">
+                    {{ pl.name }}
+                  </option>
+                </select>
+              </div>
             </div>
 
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="updategroup()" >Update</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>

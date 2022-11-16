@@ -10,8 +10,7 @@ import { Plant } from '../../shared/plant/plant.model';
 
 import { UserService } from "src/app/shared/user/user.service";
 import { PlantService } from "src/app/shared/plant/plant.service";
-import { Purchase } from 'src/app/shared/purchase/purchase.model';
-
+import { Purchase } from "src/app/shared/purchase/purchase.model";
 @Component({
   selector: "app-purchase-detail",
   templateUrl: "./purchase-detail.component.html",
@@ -56,6 +55,7 @@ export class PurchaseDetailComponent implements OnInit {
   public Todate: string;
   public selectedPlant: string;
 
+
   cols: any[];
   subcols: any[];
   editcols: any[];
@@ -95,7 +95,8 @@ export class PurchaseDetailComponent implements OnInit {
     let me = this;
     this.Fromdate = this.cDate;
     this.Todate = this.cDate;
-
+    this.dpservice.getsubgroup()
+    this.dpservice.getmaingroup()
     this.cols = [
       //  { field: 'id', header: 'ID' },
       //  { field: "grnNoMIGO", header: "grnNoMIGO" },
@@ -180,6 +181,9 @@ export class PurchaseDetailComponent implements OnInit {
       });
     }
   }
+selectedGroup(e){
+  
+}
 
 
   loadper(ev, dt) {
@@ -209,6 +213,7 @@ export class PurchaseDetailComponent implements OnInit {
 
   onRowSelect(ev) {
     this.selectedItemrej = ev.data;
+    console.log(this.selectedItemrej.id)
     this.loading = true;
     this.dpservice.purchaseLineDetail = [];
     this.dpservice.getPurchaseLineDetail(this.selectedItemrej.acDocumentNo).toPromise()
@@ -217,7 +222,12 @@ export class PurchaseDetailComponent implements OnInit {
         this.sumOfvalues();
         this.loading = false;
       });
+     this.dpservice.groupid = this.selectedItemrej.id
+    this.dpservice.getsubGroupDetail(this.selectedItemrej.id)
     $("#basicExampleModal").modal("show");
+  }
+  updategroup(){
+      this.dpservice.putmaingroup()
   }
   sumOfvalues() {
     this.materialValueSum = 0;

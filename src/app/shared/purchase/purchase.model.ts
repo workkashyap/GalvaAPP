@@ -31,7 +31,7 @@ export class Purchase {
   MaterialType: string;
   Cancellation: string;
   grouping:string;
-
+  subGrouping:string;
   totalPurchase:number;
   materialQuantity:number;
   vendorName:string;
