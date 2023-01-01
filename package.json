@@ -58,7 +58,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.29",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular/cli": "^8.3.29",
     "@ag-grid-enterprise/row-grouping": "~27.0.0",
     "@ag-grid-enterprise/server-side-row-model": "~27.0.0",
