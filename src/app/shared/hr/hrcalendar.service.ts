@@ -48,13 +48,13 @@ export class HrcalendarService {
   }
 
   /*calendar section */
-  public getallHRcal(month, selectedcode): Observable<Hrcalendar[]> {
+  public getallHRcalC(month, selectedcode, date): Observable<Hrcalendar[]> {
     //for calendar
     return this.http.get<Hrcalendar[]>(
-      this.rootUrl + '/EMP_CONT_ATT/getallHRcal/' + month + '/' + selectedcode
+      this.rootUrl + '/EMP_CONT_ATT/getallHRcalc/' + month + '/' + selectedcode + '/' + date
     );
   }
-  public getallHRcalDetail(month, date,selectedcode): Observable<Hrcalendar[]> {
+  public getallHRcalDetail(month, date, selectedcode): Observable<Hrcalendar[]> {
     //for calendar click event
     return this.http.get<Hrcalendar[]>(
       this.rootUrl + '/EMP_CONT_ATT/getallHRcal/' + month + '/' + date + '/' + selectedcode

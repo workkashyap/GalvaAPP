@@ -132,7 +132,7 @@ export class HrcalendarComponent implements OnInit {
   getData() {
     this.loading = true;
     this.hrcalendarService.hrcalendarlist = [];
-    this.hrcalendarService.getallHRcal(this.month, this.selectedcode).toPromise().then((res: any) => {
+    this.hrcalendarService.getallHRcalC(this.month, this.selectedcode, this.startdate).toPromise().then((res: any) => {
       this.hrcalendarService.hrcalendarlist = res as Hrcalendar[];
       this.loading = false;
     }, error => {
