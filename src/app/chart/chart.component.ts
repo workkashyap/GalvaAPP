@@ -64,10 +64,11 @@ export class ChartComponent implements OnInit {
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ];
-    this.yearNames = ['2022', '2021', '2020'];
+    this.yearNames = ['2024','2023','2022', '2021', '2020'];
     this.d = new Date();
     this.monthname = this.monthNames[this.d.getMonth()];
-    this.yearname = this.yearNames[this.d.getYear()];
+    this.yearname = this.yearNames.filter(x => x == this.d.getFullYear());
+    this.year = this.yearname[0];
     this.typename = 'PLATING';
     this.loadchart1();
   }
@@ -91,7 +92,6 @@ export class ChartComponent implements OnInit {
   }
   getselectedyear() {
     this.year = this.yearname;
-    
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.loadchart1();
