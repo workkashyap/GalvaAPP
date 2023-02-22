@@ -2,7 +2,7 @@
     <div class="card highlight-2 border-10 p-3">
         <div class="page-filter d-flex w-100 px-2 py-1">
             <div class="d-flex">
-                <h4 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Actual Round</h4>
+                <h5 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Actual Round</h5>
             </div>
             <!-- <div class="input-group custome-gs ml-auto" style="max-width: 250px;">
                 <input type="text" class="form-control" pInputText placeholder="Global Filter"
@@ -53,20 +53,25 @@
                   <option value="Nov">Nov</option>
                   <option value="Dec">Dec</option>
                 </select>      
-            </div>
+              </div>
+              <button class="btn btn-sm btn-custom text-white blue-bg ml-3">Total
+                Avg Complete: {{caputilsservice.caputils2[0].percaputil}} %
+              </button>
+          </div>
         </div>
         <div class="p-3">
           <div class="row my-2">
-            <button class="btn btn-sm btn-custom text-white blue-bg" style="float: right;">Total
-              Avg Complete: {{caputilsservice.caputils2[0].percaputil}} %
-            </button>
-          </div>
             <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}"
                   [responsive]="true" selectionMode="single" [(selection)]="selectedCaputils"
                   [value]="caputilsservice.caputilsList" [paginator]="true" [rows]="10" [resizableColumns]="true">
 
                   <ng-template pTemplate="header" let-columns>
-
+                    <tr>
+                      <th style="border: none;visibility: hidden;" colspan="4"></th>
+                      <th>Total : {{totPlanRound}}</th>
+                      <th>Total : {{totActualRound}}</th>
+                      <th style="border: none;visibility: hidden;" colspan="2"></th>
+                    </tr>
                     <tr>
                       <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.field"
                         pResizableColumn>
@@ -78,6 +83,7 @@
                       </th>
                     </tr>
                   </ng-template>
+
                   <ng-template pTemplate="body" let-rowData let-columns="columns">
                     <tr [pSelectableRow]="rowData">
                       <td *ngFor="let col of columns" class="ui-resizable-column">
