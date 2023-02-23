@@ -18,4 +18,7 @@ export class SalesrepoService {
   getAgGridDataall(year) {
     return this.http.get<any[]>(this.rootUrl + '/sales/getsalesrepo/all');
   }
+  getAgGridDataForFnYear(fnyear) {
+    return this.http.get<any[]>(this.rootUrl + '/sales/getsalesrepofin/' + fnyear);
+  }
 }

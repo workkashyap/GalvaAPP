@@ -112,6 +112,7 @@ import { IncentivereportComponent } from './incentivereport/incentivereport.comp
 import { CaputilsreportComponent } from './caputilsreport/caputilsreport.component';
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 import { IncentivemarksComponent } from './incentivemarks/incentivemarks.component';
+import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.component';
 
 @NgModule({
   declarations: [	
@@ -206,7 +207,8 @@ import { IncentivemarksComponent } from './incentivemarks/incentivemarks.compone
     CaputilsworkerupdateComponent,
     IncentivereportComponent,
     CaputilsreportComponent,
-      IncentivemarksComponent
+    IncentivemarksComponent,
+    SalesrepofnyearComponent
    ],
   imports: [
     BrowserModule,
@@ -556,6 +558,11 @@ import { IncentivemarksComponent } from './incentivemarks/incentivemarks.compone
       {
         path: 'salesrepoyear', 
         component: SalesrepoyearComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'salesrepofnyear', 
+        component: SalesrepofnyearComponent,
         canActivate: [AuthGuard],
       },
       {
