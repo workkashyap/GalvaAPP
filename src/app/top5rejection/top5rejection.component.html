@@ -1,0 +1,46 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-2">
+      <div class="d-flex">
+        <h4 class="font-weight-bold heading mb-0 align-self-center">
+            Top 5 Rejection (<span style="font-size: 10px;">Notes: Amounts in Lacs</span>)
+        </h4>
+      </div>
+      <div class="ml-auto mr-md-5 mr-3">
+        <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel' [(ngModel)]='this.yearname'>
+            <option disabled>--Select Year--</option>
+            <option value="23-24">2023 - 2024</option>
+            <option value="22-23">2022 - 2023</option>
+            <option value="21-22">2021 - 2022</option>
+        </select>
+      </div>
+    </div>
+</div>
+
+
+<div class="p-3">
+  <div class="card p-3 highlight-2 border-10 m-auto">
+    <div class="overflow-scroll">
+      <ag-grid-angular
+      style="height: 530px;"
+      class="ag-theme-alpine w-100"
+      [rowData]="data"
+      [columnDefs]="columnDefs"
+      [groupMultiAutoColumn]="true"
+      [groupDefaultExpanded]="groupDefaultExpanded"
+      [animateRows]="true"
+      [getRowStyle]="getRowStyle"
+      [groupIncludeFooter]="true"
+      [sideBar]="{ toolPanels: ['columns'] }"
+      [groupIncludeTotalFooter]="true"
+      (gridReady)="onGridReady($event)"
+      [suppressAggFuncInHeader]="true"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [pivotMode]="true"
+      [defaultColDef]="defaultColDef">
+    </ag-grid-angular>
+    </div> 
+  </div>
+</div>
+
+<!-- [gridOptions]="gridOptions"
+    [suppressExpandablePivotGroups]="true" -->

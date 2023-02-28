@@ -113,6 +113,7 @@ import { CaputilsreportComponent } from './caputilsreport/caputilsreport.compone
 // import { InnerRendererComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 import { IncentivemarksComponent } from './incentivemarks/incentivemarks.component';
 import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.component';
+import { Top5rejectionComponent } from './top5rejection/top5rejection.component';
 
 @NgModule({
   declarations: [	
@@ -208,7 +209,8 @@ import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.comp
     IncentivereportComponent,
     CaputilsreportComponent,
     IncentivemarksComponent,
-    SalesrepofnyearComponent
+    SalesrepofnyearComponent,
+    Top5rejectionComponent
    ],
   imports: [
     BrowserModule,
@@ -650,7 +652,11 @@ import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.comp
         component: CaputilsreportComponent,
         canActivate: [AuthGuard],
       },
-      
+      {
+        path: 'top5rejection',
+        component: Top5rejectionComponent,
+        canActivate: [AuthGuard],
+      },
       { path: '**', redirectTo: '' },
     ]),
     ToastrModule.forRoot(),
