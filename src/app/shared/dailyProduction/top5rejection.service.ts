@@ -11,8 +11,8 @@ export class Top5rejectionService {
 
   constructor(private http: HttpClient) { }
 
-  getTop5Rejection() {
-    return this.http.get<any[]>(this.rootUrl + '/Top5Rejection/gettoprejection');
+  getTop5Rejection(finyear) {
+    return this.http.get<any[]>(this.rootUrl + '/Top5Rejection/gettoprejection/' + finyear);
   }
 
 }

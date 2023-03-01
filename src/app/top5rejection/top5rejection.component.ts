@@ -45,7 +45,7 @@ export class Top5rejectionComponent implements OnInit {
     // { headerName: 'Year', field: 'finyear', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     { headerName: 'Month', field: 'monthname', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
     { headerName: 'Plant', field: 'plantname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
-    { headerName: 'item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
+    { headerName: 'Item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     {
       headerName: 'Rejection Value', field: 'rejvalue', aggFunc: params => {
         let sum = 0;
@@ -67,9 +67,8 @@ export class Top5rejectionComponent implements OnInit {
     } else {
       this.yearname = this.cyear + '-' + (this.cyear + 1);
     }
-    await this.rejectionservice.getTop5Rejection().toPromise().then(res => { this.rowData = res });
+    await this.rejectionservice.getTop5Rejection(this.yearname).toPromise().then(res => { this.rowData = res });
     this.rowData = this.sortByFnMonth();
-    this.getselectedyear();
   }
 
   sortByFnMonth() {
@@ -84,8 +83,9 @@ export class Top5rejectionComponent implements OnInit {
     }
   };
 
-  getselectedyear() {
+  async getBySelectedYear() {
     this.year = this.yearname;
-    this.data = this.rowData.filter(x => x.finyear == this.year);
+    await this.rejectionservice.getTop5Rejection(this.year).toPromise().then(res => { this.rowData = res });
+    this.rowData = this.sortByFnMonth();
   }
 }
