@@ -17,7 +17,7 @@ export class Top5rejectionComponent implements OnInit {
   public cyear: any;
   public yearname: any;
   public year: string;
-  public groupDefaultExpanded = 1;
+  public groupDefaultExpanded = 0;
   rowData: any[];
   data: any[];
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
@@ -30,7 +30,7 @@ export class Top5rejectionComponent implements OnInit {
   };
   public autoGroupColumnDef: ColDef = {
     minWidth: 50,
-    width:350,
+    width:250,
     maxWidth: 500,
     resizable: true,
     pinned: 'left',
@@ -46,15 +46,12 @@ export class Top5rejectionComponent implements OnInit {
     { headerName: 'Month', field: 'monthname', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
     { headerName: 'Plant', field: 'plantname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     { headerName: 'Item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
-    {
-      headerName: 'Rejection Value', field: 'rejvalue', aggFunc: params => {
-        let sum = 0;
-        params.values.forEach(value => sum += value);
-        return Math.round(sum * 100) / 100;
-      },
-      cellStyle: { fontSize: '13px' },
-    }
-  ];
+    { headerName: 'Reject Value', field: 'rejvalue', aggFunc: params => {
+                                                                              let sum = 0;
+                                                                              params.values.forEach(value => sum += value);
+                                                                              return Math.round(sum * 100) / 100;
+                                                                            },cellStyle: { fontSize: '13px' },
+    }];
 
   constructor(private rejectionservice: Top5rejectionService) { }
 

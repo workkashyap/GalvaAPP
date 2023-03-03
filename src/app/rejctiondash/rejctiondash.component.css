@@ -1,0 +1,14 @@
+.set-padding {
+    padding: 7px 0px 7px 0px;
+    text-align: center;
+}
+
+.resonsive-css>.col-sm-3,
+.col-md-4 {
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+}
+
+.card-title {
+    margin-bottom: 10px;
+}

@@ -114,6 +114,7 @@ import { CaputilsreportComponent } from './caputilsreport/caputilsreport.compone
 import { IncentivemarksComponent } from './incentivemarks/incentivemarks.component';
 import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.component';
 import { Top5rejectionComponent } from './top5rejection/top5rejection.component';
+import { RejctiondashComponent } from './rejctiondash/rejctiondash.component';
 
 @NgModule({
   declarations: [	
@@ -210,7 +211,8 @@ import { Top5rejectionComponent } from './top5rejection/top5rejection.component'
     CaputilsreportComponent,
     IncentivemarksComponent,
     SalesrepofnyearComponent,
-    Top5rejectionComponent
+    Top5rejectionComponent,
+    RejctiondashComponent
    ],
   imports: [
     BrowserModule,
@@ -323,6 +325,11 @@ import { Top5rejectionComponent } from './top5rejection/top5rejection.component'
       {
         path: 'dashboard1',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'rejectiondashboard',
+        component: RejctiondashComponent,
         canActivate: [AuthGuard],
       },
       {
