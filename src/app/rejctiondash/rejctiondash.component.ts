@@ -106,11 +106,11 @@ export class RejctiondashComponent implements OnInit {
             backgroundColor: '#fe909d',
             data: this.rejectvalue
           },
-          // {
-          //   label: 'Reject %',
-          //   type: 'line',
-          //   data: this.Rejectper
-          // },
+          {
+            label: 'Reject %',
+            type: 'line',
+            data: this.Rejectper
+          },
         ]
       },
       options: {
@@ -130,22 +130,22 @@ export class RejctiondashComponent implements OnInit {
           mode: 'index',
           intersect: true
         },
-        annotation: {
-          annotations: [{
-            type: 'line',
-            mode: 'horizontal',
-            scaleID: 'y-axis-0',
-            value: 15,
-            endValue: 15,
-            borderColor: '#01a9ac',
-            borderWidth: 4,
-            label: {
-              enabled: true,
-              content: 'Trendline 15%',
-              yAdjust: -16,
-            }
-          }]
-        },
+        // annotation: {
+        //   annotations: [{
+        //     type: 'line',
+        //     mode: 'horizontal',
+        //     scaleID: 'y-axis-0',
+        //     value: 10,
+        //     endValue: 15,
+        //     borderColor: '#01a9ac',
+        //     borderWidth: 4,
+        //     label: {
+        //       enabled: true,
+        //       content: 'Trendline 15%',
+        //       yAdjust: -16,
+        //     }
+        //   }]
+        // },
         maintainAspectRatio: false,
         hover: {
           mode: 'label'
