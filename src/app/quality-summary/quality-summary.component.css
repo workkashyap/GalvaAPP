@@ -1,0 +1,44 @@
+.heading{
+    color: rgba(1,41,205,0.7);
+}
+
+.page-filter{
+    border-radius: 10px;
+    border: 2px solid rgba(1,41,205,0.5);
+    background: #f8f9fa;
+}
+
+.highlight-2{
+    background: #f8f9fa;
+}
+
+.highlight-3{
+    background: rgba(1,41,205,0.4);
+}
+
+.highlight{
+    background: rgba(1,41,205,0.7);
+}
+
+.total-row{
+    background: rgba(1,41,205,0.9);
+    font-weight: bold;
+}
+
+.total{
+    right: 7.5px;
+    width: 30%;
+}
+
+.total-numbers{
+    line-height: 0.8;
+}
+
+.total-sub{
+    font-size: 13px;
+}
+
+.ag-theme-alpine{
+    --ag-header-background-color: rgba(1,41,205,0.5);
+    font-size: 14px;
+}

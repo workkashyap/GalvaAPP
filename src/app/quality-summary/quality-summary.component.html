@@ -1,0 +1,41 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-1">
+        <div class="d-flex">
+            <h4 class="font-weight-bold heading mb-0 align-self-center">Quality Summary Report</h4>
+        </div>
+        <div class="ml-auto mr-md-5 mr-3">
+            <select class="custom-select" name="Yearname" #Yearname='ngModel'
+                [(ngModel)]='this.yearname'>
+                <option disabled>--Select Year--</option>
+                <option value="23-24">2023 - 2024</option>
+                <option value="22-23">2022 - 2023</option>
+                <option value="21-22">2021 - 2022</option>
+            </select>
+        </div>
+        <div class="mr-md-5 mr-3">
+            <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+                <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                    {{ pl.plantshortname }}
+                </option>
+            </select>
+        </div>
+        <div class="mr-3">
+            <button class="btn btn-primary" (click)="onviewDetail()">View</button>
+        </div>
+    </div>
+</div>
+
+<div class="px-3 mb-3">
+    <div class="row m-0 px-md-4 px-1">
+        <div class="card w-100 highlight-2 border-10 m-auto">
+            <div class="overflow-scroll p-3">
+                <ag-grid-angular style="height: 500px;" class="ag-theme-alpine w-100" [rowData]="rowData"
+                    [columnDefs]="columnDefs" [animateRows]="true"
+                    [getRowStyle]="getRowStyle" [suppressAggFuncInHeader]="true" [animateRows]="true"
+                    [defaultColDef]="defaultColDef" [autoGroupColumnDef]="autoGroupColumnDef">
+                </ag-grid-angular>
+            </div>
+        </div>
+    </div>
+</div>

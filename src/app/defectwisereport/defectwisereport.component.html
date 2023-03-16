@@ -1,0 +1,78 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row  resonsive-css mb-2">
+                    <div class="col-sm-3">
+                        <select class=" custom-select" (change)="getselectedyear()" name="yearname" #yearname='ngModel'
+                            [(ngModel)]='this.Yearname'>
+                            <option disabled>--Select Year--</option>
+                            <option value="23-24">2023 - 2024</option>
+                            <option value="22-23">2022 - 2023</option>
+                            <option value="21-22">2021 - 2022</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <select class=" custom-select" (change)="getselectedmonth()" name="Monthname"
+                            #Monthname='ngModel' [(ngModel)]='this.monthname'>
+                            <option disabled>--Select Month--</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                            (change)="selectedGrid($event.target.value)"
+                            style="height: 38px; padding: 5px 13px 6px 9px;">
+                            <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                                {{ pl.plantshortname }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
+                            [(ngModel)]="this.selectedtype" (change)="onselecttype($event.target.value)">
+                            <option disabled>--Select Type--</option>
+                            <option value="ZCRM">CHROME</option>
+                            <option value="ZSAT">SATIN</option>
+                            <option value="ZMLD">MOULDING</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+
+        <div class="card card-info home-card">
+            <div class="card-header">
+                <div class="row  resonsive-css">
+                    <div class="col-md-4">
+                        <h3 class="card-title">Production Defect Wise Report</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <div class="row">
+                        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+                        <div class="col-md-12">
+                            <canvas id="myChart" style="width: 100% !important;height:400px !important;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

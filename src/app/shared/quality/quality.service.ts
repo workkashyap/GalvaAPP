@@ -43,4 +43,11 @@ export class QualityService {
     return this.http.delete(this.rootUrl + "/Qualities/" + id);
   }
 
+  public getSummaryAllReport(plantcode , fnyear) {
+    return this.http.get<any[]>(this.rootUrl + "/qualities/getSummaryallReport/" + plantcode + "/" + fnyear);
+  }
+
+  public getDefectWiseReport(plantcode, zcrm, fnyear) {
+    return this.http.get<any[]>(this.rootUrl + "/qualities/getdefectwisereport/" + plantcode + "/" + zcrm + "/" + fnyear);
+  }
 }

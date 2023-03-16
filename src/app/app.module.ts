@@ -115,6 +115,8 @@ import { IncentivemarksComponent } from './incentivemarks/incentivemarks.compone
 import { SalesrepofnyearComponent } from './salesrepofnyear/salesrepofnyear.component';
 import { Top5rejectionComponent } from './top5rejection/top5rejection.component';
 import { RejctiondashComponent } from './rejctiondash/rejctiondash.component';
+import { QualitySummaryComponent } from './quality-summary/quality-summary.component';
+import { DefectwisereportComponent } from './defectwisereport/defectwisereport.component';
 
 @NgModule({
   declarations: [	
@@ -212,7 +214,9 @@ import { RejctiondashComponent } from './rejctiondash/rejctiondash.component';
     IncentivemarksComponent,
     SalesrepofnyearComponent,
     Top5rejectionComponent,
-    RejctiondashComponent
+    RejctiondashComponent,
+    QualitySummaryComponent,
+    DefectwisereportComponent
    ],
   imports: [
     BrowserModule,
@@ -592,6 +596,16 @@ import { RejctiondashComponent } from './rejctiondash/rejctiondash.component';
       {
         path: 'qualityview',
         component: QualityviewComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'qualitysummary',
+        component: QualitySummaryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'defectwisereport',
+        component: DefectwisereportComponent,
         canActivate: [AuthGuard],
       },
       {
