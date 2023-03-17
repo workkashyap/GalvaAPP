@@ -17,18 +17,18 @@ import { QualityService } from '../shared/quality/quality.service';
   templateUrl: './qualitymst.component.html',
   styleUrls: ['./qualitymst.component.css'],
   providers: [DatePipe],
-//   styles: [
-//     `
-//     :host >>> .ui-autocomplete .ui-autocomplete-input {
-//     width: 10% !important;
-//     height: 26px;
-//     padding: .15rem .65rem;
-//     font-size: 0.8rem;
-//   }
-//   :host :: input.ng-tns-c5-0.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
-//     padding: 0.2em;
-// }
-//   `]
+  //   styles: [
+  //     `
+  //     :host >>> .ui-autocomplete .ui-autocomplete-input {
+  //     width: 10% !important;
+  //     height: 26px;
+  //     padding: .15rem .65rem;
+  //     font-size: 0.8rem;
+  //   }
+  //   :host :: input.ng-tns-c5-0.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-autocomplete-input.ng-star-inserted {
+  //     padding: 0.2em;
+  // }
+  //   `]
 })
 export class QualitymstComponent implements OnInit {
 
@@ -53,11 +53,11 @@ export class QualitymstComponent implements OnInit {
     public plantservice: PlantService,
     public qualityservice: QualityService,
     private toastr: ToastrService) {
-      const me = this;
-      this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+    const me = this;
+    this.lservice.currentUser.subscribe(x => (this.currentUser = x));
 
-      this.itmService.getallDataQ();
-     }
+    this.itmService.getallDataQ();
+  }
 
   ngOnInit() {
     const me = this;
@@ -194,17 +194,16 @@ export class QualitymstComponent implements OnInit {
   }
 
   countQty() {
-    this.qualityservice.qualityData.inspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
+    // this.qualityservice.qualityData.inspQty = this.qualityservice.qualityData.okqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.buffingqty;
     this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
-     
-    }
+  }
 
   countRejQty() {
     this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q
-                         + this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q + this.qualityservice.qualityData.dE16Q + this.qualityservice.qualityData.dE17Q + this.qualityservice.qualityData.dE18Q + this.qualityservice.qualityData.dE19Q + this.qualityservice.qualityData.dE20Q
-                         + this.qualityservice.qualityData.dE21Q + this.qualityservice.qualityData.dE22Q + this.qualityservice.qualityData.dE23Q + this.qualityservice.qualityData.dE24Q + this.qualityservice.qualityData.dE25Q + this.qualityservice.qualityData.dE26Q + this.qualityservice.qualityData.dE27Q + this.qualityservice.qualityData.dE28Q + this.qualityservice.qualityData.dE29Q + this.qualityservice.qualityData.dE30Q
-                         + this.qualityservice.qualityData.dE31Q + this.qualityservice.qualityData.dE32Q + this.qualityservice.qualityData.dE33Q + this.qualityservice.qualityData.dE34Q + this.qualityservice.qualityData.dE35Q + this.qualityservice.qualityData.dE36Q + this.qualityservice.qualityData.dE37Q + this.qualityservice.qualityData.dE38Q + this.qualityservice.qualityData.dE39Q + this.qualityservice.qualityData.dE40Q
-                         + this.qualityservice.qualityData.dE41Q + this.qualityservice.qualityData.dE42Q + this.qualityservice.qualityData.dE43Q + this.qualityservice.qualityData.dE44Q + this.qualityservice.qualityData.dE45Q + this.qualityservice.qualityData.dE46Q + this.qualityservice.qualityData.dE47Q + this.qualityservice.qualityData.dE48Q + this.qualityservice.qualityData.dE49Q + this.qualityservice.qualityData.dE50Q;
+      + this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q + this.qualityservice.qualityData.dE16Q + this.qualityservice.qualityData.dE17Q + this.qualityservice.qualityData.dE18Q + this.qualityservice.qualityData.dE19Q + this.qualityservice.qualityData.dE20Q
+      + this.qualityservice.qualityData.dE21Q + this.qualityservice.qualityData.dE22Q + this.qualityservice.qualityData.dE23Q + this.qualityservice.qualityData.dE24Q + this.qualityservice.qualityData.dE25Q + this.qualityservice.qualityData.dE26Q + this.qualityservice.qualityData.dE27Q + this.qualityservice.qualityData.dE28Q + this.qualityservice.qualityData.dE29Q + this.qualityservice.qualityData.dE30Q
+      + this.qualityservice.qualityData.dE31Q + this.qualityservice.qualityData.dE32Q + this.qualityservice.qualityData.dE33Q + this.qualityservice.qualityData.dE34Q + this.qualityservice.qualityData.dE35Q + this.qualityservice.qualityData.dE36Q + this.qualityservice.qualityData.dE37Q + this.qualityservice.qualityData.dE38Q + this.qualityservice.qualityData.dE39Q + this.qualityservice.qualityData.dE40Q
+      + this.qualityservice.qualityData.dE41Q + this.qualityservice.qualityData.dE42Q + this.qualityservice.qualityData.dE43Q + this.qualityservice.qualityData.dE44Q + this.qualityservice.qualityData.dE45Q + this.qualityservice.qualityData.dE46Q + this.qualityservice.qualityData.dE47Q + this.qualityservice.qualityData.dE48Q + this.qualityservice.qualityData.dE49Q + this.qualityservice.qualityData.dE50Q;
 
     this.countQty();
   }
@@ -214,165 +213,174 @@ export class QualitymstComponent implements OnInit {
   }
 
   valueM(v) {
-      this.qualityservice.qualityData.itemname = v.itemname;
-      this.qualityservice.qualityData.itemcode = v.itemcode.toString();
-      this.qualityservice.qualityData.plantcode = v.plant.toString();
-      this.qualityservice.qualityData.size = v.ctype;
-      this.qualityservice.qualityData.stdPrice = v.price;
-      this.qualityservice.qualityData.sellPrice = v.price;
-      if (v.itemtype === "Chrome") {
-        this.qualityservice.qualityData.orderType = "ZCRM";
-      }else if (v.itemtype === "Moulding")  {
-        this.qualityservice.qualityData.orderType = "ZMLD";
-      }else if (v.itemtype === "Satin")  {
-        this.qualityservice.qualityData.orderType = "ZSAT";
-      }
-
-      this.selectedcode = this.qualityservice.qualityData.plantcode;
-      this.randomData();
+    this.qualityservice.qualityData.itemname = v.itemname;
+    this.qualityservice.qualityData.itemcode = v.itemcode.toString();
+    this.qualityservice.qualityData.plantcode = v.plant.toString();
+    this.qualityservice.qualityData.size = v.ctype;
+    this.qualityservice.qualityData.stdPrice = v.price;
+    this.qualityservice.qualityData.sellPrice = v.price;
+    if (v.itemtype === "Chrome") {
+      this.qualityservice.qualityData.orderType = "ZCRM";
+    } else if (v.itemtype === "Moulding") {
+      this.qualityservice.qualityData.orderType = "ZMLD";
+    } else if (v.itemtype === "Satin") {
+      this.qualityservice.qualityData.orderType = "ZSAT";
     }
 
-    randomData() {
-      const minm = 10;
-      const maxm = 99;
-      const value = Math.floor(Math.random() * (maxm - minm + 1)) + minm;
-      const date = this.datePipe.transform(new Date(), "ddMMyyyy");
-  
-      this.insOrdeno = parseInt(this.selectedcode + "" + date + "" + value);
-      if (this.qualityservice.qualityData) {
-        this.qualityservice.qualityData.insplot = this.insOrdeno;
-        this.qualityservice.qualityData.orderno = this.insOrdeno;
-      }
-    }
+    this.selectedcode = this.qualityservice.qualityData.plantcode;
+    this.randomData();
+  }
 
-    plantcodeChange() {
-      this.selectedcode = this.qualityservice.qualityData.plantcode;
-      this.randomData();
-    }
+  randomData() {
+    const minm = 10;
+    const maxm = 99;
+    const value = Math.floor(Math.random() * (maxm - minm + 1)) + minm;
+    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
-    addDefects() {
-      this.qualityservice.qualityData.mouldingRejQty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q +
-                                                       this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q;
-      
-      this.qualityservice.qualityData.jigingRejQty = this.qualityservice.qualityData.dE16Q + this.qualityservice.qualityData.dE17Q + this.qualityservice.qualityData.dE18Q + this.qualityservice.qualityData.dE19Q + this.qualityservice.qualityData.dE20Q + this.qualityservice.qualityData.dE21Q;                                                 
-    
-      this.qualityservice.qualityData.platingRejQty = this.qualityservice.qualityData.dE22Q + this.qualityservice.qualityData.dE23Q + this.qualityservice.qualityData.dE24Q + this.qualityservice.qualityData.dE25Q + this.qualityservice.qualityData.dE26Q + this.qualityservice.qualityData.dE27Q + this.qualityservice.qualityData.dE28Q + this.qualityservice.qualityData.dE29Q +
-                                                      this.qualityservice.qualityData.dE30Q + this.qualityservice.qualityData.dE31Q + this.qualityservice.qualityData.dE32Q + this.qualityservice.qualityData.dE33Q + this.qualityservice.qualityData.dE34Q + this.qualityservice.qualityData.dE35Q + this.qualityservice.qualityData.dE36Q + this.qualityservice.qualityData.dE37Q + this.qualityservice.qualityData.dE38Q + this.qualityservice.qualityData.dE39Q +
-                                                      this.qualityservice.qualityData.dE40Q + this.qualityservice.qualityData.dE41Q + this.qualityservice.qualityData.dE42Q + this.qualityservice.qualityData.dE43Q;
-      
-      this.qualityservice.qualityData.otherRejQty = this.qualityservice.qualityData.dE44Q + this.qualityservice.qualityData.dE45Q + this.qualityservice.qualityData.dE46Q + this.qualityservice.qualityData.dE47Q + this.qualityservice.qualityData.dE48Q;  
-    }
-
-    valuesStd(){
-      this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.stdPrice;
-
-      this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
-
-      this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty; 
-      this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
-  
-    }
-
-    valuesSell(){
-      this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.stdPrice;
-      // tslint:disable-next-line:max-line-length
-      this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.inspQty * this.qualityservice.qualityData.stdPrice;
-  
-      this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
-      this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
-
-      this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty; 
-      this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
-      
-    }
-
-    allCalculations() {
-      if (this.qualityservice.qualityData.stdPrice === 0){
-        this.countQty();
-        this.countRejQty();
-        this.addDefects();
-        this.valuesStd();
-      }else{
-        this.countQty();
-        this.countRejQty();
-        this.addDefects();
-        this.valuesSell();
-      }
-    }
-
-    resetForm(form?: NgForm) {
-      if (form != null) {
-        form.form.reset();
-      }
-    }
-  
-    onComplete(form: NgForm) {
-      this.validQtyError = false;
-
-      if (this.qualityservice.qualityData.orderType.length == 0  || this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
-        this.toastr.error(
-          "Save Failed.",
-          "Add Required Fields."
-        );
-      }else{
-        if (this.actionvalue === 'Save') {
-  
-          this.loading = true;
-  
-          if (this.qualityservice.qualityData.id > 0) {
-            this.qualityservice.qualityData.createddate = this.datePipe.transform(this.qualityservice.qualityData.createddate, "yyyy-MM-dd");
-    
-            this.qualityservice.updatequality(this.qualityservice.qualityData.id).subscribe(res => {
-              this.resetForm(form);
-              this.toastr.success(
-                "Successfully Updated.",
-                "Production"
-              );
-              this.route.navigate(["./qualityview"]);
-            }, err => {
-              console.log(err);
-            });
-          }else{
-            this.qualityservice.qualityData.createddate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-    
-            this.qualityservice.saveQuality().subscribe(res => {
-              console.log(this.qualityservice.qualityData);
-              this.resetForm(form);
-              this.toastr.success(
-                'Successfully Saved.',
-                'Production'
-              );
-              this.route.navigate(['./qualityview']);
-            }, err => {
-              console.log(err);
-            });
-          } 
-        }else{
-          this.back();
-        }
-      }
-
-    }
-  
-    onSaveClick() {
-      this.actionvalue = 'Save';
-    }
-  
-    back() {
-      this.iservice.uid = this.currentUser.id;
-      this.route.navigate(['./qualityview']);
+    this.insOrdeno = parseInt(this.selectedcode + "" + date + "" + value);
+    if (this.qualityservice.qualityData) {
+      this.qualityservice.qualityData.insplot = this.insOrdeno;
+      this.qualityservice.qualityData.orderno = this.insOrdeno;
     }
   }
+
+  plantcodeChange() {
+    this.selectedcode = this.qualityservice.qualityData.plantcode;
+    this.randomData();
+  }
+
+  addDefects() {
+    this.qualityservice.qualityData.mouldingRejQty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q +
+      this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q;
+
+    this.qualityservice.qualityData.jigingRejQty = this.qualityservice.qualityData.dE16Q + this.qualityservice.qualityData.dE17Q + this.qualityservice.qualityData.dE18Q + this.qualityservice.qualityData.dE19Q + this.qualityservice.qualityData.dE20Q + this.qualityservice.qualityData.dE21Q;
+
+    this.qualityservice.qualityData.platingRejQty = this.qualityservice.qualityData.dE22Q + this.qualityservice.qualityData.dE23Q + this.qualityservice.qualityData.dE24Q + this.qualityservice.qualityData.dE25Q + this.qualityservice.qualityData.dE26Q + this.qualityservice.qualityData.dE27Q + this.qualityservice.qualityData.dE28Q + this.qualityservice.qualityData.dE29Q +
+      this.qualityservice.qualityData.dE30Q + this.qualityservice.qualityData.dE31Q + this.qualityservice.qualityData.dE32Q + this.qualityservice.qualityData.dE33Q + this.qualityservice.qualityData.dE34Q + this.qualityservice.qualityData.dE35Q + this.qualityservice.qualityData.dE36Q + this.qualityservice.qualityData.dE37Q + this.qualityservice.qualityData.dE38Q + this.qualityservice.qualityData.dE39Q +
+      this.qualityservice.qualityData.dE40Q + this.qualityservice.qualityData.dE41Q + this.qualityservice.qualityData.dE42Q + this.qualityservice.qualityData.dE43Q;
+
+    this.qualityservice.qualityData.otherRejQty = this.qualityservice.qualityData.dE44Q + this.qualityservice.qualityData.dE45Q + this.qualityservice.qualityData.dE46Q + this.qualityservice.qualityData.dE47Q + this.qualityservice.qualityData.dE48Q;
+  }
+
+  valuesStd() {
+    this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.stdPrice;
+
+    this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
+
+    this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
+    this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
+
+  }
+
+  valuesSell() {
+    this.qualityservice.qualityData.okvalue = this.qualityservice.qualityData.okqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.holdvalue = this.qualityservice.qualityData.holdqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.buffingvalue = this.qualityservice.qualityData.buffingqty * this.qualityservice.qualityData.stdPrice;
+    // tslint:disable-next-line:max-line-length
+    this.qualityservice.qualityData.rejectionvalue = this.qualityservice.qualityData.rejectionqty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.inspQty * this.qualityservice.qualityData.stdPrice;
+
+    this.qualityservice.qualityData.mouldingRejValue = this.qualityservice.qualityData.mouldingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.jigingRejValue = this.qualityservice.qualityData.jigingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
+    this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
+
+    this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
+    this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
+
+  }
+
+  allCalculations() {
+
+    let A = this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.okqty +
+      this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty
+
+
+    if (this.qualityservice.qualityData.stdPrice === 0) {
+      this.countQty();
+      this.countRejQty();
+      this.addDefects();
+      this.valuesStd();
+    } else {
+      this.countQty();
+      this.countRejQty();
+      this.addDefects();
+      this.valuesSell();
+      if (A > this.qualityservice.qualityData.inspQty){
+        this.toastr.error("Please Enter Valid Data...")
+        this.validQtyError = true;
+      }
+    }
+  }
+
+  resetForm(form?: NgForm) {
+    if (form != null) {
+      form.form.reset();
+    }
+  }
+
+  onComplete(form: NgForm) {
+    
+
+    if (this.validQtyError = false || this.qualityservice.qualityData.orderType.length == 0 || this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
+      this.toastr.error(
+        "Save Failed.",
+        "Add Required Fields."
+      );
+    } else {
+      if (this.actionvalue === 'Save') {
+
+        this.loading = true;
+
+        if (this.qualityservice.qualityData.id > 0) {
+          this.qualityservice.qualityData.createddate = this.datePipe.transform(this.qualityservice.qualityData.createddate, "yyyy-MM-dd");
+
+          this.qualityservice.updatequality(this.qualityservice.qualityData.id).subscribe(res => {
+            this.resetForm(form);
+            this.toastr.success(
+              "Successfully Updated.",
+              "Production"
+            );
+            this.route.navigate(["./qualityview"]);
+          }, err => {
+            console.log(err);
+          });
+        } else {
+          this.qualityservice.qualityData.createddate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+
+          this.qualityservice.saveQuality().subscribe(res => {
+            console.log(this.qualityservice.qualityData);
+            this.resetForm(form);
+            this.toastr.success(
+              'Successfully Saved.',
+              'Production'
+            );
+            this.route.navigate(['./qualityview']);
+          }, err => {
+            console.log(err);
+          });
+        }
+      } else {
+        this.back();
+      }
+    }
+
+  }
+
+  onSaveClick() {
+    this.actionvalue = 'Save';
+  }
+
+  back() {
+    this.iservice.uid = this.currentUser.id;
+    this.route.navigate(['./qualityview']);
+  }
+}
 

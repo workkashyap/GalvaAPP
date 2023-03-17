@@ -49,7 +49,7 @@
                         <p-autoComplete [(ngModel)]="qualityservice.qualityData.itemname" 
                          [suggestions]="filteredCountries" 
                          (completeMethod)="filterCountry($event)"
-                         id="itemname2" (onSelect)="valueM($event)"
+                         id="itemname2" (onSelect)="valueM($event);allCalculations();"
                                         name="itemname2" #itemname2="ngModel"
                           [size]="30" [minlength]="1" placeholder="Items">
                           <ng-template let-country pTemplate="item">
@@ -158,12 +158,23 @@
                     </div>
                 </div> 
                 <div class="form-group mx-1">
+                  <div class="row m-0">
+                    <div class="col-md-4 in-label">
+                      <label class="gr1" for="qty">Insp Quantity:</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input class="form-control" type='text' id="qty" name="qty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.inspQty"/>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group mx-1">
                     <div class="row m-0">
                       <div class="col-md-4 in-label">
                         <label class="gr2" for="okqty">Ok Quantity:</label>
                       </div>
                       <div class="col-md-8">
-                        <input class="form-control grp-input-2" type='number' min="0" id="okqty" name="okqty" [ngClass]="{error:validQtyError}" (change)="countQty()" [(ngModel)]="qualityservice.qualityData.okqty"/>
+                        <input class="form-control grp-input-2" type='number' min="0" id="okqty" name="okqty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.okqty"/>
                       </div>
                     </div>
                 </div>
@@ -196,16 +207,6 @@
                         <input class="form-control grp-input-2" type='number' min="0" id="rejectionqty" name="rejectionqty" [ngClass]="{error:validQtyError}" (change)="allCalculations()" [(ngModel)]="qualityservice.qualityData.rejectionqty" readonly />
                       </div>
                     </div>
-                </div>
-                <div class="form-group mx-1">
-                  <div class="row m-0">
-                    <div class="col-md-4 in-label">
-                      <label class="gr1" for="qty">Insp Quantity:</label>
-                    </div>
-                    <div class="col-md-8">
-                      <input class="form-control" type='text' id="qty" name="qty" [ngClass]="{error:validQtyError}" [(ngModel)]="qualityservice.qualityData.inspQty" readonly/>
-                    </div>
-                  </div>
                 </div>
                 <div class="form-group mx-1">
                   <div class="row m-0">
