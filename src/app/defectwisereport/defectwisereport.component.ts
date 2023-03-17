@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import * as Chart from 'chart.js';
-import { Top5rejectionService } from '../shared/dailyProduction/top5rejection.service';
 import { QualityService } from '../shared/quality/quality.service';
 import { PlantService } from '../shared/plant/plant.service';
 import { Plant } from '../shared/plant/plant.model';
@@ -15,7 +14,7 @@ import { LoginService } from '../shared/login/login.service';
 export class DefectwisereportComponent implements OnInit {
 
   public selectedtype: string;
-  public currentUser:any;
+  public currentUser: any;
 
   public myChart: Chart;
   canvas: any;
@@ -28,21 +27,18 @@ export class DefectwisereportComponent implements OnInit {
   public plantcode: any;
   public d: any;
 
-  public inspectionvalue: number[] = [];
-  public Okvalue: number[] = [];
-  public rejectvalue: number[] = [];
-  public Rejectper: number[] = [];
-  public items: string[] = [];
+  public rejvalue: number[] = [];
+  public rejqty: number[] = [];
+  public name: number[] = [];
 
   constructor(
     private service: QualityService,
-    private plantservice:PlantService,
+    private plantservice: PlantService,
     public lservice: LoginService) {
-      this.lservice.currentUser.subscribe(x => this.currentUser = x);
-    }
-  
-  async ngOnInit() {
+    this.lservice.currentUser.subscribe(x => this.currentUser = x);
+  }
 
+  async ngOnInit() {
     await this.plantservice
       .sgetPlantData(this.currentUser.id)
       .toPromise()
@@ -50,8 +46,8 @@ export class DefectwisereportComponent implements OnInit {
         this.plantservice.splantlist = res as Plant[]
         this.plantcode = this.plantservice.splantlist[0].plantcode;
       });
-      
-      this.selectedtype = "ZCRM"
+
+    this.selectedtype = "ZCRM"
 
     const namedChartAnnotation = ChartAnnotation;
     namedChartAnnotation['id'] = 'annotation';
@@ -67,76 +63,44 @@ export class DefectwisereportComponent implements OnInit {
     } else {
       this.Yearname = cyear + '-' + (cyear + 1);
     }
-    await this.service.getDefectWiseReport(this.plantcode,this.selectedtype,this.Yearname).
-    toPromise().then(res => { 
-      this.rowData = res;
-      let array = this.rowData.filter (x=> x.monthName == this.monthname);
-      console.log(array);
-    });
-    // this.filterData();
+
+    this.getChartData();
   }
 
-  // filterData() {
-  //   let filter = { monthname: this.monthname, plantname: this.plantcode };
-  //   let data = this.rowData.filter(function (item) {
-  //     for (var key in filter) {
-  //       if (item[key] === undefined || item[key] != filter[key])
-  //         return false;
-  //     }
-  //     return true;
-  //   });
-  //   this.items = [];
-  //   this.inspectionvalue = [];
-  //   this.Okvalue = [];
-  //   this.rejectvalue = [];
-  //   this.Rejectper = [];
-
-  //   data.forEach(element => {
-  //     this.items.push(element.itemname);
-  //     this.inspectionvalue.push(element.inspValue);
-  //     this.Okvalue.push(element.okvalue);
-  //     this.rejectvalue.push(element.rejvalue);
-  //     this.Rejectper.push(element.rejper);
-  //   });
-  //   this.loadchart();
-  // }
-
+  async getChartData() {
+    this.rejvalue = [];
+    this.name = [];
+    this.rejqty = [];
+    await this.service.getDefectWiseReport(this.plantcode, this.selectedtype, this.Yearname).
+      toPromise().then(res => {
+        this.rowData = res;
+        let array = this.rowData.filter(x => x.monthName == this.monthname);
+        array.forEach(e => {
+          this.name.push(e.name);
+          this.rejqty.push(e.rejqty);
+          this.rejvalue.push(e.rejvalue);
+        });
+      });
+    this.loadchart();
+  }
 
   loadchart() {
     this.loading = false;
-    // this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
-    // this.ctx.restore();
     Chart.defaults.global.legend.display = false;
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
-
+    let rejqty = this.rejqty;
     this.myChart = new Chart(this.ctx, {
       type: 'bar',
       data: {
-        labels: this.items,
+        labels: this.name,
         datasets: [
           {
-            label: 'Total Inspection Value',
+            label: 'Rejection Value',
             type: 'bar',
             backgroundColor: '#73b4fa',
-            data: this.inspectionvalue
-          },
-          {
-            label: 'Ok Value',
-            type: 'bar',
-            backgroundColor: '#11f2a3',
-            data: this.Okvalue
-          },
-          {
-            label: 'Reject Value',
-            type: 'bar',
-            backgroundColor: '#fe909d',
-            data: this.rejectvalue
-          },
-          {
-            label: 'Reject %',
-            type: 'line',
-            data: this.Rejectper
+            data: this.rejvalue,
+            barPercentage: 0.5
           },
         ]
       },
@@ -155,35 +119,28 @@ export class DefectwisereportComponent implements OnInit {
         responsive: true,
         tooltips: {
           mode: 'index',
-          intersect: true
+          intersect: true,
+          callbacks: {
+            label: function (tooltipItems, data) {
+              var multistringText = ["Value : " + tooltipItems.yLabel];
+              multistringText.push("Quantity : " + rejqty[tooltipItems.index]);
+              return multistringText;
+            }
+          }
         },
-        // annotation: {
-        //   annotations: [{
-        //     type: 'line',
-        //     mode: 'horizontal',
-        //     scaleID: 'y-axis-0',
-        //     value: 10,
-        //     endValue: 15,
-        //     borderColor: '#01a9ac',
-        //     borderWidth: 4,
-        //     label: {
-        //       enabled: true,
-        //       content: 'Trendline 15%',
-        //       yAdjust: -16,
-        //     }
-        //   }]
-        // },
         maintainAspectRatio: false,
         hover: {
           mode: 'label'
         },
         scales: {
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: 'In Lakhs'
-            }
-          }]
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: 'Value In Lakhs'
+              }
+            },
+          ]
         },
         animation: {
           duration: 1,
@@ -194,51 +151,50 @@ export class DefectwisereportComponent implements OnInit {
               (Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
             this.textAlign = 'center';
             this.textBaseline = 'bottom';
-            // tslint:disable-next-line:only-arrow-functions
-            this.data.datasets.forEach(function (dataset, i) {
-              if (dataset.type === 'line') {
-                const meta = chartInstance.controller.getDatasetMeta(i);
-                // tslint:disable-next-line:only-arrow-functions
-                meta.data.forEach(function (bar, index) {
-                  const data = dataset.data[index];
-                  if (data !== '0.00') {
-                    chartInstance.ctx.fillStyle = '#dc3545';
-                    chartInstance.ctx.font = 'italic bold 8pt verdana';
-                    chartInstance.ctx.fillText(data + ' %', bar._model.x, bar._model.y - 5);
-                  }
-
-                });
-              }
-            });
           }
         }
       }
     });
-
+    this.myChart.update();
   }
 
-  async getselectedyear() {
-    // await this.service.getTop5Rejection(this.Yearname).toPromise().then(res => { this.rowData = res });
-    // if (this.myChart) this.myChart.destroy();
-    // this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
-    // this.filterData();
+  getselectedyear() {
+    this.loading = true;
+    if (this.myChart) this.myChart.destroy();
+    this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    this.getChartData();
   }
 
   getselectedmonth() {
-    // if (this.myChart) this.myChart.destroy();
-    // this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
-    // this.filterData();
+    this.loading = true;
+    this.rejvalue = [];
+    this.name = [];
+    this.rejqty = [];
+    if (this.myChart) this.myChart.destroy();
+    this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    let array = this.rowData.filter(x => x.monthName == this.monthname);
+    array.forEach(e => {
+      this.name.push(e.name);
+      this.rejqty.push(e.rejqty);
+      this.rejvalue.push(e.rejvalue);
+    });
+    this.loadchart();
   }
 
   selectedGrid(plantcode) {
+    this.loading = true;
     this.plantcode = plantcode;
-    // if (this.myChart) this.myChart.destroy();
-    // this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
-    // this.filterData();
+    if (this.myChart) this.myChart.destroy();
+    this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    this.getChartData();
   }
 
   onselecttype(prodtype) {
+    this.loading = true;
     this.selectedtype = prodtype;
+    if (this.myChart) this.myChart.destroy();
+    this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    this.getChartData();
   }
 
 }
