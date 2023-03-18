@@ -680,7 +680,10 @@ import { DefectwisereportComponent } from './defectwisereport/defectwisereport.c
       },
       { path: '**', redirectTo: '' },
     ]),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing'}),
     AgGridModule.withComponents([InnerRenderer]
       ),
     NgxLoadingModule.forRoot({}),

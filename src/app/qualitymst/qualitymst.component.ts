@@ -294,29 +294,32 @@ export class QualitymstComponent implements OnInit {
 
     this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
     this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
-
   }
 
-  allCalculations() {
-
+  allCalculations(event) {
+    this.countRejQty();
+    //**do not change the order of function call**
     let A = this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.okqty +
       this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty
 
-
     if (this.qualityservice.qualityData.stdPrice === 0) {
       this.countQty();
-      this.countRejQty();
       this.addDefects();
+      if (A > this.qualityservice.qualityData.inspQty) {
+        this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
+        this.qualityservice.qualityData[event.target.id] = 0;
+      }
+      this.countRejQty();
       this.valuesStd();
     } else {
       this.countQty();
-      this.countRejQty();
       this.addDefects();
-      this.valuesSell();
-      if (A > this.qualityservice.qualityData.inspQty){
-        this.toastr.error("Please Enter Valid Data...")
-        this.validQtyError = true;
+      if (A > this.qualityservice.qualityData.inspQty) {
+        this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
+        this.qualityservice.qualityData[event.target.id] = 0;
       }
+      this.countRejQty();
+      this.valuesSell();
     }
   }
 
@@ -327,9 +330,8 @@ export class QualitymstComponent implements OnInit {
   }
 
   onComplete(form: NgForm) {
-    
 
-    if (this.validQtyError = false || this.qualityservice.qualityData.orderType.length == 0 || this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
+    if (this.qualityservice.qualityData.orderType.length == 0 || this.qualityservice.qualityData.itemname.length === 0 || this.qualityservice.qualityData.plantcode.length === 0 || this.qualityservice.qualityData.stdPrice === 0) {
       this.toastr.error(
         "Save Failed.",
         "Add Required Fields."
