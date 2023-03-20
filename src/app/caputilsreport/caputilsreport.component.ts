@@ -71,6 +71,8 @@ export class CaputilsreportComponent implements OnInit {
 
   public monthNames: any;
   public d: any;
+  public totPlanRound: any = 0;
+  public totActualRound: any = 0;
 
   selectedCaputils: CaputilsService;
   cols: any;
@@ -91,7 +93,7 @@ export class CaputilsreportComponent implements OnInit {
       this.itmService.getallData();
      }
 
-  ngOnInit() {
+  async ngOnInit() {
     const me = this;
     this.loading = true;
     this.monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -115,10 +117,10 @@ export class CaputilsreportComponent implements OnInit {
       { field: "percomplete", header: "Utilization %" }
 
     ];
-    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode , this.typename);
+    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode , this.typename);
     this.incmarks = 0;
 
     
@@ -164,6 +166,7 @@ export class CaputilsreportComponent implements OnInit {
   
         });
       this.resetForm();
+      this.calcTotal();
   }
 
   resetForm(form?: NgForm) {
@@ -285,29 +288,42 @@ export class CaputilsreportComponent implements OnInit {
     this.route.navigate(["./caputilsworkerupdate"]);
   }
 
-  selectedGrid(ev) {
+  async selectedGrid(ev) {
     this.selectedcode = ev;
-    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
+    this.calcTotal();
   }
 
-  getselectedyear() {
+  async getselectedyear() {
     this.year = this.yearname;
-    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode , this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode , this.typename);
+    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
+    this.calcTotal();
   }
 
-  getselectedmonth() {
+  async getselectedmonth() {
     this.Month = this.monthname;
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
-    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.calcTotal();
   }
-  getselectedtype() {
+ async getselectedtype() {
     this.type = this.typename;
-    this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
+    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    this.calcTotal();
+  }
+
+  calcTotal() {
+    this.totActualRound = 0;
+    this.totPlanRound = 0;
+    this.caputilsservice.caputilsList.forEach(element => {
+      this.totPlanRound += element.plantround;
+      this.totActualRound += element.actualround;
+    });
   }
 
 }
