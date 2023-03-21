@@ -32,8 +32,8 @@ export class DefectwisereportComponent implements OnInit {
   public name: number[] = [];
 
   constructor(
-    private service: QualityService,
-    private plantservice: PlantService,
+    public service: QualityService,
+    public plantservice: PlantService,
     public lservice: LoginService) {
     this.lservice.currentUser.subscribe(x => this.currentUser = x);
   }

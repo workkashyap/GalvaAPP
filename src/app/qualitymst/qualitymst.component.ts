@@ -297,6 +297,7 @@ export class QualitymstComponent implements OnInit {
   }
 
   allCalculations(event) {
+    if(event != 'temp')
     this.countRejQty();
     //**do not change the order of function call**
     let A = this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.okqty +
