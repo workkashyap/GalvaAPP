@@ -117,6 +117,8 @@ import { Top5rejectionComponent } from './top5rejection/top5rejection.component'
 import { RejctiondashComponent } from './rejctiondash/rejctiondash.component';
 import { QualitySummaryComponent } from './quality-summary/quality-summary.component';
 import { DefectwisereportComponent } from './defectwisereport/defectwisereport.component';
+import { DefectwisegridComponent } from './defectwisegrid/defectwisegrid.component';
+import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.component';
 
 @NgModule({
   declarations: [	
@@ -216,7 +218,9 @@ import { DefectwisereportComponent } from './defectwisereport/defectwisereport.c
     Top5rejectionComponent,
     RejctiondashComponent,
     QualitySummaryComponent,
-    DefectwisereportComponent
+    DefectwisereportComponent,
+    DefectwisegridComponent,
+    SalesrepofnmomComponent
    ],
   imports: [
     BrowserModule,
@@ -569,6 +573,11 @@ import { DefectwisereportComponent } from './defectwisereport/defectwisereport.c
         canActivate: [AuthGuard],
       },
       {
+        path: 'salesrepofnymom', 
+        component: SalesrepofnmomComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'salesrepoyear', 
         component: SalesrepoyearComponent,
         canActivate: [AuthGuard],
@@ -604,8 +613,13 @@ import { DefectwisereportComponent } from './defectwisereport/defectwisereport.c
         canActivate: [AuthGuard],
       },
       {
-        path: 'defectwisereport',
+        path: 'defectwisedashboard',
         component: DefectwisereportComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'defectwisereport',
+        component: DefectwisegridComponent,
         canActivate: [AuthGuard],
       },
       {

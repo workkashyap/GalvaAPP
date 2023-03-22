@@ -40,6 +40,7 @@ export class QualitymstComponent implements OnInit {
   public loading = false;
   public validQtyError = false;
   public validRejQtyError = false;
+  public DRejQty: any;
 
   filteredCountries: any[];
   brands: string[] = ['Audi', 'BMW', 'Fiat', 'Ford', 'Honda', 'Jaguar', 'Mercedes', 'Renault', 'Volvo', 'VW'];
@@ -199,7 +200,7 @@ export class QualitymstComponent implements OnInit {
   }
 
   countRejQty() {
-    this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q
+    this.DRejQty = this.qualityservice.qualityData.dE01Q + this.qualityservice.qualityData.dE02Q + this.qualityservice.qualityData.dE03Q + this.qualityservice.qualityData.dE04Q + this.qualityservice.qualityData.dE05Q + this.qualityservice.qualityData.dE06Q + this.qualityservice.qualityData.dE07Q + this.qualityservice.qualityData.dE08Q + this.qualityservice.qualityData.dE09Q + this.qualityservice.qualityData.dE10Q
       + this.qualityservice.qualityData.dE11Q + this.qualityservice.qualityData.dE12Q + this.qualityservice.qualityData.dE13Q + this.qualityservice.qualityData.dE14Q + this.qualityservice.qualityData.dE15Q + this.qualityservice.qualityData.dE16Q + this.qualityservice.qualityData.dE17Q + this.qualityservice.qualityData.dE18Q + this.qualityservice.qualityData.dE19Q + this.qualityservice.qualityData.dE20Q
       + this.qualityservice.qualityData.dE21Q + this.qualityservice.qualityData.dE22Q + this.qualityservice.qualityData.dE23Q + this.qualityservice.qualityData.dE24Q + this.qualityservice.qualityData.dE25Q + this.qualityservice.qualityData.dE26Q + this.qualityservice.qualityData.dE27Q + this.qualityservice.qualityData.dE28Q + this.qualityservice.qualityData.dE29Q + this.qualityservice.qualityData.dE30Q
       + this.qualityservice.qualityData.dE31Q + this.qualityservice.qualityData.dE32Q + this.qualityservice.qualityData.dE33Q + this.qualityservice.qualityData.dE34Q + this.qualityservice.qualityData.dE35Q + this.qualityservice.qualityData.dE36Q + this.qualityservice.qualityData.dE37Q + this.qualityservice.qualityData.dE38Q + this.qualityservice.qualityData.dE39Q + this.qualityservice.qualityData.dE40Q
@@ -292,35 +293,51 @@ export class QualitymstComponent implements OnInit {
     this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
     this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
 
-    this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
+    // this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
+    // this.qualityservice.qualityData.totRejQty =  this.qualityservice.qualityData.rejectionqty;
     this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
   }
 
   allCalculations(event) {
-    if(event != 'temp')
-    this.countRejQty();
-    //**do not change the order of function call**
-    let A = this.qualityservice.qualityData.rejectionqty + this.qualityservice.qualityData.okqty +
-      this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty
+    if (event != 'temp') {
+      this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
+      this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
+      this.countRejQty();
+      //**do not change the order of function call**
 
-    if (this.qualityservice.qualityData.stdPrice === 0) {
-      this.countQty();
-      this.addDefects();
-      if (A > this.qualityservice.qualityData.inspQty) {
+      if (this.qualityservice.qualityData.rejectionqty < 0) {
         this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
-        this.qualityservice.qualityData[event.target.id] = 0;
+        this.qualityservice.qualityData.rejectionqty = 0;
+        this.qualityservice.qualityData.totRejQty = 0;
+        this.qualityservice.qualityData.okqty = 0;
+        this.countRejQty();
+      } else {
+        if (this.qualityservice.qualityData.stdPrice === 0) {
+          this.countQty();
+          this.addDefects();
+          if (this.DRejQty > this.qualityservice.qualityData.rejectionqty || 
+              this.qualityservice.qualityData.buffingqty > this.qualityservice.qualityData.rejectionqty ||
+              this.qualityservice.qualityData.holdqty > this.qualityservice.qualityData.rejectionqty
+              ) {
+            this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
+            this.qualityservice.qualityData[event.target.id] = 0;
+          }
+          this.countRejQty();
+          this.valuesStd();
+        } else {
+          this.countQty();
+          this.addDefects();
+          if (this.DRejQty > this.qualityservice.qualityData.rejectionqty|| 
+            this.qualityservice.qualityData.buffingqty > this.qualityservice.qualityData.rejectionqty ||
+            this.qualityservice.qualityData.holdqty > this.qualityservice.qualityData.rejectionqty
+            ) {
+            this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
+            this.qualityservice.qualityData[event.target.id] = 0;
+          }
+          this.countRejQty();
+          this.valuesSell();
+        }
       }
-      this.countRejQty();
-      this.valuesStd();
-    } else {
-      this.countQty();
-      this.addDefects();
-      if (A > this.qualityservice.qualityData.inspQty) {
-        this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
-        this.qualityservice.qualityData[event.target.id] = 0;
-      }
-      this.countRejQty();
-      this.valuesSell();
     }
   }
 

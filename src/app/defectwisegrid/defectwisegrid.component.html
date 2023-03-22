@@ -1,0 +1,53 @@
+<div class="p-3">
+    <div class="page-filter d-flex w-100 px-2 py-2">
+        <div class="d-flex">
+            <h4 class="font-weight-bold heading mb-0 align-self-center">
+                Production DefectWise Report(<span style="font-size: 10px">Notes: Amounts in Lacs</span>)
+            </h4>
+        </div>
+        <div class="col-sm-3 ml-4">
+            <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+                (change)="selectedGrid($event.target.value)"
+                style="height: 38px; padding: 5px 13px 6px 9px;">
+                <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                    {{ pl.plantshortname }}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
+                [(ngModel)]="this.selectedtype" (change)="onselecttype($event.target.value)">
+                <option disabled>--Select Type--</option>
+                <option value="ZCRM">CHROME</option>
+                <option value="ZSAT">SATIN</option>
+                <option value="ZMLD">MOULDING</option>
+            </select>
+        </div>
+        <div class="mr-2">
+            <select class="custom-select" (change)="getBySelectedYear()" name="Yearname" #Yearname="ngModel"
+                [(ngModel)]="this.yearname">
+                <option disabled>--Select Year--</option>
+                <option value="23-24">2023 - 2024</option>
+                <option value="22-23">2022 - 2023</option>
+                <option value="21-22">2021 - 2022</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="p-3">
+    <div class="card p-3 highlight-2 border-10 m-auto">
+        <div class="overflow-scroll">
+            <ag-grid-angular style="height: 530px" class="ag-theme-alpine w-100" [rowData]="rowData"
+                [columnDefs]="columnDefs" [groupMultiAutoColumn]="true" [groupDefaultExpanded]="groupDefaultExpanded"
+                [animateRows]="true" [getRowStyle]="getRowStyle" [groupIncludeFooter]="true"
+                [sideBar]="{ toolPanels: ['columns'] }" [groupIncludeTotalFooter]="true"
+                [suppressAggFuncInHeader]="true"
+                [autoGroupColumnDef]="autoGroupColumnDef" [pivotMode]="true" [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+        </div>
+    </div>
+</div>
+
+<!-- [gridOptions]="gridOptions"
+    [suppressExpandablePivotGroups]="true" -->

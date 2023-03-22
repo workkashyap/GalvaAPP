@@ -80,6 +80,7 @@ export class DefectwisereportComponent implements OnInit {
           this.rejqty.push(e.rejqty);
           this.rejvalue.push(e.rejvalue);
         });
+        this.rejvalue.sort((a,b)=>{return b-a;});
       });
     this.loadchart();
   }
@@ -98,7 +99,7 @@ export class DefectwisereportComponent implements OnInit {
           {
             label: 'Rejection Value',
             type: 'bar',
-            backgroundColor: '#73b4fa',
+            backgroundColor: ['#fa2839','#fe909d','#1905fa','#f5ea20','#37e666',],
             data: this.rejvalue,
             barPercentage: 0.5
           },
@@ -178,6 +179,7 @@ export class DefectwisereportComponent implements OnInit {
       this.rejqty.push(e.rejqty);
       this.rejvalue.push(e.rejvalue);
     });
+    this.rejvalue.sort((a,b)=>{return b-a;});
     this.loadchart();
   }
 
