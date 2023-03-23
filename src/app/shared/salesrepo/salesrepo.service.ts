@@ -21,4 +21,8 @@ export class SalesrepoService {
   getAgGridDataForFnYear(fnyear) {
     return this.http.get<any[]>(this.rootUrl + '/sales/getsalesrepofin/' + fnyear);
   }
+
+  getSalesRepoFinWithMould(fnyear) {
+    return this.http.get<any[]>(this.rootUrl + '/sales/getsalesrepofinwithmould/' + fnyear);
+  }
 }
