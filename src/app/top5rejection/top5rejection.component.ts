@@ -6,6 +6,9 @@ import 'ag-grid-enterprise';
 import { InnerRenderer } from '../salesrepo/innerrenderer.component';
 import { Top5rejectionService } from '../shared/dailyProduction/top5rejection.service';
 import * as _ from 'lodash';
+import { PlantService } from '../shared/plant/plant.service';
+import { LoginService } from '../shared/login/login.service';
+import { Plant } from '../shared/plant/plant.model';
 
 @Component({
   selector: 'app-top5rejection',
@@ -18,6 +21,9 @@ export class Top5rejectionComponent implements OnInit {
   public yearname: any;
   public year: string;
   public groupDefaultExpanded = 0;
+  public currentuser: any;
+  public plantcode: any;
+  public plantname: any;
   rowData: any[];
   data: any[];
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
@@ -30,7 +36,7 @@ export class Top5rejectionComponent implements OnInit {
   };
   public autoGroupColumnDef: ColDef = {
     minWidth: 50,
-    width:250,
+    width:  350,
     maxWidth: 500,
     resizable: true,
     pinned: 'left',
@@ -44,8 +50,8 @@ export class Top5rejectionComponent implements OnInit {
   public columnDefs: ColDef[] = [
     // { headerName: 'Year', field: 'finyear', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     { headerName: 'Month', field: 'monthname', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'Plant', field: 'plantname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
-    { headerName: 'Item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
+    // { headerName: 'Plant', field: 'plantname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
+    { headerName: 'Item', field: 'itemname', width:500, enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     { headerName: 'Reject Value', field: 'rejvalue', aggFunc: params => {
                                                                               let sum = 0;
                                                                               params.values.forEach(value => sum += value);
@@ -53,9 +59,21 @@ export class Top5rejectionComponent implements OnInit {
                                                                             },cellStyle: { fontSize: '13px' },
     }];
 
-  constructor(private rejectionservice: Top5rejectionService) { }
+  constructor(
+    private rejectionservice: Top5rejectionService,
+    public plantservice: PlantService,
+    public lservice: LoginService,
+    ) { this.lservice.currentUser.subscribe(x => this.currentuser = x); }
 
   async ngOnInit() {
+    await this.plantservice
+    .sgetPlantData(this.currentuser.id)
+    .toPromise()
+    .then(res => {
+      this.plantservice.splantlist = res as Plant[]
+      this.plantcode = this.plantservice.splantlist[0].plantcode;
+    });
+    
     this.d = new Date();
     this.cyear = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
@@ -64,7 +82,9 @@ export class Top5rejectionComponent implements OnInit {
     } else {
       this.yearname = this.cyear + '-' + (this.cyear + 1);
     }
-    await this.rejectionservice.getTop5Rejection(this.yearname).toPromise().then(res => { this.rowData = res });
+    await this.rejectionservice.getTop5Rejection(this.yearname,this.plantcode).toPromise().then(res => { this.rowData = res; });
+    await this.rejectionservice.getTop5RejectionSum(this.yearname,this.plantcode).toPromise()
+          .then(res => { this.data = res;this.plantname = res[0].plantname; });
     this.rowData = this.sortByFnMonth();
   }
 
@@ -82,7 +102,17 @@ export class Top5rejectionComponent implements OnInit {
 
   async getBySelectedYear() {
     this.year = this.yearname;
-    await this.rejectionservice.getTop5Rejection(this.year).toPromise().then(res => { this.rowData = res });
+    await this.rejectionservice.getTop5Rejection(this.year,this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.rejectionservice.getTop5RejectionSum(this.yearname,this.plantcode).toPromise()
+          .then(res => { this.data = res;this.plantname = res[0].plantname; });
+    this.rowData = this.sortByFnMonth();
+  }
+
+  async selectedGrid(plantcode) {
+    this.plantcode = plantcode;
+    await this.rejectionservice.getTop5Rejection(this.yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.rejectionservice.getTop5RejectionSum(this.yearname,this.plantcode).toPromise()
+          .then(res => { this.data = res;this.plantname = res[0].plantname; });
     this.rowData = this.sortByFnMonth();
   }
 }

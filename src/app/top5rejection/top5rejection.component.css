@@ -20,3 +20,11 @@
 .border-10 {
     border-radius: 10px;
 }
+
+.btn-primary{
+    background-color: #4B67DB !important;
+}
+
+.table-primary ,.table-primary>th{
+    background-color: #8094E6 !important;
+}

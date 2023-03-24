@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
 
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -235,6 +236,7 @@ import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.compone
     FullCalendarModule,
     TableModule,
     CalendarModule,
+    AccordionModule,
     RouterModule.forRoot([
       {
         path: '',
@@ -568,12 +570,12 @@ import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.compone
         canActivate: [AuthGuard],
       },
       {
-        path: 'salesrepo', 
+        path: 'salesrepomom', 
         component: SalesrepoComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'salesrepofnymom', 
+        path: 'salesrepofnmom', 
         component: SalesrepofnmomComponent,
         canActivate: [AuthGuard],
       },

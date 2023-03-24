@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import * as Chart from 'chart.js';
 import { Top5rejectionService } from '../shared/dailyProduction/top5rejection.service';
+import { PlantService } from '../shared/plant/plant.service';
+import { LoginService } from '../shared/login/login.service';
+import { Plant } from '../shared/plant/plant.model';
+
 
 @Component({
   selector: 'app-rejctiondash',
@@ -14,7 +18,8 @@ export class RejctiondashComponent implements OnInit {
   canvas: any;
   ctx: any;
   rowData: any;
-
+  currentuser:any;
+  plantcode: any;
   public loading = false;
   public monthname: any;
   public Yearname: any;
@@ -27,15 +32,27 @@ export class RejctiondashComponent implements OnInit {
   public Rejectper: number[] = [];
   public items: string[] = [];
 
-  constructor(private service: Top5rejectionService) { }
+  constructor(
+    private service: Top5rejectionService,
+    public lservice: LoginService,
+    public plantservice: PlantService,
+    ) {  this.lservice.currentUser.subscribe(x => this.currentuser = x); }
 
   async ngOnInit() {
+    await this.plantservice
+    .sgetPlantData(this.currentuser.id)
+    .toPromise()
+    .then(res => {
+      this.plantservice.splantlist = res as Plant[]
+      this.plantcode = this.plantservice.splantlist[0].plantcode;
+    });
+
     const namedChartAnnotation = ChartAnnotation;
     namedChartAnnotation['id'] = 'annotation';
     Chart.pluginService.register(namedChartAnnotation);
     this.loading = true;
 
-    this.plantname = "GDPL Zaroli";
+    this.plantname = "GDPL Vapi";
     this.d = new Date();
     let cyear: any = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
@@ -45,7 +62,7 @@ export class RejctiondashComponent implements OnInit {
     } else {
       this.Yearname = cyear + '-' + (cyear + 1);
     }
-    await this.service.getTop5Rejection(this.Yearname).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
     this.filterData();
   }
 
@@ -191,7 +208,7 @@ export class RejctiondashComponent implements OnInit {
   }
 
   async getselectedyear() {
-    await this.service.getTop5Rejection(this.Yearname).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.filterData();
@@ -203,9 +220,12 @@ export class RejctiondashComponent implements OnInit {
     this.filterData();
   }
 
-  selectedplant() {
+  async selectedplant(plantcode) {
+    this.plantcode = plantcode;
+    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
+    this.plantname = this.rowData[0].plantname;
     this.filterData();
   }
 

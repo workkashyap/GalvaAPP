@@ -31,15 +31,12 @@
               </select>
             </div>
             <div class="col-sm-3">
-              <select class=" custom-select" name="myselect" #mySelect="ngModel" [(ngModel)]="plantname"
-                (change)="selectedplant()">
-                <option disabled>--Select Plant--</option>
-                <option value="GDPL Vapi">GDPL Vapi</option>
-                <option value="GDPL Zaroli">GDPL Zaroli</option>
-                <option value="GDPL Chakan">GDPL Chakan</option>
-                <option value="GDPL Chennai">GDPL Chennai</option>
-                <option value="GDPL Andhra Pradesh">GDPL Andhra Pradesh</option>
-              </select>
+              <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
+              (change)="selectedplant($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+              <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+                  {{ pl.plantshortname }}
+              </option>
+          </select>
             </div>
             <div class="col-sm-3">
               <button (click)="monthclick()" class="btn btn-primary ml-1">This Month</button>

@@ -101,11 +101,9 @@ export class QualitySummaryComponent implements OnInit {
 
   selectedGrid(plantcode) {
     this.plantcode = plantcode;
-  }
-
-  onviewDetail() {
     this.getSummary(this.plantcode,this.yearname);
   }
+
   getRowStyle = params => {
     if (params.node.footer) {
       return { background: 'PowderBlue', fontWeight: 'bolder' };
