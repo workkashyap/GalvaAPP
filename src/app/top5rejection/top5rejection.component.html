@@ -2,9 +2,12 @@
   <div class="page-filter d-flex w-100 px-2 py-2">
     <div class="d-flex">
       <div class="ml-auto mr-3">
-        <button class="btn btn-primary"  type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
-                aria-expanded="false"  aria-controls="multiCollapseExample2">
-                <i class="fa fa-sm fa-plus"></i>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
+          aria-expanded="false" (click)="show=!show" aria-controls="multiCollapseExample2">
+          <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+            aria-controls="multiCollapseExample2" *ngIf="!show" class="fa fa-sm fa-plus"></i>
+          <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+            aria-controls="multiCollapseExample2" *ngIf="show" class="fa fa-sm fa-minus"></i>
         </button>
       </div>
       <h4 class="font-weight-bold heading mb-0 align-self-center">
@@ -34,7 +37,7 @@
 <div class="mx-3">
   <div class="collapse multi-collapse" id="multiCollapseExample2">
     <div class="card p-1 shadow card-body">
-      <table  class="table table-bordered border-primary table-sm p-0">
+      <table class="table table-bordered border-primary table-sm p-0">
         <thead class="table-primary">
           <th>{{plantname | uppercase}}</th>
           <th style="font-size: 13px;width: 12%;">INSPECTION VALUE</th>
@@ -55,8 +58,18 @@
             <td class="border-primary">{{item.rejper}}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td class="table-primary border-primary"><strong class="float-right">TOTAL : </strong></td>
+            <td class="border-primary">{{Tinspection}}</td>
+            <td class="border-primary">{{Tok}}</td>
+            <td class="border-primary">{{Tokper}} <small>(Avg.)</small></td>
+            <td class="border-primary">{{Trej}}</td>
+            <td class="border-primary">{{Trejper}} <small>(Avg.)</small></td>
+          </tr>
+        </tfoot>
       </table>
-      <ng-container *ngIf="data.length <= 0">
+      <ng-container *ngIf="data?.length <= 0">
         <h6 class="text-center">No Rows To Show</h6>
       </ng-container>
     </div>

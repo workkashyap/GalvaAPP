@@ -49,11 +49,6 @@ export class SalesrepofnmomComponent implements OnInit {
   public columnDefs: ColDef[] = [
     { headerName: 'Month', field: 'monthName', type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true, cellStyle: { fontSize: '13px' } },
     { headerName: 'Branch', field: 'plantname', type: 'leftAligned', enableRowGroup: true, rowGroup: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'rightAligned',aggFunc: params => {
-      let sum = 0;
-      params.values.forEach(value => sum += value);
-      return Math.round(sum * 100) / 100;
-    },cellStyle: { fontSize: '13px' } },
     {
       headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned', aggFunc: params => {
         let sum = 0;
@@ -101,6 +96,13 @@ export class SalesrepofnmomComponent implements OnInit {
         return Math.round(sum * 100) / 100;
       },
       cellStyle: { fontSize: '13px' }
+    },
+    { headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'rightAligned',aggFunc: params => {
+      let sum = 0;
+      params.values.forEach(value => sum += value);
+      return Math.round(sum * 100) / 100;
+      },
+      cellStyle: { fontSize: '13px' } 
     },
   ]
 
