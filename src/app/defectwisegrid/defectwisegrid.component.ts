@@ -97,7 +97,11 @@ export class DefectwisegridComponent implements OnInit {
 
     await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
       then(res => { this.rowData = res; });
+    await this.qualityservice.getDefectWiseReportSum(this.plantcode, this.selectedtype, this.yearname).toPromise()
+      .then(res => { this.data = res; });
     this.rowData = this.sortByFnMonth();
+
+    this.getTotal();
   }
 
   sortByFnMonth() {
@@ -109,15 +113,21 @@ export class DefectwisegridComponent implements OnInit {
       then(res => {
         this.rowData = res;
       });
+    await this.qualityservice.getDefectWiseReportSum(this.plantcode, this.selectedtype, this.yearname).toPromise()
+      .then(res => { this.data = res; });
+    this.getTotal();
     this.rowData = this.sortByFnMonth();
   }
 
-  selectedGrid(plantcode) {
-      this.plantcode = plantcode;
-    this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
+  async selectedGrid(plantcode) {
+    this.plantcode = plantcode;
+    await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
       then(res => {
         this.rowData = res;
       });
+    await this.qualityservice.getDefectWiseReportSum(this.plantcode, this.selectedtype, this.yearname).toPromise()
+      .then(res => { this.data = res; });
+    this.getTotal();
     this.rowData = this.sortByFnMonth();
   }
 
@@ -127,8 +137,34 @@ export class DefectwisegridComponent implements OnInit {
       then(res => {
         this.rowData = res;
       });
+    await this.qualityservice.getDefectWiseReportSum(this.plantcode, this.selectedtype, this.yearname).toPromise()
+      .then(res => { this.data = res; });
+    this.getTotal();
     this.rowData = this.sortByFnMonth();
   }
+
+  Trejval: any;
+  Trejqty: any;
+  getTotal() {
+    this.Trejqty = 0;
+    this.Trejval = 0;
+    const res = []
+    for (let i = 0; i < this.data.length; i++) {
+      const ind = res.findIndex(el => el.name === this.data[i].name);
+      if (ind === -1) {
+        res.push(this.data[i]);
+      } else {
+        res[ind].rejqty += this.data[i].rejqty;
+        res[ind].rejvalue += this.data[i].rejvalue;
+      };
+      this.Trejqty += this.data[i].rejqty;
+      this.Trejval += this.data[i].rejvalue;
+    };
+    this.data = res;
+    this.Trejqty = Math.round(this.Trejqty * 100) / 100;
+    this.Trejval = Math.round(this.Trejval * 100) / 100;
+  }
+
   getRowStyle = params => {
     if (params.node.footer) {
       return { background: 'PowderBlue', fontWeight: 'bolder' };

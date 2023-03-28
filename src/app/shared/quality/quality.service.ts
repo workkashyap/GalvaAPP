@@ -50,4 +50,8 @@ export class QualityService {
   public getDefectWiseReport(plantcode, zcrm, fnyear) {
     return this.http.get<any[]>(this.rootUrl + "/qualities/getdefectwisereport/" + plantcode + "/" + zcrm + "/" + fnyear);
   }
+
+  public getDefectWiseReportSum(plantcode, zcrm, fnyear) {
+    return this.http.get<any[]>(this.rootUrl + "/qualities/getdefectwisereportsum/" + plantcode + "/" + zcrm + "/" + fnyear);
+  }
 }

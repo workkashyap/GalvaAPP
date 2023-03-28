@@ -120,25 +120,26 @@ export class Top5rejectionComponent implements OnInit {
     this.getTotal();
   }
 
-  Tinspection: any = 0;
-  Tok: any = 0;
-  Tokper: any = 0;
-  Trej: any = 0;
-  Trejper: any = 0;
+  Tinspection: any;
+  Tok: any;
+  Tokper: any;
+  Trej: any;
+  Trejper: any;
   getTotal() {
+    this.Tinspection = 0;this.Tok = 0;this.Tokper = 0;this.Trej = 0;this.Trejper = 0;
     this.data.forEach(e => {
-      this.Tinspection +=  e.inspValue ;
-      this.Tok += e.okvalue ;
-      this.Tokper += e.okjper ;
-      this.Trej += e.rejvalue ;
-      this.Trejper += e.rejper ;
+      this.Tinspection += e.inspValue;
+      this.Tok += e.okvalue;
+      this.Tokper += e.okjper;
+      this.Trej += e.rejvalue;
+      this.Trejper += e.rejper;
     });
     this.Tokper = this.Tokper / this.data.length;
     this.Trejper = this.Trejper / this.data.length;
-    this.Tinspection = Math.round(this.Tinspection * 100)/100;
-    this.Tok = Math.round(this.Tok * 100)/100;
-    this.Trej = Math.round(this.Trej * 100)/100;
-    this.Tokper = Math.round(this.Tokper * 100)/100;
-    this.Trejper = Math.round(this.Trejper * 100)/100;
+    this.Tinspection = Math.round(this.Tinspection * 100) / 100;
+    this.Tok = Math.round(this.Tok * 100) / 100;
+    this.Trej = Math.round(this.Trej * 100) / 100;
+    this.Tokper = Math.round(this.Tokper * 100) / 100;
+    this.Trejper = Math.round(this.Trejper * 100) / 100;
   }
 }

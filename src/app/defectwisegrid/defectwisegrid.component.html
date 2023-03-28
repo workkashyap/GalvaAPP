@@ -1,5 +1,14 @@
 <div class="p-3">
     <div class="page-filter d-flex w-100 px-2 py-2">
+        <div class="mr-3">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
+                aria-expanded="false" (click)="show=!show" aria-controls="multiCollapseExample2">
+                <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+                    aria-controls="multiCollapseExample2" *ngIf="!show" class="fa fa-sm fa-plus"></i>
+                <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+                    aria-controls="multiCollapseExample2" *ngIf="show" class="fa fa-sm fa-minus"></i>
+            </button>
+        </div>
         <div class="d-flex">
             <h4 class="font-weight-bold heading mb-0 align-self-center">
                 Production DefectWise Report(<span style="font-size: 10px">Notes: Amounts in Lacs</span>)
@@ -7,16 +16,15 @@
         </div>
         <div class="col-sm-3 ml-4">
             <select class="form-control align-self-center" *ngIf="plantservice" name="myselect" #mySelect
-                (change)="selectedGrid($event.target.value)"
-                style="height: 38px; padding: 5px 13px 6px 9px;">
+                (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
                 <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
                     {{ pl.plantshortname }}
                 </option>
             </select>
         </div>
         <div class="col-sm-2">
-            <select class=" custom-select" name="typeSelect" #typeSelect="ngModel"
-                [(ngModel)]="this.selectedtype" (change)="onselecttype($event.target.value)">
+            <select class=" custom-select" name="typeSelect" #typeSelect="ngModel" [(ngModel)]="this.selectedtype"
+                (change)="onselecttype($event.target.value)">
                 <option disabled>--Select Type--</option>
                 <option value="ZCRM">CHROME</option>
                 <option value="ZSAT">SATIN</option>
@@ -35,6 +43,43 @@
     </div>
 </div>
 
+
+<div class="mx-3">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+        <div class="card p-1 shadow card-body">
+            <table class="table table-bordered border-primary table-sm p-0">
+                <thead class="table-primary">
+                    <th>ITEM NAME</th>
+                    <th style="font-size: 13px;width: 30%;">REJECTION VALUE</th>
+                    <th style="font-size: 13px;width: 30%;">REJECTION QUANTITY</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data">
+                        <td class="table-primary border-primary">
+                            <small><strong>{{item.name}}</strong></small>
+                        </td>
+                        <td class="border-primary">
+                            <small><strong>{{item.rejvalue}}</strong></small>
+                        </td>
+                        <td class="border-primary">
+                            <small><strong>{{item.rejqty}}</strong></small>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <td class="table-primary border-primary"><strong class="float-right">TOTAL : </strong></td>
+                    <td class="border-primary"><small><strong>{{Trejval}}</strong></small></td>
+                    <td class="border-primary"><small><strong>{{Trejqty}}</strong></small></td>
+                </tfoot>
+            </table>
+            <ng-container *ngIf="data?.length <= 0">
+                <h6 class="text-center">No Rows To Show</h6>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
 <div class="p-3">
     <div class="card p-3 highlight-2 border-10 m-auto">
         <div class="overflow-scroll">
@@ -42,8 +87,8 @@
                 [columnDefs]="columnDefs" [groupMultiAutoColumn]="true" [groupDefaultExpanded]="groupDefaultExpanded"
                 [animateRows]="true" [getRowStyle]="getRowStyle" [groupIncludeFooter]="true"
                 [sideBar]="{ toolPanels: ['columns'] }" [groupIncludeTotalFooter]="true"
-                [suppressAggFuncInHeader]="true"
-                [autoGroupColumnDef]="autoGroupColumnDef" [pivotMode]="true" [defaultColDef]="defaultColDef">
+                [suppressAggFuncInHeader]="true" [autoGroupColumnDef]="autoGroupColumnDef" [pivotMode]="true"
+                [defaultColDef]="defaultColDef">
             </ag-grid-angular>
         </div>
     </div>
