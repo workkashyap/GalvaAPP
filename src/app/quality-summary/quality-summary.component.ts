@@ -90,9 +90,9 @@ export class QualitySummaryComponent implements OnInit {
         this.rowData = res;
         this.rowData.forEach(e => {
           if(e.inspValue == "Rej Per" || e.inspValue == "OK Per"){
-            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)/12).toPrecision(5); 
+            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)/12).toFixed(2); 
           }else{
-            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)).toPrecision(7); 
+            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)).toFixed(2); 
           }
         });
       }

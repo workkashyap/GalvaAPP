@@ -14,6 +14,7 @@ export class CaputilsService {
   public caputilsList: Caputils[] = [];
   public caputils2: Caputils2 [] = [] ;
   public caputils2Data: Caputils2;
+  public caputilsReason: any = [] ;
 
   readonly rootUrl = environment.apiUrl;
   public id: number;
@@ -123,4 +124,10 @@ export class CaputilsService {
   public deletecaputils(id): any {
     return this.http.delete(this.rootUrl + "/caputils/" + id);
   }
+
+  public getCaputilsReason() {
+    this.http.get(this.rootUrl + "/caputils/Getcaputilreason/reason").toPromise().
+    then(res => {this.caputilsReason = res;});
+  }
+
 }

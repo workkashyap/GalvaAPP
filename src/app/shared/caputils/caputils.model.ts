@@ -8,4 +8,5 @@ export class Caputils {
     percomplete?: number;
     planremark?: string;
     actualremark?: string;
+    reason?: string;
 }

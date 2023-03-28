@@ -76,6 +76,7 @@ export class CaputilsreportComponent implements OnInit {
 
   selectedCaputils: CaputilsService;
   cols: any;
+  temprows:any;
   percaputils: Observable<Caputils2[]>;
 
   constructor(
@@ -114,8 +115,8 @@ export class CaputilsreportComponent implements OnInit {
       { field: "planremark", header: "Plan Remark" },
       { field: "actualround", header: "Actual Round" },
       { field: "actualremark", header: "Actual Remark" },
-      { field: "percomplete", header: "Utilization %" }
-
+      { field: "percomplete", header: "Utilization %" },
+      { field: "reason", header: "Reason" }
     ];
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
 
@@ -123,7 +124,7 @@ export class CaputilsreportComponent implements OnInit {
     await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode , this.typename);
     this.incmarks = 0;
 
-    
+    this.caputilsservice.getCaputilsReason();
     const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
@@ -324,6 +325,15 @@ export class CaputilsreportComponent implements OnInit {
       this.totPlanRound += element.plantround;
       this.totActualRound += element.actualround;
     });
+    this.temprows = this.caputilsservice.caputilsList;
+  }
+
+  filterReason(reason) {
+    if(reason == "all"){
+      this.caputilsservice.caputilsList = this.temprows;
+    }else{
+      this.caputilsservice.caputilsList = this.temprows.filter(e => e.reason === reason);
+    }
   }
 
 }
