@@ -24,6 +24,7 @@ export class DefectwisegridComponent implements OnInit {
   public groupDefaultExpanded = 0;
   rowData: any[];
   data: any[];
+  show = false;
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,

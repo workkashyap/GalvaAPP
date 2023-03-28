@@ -26,6 +26,7 @@ export class Top5rejectionComponent implements OnInit {
   public plantname: any;
   rowData: any[];
   data: any[];
+  show = false;
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,
