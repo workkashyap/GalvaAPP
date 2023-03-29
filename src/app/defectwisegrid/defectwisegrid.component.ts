@@ -162,6 +162,7 @@ export class DefectwisegridComponent implements OnInit {
       this.Trejval += this.data[i].rejvalue;
     };
     this.data = res;
+    this.data.sort((a, b) => { return b.rejvalue - a.rejvalue });
     this.Trejqty = Math.round(this.Trejqty * 100) / 100;
     this.Trejval = Math.round(this.Trejval * 100) / 100;
   }

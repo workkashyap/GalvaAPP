@@ -24,20 +24,20 @@ export class QualitySummaryComponent implements OnInit {
   public cyear: any;
 
   public columnDefs: ColDef[] = [
-    { headerName: 'Values (In Lacs / %)', field: 'inspValue', pinned: 'left', width:180, cellStyle: {fontSize: '14px'}},
-    { headerName: 'Total', field: 'total', pinned: 'left',width:150, cellStyle: {fontSize: '14px', 'background-color': '#e7feff'}},
-    { headerName: 'April', field: 'apr', cellStyle: {fontSize: '14px'}},
-    { headerName: 'May', field: 'may', cellStyle: {fontSize: '14px'}},
-    { headerName: 'June', field: 'jun', cellStyle: {fontSize: '14px'}},
-    { headerName: 'July', field: 'jul', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Aug', field: 'aug', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Sep', field: 'sep', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Oct', field: 'oct', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Nov', field: 'nov', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Dec', field: 'dec', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Jan', field: 'jan', cellStyle: {fontSize: '14px'}},
-    { headerName: 'Feb', field: 'feb', cellStyle: {fontSize: '14px'}},
-    { headerName: 'March', field: 'mar', cellStyle: {fontSize: '14px'}},
+    { headerName: 'Values (In Lacs / %)', field: 'inspValue', pinned: 'left', width: 180, cellStyle: { fontSize: '14px' } },
+    { headerName: 'Total', field: 'total', pinned: 'left', width: 150, cellStyle: { fontSize: '14px', 'background-color': '#e7feff' } },
+    { headerName: 'April', field: 'apr', cellStyle: { fontSize: '14px' } },
+    { headerName: 'May', field: 'may', cellStyle: { fontSize: '14px' } },
+    { headerName: 'June', field: 'jun', cellStyle: { fontSize: '14px' } },
+    { headerName: 'July', field: 'jul', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Aug', field: 'aug', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Sep', field: 'sep', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Oct', field: 'oct', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Nov', field: 'nov', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Dec', field: 'dec', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Jan', field: 'jan', cellStyle: { fontSize: '14px' } },
+    { headerName: 'Feb', field: 'feb', cellStyle: { fontSize: '14px' } },
+    { headerName: 'March', field: 'mar', cellStyle: { fontSize: '14px' } },
   ];
 
   public defaultColDef: ColDef = {
@@ -50,11 +50,11 @@ export class QualitySummaryComponent implements OnInit {
   public autoGroupColumnDef: ColDef = {
     maxWidth: 180,
     cellRendererParams: {
-        suppressCount: true,
-        checkbox: false,
+      suppressCount: true,
+      checkbox: false,
     }
   };
-  
+
   constructor(
     public plantservice: PlantService,
     public qualityservice: QualityService,
@@ -80,19 +80,43 @@ export class QualitySummaryComponent implements OnInit {
     } else {
       this.yearname = this.cyear + '-' + (this.cyear + 1);
     }
-   
-    this.getSummary(this.plantcode,this.yearname);
+
+    this.getSummary(this.plantcode, this.yearname);
   }
 
-  getSummary(plntcod,year) {
-    this.qualityservice.getSummaryAllReport(plntcod,year).toPromise().then(
+  getSummary(plntcod, year) {
+    this.qualityservice.getSummaryAllReport(plntcod, year).toPromise().then(
       res => {
         this.rowData = res;
         this.rowData.forEach(e => {
-          if(e.inspValue == "Rej Per" || e.inspValue == "OK Per"){
-            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)/12).toFixed(2); 
-          }else{
-            e.total = ((e.jan + e.feb + e.mar + e.apr + e.may + e.jun + e.jul + e.aug + e.sep + e.oct + e.nov + e.dec)).toFixed(2); 
+          if (e.inspValue == "Rej Per" || e.inspValue == "OK Per") {
+            e.total = Number((
+              Number(e.jan != null ? e.jan.replaceAll(',', '') : e.jan) +
+              Number(e.feb != null ? e.feb.replaceAll(',', '') : e.feb) +
+              Number(e.mar != null ? e.mar.replaceAll(',', '') : e.mar) +
+              Number(e.apr != null ? e.apr.replaceAll(',', '') : e.apr) +
+              Number(e.may != null ? e.may.replaceAll(',', '') : e.may) +
+              Number(e.jun != null ? e.jun.replaceAll(',', '') : e.jun) +
+              Number(e.jul != null ? e.jul.replaceAll(',', '') : e.jul) +
+              Number(e.aug != null ? e.aug.replaceAll(',', '') : e.aug) +
+              Number(e.sep != null ? e.sep.replaceAll(',', '') : e.sep) +
+              Number(e.oct != null ? e.oct.replaceAll(',', '') : e.oct) +
+              Number(e.nov != null ? e.nov.replaceAll(',', '') : e.nov) +
+              Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec)) / 12).toFixed(2);
+          } else {
+            e.total = Number((
+              Number(e.jan != null ? e.jan.replaceAll(',', '') : e.jan) +
+              Number(e.feb != null ? e.feb.replaceAll(',', '') : e.feb) +
+              Number(e.mar != null ? e.mar.replaceAll(',', '') : e.mar) +
+              Number(e.apr != null ? e.apr.replaceAll(',', '') : e.apr) +
+              Number(e.may != null ? e.may.replaceAll(',', '') : e.may) +
+              Number(e.jun != null ? e.jun.replaceAll(',', '') : e.jun) +
+              Number(e.jul != null ? e.jul.replaceAll(',', '') : e.jul) +
+              Number(e.aug != null ? e.aug.replaceAll(',', '') : e.aug) +
+              Number(e.sep != null ? e.sep.replaceAll(',', '') : e.sep) +
+              Number(e.oct != null ? e.oct.replaceAll(',', '') : e.oct) +
+              Number(e.nov != null ? e.nov.replaceAll(',', '') : e.nov) +
+              Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec))).toFixed(2);
           }
         });
       }
@@ -101,7 +125,12 @@ export class QualitySummaryComponent implements OnInit {
 
   selectedGrid(plantcode) {
     this.plantcode = plantcode;
-    this.getSummary(this.plantcode,this.yearname);
+    this.getSummary(this.plantcode, this.yearname);
+  }
+
+  selectedYear(year) {
+    this.yearname = year;
+    this.getSummary(this.plantcode, this.yearname);
   }
 
   getRowStyle = params => {
