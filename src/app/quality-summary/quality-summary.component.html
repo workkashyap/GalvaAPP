@@ -27,12 +27,22 @@
     <div class="row m-0 px-md-4 px-1">
         <div class="card w-100 highlight-2 border-10 m-auto">
             <div class="overflow-scroll p-3">
-                <ag-grid-angular style="height: 500px;" class="ag-theme-alpine w-100" [rowData]="rowData"
+                <ag-grid-angular style="height: 320px;" class="ag-theme-alpine w-100" [rowData]="rowData"
                     [columnDefs]="columnDefs" [animateRows]="true" [getRowStyle]="getRowStyle"
                     [suppressAggFuncInHeader]="true" [animateRows]="true" [defaultColDef]="defaultColDef"
                     [autoGroupColumnDef]="autoGroupColumnDef">
                 </ag-grid-angular>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="chart">
+    <div class="row">
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+        <div class="col-md-12">
+            <canvas id="myChart" style="width: 100% !important;height:300px !important;"></canvas>
         </div>
     </div>
 </div>

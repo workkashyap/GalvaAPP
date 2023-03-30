@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { Observable } from 'rxjs';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import * as Chart from 'chart.js';
 import { LoginService } from '../shared/login/login.service';
 import { User } from '../shared/login/User.model';
 import { Plant } from '../shared/plant/plant.model';
@@ -22,6 +23,11 @@ export class QualitySummaryComponent implements OnInit {
 
   public d: any;
   public cyear: any;
+  loading: boolean = true;
+
+  public myChart: Chart;
+  canvas: any;
+  ctx: any;
 
   public columnDefs: ColDef[] = [
     { headerName: 'Values (In Lacs / %)', field: 'inspValue', pinned: 'left', width: 180, cellStyle: { fontSize: '14px' } },
@@ -84,11 +90,95 @@ export class QualitySummaryComponent implements OnInit {
     this.getSummary(this.plantcode, this.yearname);
   }
 
+  index: any;
+  data: any = [];
+  label: any = [];
+
   getSummary(plntcod, year) {
     this.qualityservice.getSummaryAllReport(plntcod, year).toPromise().then(
       res => {
         this.rowData = res;
-        this.rowData.forEach(e => {
+
+        var i0 = this.rowData.map(function (e) { return e.inspValue; }).indexOf('Insp Value');
+        var i1 = this.rowData.map(function (e) { return e.inspValue; }).indexOf('OK Value');
+        var irewrk = this.rowData.map(function (e) { return e.inspValue; }).indexOf('Rework OK');
+
+        var irejper = this.rowData.map(function (e) { return e.inspValue; }).indexOf('Rej Per');
+        var i2 = this.rowData.map(function (e) { return e.inspValue; }).indexOf('Reject Value');
+        this.index = irejper;
+        //count rejectin value => inspection value -(minus) ok value -(minus) rework value = total rejectin value
+        if (i0 >= 0 && i1 >= 0 && irewrk >= 0) {
+          this.rowData[i2] = Object.keys(this.rowData[i0]).reduce((a, k) => {
+            if (k === 'id' || k === 'plantcode') {
+              a[k] = this.rowData[i2][k];
+              return a;
+            } else if (k === 'inspValue') { a[k] = this.rowData[i2][k]; return a; }
+            else {
+              if (this.rowData[i0][k] != 0.00) {
+                a[k] = this.rowData[i0][k].replaceAll(',', '') - this.rowData[i1][k].replaceAll(',', '') - this.rowData[irewrk][k].replaceAll(',', '');
+                a[k] = a[k].toFixed(2);
+                return a;
+              } else {
+                a[k] = this.rowData[i2][k];
+                return a;
+              }
+            }
+          }, {});
+          this.rowData[irejper] = Object.keys(this.rowData[i0]).reduce((a, k) => {
+            if (k === 'id' || k === 'plantcode') {
+              a[k] = this.rowData[irejper][k];
+              return a;
+            } else if (k === 'inspValue') { a[k] = this.rowData[irejper][k]; return a; }
+            else {
+              if (this.rowData[i0][k] != 0.00) {
+                a[k] = this.rowData[i2][k].replaceAll(',', '') / this.rowData[i0][k].replaceAll(',', '') * 100;
+                a[k] = a[k].toFixed(2);
+                return a;
+              } else {
+                a[k] = this.rowData[i2][k];
+                return a;
+              }
+            }
+          }, {});
+        }
+
+        if (i0 >= 0 && i1 >= 0 && irewrk < 0) {
+          this.rowData[i2] = Object.keys(this.rowData[i0]).reduce((a, k) => {
+            if (k === 'id' || k === 'plantcode') {
+              a[k] = this.rowData[i2][k];
+              return a;
+            } else if (k === 'inspValue') { a[k] = this.rowData[i2][k]; return a; }
+            else {
+              if (this.rowData[i0][k] != 0.00) {
+                a[k] = this.rowData[i0][k].replaceAll(',', '') - this.rowData[i1][k].replaceAll(',', '');
+                a[k] = a[k].toFixed(2);
+                return a;
+              } else {
+                a[k] = this.rowData[i2][k];
+                return a;
+              }
+            }
+          }, {});
+          this.rowData[irejper] = Object.keys(this.rowData[i0]).reduce((a, k) => {
+            if (k === 'id' || k === 'plantcode') {
+              a[k] = this.rowData[irejper][k];
+              return a;
+            } else if (k === 'inspValue') { a[k] = this.rowData[irejper][k]; return a; }
+            else {
+              if (this.rowData[i0][k] != 0.00) {
+                a[k] = this.rowData[i2][k].replaceAll(',', '') / this.rowData[i0][k].replaceAll(',', '') * 100;
+                a[k] = a[k].toFixed(2);
+                return a;
+              } else {
+                a[k] = this.rowData[i2][k];
+                return a;
+              }
+            }
+          }, {});
+        }
+
+        this.rowData.forEach((e, i) => {
+
           if (e.inspValue == "Rej Per" || e.inspValue == "OK Per") {
             e.total = Number((
               Number(e.jan != null ? e.jan.replaceAll(',', '') : e.jan) +
@@ -118,7 +208,12 @@ export class QualitySummaryComponent implements OnInit {
               Number(e.nov != null ? e.nov.replaceAll(',', '') : e.nov) +
               Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec))).toFixed(2);
           }
+          if(e.inspValue == "Rej Per"){
+            this.data.push(e.apr,e.may,e.jun,e.jul,e.aug,e.sep,e.oct,e.nov,e.dec,e.jan,e.feb,e.mar);
+          }
         });
+        this.label.push('apr','may','jun','jul','aug','sep','oct','nov','dec','jan','feb','mar');    
+        this.loadchart();
       }
     );
   }
@@ -133,9 +228,108 @@ export class QualitySummaryComponent implements OnInit {
     this.getSummary(this.plantcode, this.yearname);
   }
 
+  loadchart() {
+    this.loading = false;
+    Chart.defaults.global.legend.display = false;
+    this.canvas = document.getElementById('myChart');
+    this.ctx = this.canvas.getContext('2d');
+    // let rejqty = this.rejqty;
+    this.myChart = new Chart(this.ctx, {
+      type: 'bar',
+      data: {
+        labels: this.label,
+        datasets: [
+          {
+            label: 'Rejection Percentage',
+            type: 'line',
+            data: this.data,
+          },
+        ]
+      },
+      options: {
+        scaleBeginAtZero: true,
+        scaleShowGridLines: true,
+        // tslint:disable-next-line:quotemark
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        scaleGridLineWidth: 1,
+        scaleShowHorizontalLines: true,
+        scaleShowVerticalLines: true,
+        barShowStroke: true,
+        barStrokeWidth: 2,
+        barValueSpacing: 5,
+        barDatasetSpacing: 1,
+        responsive: true,
+        tooltips: {
+          mode: 'index',
+          intersect: true,
+          callbacks: {
+            label: function (tooltipItems, data) {
+              var multistringText = ["Percentage : " + tooltipItems.yLabel];
+              // multistringText.push("Quantity : " + rejqty[tooltipItems.index]);
+              return multistringText;
+            }
+          }
+        },
+        maintainAspectRatio: false,
+        hover: {
+          mode: 'label'
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+            },
+              scaleLabel: {
+                labelString: 'Value In Percentage'
+              }
+            },
+          ]
+        },
+        animation: {
+          duration: 1,
+          onComplete: function () {
+            const chartInstance = this.chart;
+            this.ctx = chartInstance.ctx;
+            this.font = Chart.helpers.fontString
+              (Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            this.textAlign = 'center';
+            this.textBaseline = 'bottom';
+          }
+        }
+      }
+    });
+    this.myChart.update();
+  }
+
+
   getRowStyle = params => {
     if (params.node.footer) {
       return { background: 'PowderBlue', fontWeight: 'bolder' };
     }
   }
 }
+
+
+
+
+
+
+
+
+
+// this.rowData.forEach(e => {
+          // Number(e.jan != null ? e.jan = e.jan.replaceAll(',', '') : null)
+          // Number(e.feb != null ? e.feb = e.feb.replaceAll(',', '') : null)
+          // Number(e.mar != null ? e.mar = e.mar.replaceAll(',', '') : null)
+          // Number(e.apr != null ? e.apr = e.apr.replaceAll(',', '') : null)
+          // Number(e.may != null ? e.may = e.may.replaceAll(',', '') : null)
+          // Number(e.jun != null ? e.jun = e.jun.replaceAll(',', '') : null)
+          // Number(e.jul != null ? e.jul = e.jul.replaceAll(',', '') : null)
+          // Number(e.aug != null ? e.aug = e.aug.replaceAll(',', '') : null)
+          // Number(e.sep != null ? e.sep = e.sep.replaceAll(',', '') : null)
+          // Number(e.oct != null ? e.oct = e.oct.replaceAll(',', '') : null)
+          // Number(e.nov != null ? e.nov = e.nov.replaceAll(',', '') : null)
+          // Number(e.dec != null ? e.dec = e.dec.replaceAll(',', '') : null)
+        // });
+
