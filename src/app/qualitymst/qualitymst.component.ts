@@ -300,25 +300,43 @@ export class QualitymstComponent implements OnInit {
 
   allCalculations(event) {
     if (event != 'temp') {
-      this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
-      this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
+debugger
       this.countRejQty();
+      this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
+      if (this.qualityservice.qualityData.totRejQty >= 0) {
+        this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.totRejQty - (this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty);
+      }
+
       //**do not change the order of function call**
 
-      if (this.qualityservice.qualityData.rejectionqty < 0) {
-        this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
-        this.qualityservice.qualityData.rejectionqty = 0;
+      if (this.qualityservice.qualityData.okqty > this.qualityservice.qualityData.inspQty || this.qualityservice.qualityData.rejectionqty < 0) {
+        this.qualityservice.qualityData.inspQty = 0;
         this.qualityservice.qualityData.totRejQty = 0;
         this.qualityservice.qualityData.okqty = 0;
+        this.qualityservice.qualityData.holdqty = 0;
+        this.DRejQty = 0;
+        this.qualityservice.qualityData.rejectionqty = 0;
+        this.qualityservice.qualityData.buffingqty = 0;
+        this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
         this.countRejQty();
-      } else {
+        this.countQty();
+        this.valuesStd();
+      }
+
+      // if (this.qualityservice.qualityData.rejectionqty < 0) {
+      //   this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
+      //   this.qualityservice.qualityData[event.target.id] = 0;
+      //   this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.totRejQty - (this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty);
+      //   this.countRejQty();
+      //   this.countQty();
+      //   this.valuesStd();
+      // } else {
+
         if (this.qualityservice.qualityData.stdPrice === 0) {
           this.countQty();
           this.addDefects();
-          if (this.DRejQty > this.qualityservice.qualityData.rejectionqty || 
-              this.qualityservice.qualityData.buffingqty > this.qualityservice.qualityData.rejectionqty ||
-              this.qualityservice.qualityData.holdqty > this.qualityservice.qualityData.rejectionqty
-              ) {
+          if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
+          ) {
             this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
             this.qualityservice.qualityData[event.target.id] = 0;
           }
@@ -327,17 +345,17 @@ export class QualitymstComponent implements OnInit {
         } else {
           this.countQty();
           this.addDefects();
-          if (this.DRejQty > this.qualityservice.qualityData.rejectionqty|| 
-            this.qualityservice.qualityData.buffingqty > this.qualityservice.qualityData.rejectionqty ||
-            this.qualityservice.qualityData.holdqty > this.qualityservice.qualityData.rejectionqty
-            ) {
+          if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
+          ) {
             this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
             this.qualityservice.qualityData[event.target.id] = 0;
           }
           this.countRejQty();
           this.valuesSell();
         }
-      }
+
+      // }
+
     }
   }
 

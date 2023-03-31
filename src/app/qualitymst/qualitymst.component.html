@@ -163,7 +163,7 @@
                       <label class="gr1" for="qty">Insp Quantity:</label>
                     </div>
                     <div class="col-md-8">
-                      <input class="form-control" type='text' id="qty" name="qty" [ngClass]="{error:validQtyError}" (change)="allCalculations('temp')" [(ngModel)]="qualityservice.qualityData.inspQty"/>
+                      <input class="form-control" type='text' id="qty" name="qty" [ngClass]="{error:validQtyError}" (change)="allCalculations($event)" [(ngModel)]="qualityservice.qualityData.inspQty"/>
                     </div>
                   </div>
                 </div>

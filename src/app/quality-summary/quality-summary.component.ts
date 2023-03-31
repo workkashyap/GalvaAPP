@@ -95,6 +95,7 @@ export class QualitySummaryComponent implements OnInit {
   label: any = [];
 
   getSummary(plntcod, year) {
+    this.data = [] ; this.label = [];
     this.qualityservice.getSummaryAllReport(plntcod, year).toPromise().then(
       res => {
         this.rowData = res;
@@ -212,7 +213,7 @@ export class QualitySummaryComponent implements OnInit {
             this.data.push(e.apr,e.may,e.jun,e.jul,e.aug,e.sep,e.oct,e.nov,e.dec,e.jan,e.feb,e.mar);
           }
         });
-        this.label.push('apr','may','jun','jul','aug','sep','oct','nov','dec','jan','feb','mar');    
+        this.label.push('APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER','JANUARY','FEBRUARY','MARCH');    
         this.loadchart();
       }
     );
@@ -264,7 +265,7 @@ export class QualitySummaryComponent implements OnInit {
           intersect: true,
           callbacks: {
             label: function (tooltipItems, data) {
-              var multistringText = ["Percentage : " + tooltipItems.yLabel];
+              var multistringText = ["Rejection % : " + tooltipItems.yLabel];
               // multistringText.push("Quantity : " + rejqty[tooltipItems.index]);
               return multistringText;
             }
@@ -281,6 +282,7 @@ export class QualitySummaryComponent implements OnInit {
                 beginAtZero: true
             },
               scaleLabel: {
+                display: true,
                 labelString: 'Value In Percentage'
               }
             },
@@ -309,27 +311,3 @@ export class QualitySummaryComponent implements OnInit {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-// this.rowData.forEach(e => {
-          // Number(e.jan != null ? e.jan = e.jan.replaceAll(',', '') : null)
-          // Number(e.feb != null ? e.feb = e.feb.replaceAll(',', '') : null)
-          // Number(e.mar != null ? e.mar = e.mar.replaceAll(',', '') : null)
-          // Number(e.apr != null ? e.apr = e.apr.replaceAll(',', '') : null)
-          // Number(e.may != null ? e.may = e.may.replaceAll(',', '') : null)
-          // Number(e.jun != null ? e.jun = e.jun.replaceAll(',', '') : null)
-          // Number(e.jul != null ? e.jul = e.jul.replaceAll(',', '') : null)
-          // Number(e.aug != null ? e.aug = e.aug.replaceAll(',', '') : null)
-          // Number(e.sep != null ? e.sep = e.sep.replaceAll(',', '') : null)
-          // Number(e.oct != null ? e.oct = e.oct.replaceAll(',', '') : null)
-          // Number(e.nov != null ? e.nov = e.nov.replaceAll(',', '') : null)
-          // Number(e.dec != null ? e.dec = e.dec.replaceAll(',', '') : null)
-        // });
-
