@@ -9,4 +9,5 @@ export class Caputils {
     planremark?: string;
     actualremark?: string;
     reason?: string;
+    reasoncount?: number;
 }

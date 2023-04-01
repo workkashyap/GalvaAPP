@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { Caputils } from "./caputils.model";
 import { Caputils2 } from "./caputils2.model";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
+import { concatMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -130,4 +131,13 @@ export class CaputilsService {
     then(res => {this.caputilsReason = res;});
   }
 
+  public savecaputilswithreason(data:any[]):  Observable<any> {
+    return data.reduce((previous, current) => {
+      return previous.pipe(
+        concatMap(() => {
+          return this.http.post(this.rootUrl + "/caputilsreason", current);
+        })
+      );
+    }, of(null));
+  }
 }

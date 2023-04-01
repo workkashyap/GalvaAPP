@@ -198,7 +198,6 @@ export class CaputilsworkerComponent implements OnInit {
 
   onSaveClick() {
     this.actionvalue = 'Save';
-    $('#basicExampleModal').modal('hide');
   }
 
   back() {
@@ -299,5 +298,86 @@ export class CaputilsworkerComponent implements OnInit {
       this.totPlanRound += element.plantround;
       this.totActualRound += element.actualround;
     });
+  }
+
+
+  /****/
+  r: any[] = [];
+  rsn = { reason: null, reasoncount: null };
+  data: any[] = [];
+
+  addReason() {
+    this.r.push(this.rsn);
+    this.rsn = { reason: null, reasoncount: null }
+  }
+  //////////////
+  onSave(form: NgForm) {
+    this.data = [];
+    delete this.caputilsservice.caputilsData.planremark;
+    delete this.caputilsservice.caputilsData.actualremark;
+    delete this.caputilsservice.caputilsData.percomplete;
+    
+    this.caputilsservice.caputilsData.id = 0;
+    let obj: Object = this.caputilsservice.caputilsData;
+
+    if (this.caputilsservice.caputilsData.reason != null && this.caputilsservice.caputilsData.reason != '' &&
+      this.caputilsservice.caputilsData.reasoncount != null && this.caputilsservice.caputilsData.reasoncount != undefined) {
+      this.data.push(obj);
+    } else {
+      this.toastr.error('Please fill the fields');
+      return;
+    }
+
+    for (var i = 0; i < this.r.length; i++) {
+      if (this.r[i].reason != null && this.r[i].reason != '') {
+        if (this.r[i].reasoncount != null && this.r[i].reasoncount != 0) {
+          const newobj = { ...this.caputilsservice.caputilsData };
+          newobj.reasoncount = Number(this.r[i].reasoncount);
+          newobj.reason = this.r[i].reason;
+          let d = new Date(newobj.entrydate);
+          let d2 = new Date(d);
+          newobj.entrydate = new Date(d2.setMinutes(d.getMinutes() + ((i * 1) + 30))).toISOString();
+          this.data.push(newobj);
+        }else {this.toastr.error('Please fill the fields'); return;}
+      }
+    }
+    if (this.data.length > 0) {
+      this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
+        console.log('Data sent successfully:', response);
+        $('#basicExampleModal').modal('hide');
+        this.toastr.success('Data sent successfully');
+        this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
+          this.route.navigate(['./caputilsworker']);
+          this.r = [];
+        });
+      });
+    } else {
+      this.toastr.error('Please fill the Data');
+      return;
+    }
+  }
+
+  ////////////////
+  validate(event, index) {
+    let t = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
+    let b: any = 0;
+    b += Number(this.caputilsservice.caputilsData.reasoncount);
+    for (var i = 0; i < this.r.length; i++) {
+      if (this.r[i].reasoncount != null) {
+        b += Number(this.r[i].reasoncount)
+      }
+    }
+    if (b > t) {
+      this.toastr.error('Enter Valid Data!!')
+      if (event.target.name == "reasoncountt") {
+        this.caputilsservice.caputilsData.reasoncount = null;
+        this.caputilsservice.caputilsData.reason = null;
+        event.target.value = null;
+      } else {
+        event.target.value = null;
+        this.r[index].reasoncount = null;
+        this.r[index].reason = null;
+      }
+    }
   }
 }
