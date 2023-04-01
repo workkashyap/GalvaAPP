@@ -82,9 +82,9 @@ export class QualitySummaryComponent implements OnInit {
     this.cyear = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
     if (cmonth < 3) {
-      this.yearname = (this.cyear - 1) + '-' + this.cyear;
+      this.yearname = (Number(this.cyear) - 1) + '-' + this.cyear;
     } else {
-      this.yearname = this.cyear + '-' + (this.cyear + 1);
+      this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);
     }
 
     this.getSummary(this.plantcode, this.yearname);
@@ -95,7 +95,7 @@ export class QualitySummaryComponent implements OnInit {
   label: any = [];
 
   getSummary(plntcod, year) {
-    this.data = [] ; this.label = [];
+    this.data = []; this.label = [];
     this.qualityservice.getSummaryAllReport(plntcod, year).toPromise().then(
       res => {
         this.rowData = res;
@@ -209,11 +209,11 @@ export class QualitySummaryComponent implements OnInit {
               Number(e.nov != null ? e.nov.replaceAll(',', '') : e.nov) +
               Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec))).toFixed(2);
           }
-          if(e.inspValue == "Rej Per"){
-            this.data.push(e.apr,e.may,e.jun,e.jul,e.aug,e.sep,e.oct,e.nov,e.dec,e.jan,e.feb,e.mar);
+          if (e.inspValue == "Rej Per") {
+            this.data.push(e.apr, e.may, e.jun, e.jul, e.aug, e.sep, e.oct, e.nov, e.dec, e.jan, e.feb, e.mar);
           }
         });
-        this.label.push('APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER','JANUARY','FEBRUARY','MARCH');    
+        this.label.push('APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER', 'JANUARY', 'FEBRUARY', 'MARCH');
         this.loadchart();
       }
     );
@@ -244,6 +244,7 @@ export class QualitySummaryComponent implements OnInit {
             label: 'Rejection Percentage',
             type: 'line',
             data: this.data,
+            borderColor: 'red'
           },
         ]
       },
@@ -280,7 +281,7 @@ export class QualitySummaryComponent implements OnInit {
             {
               ticks: {
                 beginAtZero: true
-            },
+              },
               scaleLabel: {
                 display: true,
                 labelString: 'Value In Percentage'
@@ -291,12 +292,21 @@ export class QualitySummaryComponent implements OnInit {
         animation: {
           duration: 1,
           onComplete: function () {
+            var ctx = this.ctx;
             const chartInstance = this.chart;
             this.ctx = chartInstance.ctx;
-            this.font = Chart.helpers.fontString
-              (Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
             this.textAlign = 'center';
             this.textBaseline = 'bottom';
+            ctx.fillStyle = "#000000"
+
+            this.data.datasets.forEach(function (dataset, i) {
+              var meta = chartInstance.controller.getDatasetMeta(i);
+              meta.data.forEach(function (bar, index) {
+                var data = dataset.data[index];
+                ctx.fillText(data, bar._model.x, bar._model.y-8);
+              });
+            });
+
           }
         }
       }

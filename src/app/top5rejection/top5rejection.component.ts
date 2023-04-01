@@ -80,9 +80,9 @@ export class Top5rejectionComponent implements OnInit {
     this.cyear = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
     if (cmonth < 3) {
-      this.yearname = (this.cyear - 1) + '-' + this.cyear;
+      this.yearname = (Number(this.cyear) + 1); + '-' + this.cyear;
     } else {
-      this.yearname = this.cyear + '-' + (this.cyear + 1);
+      this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);;
     }
     await this.rejectionservice.getTop5Rejection(this.yearname, this.plantcode).toPromise().then(res => { this.rowData = res; });
     await this.rejectionservice.getTop5RejectionSum(this.yearname, this.plantcode).toPromise()

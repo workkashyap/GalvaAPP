@@ -111,9 +111,9 @@ export class SalesrepofnmomComponent implements OnInit {
     this.cyear = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
     if (cmonth < 3) {
-      this.yearname = (this.cyear - 1) + '-' + this.cyear;
+      this.yearname =(Number(this.cyear) - 1); + '-' + this.cyear;
     } else {
-      this.yearname = this.cyear + '-' + (this.cyear + 1);
+      this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);;
     }
     await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
     this.rowData.map(v => {v.mouldPurchase = 0});

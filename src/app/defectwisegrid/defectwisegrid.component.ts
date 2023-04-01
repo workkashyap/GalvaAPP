@@ -91,9 +91,9 @@ export class DefectwisegridComponent implements OnInit {
     let cyear: any = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
     if (cmonth < 3) {
-      this.yearname = (cyear - 1) + '-' + cyear;
+      this.yearname = (Number(cyear) - 1) + '-' + cyear;
     } else {
-      this.yearname = cyear + '-' + (cyear + 1);
+      this.yearname = cyear + '-' + (Number(cyear) + 1);
     }
 
     await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().

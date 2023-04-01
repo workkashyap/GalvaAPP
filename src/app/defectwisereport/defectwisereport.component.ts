@@ -59,9 +59,9 @@ export class DefectwisereportComponent implements OnInit {
     let cmonth = this.d.getMonth();
     this.monthname = this.d.toLocaleDateString('default', { month: 'long' });
     if (cmonth < 3) {
-      this.Yearname = (cyear - 1) + '-' + cyear;
+      this.Yearname = (Number(cyear) - 1); + '-' + cyear;
     } else {
-      this.Yearname = cyear + '-' + (cyear + 1);
+      this.Yearname = cyear + '-' + (Number(cyear) + 1);
     }
 
     this.getChartData();
