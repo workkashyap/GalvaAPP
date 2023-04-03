@@ -116,7 +116,6 @@ export class CaputilsreportComponent implements OnInit {
       { field: "actualround", header: "Actual Round" },
       { field: "actualremark", header: "Actual Remark" },
       { field: "percomplete", header: "Utilization %" },
-      { field: "reason", header: "Reason" }
     ];
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
 
@@ -328,12 +327,13 @@ export class CaputilsreportComponent implements OnInit {
     this.temprows = this.caputilsservice.caputilsList;
   }
 
-  filterReason(reason) {
-    if(reason == "all"){
-      this.caputilsservice.caputilsList = this.temprows;
-    }else{
-      this.caputilsservice.caputilsList = this.temprows.filter(e => e.reason === reason);
-    }
-  }
+  // filterReason(reason) {
+  //   if(reason == "all"){
+  //     this.caputilsservice.caputilsList = this.temprows;
+  //   }else{
+  //     this.caputilsservice.caputilsList = this.temprows.filter(e => e.reason === reason);
+  //   }
+  //   this.calcTotal();
+  // }
 
 }

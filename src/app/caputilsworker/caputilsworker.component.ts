@@ -49,6 +49,7 @@ export class CaputilsworkerComponent implements OnInit {
   selectedCaputils: CaputilsService;
   cols: any;
   percaputils: Observable<Caputils2[]>;
+  reasonData: any[] = [];
 
   constructor(
     private route: Router,
@@ -87,15 +88,12 @@ export class CaputilsworkerComponent implements OnInit {
       { field: "actualround", header: "Actual Round" },
       { field: "actualremark", header: "Actual Remark" },
       { field: "percomplete", header: "Uitilization %" },
-      { field: "reason", header: "Reason" }
 
     ];
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode, this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode, this.typename);
-
-    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
     this.isReadOnly = false;
@@ -110,8 +108,6 @@ export class CaputilsworkerComponent implements OnInit {
           me.plantservice.splantlist.push(splant);
         });
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
-
-
         if (me.caputilsservice.id) {
           me.caputilsservice.caputilsbyid(me.caputilsservice.id)
             .toPromise()
@@ -209,11 +205,11 @@ export class CaputilsworkerComponent implements OnInit {
     this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100;
   }
 
-  opendetail(id) {
-    this.caputilsservice.id = id;
+  opendetail(data) {
+    this.r = [];
+    this.caputilsservice.id = data.id;
     const me = this;
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    const date = this.datePipe.transform(new Date(), "ddMMyyyy");
 
     this.loading = false;
     this.isReadOnly = false;
@@ -228,8 +224,6 @@ export class CaputilsworkerComponent implements OnInit {
           me.plantservice.splantlist.push(splant);
         });
         me.selectedcode = me.plantservice.splantlist[0].plantcode;
-
-
         if (me.caputilsservice.id) {
           me.caputilsservice.caputilsbyid(me.caputilsservice.id)
             .toPromise()
@@ -241,6 +235,16 @@ export class CaputilsworkerComponent implements OnInit {
               } else {
                 this.isReadOnly = false;
               };
+            });
+          me.caputilsservice.getCaputilsReasonFilter(data.entrydate.substring(0, data.entrydate.indexOf('T')), data.plantcode, data.linetype)
+            .subscribe((res: any) => {
+              this.reasonData = res;
+              this.caputilsservice.caputilsData.reason = this.reasonData[0].reason;
+              this.caputilsservice.caputilsData.reasoncount = this.reasonData[0].reasoncount;
+              for (let i = 1; i < this.reasonData.length; i++) {
+                const e = this.reasonData[i];
+                this.r.push({ reason: e.reason, reasoncount: e.reasoncount });
+              }
             });
         } else {
           me.caputilsservice.caputilsData = {
@@ -316,12 +320,14 @@ export class CaputilsworkerComponent implements OnInit {
     delete this.caputilsservice.caputilsData.planremark;
     delete this.caputilsservice.caputilsData.actualremark;
     delete this.caputilsservice.caputilsData.percomplete;
-    
+
     this.caputilsservice.caputilsData.id = 0;
     let obj: Object = this.caputilsservice.caputilsData;
 
     if (this.caputilsservice.caputilsData.reason != null && this.caputilsservice.caputilsData.reason != '' &&
       this.caputilsservice.caputilsData.reasoncount != null && this.caputilsservice.caputilsData.reasoncount != undefined) {
+      obj['planround'] = obj['plantround'];
+      delete obj['plantround'];
       this.data.push(obj);
     } else {
       this.toastr.error('Please fill the fields');
@@ -338,23 +344,28 @@ export class CaputilsworkerComponent implements OnInit {
           let d2 = new Date(d);
           newobj.entrydate = new Date(d2.setMinutes(d.getMinutes() + ((i * 1) + 30))).toISOString();
           this.data.push(newobj);
-        }else {this.toastr.error('Please fill the fields'); return;}
+        } else { this.toastr.error('Please fill the fields'); return; }
       }
     }
     if (this.data.length > 0) {
+      this.r = [];
+      console.log(this.r);
       this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
         console.log('Data sent successfully:', response);
-        $('#basicExampleModal').modal('hide');
         this.toastr.success('Data sent successfully');
         this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
           this.route.navigate(['./caputilsworker']);
-          this.r = [];
         });
-      });
+      }, error => {
+        console.log(error);
+        this.toastr.error('Could not save Data', 'Error');
+      }
+      );
     } else {
       this.toastr.error('Please fill the Data');
       return;
     }
+    $('#basicExampleModal').modal('hide');
   }
 
   ////////////////

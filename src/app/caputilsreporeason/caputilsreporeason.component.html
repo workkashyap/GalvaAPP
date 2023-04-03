@@ -1,0 +1,103 @@
+<div class="px-5 py-4">
+    <div class="card highlight-2 border-10 p-3">
+      <div class="page-filter d-flex w-100 px-2 py-1">
+        <div class="d-flex mr-4">
+          <h5 class="font-weight-bold heading mb-0 align-self-center">Capacity Utilization Reason Report</h5>
+        </div>
+        <div class="ml-2">
+          <select class="form-control align-self-center" [(ngModel)]="this.selectedcode" *ngIf="plantservice" name="myselect" #mySelect
+            (change)="selectedGrid($event.target.value)" style="height: 38px; padding: 5px 13px 6px 9px;">
+            <!-- <option value="ALL">ALL</option> -->
+            <option *ngFor="let pl of plantservice.splantlist" value="{{pl.plantcode}}">
+              {{ pl.plantshortname }}
+            </option>
+          </select>
+        </div>
+        <div class="ml-2">
+          <select class="custom-select" (change)="getselectedyear()" name="Yearname" #Yearname='ngModel'
+            [(ngModel)]='this.yearname'>
+            <option disabled>Year</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+          </select>
+        </div>
+        <div class="ml-2">
+          <select class="custom-select" (change)="getselectedtype()" name="Typename" #Typename='ngModel'
+            [(ngModel)]='this.typename'>
+            <option value="ALL">ALL</option>
+            <option value="Chrome">Chrome</option>
+            <option value="Satin">Satin</option>
+          </select>
+        </div>
+        <div class="ml-2">
+          <select class="custom-select" (change)="getselectedmonth()" name="Monthname" #Monthname='ngModel'
+            [(ngModel)]='this.x'>
+            <option disabled>Select</option>
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+        </div>
+        <div class="ml-2">
+          <select class="form-control" id="reason" [(ngModel)]="reason" name="reason" (change)="filterReason()">
+            <option selected value="all"> ALL </option>
+            <option *ngFor="let rsn of caputilsservice.caputilsReason" value="{{rsn.reason}}">
+              {{ rsn.reason }}
+            </option>
+          </select>
+        </div>
+        <!-- <button class="btn btn-sm btn-custom text-white blue-bg ml-5">Total
+          Avg Plating Utilization: {{caputilsservice.caputils2[0]?.percaputil}}%
+        </button> -->
+      </div>
+      <div class="p-3 pt-4">
+        <!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
+        <p-table #dt [columns]="cols" [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+          selectionMode="single" [style]="{'width':'100%'}" [(selection)]="selectedCaputils"
+          [value]="rowData" [paginator]="true" [rows]="20" [resizableColumns]="true">
+  
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th style="border: none;visibility: hidden;" colspan="3"></th>
+              <th>Total : {{totPlanRound}}</th>
+              <th>Total : {{totActualRound}}</th>
+              <th style="border: none;visibility: hidden;" colspan="2"></th>
+            </tr>
+            <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+                </p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+  
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns" class="ui-resizable-column">
+                <span *ngIf="col.field=='entrydate'">
+                  {{rowData[col.field] | date :'dd-MM-y'}}
+                </span>
+                <span *ngIf="col.field !='entrydate'">
+                  {{rowData[col.field]}}
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>

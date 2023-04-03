@@ -120,6 +120,7 @@ import { QualitySummaryComponent } from './quality-summary/quality-summary.compo
 import { DefectwisereportComponent } from './defectwisereport/defectwisereport.component';
 import { DefectwisegridComponent } from './defectwisegrid/defectwisegrid.component';
 import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.component';
+import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsreporeason.component';
 
 @NgModule({
   declarations: [	
@@ -221,7 +222,8 @@ import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.compone
     QualitySummaryComponent,
     DefectwisereportComponent,
     DefectwisegridComponent,
-    SalesrepofnmomComponent
+    SalesrepofnmomComponent,
+    CaputilsreporeasonComponent
    ],
   imports: [
     BrowserModule,
@@ -687,6 +689,11 @@ import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.compone
       {
         path: 'caputilsreport',
         component: CaputilsreportComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'caputilsreportreason',
+        component: CaputilsreporeasonComponent,
         canActivate: [AuthGuard],
       },
       {

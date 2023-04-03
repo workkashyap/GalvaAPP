@@ -57,14 +57,16 @@
           <option value="Dec">Dec</option>
         </select>
       </div>
-      <div class="ml-2">
+
+      <!-- <div class="ml-2">
         <select class="form-control" id="reason" name="reason" (change)="filterReason($event.target.value)">
           <option selected value="all"> Select Reason </option>
           <option *ngFor="let rsn of caputilsservice.caputilsReason" value="{{rsn.reason}}">
             {{ rsn.reason }}
           </option>
         </select>
-      </div>
+      </div> -->
+      
       <button class="btn btn-sm btn-custom text-white blue-bg ml-5">Total
         Avg Plating Utilization: {{caputilsservice.caputils2[0]?.percaputil}}%
       </button>

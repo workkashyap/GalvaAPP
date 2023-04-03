@@ -89,7 +89,7 @@
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" class="ui-resizable-column">
               <span *ngIf="col.field=='view'">
-                <button class="btn btn-primary  btn-sm cs-btn" (click)="opendetail(rowData.id)">
+                <button class="btn btn-primary  btn-sm cs-btn" (click)="opendetail(rowData)">
                   <fa name="pencil"></fa>
                 </button> &nbsp;
                 <!-- <button class="btn btn-secondary btn-sm cs-btn" (click)="deleteSelected(rowData.id)">

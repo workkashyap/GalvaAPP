@@ -13,9 +13,9 @@ export class CaputilsService {
 
   public caputilsData: Caputils;
   public caputilsList: Caputils[] = [];
-  public caputils2: Caputils2 [] = [] ;
+  public caputils2: Caputils2[] = [];
   public caputils2Data: Caputils2;
-  public caputilsReason: any = [] ;
+  public caputilsReason: any = [];
 
   readonly rootUrl = environment.apiUrl;
   public id: number;
@@ -36,19 +36,19 @@ export class CaputilsService {
     //for calendar click event/
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-" + month + "-12/" + plant)
-      .toPromise()
-      .then(res => {
-        this.caputilsList = res as Caputils[];
-       
-      });
+        .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-" + month + "-12/" + plant)
+        .toPromise()
+        .then(res => {
+          this.caputilsList = res as Caputils[];
+
+        });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-0" + month + "-12/" + plant)
-      .toPromise()
-      .then(res => {
-        this.caputilsList = res as Caputils[];
-      });
+        .get(this.rootUrl + "/caputils/Getcaputilbydate/" + year + "-0" + month + "-12/" + plant)
+        .toPromise()
+        .then(res => {
+          this.caputilsList = res as Caputils[];
+        });
     }
   }
 
@@ -56,57 +56,57 @@ export class CaputilsService {
     //for calendar click event/
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-" + month + "-12/" + plant + '/' + type)
-      .toPromise()
-      .then(res => {
-        this.caputilsList = res as Caputils[];
-       
-      });
+        .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-" + month + "-12/" + plant + '/' + type)
+        .toPromise()
+        .then(res => {
+          this.caputilsList = res as Caputils[];
+
+        });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-0" + month + "-12/" + plant + '/' + type)
-      .toPromise()
-      .then(res => {
-        this.caputilsList = res as Caputils[];
-      });
+        .get(this.rootUrl + "/caputils/Getcaputilbydatetype/" + year + "-0" + month + "-12/" + plant + '/' + type)
+        .toPromise()
+        .then(res => {
+          this.caputilsList = res as Caputils[];
+        });
     }
   }
 
   public getAvgPer(year, month, plant) {
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant)
-      .toPromise()
-      .then(res => {
-        this.caputils2 = res as Caputils2 [];
-        console.log(this.caputils2[0].percaputil);
-      });
+        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant)
+        .toPromise()
+        .then(res => {
+          this.caputils2 = res as Caputils2[];
+          console.log(this.caputils2[0].percaputil);
+        });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant)
-      .toPromise()
-      .then(res => {
-        this.caputils2 = res as Caputils2 [];
-      });
+        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant)
+        .toPromise()
+        .then(res => {
+          this.caputils2 = res as Caputils2[];
+        });
     }
   }
 
   public getAvgPer_(year, month, plant, type) {
     if (month.length > 1) {
       return this.http
-      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant + '/' + type)
-      .toPromise()
-      .then(res => {
-        this.caputils2 = res as Caputils2 [];
-        console.log(this.caputils2[0].percaputil);
-      });
+        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant + '/' + type)
+        .toPromise()
+        .then(res => {
+          this.caputils2 = res as Caputils2[];
+          console.log(this.caputils2[0].percaputil);
+        });
     } else {
       return this.http
-      .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant + '/' + type)
-      .toPromise()
-      .then(res => {
-        this.caputils2 = res as Caputils2 [];
-      });
+        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant + '/' + type)
+        .toPromise()
+        .then(res => {
+          this.caputils2 = res as Caputils2[];
+        });
     }
   }
 
@@ -128,10 +128,18 @@ export class CaputilsService {
 
   public getCaputilsReason() {
     this.http.get(this.rootUrl + "/caputils/Getcaputilreason/reason").toPromise().
-    then(res => {this.caputilsReason = res;});
+      then(res => { this.caputilsReason = res; });
   }
 
-  public savecaputilswithreason(data:any[]):  Observable<any> {
+  public getCaputilsWithReason(): Observable<any[]> {
+    return this.http.get<any[]>(this.rootUrl + "/caputilsreason");
+  }
+
+  public getCaputilsReasonFilter(date: any, plant: any, type: any): Observable<any[]> {
+    return this.http.get<any[]>(this.rootUrl + "/caputilsreason/Getcaputilbydatetype/" + date + '/' + plant + '/' + type);
+  }
+
+  public savecaputilswithreason(data: any[]): Observable<any> {
     return data.reduce((previous, current) => {
       return previous.pipe(
         concatMap(() => {
