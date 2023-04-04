@@ -141,11 +141,19 @@ export class CaputilsService {
 
   public savecaputilswithreason(data: any[]): Observable<any> {
     return data.reduce((previous, current) => {
-      return previous.pipe(
-        concatMap(() => {
-          return this.http.post(this.rootUrl + "/caputilsreason", current);
-        })
-      );
+      if (current.id != 0) {
+        return previous.pipe(
+          concatMap(() => {
+            return this.http.put(this.rootUrl + "/caputilsreason/" + current.id, current);
+          })
+        );
+      } else {
+        return previous.pipe(
+          concatMap(() => {
+            return this.http.post(this.rootUrl + "/caputilsreason", current);
+          })
+        );
+      }
     }, of(null));
   }
 }
