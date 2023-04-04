@@ -121,6 +121,7 @@ import { DefectwisereportComponent } from './defectwisereport/defectwisereport.c
 import { DefectwisegridComponent } from './defectwisegrid/defectwisegrid.component';
 import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.component';
 import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsreporeason.component';
+import { HoldimportComponent } from './holdimport/holdimport.component';
 
 @NgModule({
   declarations: [	
@@ -223,7 +224,8 @@ import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsrepore
     DefectwisereportComponent,
     DefectwisegridComponent,
     SalesrepofnmomComponent,
-    CaputilsreporeasonComponent
+    CaputilsreporeasonComponent,
+    HoldimportComponent
    ],
   imports: [
     BrowserModule,
@@ -357,6 +359,11 @@ import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsrepore
       {
         path: 'holdnbuff-report',
         component: HolnbuffComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'holdimport',
+        component: HoldimportComponent,
         canActivate: [AuthGuard],
       },
       {

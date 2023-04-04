@@ -50,6 +50,7 @@ export class CaputilsworkerComponent implements OnInit {
   cols: any;
   percaputils: Observable<Caputils2[]>;
   reasonData: any[] = [];
+  ISEDIT: boolean = false;
 
   constructor(
     private route: Router,
@@ -192,9 +193,9 @@ export class CaputilsworkerComponent implements OnInit {
     }
   }
 
-  onSaveClick() {
-    this.actionvalue = 'Save';
-  }
+  // onSaveClick() {
+  //   this.actionvalue = 'Save';
+  // }
 
   back() {
     this.iservice.uid = this.currentUser.id;
@@ -236,15 +237,23 @@ export class CaputilsworkerComponent implements OnInit {
                 this.isReadOnly = false;
               };
             });
-          me.caputilsservice.getCaputilsReasonFilter(data.entrydate.substring(0, data.entrydate.indexOf('T')), data.plantcode, data.linetype)
+          let date = data.entrydate.substring(0, data.entrydate.indexOf('T'));
+          me.caputilsservice.getCaputilsReasonFilter(date, data.plantcode, data.linetype)
             .subscribe((res: any) => {
               this.reasonData = res;
-              this.caputilsservice.caputilsData.reason = this.reasonData[0].reason;
-              this.caputilsservice.caputilsData.reasoncount = this.reasonData[0].reasoncount;
-              for (let i = 1; i < this.reasonData.length; i++) {
-                const e = this.reasonData[i];
-                this.r.push({ reason: e.reason, reasoncount: e.reasoncount });
-              }
+              setTimeout(() => {
+                this.reasonData = this.reasonData.filter(x => x.entrydate.substring(0, data.entrydate.indexOf('T')) == date);
+                if (this.reasonData.length > 0) {
+                  this.ISEDIT = true;
+                  this.caputilsservice.caputilsData.id = this.reasonData[0].id;
+                  this.caputilsservice.caputilsData.reason = this.reasonData[0].reason;
+                  this.caputilsservice.caputilsData.reasoncount = this.reasonData[0].reasoncount;
+                  for (let i = 1; i < this.reasonData.length; i++) {
+                    const e = this.reasonData[i];
+                    this.r.push({ id: e.id, reason: e.reason, reasoncount: e.reasoncount });
+                  }
+                }
+              }, 100);
             });
         } else {
           me.caputilsservice.caputilsData = {
@@ -321,23 +330,19 @@ export class CaputilsworkerComponent implements OnInit {
     delete this.caputilsservice.caputilsData.actualremark;
     delete this.caputilsservice.caputilsData.percomplete;
 
-    this.caputilsservice.caputilsData.id = 0;
-    let obj: Object = this.caputilsservice.caputilsData;
-
-    if (this.caputilsservice.caputilsData.reason != null && this.caputilsservice.caputilsData.reason != '' &&
-      this.caputilsservice.caputilsData.reasoncount != null && this.caputilsservice.caputilsData.reasoncount != undefined) {
+    if (this.ISEDIT) {
+      let obj: Object = this.caputilsservice.caputilsData;
       obj['planround'] = obj['plantround'];
       delete obj['plantround'];
       this.data.push(obj);
-    } else {
-      this.toastr.error('Please fill the fields');
-      return;
-    }
-
-    for (var i = 0; i < this.r.length; i++) {
-      if (this.r[i].reason != null && this.r[i].reason != '') {
-        if (this.r[i].reasoncount != null && this.r[i].reasoncount != 0) {
+      for (var i = 0; i < this.r.length; i++) {
+        if (this.r[i].reason != null && this.r[i].reason != '') {
           const newobj = { ...this.caputilsservice.caputilsData };
+          if (this.r[i].id) {
+            newobj.id = this.r[i].id;
+          } else {
+            newobj.id = 0;
+          }
           newobj.reasoncount = Number(this.r[i].reasoncount);
           newobj.reason = this.r[i].reason;
           let d = new Date(newobj.entrydate);
@@ -346,25 +351,68 @@ export class CaputilsworkerComponent implements OnInit {
           this.data.push(newobj);
         } else { this.toastr.error('Please fill the fields'); return; }
       }
-    }
-    if (this.data.length > 0) {
-      this.r = [];
-      console.log(this.r);
-      this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
-        console.log('Data sent successfully:', response);
-        this.toastr.success('Data sent successfully');
-        this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['./caputilsworker']);
+      if (this.data.length > 0) {
+        this.r = [];
+        this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
+          console.log('Data Updated successfully:', response);
+          this.toastr.success('Data Updated successfully');
+          this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
+            this.route.navigate(['./caputilsworker']);
+          });
+        }, error => {
+          console.log(error);
+          this.toastr.error('Could not save Data', 'Error');
         });
-      }, error => {
-        console.log(error);
-        this.toastr.error('Could not save Data', 'Error');
+      } else {
+        this.toastr.error('Please fill the Data');
+        return;
       }
-      );
+
+      // if first time data is entered then save
     } else {
-      this.toastr.error('Please fill the Data');
-      return;
+      this.caputilsservice.caputilsData.id = 0;
+      let obj: Object = this.caputilsservice.caputilsData;
+      if (this.caputilsservice.caputilsData.reason != null && this.caputilsservice.caputilsData.reason != '' &&
+        this.caputilsservice.caputilsData.reasoncount != null && this.caputilsservice.caputilsData.reasoncount != undefined) {
+        obj['planround'] = obj['plantround'];
+        delete obj['plantround'];
+        this.data.push(obj);
+      } else {
+        this.toastr.error('Please fill the fields');
+        return;
+      }
+      for (var i = 0; i < this.r.length; i++) {
+        if (this.r[i].reason != null && this.r[i].reason != '') {
+          if (this.r[i].reasoncount != null && this.r[i].reasoncount != 0) {
+            const newobj = { ...this.caputilsservice.caputilsData };
+            newobj.reasoncount = Number(this.r[i].reasoncount);
+            newobj.reason = this.r[i].reason;
+            let d = new Date(newobj.entrydate);
+            let d2 = new Date(d);
+            newobj.entrydate = new Date(d2.setMinutes(d.getMinutes() + ((i * 1) + 30))).toISOString();
+            this.data.push(newobj);
+          } else { this.toastr.error('Please fill the fields'); return; }
+        }
+      }
+      if (this.data.length > 0) {
+        this.r = [];
+        console.log(this.r);
+        this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
+          console.log('Data sent successfully:', response);
+          this.toastr.success('Data sent successfully');
+          this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
+            this.route.navigate(['./caputilsworker']);
+          });
+        }, error => {
+          console.log(error);
+          this.toastr.error('Could not save Data', 'Error');
+        });
+      } else {
+        this.toastr.error('Please fill the Data');
+        return;
+      }
     }
+    this.resetForm(form);
     $('#basicExampleModal').modal('hide');
   }
 
