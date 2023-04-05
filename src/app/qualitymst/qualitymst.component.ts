@@ -300,7 +300,6 @@ export class QualitymstComponent implements OnInit {
 
   allCalculations(event) {
     if (event != 'temp') {
-debugger
       this.countRejQty();
       this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.inspQty - this.qualityservice.qualityData.okqty;
       if (this.qualityservice.qualityData.totRejQty >= 0) {
@@ -322,16 +321,6 @@ debugger
         this.countQty();
         this.valuesStd();
       }
-
-      // if (this.qualityservice.qualityData.rejectionqty < 0) {
-      //   this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
-      //   this.qualityservice.qualityData[event.target.id] = 0;
-      //   this.qualityservice.qualityData.rejectionqty = this.qualityservice.qualityData.totRejQty - (this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty);
-      //   this.countRejQty();
-      //   this.countQty();
-      //   this.valuesStd();
-      // } else {
-
         if (this.qualityservice.qualityData.stdPrice === 0) {
           this.countQty();
           this.addDefects();

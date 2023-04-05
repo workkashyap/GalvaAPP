@@ -66,6 +66,7 @@ export class CaputilsreporeasonComponent implements OnInit {
   public d: any;
   public totPlanRound: any = 0;
   public totActualRound: any = 0;
+  public totReasonCount: any = 0;
 
   selectedCaputils: CaputilsService;
   cols: any;
@@ -78,13 +79,11 @@ export class CaputilsreporeasonComponent implements OnInit {
     private datePipe: DatePipe,
     public productionsService: ProductionsService,
     public iservice: InboxService,
-    // public itmService: ItemmstsService,
     public lservice: LoginService,
     public plantservice: PlantService,
     public caputilsservice: CaputilsService,
   ) {
     this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-    // this.itmService.getallData();
   }
 
   async ngOnInit() {
@@ -204,9 +203,11 @@ export class CaputilsreporeasonComponent implements OnInit {
     }
     this.totActualRound = 0;
     this.totPlanRound = 0;
+    this.totReasonCount = 0;
     this.rowData.forEach(element => {
       this.totPlanRound += element.planround;
       this.totActualRound += element.actualround;
+      this.totReasonCount += element.reasoncount;
     });
   }
 

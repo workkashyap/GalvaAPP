@@ -156,4 +156,8 @@ export class CaputilsService {
       }
     }, of(null));
   }
+
+  public getHoldReport(plant: any): Observable<any[]> {
+    return this.http.get<any[]>(this.rootUrl + "/caputilsreason/getHoldUpload/" + plant);
+  }
 }

@@ -73,7 +73,8 @@
               <th style="border: none;visibility: hidden;" colspan="3"></th>
               <th>Total : {{totPlanRound}}</th>
               <th>Total : {{totActualRound}}</th>
-              <th style="border: none;visibility: hidden;" colspan="2"></th>
+              <th style="border: none;visibility: hidden;" ></th>
+              <th>Total : {{totReasonCount}}</th>
             </tr>
             <tr>
               <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>

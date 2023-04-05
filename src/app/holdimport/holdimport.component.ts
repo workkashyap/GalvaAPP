@@ -43,10 +43,10 @@ export class HoldimportComponent {
           }
         });
       this.loading = false;
-      this.clearSelectedfile();
     }else {
       this.toastr.error('Please select a file');
     }
+    this.clearSelectedfile();
   }
 
   clearSelectedfile() {
@@ -54,6 +54,7 @@ export class HoldimportComponent {
   }
 
   upload(files) {
+    this.formData = new FormData();
     this.message = '  ';
     if (files.length === 0) return;
     for (let file of files) this.formData.append(file.name, file);
