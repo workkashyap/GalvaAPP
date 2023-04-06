@@ -5,6 +5,9 @@ import { Top5rejectionService } from '../shared/dailyProduction/top5rejection.se
 import { PlantService } from '../shared/plant/plant.service';
 import { LoginService } from '../shared/login/login.service';
 import { Plant } from '../shared/plant/plant.model';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import 'ag-grid-enterprise';
 import * as _ from 'lodash';
 
 @Component({
