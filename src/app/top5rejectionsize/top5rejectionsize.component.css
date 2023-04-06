@@ -1,0 +1,30 @@
+.page-filter {
+    border-radius: 10px;
+    border: 2px solid rgba(1, 41, 205, 0.5);
+    background: #f8f9fa;
+}
+
+.heading {
+    color: rgba(1, 41, 205, 0.7);
+}
+
+.ag-theme-alpine {
+    --ag-header-background-color: rgba(1, 41, 205, 0.5);
+    font-size: 14px;
+}
+
+.highlight-2 {
+    background: #f8f9fa;
+}
+
+.border-10 {
+    border-radius: 10px;
+}
+
+.btn-primary{
+    background-color: #4B67DB !important;
+}
+
+.table-primary ,.table-primary>th{
+    background-color: #8094E6 !important;
+}

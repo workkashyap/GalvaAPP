@@ -123,6 +123,7 @@ import { SalesrepofnmomComponent } from './salesrepofnmom/salesrepofnmom.compone
 import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsreporeason.component';
 import { HoldimportComponent } from './holdimport/holdimport.component';
 import { HoldReportComponent } from './hold-report/hold-report.component';
+import { Top5rejectionsizeComponent } from './top5rejectionsize/top5rejectionsize.component';
 
 @NgModule({
   declarations: [	
@@ -227,7 +228,8 @@ import { HoldReportComponent } from './hold-report/hold-report.component';
     SalesrepofnmomComponent,
     CaputilsreporeasonComponent,
     HoldimportComponent,
-    HoldReportComponent
+    HoldReportComponent,
+    Top5rejectionsizeComponent
    ],
   imports: [
     BrowserModule,
@@ -713,6 +715,11 @@ import { HoldReportComponent } from './hold-report/hold-report.component';
       {
         path: 'top5rejection',
         component: Top5rejectionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'top5rejectionsize',
+        component: Top5rejectionsizeComponent,
         canActivate: [AuthGuard],
       },
       { path: '**', redirectTo: '' },

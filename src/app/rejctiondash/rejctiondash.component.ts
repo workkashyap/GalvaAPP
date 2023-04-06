@@ -18,7 +18,9 @@ export class RejctiondashComponent implements OnInit {
   canvas: any;
   ctx: any;
   rowData: any;
-  currentuser:any;
+  rowDataSum: any;
+  total: any = 0;
+  currentuser: any;
   plantcode: any;
   public loading = false;
   public monthname: any;
@@ -36,16 +38,16 @@ export class RejctiondashComponent implements OnInit {
     private service: Top5rejectionService,
     public lservice: LoginService,
     public plantservice: PlantService,
-    ) {  this.lservice.currentUser.subscribe(x => this.currentuser = x); }
+  ) { this.lservice.currentUser.subscribe(x => this.currentuser = x); }
 
   async ngOnInit() {
     await this.plantservice
-    .sgetPlantData(this.currentuser.id)
-    .toPromise()
-    .then(res => {
-      this.plantservice.splantlist = res as Plant[]
-      this.plantcode = this.plantservice.splantlist[0].plantcode;
-    });
+      .sgetPlantData(this.currentuser.id)
+      .toPromise()
+      .then(res => {
+        this.plantservice.splantlist = res as Plant[]
+        this.plantcode = this.plantservice.splantlist[0].plantcode;
+      });
 
     const namedChartAnnotation = ChartAnnotation;
     namedChartAnnotation['id'] = 'annotation';
@@ -62,7 +64,8 @@ export class RejctiondashComponent implements OnInit {
     } else {
       this.Yearname = cyear + '-' + (Number(cyear) + 1);
     }
-    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5Rejection(this.Yearname, this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5RejectionValue(this.Yearname, this.plantcode).toPromise().then(res => { this.rowDataSum = res });
     this.filterData();
   }
 
@@ -89,9 +92,11 @@ export class RejctiondashComponent implements OnInit {
       this.Rejectper.push(element.rejper);
     });
     this.loadchart();
+    const dt = this.rowDataSum.find(r => r.monthName == this.monthname);
+    dt == undefined ? this.total = 0 : this.total = dt.rejvalue;
   }
-
-
+  
+  
   loadchart() {
     this.loading = false;
     // this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
@@ -208,7 +213,8 @@ export class RejctiondashComponent implements OnInit {
   }
 
   async getselectedyear() {
-    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5RejectionValue(this.Yearname, this.plantcode).toPromise().then(res => { this.rowDataSum = res });
+    await this.service.getTop5Rejection(this.Yearname, this.plantcode).toPromise().then(res => { this.rowData = res });
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.filterData();
@@ -222,7 +228,8 @@ export class RejctiondashComponent implements OnInit {
 
   async selectedplant(plantcode) {
     this.plantcode = plantcode;
-    await this.service.getTop5Rejection(this.Yearname,this.plantcode).toPromise().then(res => { this.rowData = res });
+    await this.service.getTop5RejectionValue(this.Yearname, this.plantcode).toPromise().then(res => { this.rowDataSum = res });
+    await this.service.getTop5Rejection(this.Yearname, this.plantcode).toPromise().then(res => { this.rowData = res });
     if (this.myChart) this.myChart.destroy();
     this.ctx.clearRect(0, 0, this.canvas.weight, this.canvas.height);
     this.plantname = this.rowData[0].plantname;

@@ -193,10 +193,6 @@ export class CaputilsworkerComponent implements OnInit {
     }
   }
 
-  // onSaveClick() {
-  //   this.actionvalue = 'Save';
-  // }
-
   back() {
     this.iservice.uid = this.currentUser.id;
     this.route.navigate(['./caputilsworker']);
@@ -325,6 +321,9 @@ export class CaputilsworkerComponent implements OnInit {
   }
   //////////////
   onSave(form: NgForm) {
+    this.actionvalue = 'Save';
+
+    this.onComplete(form);
     this.data = [];
     delete this.caputilsservice.caputilsData.planremark;
     delete this.caputilsservice.caputilsData.actualremark;
@@ -377,10 +376,7 @@ export class CaputilsworkerComponent implements OnInit {
         obj['planround'] = obj['plantround'];
         delete obj['plantround'];
         this.data.push(obj);
-      } else {
-        this.toastr.error('Please fill the fields');
-        return;
-      }
+      } 
       for (var i = 0; i < this.r.length; i++) {
         if (this.r[i].reason != null && this.r[i].reason != '') {
           if (this.r[i].reasoncount != null && this.r[i].reasoncount != 0) {
@@ -407,9 +403,6 @@ export class CaputilsworkerComponent implements OnInit {
           console.log(error);
           this.toastr.error('Could not save Data', 'Error');
         });
-      } else {
-        this.toastr.error('Please fill the Data');
-        return;
       }
     }
     this.resetForm(form);
