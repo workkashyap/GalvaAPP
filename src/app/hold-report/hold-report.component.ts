@@ -16,6 +16,8 @@ export class HoldReportComponent implements OnInit {
   public cols: any[] = [];
   public rowData: any[] = [];
   loading: boolean = false;
+  totQty:number = 0;
+  totval:number = 0;
 
   constructor(
     public lservice: LoginService,
@@ -47,7 +49,7 @@ export class HoldReportComponent implements OnInit {
       });
 
     this.caputilsservice.getHoldReport(this.plantcode).subscribe(
-      (res: any) => { this.rowData = res; },
+      (res: any) => { this.rowData = res;this.calcTotal(); },
       (err: any) => { console.log(err); }
     );
     this.loading = false;
@@ -57,10 +59,19 @@ export class HoldReportComponent implements OnInit {
   selectedGrid(ev) {
     this.loading = true;
     this.caputilsservice.getHoldReport(this.plantcode).subscribe(
-      (res: any) => { this.rowData = res; },
+      (res: any) => { this.rowData = res;this.calcTotal(); },
       (err: any) => { console.log(err); }
     );
     this.loading = false;
+  }
+
+  calcTotal() {
+    this.totQty = 0;
+    this.totval = 0;
+    this.rowData.forEach(e => {
+      this.totQty += e.qty;
+      this.totval += e.totvalue;
+    });
   }
 
 }

@@ -50,14 +50,22 @@ export class Top5rejectionsizeComponent implements OnInit {
   public columnDefs: ColDef[] = [
     { headerName: 'Month', field: 'monthname', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
     { headerName: 'Size', field: 'size', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
-    // { headerName: 'Item', field: 'itemname', width: 500, enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
+    { headerName: 'Item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     {
       headerName: 'Reject Value', field: 'rejvalue', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       }, cellStyle: { fontSize: '13px' },
-    }];
+    },
+    // {
+    //   headerName: 'Reject Qty.', field: 'rejvalue', aggFunc: params => {
+    //     let sum = 0;
+    //     params.values.forEach(value => sum += value);
+    //     return Math.round(sum * 100) / 100;
+    //   }, cellStyle: { fontSize: '13px' },
+    // }
+  ];
 
   constructor(
     private rejectionservice: Top5rejectionService,

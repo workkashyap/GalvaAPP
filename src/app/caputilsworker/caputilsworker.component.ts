@@ -146,6 +146,8 @@ export class CaputilsworkerComponent implements OnInit {
   onComplete(form: NgForm) {
     this.validQtyError = false;
 
+    this.actionvalue = 'Save';
+
     // tslint:disable-next-line: max-line-length
     if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0) {
       this.toastr.error(
@@ -161,15 +163,18 @@ export class CaputilsworkerComponent implements OnInit {
           this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, 'yyyy-MM-dd');
 
           this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
-            this.resetForm(form);
             this.toastr.success(
               "Successfully Updated.",
               "Production"
             );
+
+            this.onSave(form);
+
             this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
               this.route.navigate(['./caputilsworker']);
             });
 
+            // this.resetForm(form);
           }, err => {
             console.log(err);
           });
@@ -225,6 +230,7 @@ export class CaputilsworkerComponent implements OnInit {
           me.caputilsservice.caputilsbyid(me.caputilsservice.id)
             .toPromise()
             .then((res: any) => {
+
               this.caputilsservice.caputilsData = res; //as Productions[];
               this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
               if (this.caputilsservice.caputilsData.actualround > 0) {
@@ -233,15 +239,17 @@ export class CaputilsworkerComponent implements OnInit {
                 this.isReadOnly = false;
               };
             });
-          let date = data.entrydate.substring(0, data.entrydate.indexOf('T'));
+          // let date = data.entrydate.substring(0, data.entrydate.indexOf('T'));
+          let date =this.datePipe.transform(data.entrydate, "yyyy-MM-dd");
           me.caputilsservice.getCaputilsReasonFilter(date, data.plantcode, data.linetype)
             .subscribe((res: any) => {
               this.reasonData = res;
               setTimeout(() => {
+
                 this.reasonData = this.reasonData.filter(x => x.entrydate.substring(0, data.entrydate.indexOf('T')) == date);
                 if (this.reasonData.length > 0) {
                   this.ISEDIT = true;
-                  this.caputilsservice.caputilsData.id = this.reasonData[0].id;
+                  // this.caputilsservice.caputilsData.id = this.reasonData[0].id;
                   this.caputilsservice.caputilsData.reason = this.reasonData[0].reason;
                   this.caputilsservice.caputilsData.reasoncount = this.reasonData[0].reasoncount;
                   for (let i = 1; i < this.reasonData.length; i++) {
@@ -321,15 +329,19 @@ export class CaputilsworkerComponent implements OnInit {
   }
   //////////////
   onSave(form: NgForm) {
-    this.actionvalue = 'Save';
+    // this.actionvalue = 'Save';
 
-    this.onComplete(form);
+    // this.onComplete(form);
+
     this.data = [];
     delete this.caputilsservice.caputilsData.planremark;
     delete this.caputilsservice.caputilsData.actualremark;
     delete this.caputilsservice.caputilsData.percomplete;
 
     if (this.ISEDIT) {
+
+      this.caputilsservice.caputilsData.id = this.reasonData[0].id;
+
       let obj: Object = this.caputilsservice.caputilsData;
       obj['planround'] = obj['plantround'];
       delete obj['plantround'];
@@ -353,11 +365,8 @@ export class CaputilsworkerComponent implements OnInit {
       if (this.data.length > 0) {
         this.r = [];
         this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
-          console.log('Data Updated successfully:', response);
-          this.toastr.success('Data Updated successfully');
-          this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
-            this.route.navigate(['./caputilsworker']);
-          });
+          console.log('REASON Data Updated successfully:', response);
+          // this.toastr.success('Data Updated successfully');
         }, error => {
           console.log(error);
           this.toastr.error('Could not save Data', 'Error');
@@ -376,7 +385,7 @@ export class CaputilsworkerComponent implements OnInit {
         obj['planround'] = obj['plantround'];
         delete obj['plantround'];
         this.data.push(obj);
-      } 
+      }
       for (var i = 0; i < this.r.length; i++) {
         if (this.r[i].reason != null && this.r[i].reason != '') {
           if (this.r[i].reasoncount != null && this.r[i].reasoncount != 0) {
@@ -396,9 +405,6 @@ export class CaputilsworkerComponent implements OnInit {
         this.caputilsservice.savecaputilswithreason(this.data).subscribe(response => {
           console.log('Data sent successfully:', response);
           this.toastr.success('Data sent successfully');
-          this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
-            this.route.navigate(['./caputilsworker']);
-          });
         }, error => {
           console.log(error);
           this.toastr.error('Could not save Data', 'Error');
@@ -406,6 +412,9 @@ export class CaputilsworkerComponent implements OnInit {
       }
     }
     this.resetForm(form);
+    this.route.navigateByUrl('./caputilsworker', { skipLocationChange: true }).then(() => {
+      this.route.navigate(['./caputilsworker']);
+    });
     $('#basicExampleModal').modal('hide');
   }
 

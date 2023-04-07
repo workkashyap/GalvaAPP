@@ -75,6 +75,27 @@
     </div>
   </div>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="mx-3">
+  <div class="collapse multi-collapse" id="multiCollapseExample2">
+    <div class="card p-1 shadow card-body">
+      <table class="table table-bordered table-sm p-0">
+        <thead>
+          <tr>
+            <th class="table-primary border-0" style="width: 100px;">REJECT</th>
+            <th *ngFor="let item of valueData" class="table-primary border-primary">{{item.monthName}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="table-primary border-0">VALUE</th>
+            <td *ngFor="let item of valueData">{{item.rejvalue}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <div class="px-3 pt-1">
   <div class="card p-3 highlight-2 border-10 m-auto">
@@ -88,6 +109,3 @@
     </div>
   </div>
 </div>
-
-<!-- [gridOptions]="gridOptions"
-    [suppressExpandablePivotGroups]="true" -->
