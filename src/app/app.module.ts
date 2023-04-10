@@ -124,6 +124,7 @@ import { CaputilsreporeasonComponent } from './caputilsreporeason/caputilsrepore
 import { HoldimportComponent } from './holdimport/holdimport.component';
 import { HoldReportComponent } from './hold-report/hold-report.component';
 import { Top5rejectionsizeComponent } from './top5rejectionsize/top5rejectionsize.component';
+import { PurchaseDetailGridComponent } from './purchase/purchase-detail-grid/purchase-detail-grid.component';
 
 @NgModule({
   declarations: [	
@@ -229,7 +230,8 @@ import { Top5rejectionsizeComponent } from './top5rejectionsize/top5rejectionsiz
     CaputilsreporeasonComponent,
     HoldimportComponent,
     HoldReportComponent,
-    Top5rejectionsizeComponent
+    Top5rejectionsizeComponent,
+    PurchaseDetailGridComponent
    ],
   imports: [
     BrowserModule,
@@ -580,6 +582,11 @@ import { Top5rejectionsizeComponent } from './top5rejectionsize/top5rejectionsiz
       }, {
         path: 'pdreport', 
         component: PurchaseDetailReportComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'pdreportgrid', 
+        component: PurchaseDetailGridComponent,
         canActivate: [AuthGuard],
       },
       {
