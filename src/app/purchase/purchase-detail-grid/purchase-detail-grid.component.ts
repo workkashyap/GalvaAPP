@@ -9,7 +9,6 @@ import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-purchase-detail-grid',
@@ -68,7 +67,6 @@ export class PurchaseDetailGridComponent implements OnInit {
     { headerName: 'Doc Name', field: 'poDocName', cellStyle: { fontSize: '12px' } },
   ];
 
-
   constructor(
     private datePipe: DatePipe,
     public plantservice: PlantService,
@@ -102,11 +100,8 @@ export class PurchaseDetailGridComponent implements OnInit {
     await this.purchaseservice.getPurchaseDetail(this.selectedPlant, this.Fromdate, this.Todate).toPromise()
       .then(res => {
         this.rowData = res;
-        console.log(this.rowData);
       }).catch(err => { console.log(err); });
-    this.rowData.forEach(e => {
-      console.log(e.dateOfGRN);
-      
+    this.rowData.forEach(e => {      
       e.dateOfGRN ? e.dateOfGRN = this.datePipe.transform(e.dateOfGRN, "dd-MM-yyyy") : null;
       e.vendorInvoiceDate ? e.vendorInvoiceDate = this.datePipe.transform(e.vendorInvoiceDate, "dd-MM-yyyy") : null;
       e.category == null ?  e.category = "No Category" : null;
@@ -117,14 +112,11 @@ export class PurchaseDetailGridComponent implements OnInit {
       .then(res => { res.length > 0 ? this.totalPurchase = res[0].totalPurchase : null }).catch(err => { console.log(err); });
     this.loading = false;
     this.tempData = this.rowData;
-
   }
 
   filterCategory() {
-    console.log(this.selectedCategory,this.rowData);
-    console.log(this.tempData);
-    
     if(this.selectedCategory == "ALL") {this.rowData = this.tempData; return;}
+    this.rowData = this.tempData;
     this.rowData = this.rowData.filter(e => e.category == this.selectedCategory);
   }
 
