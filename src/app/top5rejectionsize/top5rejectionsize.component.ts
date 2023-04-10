@@ -25,7 +25,10 @@ export class Top5rejectionsizeComponent implements OnInit {
   public currentuser: any;
   public plantcode: any;
   public plantname: any;
+  public loading: boolean = false;
+  public show: boolean = false;
   rowData: any[];
+  valueData: any[];
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,
@@ -57,14 +60,7 @@ export class Top5rejectionsizeComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       }, cellStyle: { fontSize: '13px' },
-    },
-    // {
-    //   headerName: 'Reject Qty.', field: 'rejvalue', aggFunc: params => {
-    //     let sum = 0;
-    //     params.values.forEach(value => sum += value);
-    //     return Math.round(sum * 100) / 100;
-    //   }, cellStyle: { fontSize: '13px' },
-    // }
+    }
   ];
 
   constructor(
@@ -75,6 +71,7 @@ export class Top5rejectionsizeComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.loading = true;
     await this.plantservice
       .sgetPlantData(this.currentuser.id)
       .toPromise()
@@ -91,12 +88,19 @@ export class Top5rejectionsizeComponent implements OnInit {
     } else {
       this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);;
     }
+    await this.rejectionservice.getTop5RejectionValue(this.yearname, this.plantcode).toPromise().then(res => { this.valueData = res; });
     await this.rejectionservice.getTop5RejectionSize(this.yearname, this.plantcode).toPromise().then(res => { this.rowData = res; });
     this.rowData = this.sortByFnMonth();
+    this.valueData = this.sortValueByFnMonth();
+    this.loading = false;
   }
 
   sortByFnMonth() {
     return _.orderBy(this.rowData, [(datas) => datas.finyear, (user) => (this.monthArray.indexOf(user.monthname))], ["asc", "asc"]);
+  }
+
+  sortValueByFnMonth() {
+    return _.orderBy(this.valueData, [(datas) => this.yearname, (user) => (this.monthArray.indexOf(user.monthName))], ["asc", "asc"]);
   }
 
   onGridReady(params: GridReadyEvent) { }
@@ -108,14 +112,22 @@ export class Top5rejectionsizeComponent implements OnInit {
   };
 
   async getBySelectedYear() {
+    this.loading = true;
     this.year = this.yearname;
+    await this.rejectionservice.getTop5RejectionValue(this.year, this.plantcode).toPromise().then(res => { this.valueData = res; });
     await this.rejectionservice.getTop5RejectionSize(this.year, this.plantcode).toPromise().then(res => { this.rowData = res });
     this.rowData = this.sortByFnMonth();
+    this.valueData = this.sortValueByFnMonth();
+    this.loading = false;
   }
 
   async selectedGrid(plantcode) {
+    this.loading = true;
     this.plantcode = plantcode;
+    await this.rejectionservice.getTop5RejectionValue(this.yearname, this.plantcode).toPromise().then(res => { this.valueData = res; });
     await this.rejectionservice.getTop5RejectionSize(this.yearname, this.plantcode).toPromise().then(res => { this.rowData = res });
     this.rowData = this.sortByFnMonth();
+    this.valueData = this.sortValueByFnMonth();
+    this.loading = false;
   }
 }

@@ -1,6 +1,16 @@
 <div class="mx-3 pt-3 pb-2">
     <div class="page-filter d-flex w-100 px-2 py-2">
         <div class="d-flex">
+            <div class="ml-auto mr-3">
+                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                    data-target="#multiCollapseExample2" aria-expanded="false" (click)="show=!show"
+                    aria-controls="multiCollapseExample2">
+                    <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+                        aria-controls="multiCollapseExample2" *ngIf="!show" class="fa fa-sm fa-plus"></i>
+                    <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false"
+                        aria-controls="multiCollapseExample2" *ngIf="show" class="fa fa-sm fa-minus"></i>
+                </button>
+            </div>
             <h4 class="font-weight-bold heading mb-0 align-self-center">
                 Top 5 Rejection Size (<span style="font-size: 10px">Notes: Amounts in Lacs</span>)
             </h4>
@@ -21,6 +31,28 @@
                     {{ pl.plantshortname }}
                 </option>
             </select>
+        </div>
+    </div>
+</div>
+
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="mx-3">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+        <div class="card p-1 shadow card-body">
+            <table class="table table-bordered table-sm p-0">
+                <thead>
+                    <tr>
+                        <th class="table-primary border-0" style="width: 100px;">REJECT</th>
+                        <th *ngFor="let item of valueData" class="table-primary border-primary">{{item.monthName}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="table-primary border-0">VALUE</th>
+                        <td *ngFor="let item of valueData">{{item.rejvalue}} </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -20,7 +20,6 @@ export class PurchaserepoComponent implements OnInit {
   public yearname: string;
   public year: string;
 
-  // rowData: Observable<any[]>;
   rowData: any[] = [];
   public sideBar: SideBarDef | string | boolean | null = 'columns';
   public columnDefs: ColDef[] = [
@@ -87,8 +86,6 @@ export class PurchaserepoComponent implements OnInit {
   }
 
   async getselectedyear() {
-    // this.rowData = this.purchaserepo.getData(this.year);
-    if(this.yearname == '2024'){this.rowData = [];return}
     this.rowData = [];
     this.year = this.yearname;
     console.log(String(Number(this.yearname) - 1 + '-' + Number(this.yearname)));

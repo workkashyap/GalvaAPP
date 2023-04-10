@@ -2,7 +2,10 @@
     <div class="card highlight-2 border-10 p-3">
         <div class="page-filter d-flex align-items-center justify-content-between w-100 px-2 py-1">
             <div class="ml-3s">
-                <h5 class="font-weight-bold heading mb-0 align-self-center">Hold Report</h5>
+                <h5 class="font-weight-bold heading mb-0 align-self-center">
+                    Hold Report
+                    (<span style="font-size: 14px">Last Modified : {{this.rowData[0]?.lastmodified | date:'dd-MM-yyyy'}}</span>)
+                </h5>
             </div>
             <div class="mr-4">
                 <select class="form-control align-self-center" [(ngModel)]="this.plantcode" *ngIf="plantservice"

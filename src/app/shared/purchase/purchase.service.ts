@@ -18,6 +18,7 @@ export class PurchaseService {
   public purchase: Purchase[] = [];
   public purchaseLineDetail: Purchase[] = [];
   maingrouplist: []
+  categorylist: []
   subgrouplist: []
   subgroup:any
   maingroup:any
@@ -106,6 +107,13 @@ export class PurchaseService {
       this.maingrouplist = res
     });
   }
+
+  async getCategory() {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/getPurchasecategory/purchasecategory').subscribe(res => {
+      this.categorylist = res
+    });
+  }
+
    getsubGroupDetail(id){
     return this.http.get<any>(this.rootUrl + '/PurchaseHeaders/'+id).subscribe(res => {
       console.log(res.subGrouping)
