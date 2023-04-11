@@ -6,12 +6,26 @@
                     <div class="card card-primary card-outline">
                         <div class="card-header py-1">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-11">
                                     <h5 class="card-title-md">Purchase Detail By Category</h5>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="float-right">
+                                        <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                                            data-target="#multiCollapseExample2" aria-expanded="false"
+                                            (click)="show=!show" aria-controls="multiCollapseExample2">
+                                            <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
+                                                aria-expanded="false" aria-controls="multiCollapseExample2"
+                                                *ngIf="!show" class="fa fa-sm fa-plus"></i>
+                                            <i type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
+                                                aria-expanded="false" aria-controls="multiCollapseExample2" *ngIf="show"
+                                                class="fa fa-sm fa-minus"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pb-1">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="row">
@@ -33,7 +47,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <select class="custom-select" name="myselect" #mySelect="ngModel"
-                                        [(ngModel)]="this.selectedPlant">
+                                        [(ngModel)]="this.selectedPlant" (change)="selectedGrid($event.target.value)">
                                         <option value="0">--Select Plant--</option>
                                         <option *ngFor="let pl of plantservice.plantlist" value="{{pl.plantcode}}">
                                             {{ pl.plantshortname }}
@@ -42,7 +56,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <select class="custom-select" name="myselect1" #mySelect1="ngModel"
-                                        [(ngModel)]="this.selectedCategory" (change)="filterCategory()">
+                                        [(ngModel)]="this.selectedCategory">
                                         <option [selected]="true" value="ALL">ALL</option>
                                         <option value="No Category">No Category</option>
                                         <option *ngFor="let pl of this.purchaseservice.categorylist"
@@ -59,8 +73,31 @@
                                         Lacs</button>
                                 </div>
                             </div>
+
+                            <!----->
+                            <div class="w-100 pt-1" style="overflow: auto !important;">
+                                <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                    <table class="table table-bordered table-sm p-0">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width: 100px !important;" *ngFor="let item of valueData"
+                                                    class="table-primary">
+                                                    <small>{{item.category}}</small>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td *ngFor="let item of valueData">
+                                                    {{item.totalPurchase}} Lacs.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!----->
+
                         </div>
-                        <!-- </form> -->
                     </div>
                 </div>
             </div>
@@ -70,15 +107,133 @@
             <div class="px-3 pt-1">
                 <div class="card p-3 highlight-2 border-10 m-auto">
                     <div class="overflow-scroll">
-                        <ag-grid-angular style="height: 600px" class="ag-theme-alpine w-100"
-                            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" groupDisplayType="singleColumn"
+                        <ag-grid-angular style="height: 600px" class="ag-theme-alpine w-100" [columnDefs]="columnDefs"
+                            [defaultColDef]="defaultColDef" groupDisplayType="singleColumn"
                             [groupDefaultExpanded]="groupDefaultExpanded" [getRowStyle]="getRowStyle"
                             [autoGroupColumnDef]="autoGroupColumnDef" [animateRows]="true" [rowData]="rowData"
-                            (gridReady)="onGridReady($event)">
+                            (gridReady)="onGridReady($event)" (rowClicked)="selectionChange()"
+                            [rowSelection]="'single'">
                         </ag-grid-angular>
                     </div>
                 </div>
             </div>
+
+            <!---->
+            <div class="modal fade bd-example-modal-xl" id="basicExampleModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="row col-md-11">
+                                <div class="col-md-6">
+                                    <h5>Detail</h5>
+                                </div>
+                                <div class="col-md-5">
+                                    <h4>{{plant_name }}</h4>
+                                </div>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="overflow-y: scroll; height: 400px;">
+                                <p-table #dtdefect [columns]="subcols"
+                                    [style]="{'text-align': 'center', 'font-size': '0.7em'}" [responsive]="true"
+                                    selectionMode="single" [style]="{'width':'100%'}"
+                                    [value]="purchaseservice.purchaseLineDetail" [paginator]="false" [rows]="5">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <td colspan="2" style=" width:250px;">
+                                                <div class="input-group mb-2 ">
+                                                    <input type="text" pInputText placeholder="Global Filter"
+                                                        (input)="dtdefect.filterGlobal($event.target.value, 'contains')"
+                                                        class="form-control fix-height">
+                                                    <div class="input-group-append fix-height">
+                                                        <i class="fa fa-search input-group-text"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width:115px;">
+                                                <button type="button" label="EXCEL" (click)="dtdefect.exportCSV()"
+                                                    class="btn btn-success btn-sm mb-2">
+                                                    <i class="fa fa-file-excel-o"></i> Export</button>
+                                            </td>
+                                            <td colspan="6" style="width: 1000px;"></td>
+                                            <td style="width:180px;">
+                                                <button class="btn btn-sm  text-dark bg-info mb-2"
+                                                    [ngClass]="totalSumofBg" style="float: right;">
+                                                    Total : {{ materialValueSum | number:'1.2-2'}}
+                                                </button>
+                                            </td>
+                                            <td style="width:180px;">
+                                                <button class="btn btn-sm  text-dark bg-info mb-2"
+                                                    [ngClass]="totalSumofBg" style="float: right;">
+                                                    Total : {{ totalValueSum | number:'1.2-2'}}
+                                                </button>
+                                            </td>
+                                            <td style="width:180px;">
+                                                <button class="btn btn-sm  text-dark bg-info mb-2"
+                                                    [ngClass]="totalSumofBg" style="float: right;">
+                                                    Total : {{ netPayableToVendorSum | number:'1.2-2'}}
+                                                </button>
+                                            </td>
+                                            <td colspan="2" style="width: 250px;"></td>
+                                        </tr>
+                                        <tr>
+                                            <th *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                                style="width:140px" class="tbl-th">
+                                                {{col.header}}
+                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                                    ariaLabelDesc="Activate to sort in descending order"
+                                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                        <tr [pSelectableRow]="rowData">
+                                            <td *ngFor="let col of columns">
+                                                <span *ngIf="col.field=='acDocumentDate'">
+                                                    {{rowData[col.field] | date :'dd-MM-y'}}
+                                                </span>
+                                                <span *ngIf="col.field !='acDocumentDate'">
+                                                    {{rowData[col.field]}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div style="width: 45%;">
+                                    <label style="width: 30%;">MainGroup</label>
+                                    <select class="custom-select mt-2" name="maingroup" #maingroup="ngModel"
+                                        [(ngModel)]="purchaseservice.maingroup" style="width: 70%;">
+                                        <option value=null>--Select mainGroup--</option>
+                                        <option *ngFor="let pl of purchaseservice.maingrouplist" value="{{pl.name}}">
+                                            {{ pl.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div style="width: 45%;margin-right: 5px;">
+                                    <label style="width: 30%;">SubGroup</label>
+                                    <select class="custom-select mt-2" name="subgroup" #subgroup="ngModel"
+                                        [(ngModel)]="purchaseservice.subgroup" style="width: 70%;">
+                                        <option value=null>--Select subGroup--</option>
+                                        <option *ngFor="let pl of purchaseservice.subgrouplist" value="{{pl.name}}">
+                                            {{ pl.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" (click)="updategroup()">Update</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------->
 
         </section>
     </div>

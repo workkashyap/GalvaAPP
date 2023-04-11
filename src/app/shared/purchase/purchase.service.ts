@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Purchasesummary } from './purchasesummary.model';
 import { Purchasedetail } from './purchasedetail.model';
 import { Purchase } from './purchase.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -20,12 +21,12 @@ export class PurchaseService {
   maingrouplist: []
   categorylist: []
   subgrouplist: []
-  subgroup:any
-  maingroup:any
-  groupid:any
- 
+  subgroup: any
+  maingroup: any
+  groupid: any
 
-  constructor(public http: HttpClient) { }
+
+  constructor(public http: HttpClient, private toaster: ToastrService) { }
 
   public getPurchaseCalendar(id, date): Observable<Purchasecalendar[]> {
     return this.http.get<Purchasecalendar[]>(
@@ -114,18 +115,23 @@ export class PurchaseService {
     });
   }
 
-   getsubGroupDetail(id){
-    return this.http.get<any>(this.rootUrl + '/PurchaseHeaders/'+id).subscribe(res => {
+  getPurchaseCategorySum(plantcode, fromdate, todate): Observable<any[]> {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/purchaseSumCategory/' + plantcode + '/' + fromdate + '/' + todate);
+  }
+
+  getsubGroupDetail(id) {
+    return this.http.get<any>(this.rootUrl + '/PurchaseHeaders/' + id).subscribe(res => {
       console.log(res.subGrouping)
-        this.subgroup = res.subGrouping
-        this.maingroup = res.grouping
+      this.subgroup = res.subGrouping
+      this.maingroup = res.grouping
     });
 
   }
   putmaingroup() {
-    return this.http.get<any>(this.rootUrl + '/purchaseheaders/UpdatePurchaseGroup/'+this.groupid+'/'+this.maingroup+'/'+this.subgroup).subscribe(res => {
-       console.log(res)
-       $("#basicExampleModal").modal("hide");
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/UpdatePurchaseGroup/' + this.groupid + '/' + this.maingroup + '/' + this.subgroup).subscribe(res => {
+      this.toaster.success("Updated Successfully");
+      console.log(res);
+      $("#basicExampleModal").modal("hide");
     });
   }
 }
