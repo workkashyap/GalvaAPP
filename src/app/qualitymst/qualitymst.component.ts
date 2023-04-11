@@ -274,7 +274,7 @@ export class QualitymstComponent implements OnInit {
     this.qualityservice.qualityData.platingRejValue = this.qualityservice.qualityData.platingRejQty * this.qualityservice.qualityData.stdPrice;
     this.qualityservice.qualityData.otherRejValue = this.qualityservice.qualityData.otherRejQty * this.qualityservice.qualityData.stdPrice;
 
-    this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
+    // this.qualityservice.qualityData.totRejQty = this.qualityservice.qualityData.buffingqty + this.qualityservice.qualityData.holdqty + this.qualityservice.qualityData.rejectionqty;
     this.qualityservice.qualityData.totRejValue = this.qualityservice.qualityData.totRejQty * this.qualityservice.qualityData.stdPrice;
     this.qualityservice.qualityData.inspValue = this.qualityservice.qualityData.stdPrice * this.qualityservice.qualityData.inspQty;
 
@@ -321,31 +321,40 @@ export class QualitymstComponent implements OnInit {
         this.countQty();
         this.valuesStd();
       }
-        if (this.qualityservice.qualityData.stdPrice === 0) {
-          this.countQty();
-          this.addDefects();
-          if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
-          ) {
-            this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
-            this.qualityservice.qualityData[event.target.id] = 0;
-          }
-          this.countRejQty();
-          this.valuesStd();
-        } else {
-          this.countQty();
-          this.addDefects();
-          if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
-          ) {
-            this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
-            this.qualityservice.qualityData[event.target.id] = 0;
-          }
-          this.countRejQty();
-          this.valuesSell();
+      if (this.qualityservice.qualityData.stdPrice === 0) {
+        this.countQty();
+        this.addDefects();
+        if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
+        ) {
+          if (event.target.id == 'qty') { this.clearRejQty(); return}
+          this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'");
+          this.qualityservice.qualityData[event.target.id] = 0;
         }
-
-      // }
+        this.countRejQty();
+        this.valuesStd();
+      } else {
+        this.countQty();
+        this.addDefects();
+        if (this.DRejQty > this.qualityservice.qualityData.totRejQty || this.qualityservice.qualityData.rejectionqty > this.qualityservice.qualityData.totRejQty
+        ) {
+          if (event.target.id == 'qty') { this.clearRejQty(); return}
+          this.toastr.error("Please Enter Valid Data In '" + event.target.id + "'")
+          this.qualityservice.qualityData[event.target.id] = 0;
+        }
+        this.countRejQty();
+        this.valuesSell();
+      }
 
     }
+  }
+
+  clearRejQty() {
+    for (let i = 1; i <= 50; i++) {
+      let j = String(i).padStart(2, '0');
+      let d = 'dE' + j + 'Q';
+      this.qualityservice.qualityData[d] = 0;
+    }
+    this.toastr.warning('All Defects value are cleared.!');
   }
 
   resetForm(form?: NgForm) {
