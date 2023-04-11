@@ -27,8 +27,8 @@ export class Top5rejectionsizeComponent implements OnInit {
   public plantname: any;
   public loading: boolean = false;
   public show: boolean = false;
-  rowData: any[];
-  valueData: any[];
+  rowData: any[] = [];
+  valueData: any[] = [];
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,
@@ -55,7 +55,7 @@ export class Top5rejectionsizeComponent implements OnInit {
     { headerName: 'Size', field: 'size', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     { headerName: 'Item', field: 'itemname', enableRowGroup: true, rowGroup: true, hide: false, cellStyle: { fontSize: '13px' } },
     {
-      headerName: 'Reject Value', field: 'rejvalue', aggFunc: params => {
+      headerName: 'Reject Quantity', field: 'rejvalue', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;

@@ -25,6 +25,7 @@ export class DefectwisegridComponent implements OnInit {
   rowData: any[];
   data: any[];
   show = false;
+  public loading = false;
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,
@@ -78,6 +79,7 @@ export class DefectwisegridComponent implements OnInit {
   ) { this.lservice.currentUser.subscribe(x => (this.currentUser = x)); }
 
   async ngOnInit() {
+    this.loading = true;
     await this.plantservice
       .sgetPlantData(this.currentUser.id)
       .toPromise()
@@ -103,6 +105,7 @@ export class DefectwisegridComponent implements OnInit {
     this.rowData = this.sortByFnMonth();
 
     this.getTotal();
+    this.loading = false;
   }
 
   sortByFnMonth() {
@@ -110,6 +113,7 @@ export class DefectwisegridComponent implements OnInit {
   }
 
   async getBySelectedYear() {
+    this.loading = true;
     await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
       then(res => {
         this.rowData = res;
@@ -118,9 +122,11 @@ export class DefectwisegridComponent implements OnInit {
       .then(res => { this.data = res; });
     this.getTotal();
     this.rowData = this.sortByFnMonth();
+    this.loading = false;
   }
 
   async selectedGrid(plantcode) {
+    this.loading = true;
     this.plantcode = plantcode;
     await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
       then(res => {
@@ -130,9 +136,11 @@ export class DefectwisegridComponent implements OnInit {
       .then(res => { this.data = res; });
     this.getTotal();
     this.rowData = this.sortByFnMonth();
+    this.loading = false;
   }
 
   async onselecttype(prodtype) {
+    this.loading = true;
     this.selectedtype = prodtype;
     await this.qualityservice.getDefectWiseReport(this.plantcode, this.selectedtype, this.yearname).toPromise().
       then(res => {
@@ -142,6 +150,7 @@ export class DefectwisegridComponent implements OnInit {
       .then(res => { this.data = res; });
     this.getTotal();
     this.rowData = this.sortByFnMonth();
+    this.loading = false;
   }
 
   Trejval: any;

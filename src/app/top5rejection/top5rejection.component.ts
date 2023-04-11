@@ -28,7 +28,7 @@ export class Top5rejectionComponent implements OnInit {
   data: any[];
   valueData: any[];
   show = false;
-  public loading:boolean = false;
+  public loading: boolean = false;
   monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
   public defaultColDef: ColDef = {
     flex: 1,
@@ -93,10 +93,10 @@ export class Top5rejectionComponent implements OnInit {
       .then(res => { this.rowData = res; });
     await this.rejectionservice.getTop5RejectionSum(this.yearname, this.plantcode).toPromise()
       .then(res => { this.data = res; this.plantname = res[0].plantname; });
+    this.loading = false;
     this.rowData = this.sortByFnMonth(this.rowData);
     this.valueData = this.sortValueByFnMonth(this.valueData);
     this.getTotal();
-    this.loading = false;
   }
 
   sortByFnMonth(data) {
@@ -124,11 +124,11 @@ export class Top5rejectionComponent implements OnInit {
     await this.rejectionservice.getTop5RejectionValue(this.year, this.plantcode).toPromise().then(res => { this.valueData = res; });
     await this.rejectionservice.getTop5Rejection(this.year, this.plantcode).toPromise().then(res => { this.rowData = res });
     await this.rejectionservice.getTop5RejectionSum(this.yearname, this.plantcode).toPromise()
-      .then(res => { this.data = res; this.plantname = res[0].plantname; });
+      .then(res => { this.data = res; res.length > 0 ? this.plantname = res[0].plantname : null;});
+    this.loading = false;
     this.rowData = this.sortByFnMonth(this.rowData);
     this.valueData = this.sortValueByFnMonth(this.valueData);
     this.getTotal();
-    this.loading = false;
   }
 
   async selectedGrid(plantcode) {
@@ -137,11 +137,11 @@ export class Top5rejectionComponent implements OnInit {
     await this.rejectionservice.getTop5RejectionValue(this.yearname, this.plantcode).toPromise().then(res => { this.valueData = res; });
     await this.rejectionservice.getTop5Rejection(this.yearname, this.plantcode).toPromise().then(res => { this.rowData = res });
     await this.rejectionservice.getTop5RejectionSum(this.yearname, this.plantcode).toPromise()
-      .then(res => { this.data = res; this.plantname = res[0].plantname; });
+      .then(res => { this.data = res; res.length > 0 ? this.plantname = res[0].plantname : null; });
+    this.loading = false;
     this.rowData = this.sortByFnMonth(this.rowData);
     this.valueData = this.sortValueByFnMonth(this.valueData);
     this.getTotal();
-    this.loading = false;
   }
 
   Tinspection: any;
