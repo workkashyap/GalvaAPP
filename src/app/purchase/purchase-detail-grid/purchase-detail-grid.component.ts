@@ -83,27 +83,17 @@ export class PurchaseDetailGridComponent implements OnInit {
     maxWidth: 500,
     resizable: true,
     pinned: 'left',
-    suppressFiltersToolPanel:true
+    suppressFiltersToolPanel: true
   };
-
-  dateformatter = params => {
-    var dateAsString = params.data.date;
-    var dateParts = dateAsString.split("/");
-    return `${dateParts[0]} - ${dateParts[1]} - ${dateParts[2]}`;
-  }
 
   public columnDefs: ColDef[] = [
     { headerName: 'Category', field: 'category', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'VndrName', field: 'vendorName', cellStyle: { fontSize: '12px' } },
-    { headerName: 'VndrCod', field: 'vendorCode', cellStyle: { fontSize: '12px' } },
-    { headerName: 'PO Name', field: 'poDocName', cellStyle: { fontSize: '12px' } },
-    { headerName: 'PO No.', field: 'purchaseOrder', cellStyle: { fontSize: '12px' } },
-    { headerName: 'GRN No', field: 'grnNoMIGO', cellStyle: { fontSize: '12px' } },
-    { headerName: 'GRN Date', field: 'dateOfGRN', cellStyle: { fontSize: '12px' } },
-    { headerName: 'Inv Date', field: 'vendorInvoiceDate', cellStyle: { fontSize: '12px' } },
-    { headerName: 'Inv No', field: 'vendorInvoiceNo', cellStyle: { fontSize: '12px' } },
-    { headerName: 'AcDoc No', field: 'acDocumentNo', cellStyle: { fontSize: '12px' } },
-    { headerName: 'Doc Name', field: 'poDocName', cellStyle: { fontSize: '12px' } },
+    { headerName: 'acDocNo', field: 'acDocumentNo', cellStyle: { fontSize: '12px' } },
+    { headerName: 'acDocDate', field: 'acDocumentDate', cellStyle: { fontSize: '12px' } },
+    { headerName: 'poDocType', field: 'poDocType', cellStyle: { fontSize: '12px' } },
+    { headerName: 'vendorCode.', field: 'vendorCode', cellStyle: { fontSize: '12px' } },
+    { headerName: 'vendorName', field: 'vendorName', cellStyle: { fontSize: '12px' } },
+    { headerName: 'Purchase', field: 'totalPurchase', width: 70, cellStyle: { fontSize: '12px' } },
   ];
 
   constructor(
@@ -153,15 +143,8 @@ export class PurchaseDetailGridComponent implements OnInit {
 
   async getPurchaseDetail() {
     this.loading = true;
-    this.totalPurchase = 0;
 
-    await this.purchaseservice
-      .getPurchaseDetailTotal(this.selectedPlant, this.Fromdate, this.Todate)
-      .toPromise()
-      .then(res => { res.length > 0 ? this.totalPurchase = res[0].totalPurchase : null }).catch(err => { console.log(err); });
-
-
-    await this.purchaseservice.getPurchaseDetail(this.selectedPlant, this.Fromdate, this.Todate).toPromise()
+    await this.purchaseservice.getPurchaseView(this.selectedPlant, this.Fromdate, this.Todate).toPromise()
       .then(res => {
         this.rowData = res;
       }).catch(err => { console.log(err); });
@@ -170,11 +153,7 @@ export class PurchaseDetailGridComponent implements OnInit {
       .then((res) => {
         this.valueData = res;
       }).catch((err) => { console.error(err); });
-    this.rowData.forEach(e => {
-      e.dateOfGRN ? e.dateOfGRN = this.datePipe.transform(e.dateOfGRN, "dd-MM-yyyy") : null;
-      e.vendorInvoiceDate ? e.vendorInvoiceDate = this.datePipe.transform(e.vendorInvoiceDate, "dd-MM-yyyy") : null;
-      e.category == null ? e.category = "No Category" : null;
-    });
+
     this.loading = false;
     this.tempData = this.rowData;
     this.tempvalData = this.valueData;
@@ -182,17 +161,28 @@ export class PurchaseDetailGridComponent implements OnInit {
   }
 
   filterCategory() {
+    this.totalPurchase = 0;
     if (this.selectedCategory == "ALL") {
-      this.rowData = this.tempData;
       this.valueData = this.tempvalData;
+      this.rowData = this.tempData;
+
+      this.rowData.forEach(e => {
+        e.acDocumentDate ? e.acDocumentDate = this.datePipe.transform(e.acDocumentDate, "dd-MM-yyyy") : null;
+        e.category == null ? e.category = "No Category" : null;
+        this.totalPurchase += e.totalPurchase;
+      });
       return;
     }
+    
     this.rowData = this.tempData;
     this.valueData = this.tempvalData;
-    this.rowData = this.rowData.filter(e => e.category == this.selectedCategory);
     this.valueData = this.valueData.filter(e => e.category == this.selectedCategory);
-    console.log(this.valueData);
-
+    this.rowData = this.rowData.filter(e => e.category == this.selectedCategory);
+    
+    this.rowData.forEach(e => {
+      e.acDocumentDate ? e.acDocumentDate = this.datePipe.transform(e.acDocumentDate, "dd-MM-yyyy") : null;
+      this.totalPurchase += e.totalPurchase;
+    });
   }
 
   onGridReady(params: GridReadyEvent) { this.gridApi = params.api; }
@@ -237,6 +227,10 @@ export class PurchaseDetailGridComponent implements OnInit {
 
   updategroup() {
     this.purchaseservice.putmaingroup();
+    this.purchaseservice.putcategory();
+    setTimeout(() => {  
+      this.getPurchaseDetail();
+    }, 100);
   }
 
   sumOfvalues() {

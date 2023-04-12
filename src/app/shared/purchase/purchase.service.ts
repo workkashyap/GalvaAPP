@@ -24,7 +24,7 @@ export class PurchaseService {
   subgroup: any
   maingroup: any
   groupid: any
-
+  category:any
 
   constructor(public http: HttpClient, private toaster: ToastrService) { }
 
@@ -69,6 +69,11 @@ export class PurchaseService {
   public getPurchaseDetail(plantcode, fromdate, todate): Observable<Purchase[]> {
     return this.http.get<Purchase[]>(
       this.rootUrl + '/purchaseheaders/GetPurchaseHeader/' + plantcode + '/' + fromdate + '/' + todate
+    );
+  }
+  public getPurchaseView(plantcode, fromdate, todate): Observable<Purchase[]> {
+    return this.http.get<Purchase[]>(
+      this.rootUrl + '/purchaseheaders/GetPurchaseView/' + plantcode + '/' + fromdate + '/' + todate
     );
   }
   public getPurchaseDetailTotal(plantcode, fromdate, todate): Observable<Purchase[]> {
@@ -124,11 +129,17 @@ export class PurchaseService {
       console.log(res.subGrouping)
       this.subgroup = res.subGrouping
       this.maingroup = res.grouping
+      this.category = res.category
     });
 
   }
   putmaingroup() {
     return this.http.get<any>(this.rootUrl + '/purchaseheaders/UpdatePurchaseGroup/' + this.groupid + '/' + this.maingroup + '/' + this.subgroup).subscribe(res => {
+      console.log(res);
+    });
+  }
+  putcategory() {
+    return this.http.get<any>(this.rootUrl + '/purchaseheaders/UpdatePurchaseCategory/' + this.groupid + '/' + this.category ).subscribe(res => {
       this.toaster.success("Updated Successfully");
       console.log(res);
       $("#basicExampleModal").modal("hide");

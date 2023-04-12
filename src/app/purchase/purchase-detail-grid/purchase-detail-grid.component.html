@@ -223,6 +223,17 @@
                                         </option>
                                     </select>
                                 </div>
+                                <div style="width: 45%;margin-right: 5px;">
+                                    <label style="width: 30%;">Category</label>
+                                    <select class="custom-select mt-2" name="category" #category="ngModel"
+                                        [(ngModel)]="purchaseservice.category" style="width: 70%;">
+                                        <option disabled value="null">--Select category--</option>
+                                        <option *ngFor="let pl of this.purchaseservice.categorylist"
+                                            value="{{pl.category}}">
+                                            {{ pl.category }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>
