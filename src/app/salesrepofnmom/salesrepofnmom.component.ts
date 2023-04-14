@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesrepoService } from '../shared/salesrepo/salesrepo.service';
-import { ColDef, GridReadyEvent, SideBarDef  } from 'ag-grid-community';
+import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
@@ -41,8 +41,8 @@ export class SalesrepofnmomComponent implements OnInit {
       innerRenderer: InnerRenderer,
     },
   };
-  
-  monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December','January', 'February', 'March'];
+
+  monthArray = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
 
   constructor(private salesrepo: SalesrepoService) { }
 
@@ -98,12 +98,13 @@ export class SalesrepofnmomComponent implements OnInit {
       },
       cellStyle: { fontSize: '13px' }
     },
-    { headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'rightAligned',aggFunc: params => {
-      let sum = 0;
-      params.values.forEach(value => sum += value);
-      return Math.round(sum * 100) / 100;
+    {
+      headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'rightAligned', aggFunc: params => {
+        let sum = 0;
+        params.values.forEach(value => sum += value);
+        return Math.round(sum * 100) / 100;
       },
-      cellStyle: { fontSize: '13px' } 
+      cellStyle: { fontSize: '13px' }
     },
   ]
 
@@ -112,24 +113,28 @@ export class SalesrepofnmomComponent implements OnInit {
     this.cyear = new Date().toLocaleDateString('en', { year: '2-digit' });
     let cmonth = this.d.getMonth();
     if (cmonth < 3) {
-      this.yearname =(Number(this.cyear) - 1); + '-' + this.cyear;
+      this.yearname = (Number(this.cyear) - 1); + '-' + this.cyear;
     } else {
       this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);;
     }
     await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
-    this.rowData.map(v => {v.mouldPurchase = 0});
+    this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
-      e.plantname = e.plantname.replace('GDPL', 'Galva');
+      if (e.plantname == 'FFPL') {
+        e.company = 'FUTURE FINISHER'
+      } else {
+        e.company = 'GALVA';
+      }
       e.endcustomer = 0;
-      e.exportsales =  0 ;
+      e.exportsales = 0;
       e.rejection = 0;
       e.netsales = 0;
       e.toolsale = 0;
       e.othersales = 0;
       this.rowData.push(e);
     });
-    
+
     this.rowData = this.sortByFnMonth();
   }
 
@@ -137,12 +142,16 @@ export class SalesrepofnmomComponent implements OnInit {
     this.year = this.yearname;
     await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
 
-    this.rowData.map(v => {v.mouldPurchase = 0});
+    this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
-      e.plantname = e.plantname.replace('GDPL', 'Galva');
+      if (e.plantname == 'FFPL') {
+        e.company = 'FUTURE FINISHER'
+      } else {
+        e.company = 'GALVA';
+      }
       e.endcustomer = 0;
-      e.exportsales =  0 ;
+      e.exportsales = 0;
       e.rejection = 0;
       e.netsales = 0;
       e.toolsale = 0;
@@ -164,5 +173,5 @@ export class SalesrepofnmomComponent implements OnInit {
       return { background: 'PowderBlue', fontWeight: 'bolder' };
     }
   }
-  
+
 }
