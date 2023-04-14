@@ -48,6 +48,7 @@ export class SalesrepofnmomComponent implements OnInit {
 
   public columnDefs: ColDef[] = [
     { headerName: 'Month', field: 'monthName', type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true, cellStyle: { fontSize: '13px' } },
+    { headerName: 'Company', field: 'company', type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true, cellStyle: { fontSize: '13px' } },
     { headerName: 'Branch', field: 'plantname', type: 'leftAligned', enableRowGroup: true, rowGroup: true, cellStyle: { fontSize: '13px' } },
     {
       headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned', aggFunc: params => {
