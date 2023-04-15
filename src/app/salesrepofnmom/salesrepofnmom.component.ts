@@ -141,7 +141,6 @@ export class SalesrepofnmomComponent implements OnInit {
   async getselectedyear() {
     this.year = this.yearname;
     await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
-
     this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
