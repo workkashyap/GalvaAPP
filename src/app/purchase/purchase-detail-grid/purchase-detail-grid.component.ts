@@ -5,7 +5,7 @@ import { PlantService } from 'src/app/shared/plant/plant.service';
 import { LoginService } from 'src/app/shared/login/login.service';
 import { PurchaseService } from 'src/app/shared/purchase/purchase.service';
 import { Plant } from 'src/app/shared/plant/plant.model';
-import { ColDef, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridReadyEvent, ValueFormatterParams, ValueParserParams } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
@@ -79,7 +79,7 @@ export class PurchaseDetailGridComponent implements OnInit {
   };
   public autoGroupColumnDef: ColDef = {
     minWidth: 50,
-    width: 250,
+    width: 300,
     maxWidth: 500,
     resizable: true,
     pinned: 'left',
@@ -93,7 +93,7 @@ export class PurchaseDetailGridComponent implements OnInit {
     { headerName: 'poDocType', field: 'poDocType', cellStyle: { fontSize: '12px' } },
     { headerName: 'vendorCode.', field: 'vendorCode', cellStyle: { fontSize: '12px' } },
     { headerName: 'vendorName', field: 'vendorName', cellStyle: { fontSize: '12px' } },
-    { headerName: 'Purchase', field: 'totalPurchase', width: 70, cellStyle: { fontSize: '12px' } },
+    { headerName: 'Purchase', pinned:true, field: 'totalPurchase', width: 90, type:'number', cellStyle: { fontSize: '12px' } },
   ];
 
   constructor(
@@ -141,9 +141,24 @@ export class PurchaseDetailGridComponent implements OnInit {
     this.getPurchaseDetail();
   }
 
+  public columnTypes: {
+    [key: string]: ColDef;
+  } = {
+    number: {
+      editable: true,
+      // editing works with strings, need to change string to number
+      valueParser: (params: ValueParserParams) => {
+        return parseInt(params.newValue,10);
+      },
+      valueFormatter: (params: ValueFormatterParams) =>{
+        return params.value.toFixed(2);
+      },
+      aggFunc: 'sum',
+    },
+  };
+
   async getPurchaseDetail() {
     this.loading = true;
-
     await this.purchaseservice.getPurchaseView(this.selectedPlant, this.Fromdate, this.Todate).toPromise()
       .then(res => {
         this.rowData = res;

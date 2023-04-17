@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-salesrepofnmom',
   templateUrl: './salesrepofnmom.component.html',
-  styleUrls: ['./salesrepofnmom.component.css']
+  styleUrls: ['./salesrepofnmom.component.css'],
 })
 export class SalesrepofnmomComponent implements OnInit {
 
@@ -25,16 +25,21 @@ export class SalesrepofnmomComponent implements OnInit {
   rowData: any = [];
 
   public defaultColDef: ColDef = {
-    flex: 1,
-    minWidth: 120,
+    // flex: 1,
+    // minWidth: 100,
+    width: 150,
+    cellStyle: {margin:0,padding:0 },
     sortable: true,
     floatingFilter: true,
     resizable: true,
   };
 
   public autoGroupColumnDef: ColDef = {
-    minWidth: 220,
+    minWidth: 120,
+    maxWidth: 220,
     pinned: 'left',
+    cellStyle: {margin:0,padding:0 },
+    resizable: true,
     cellRendererParams: {
       suppressCount: true,
       checkbox: false,
@@ -47,15 +52,19 @@ export class SalesrepofnmomComponent implements OnInit {
   constructor(private salesrepo: SalesrepoService) { }
 
   public columnDefs: ColDef[] = [
-    { headerName: 'Month', field: 'monthName', type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'Company', field: 'company', type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'Branch', field: 'plantname', type: 'leftAligned', enableRowGroup: true, rowGroup: true, cellStyle: { fontSize: '13px' } },
+    { headerName: 'Month', field: 'monthName', width: 150, type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true },
+    { headerName: 'Company', field: 'company', width: 200, type: 'leftAligned', enableRowGroup: true, rowGroup: true, filter: true, hide: true },
+    {
+      headerName: 'Branch', field: 'plantname', width: 200, minWidth: 200, type: 'leftAligned', enableRowGroup: true,
+      rowGroup: true,
+    },
     {
       headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -64,6 +73,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -72,6 +82,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -80,6 +91,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -88,6 +100,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -96,6 +109,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
     {
@@ -104,6 +118,7 @@ export class SalesrepofnmomComponent implements OnInit {
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
+      width: 120,
       cellStyle: { fontSize: '13px' }
     },
   ]
@@ -165,7 +180,8 @@ export class SalesrepofnmomComponent implements OnInit {
     return _.orderBy(this.rowData, [(datas) => this.yearname, (user) => (this.monthArray.indexOf(user.monthName))], ["asc", "asc"]);
   }
 
-  onGridReady(params: GridReadyEvent) { }
+  onGridReady(params: GridReadyEvent) {
+  }
 
   getRowStyle = params => {
     if (params.node.footer) {

@@ -112,7 +112,10 @@
                             [groupDefaultExpanded]="groupDefaultExpanded" [getRowStyle]="getRowStyle"
                             [autoGroupColumnDef]="autoGroupColumnDef" [animateRows]="true" [rowData]="rowData"
                             (gridReady)="onGridReady($event)" (rowClicked)="selectionChange()"
-                            [rowSelection]="'single'">
+                            [rowSelection]="'single'"
+                            [groupRowRendererParams]="groupRowRendererParams"
+                            [columnTypes]="columnTypes">
+                            <!-- [groupDisplayType]="'groupRows'" -->
                         </ag-grid-angular>
                     </div>
                 </div>

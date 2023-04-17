@@ -24,3 +24,7 @@
 .myClass{
 color:navy;
 }
+
+::ng-deep .ag-cell-wrapper {
+    margin: 0% !important;
+}
