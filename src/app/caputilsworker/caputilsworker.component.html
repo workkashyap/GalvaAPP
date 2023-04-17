@@ -188,9 +188,12 @@
                 <div class="col-md-4 in-label">
                   <label for="actualremark">Actual Remark:</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                   <input class="form-control" type='text' id="actualremark" name="actualremark" #actualremark="ngModel"
-                    (change)="perCalc()" [(ngModel)]="caputilsservice.caputilsData.actualremark" />
+                  (change)="perCalc()" [(ngModel)]="caputilsservice.caputilsData.actualremark" />
+                </div>
+                <div class="col-md-2 mt-1">
+                  <label>No. of Loss : {{loss}}</label>
                 </div>
               </div>
             </div>
@@ -201,7 +204,7 @@
                   <label for="reason">Reason 1 : </label>
                 </div>
                 <div class="col-md-5">
-                  <select class="form-control" id="reason" name="reason"
+                  <select [disabled]="ISEDIT" class="form-control" id="reason" name="reason"
                     [(ngModel)]="caputilsservice.caputilsData.reason" #reason>
                     <option *ngFor="let rsn of caputilsservice.caputilsReason" value="{{rsn.reason}}">
                       {{ rsn.reason }}
@@ -210,7 +213,7 @@
                 </div>
                 <div class="col-md-2">
                   <input class="form-control" type='number' min="1" id="reasoncount" name="reasoncountt" #reasoncount="ngModel"
-                    [(ngModel)]="caputilsservice.caputilsData.reasoncount" (change)="validate($event,null)"/>
+                    [(ngModel)]="caputilsservice.caputilsData.reasoncount" [disabled]="ISEDIT" (change)="validate($event,null)"/>
                 </div>
                 <div class="col-md-1">
                   <button class="btn btn-primary ml-2" type="button" (click)="addReason()"><i class="fa fa-plus"></i></button>
@@ -225,7 +228,7 @@
                 </div>
                 <div class="col-md-5">
                   <select class="form-control" id="reason" name="reason" [ngModelOptions]="{standalone : true}"
-                    [(ngModel)]="r[i].reason">
+                    [(ngModel)]="r[i].reason" [disabled]="ISEDIT">
                     <option *ngFor="let rsn of caputilsservice.caputilsReason" value="{{rsn.reason}}">
                       {{ rsn.reason }}
                     </option>
@@ -233,7 +236,7 @@
                 </div>
                 <div class="col-md-2">
                   <input class="form-control" type='number' min="1" id="reasoncount" name="reasoncount"
-                    [(ngModel)]="r[i].reasoncount" (change)="validate($event,i)" [ngModelOptions]="{standalone : true}" />
+                    [(ngModel)]="r[i].reasoncount" [disabled]="ISEDIT" (change)="validate($event,i)" [ngModelOptions]="{standalone : true}" />
                 </div>
               </div>
             </div>

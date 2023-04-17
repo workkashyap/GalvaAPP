@@ -51,6 +51,7 @@ export class CaputilsworkerComponent implements OnInit {
   percaputils: Observable<Caputils2[]>;
   reasonData: any[] = [];
   ISEDIT: boolean = false;
+  loss = 0;
 
   constructor(
     private route: Router,
@@ -209,6 +210,7 @@ export class CaputilsworkerComponent implements OnInit {
 
   opendetail(data) {
     this.r = [];
+    this.ISEDIT = false;
     this.caputilsservice.id = data.id;
     const me = this;
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
@@ -230,7 +232,6 @@ export class CaputilsworkerComponent implements OnInit {
           me.caputilsservice.caputilsbyid(me.caputilsservice.id)
             .toPromise()
             .then((res: any) => {
-
               this.caputilsservice.caputilsData = res; //as Productions[];
               this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
               if (this.caputilsservice.caputilsData.actualround > 0) {
@@ -238,6 +239,7 @@ export class CaputilsworkerComponent implements OnInit {
               } else {
                 this.isReadOnly = false;
               };
+              this.loss = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
             });
           // let date = data.entrydate.substring(0, data.entrydate.indexOf('T'));
           let date =this.datePipe.transform(data.entrydate, "yyyy-MM-dd");
@@ -245,7 +247,6 @@ export class CaputilsworkerComponent implements OnInit {
             .subscribe((res: any) => {
               this.reasonData = res;
               setTimeout(() => {
-
                 this.reasonData = this.reasonData.filter(x => x.entrydate.substring(0, data.entrydate.indexOf('T')) == date);
                 if (this.reasonData.length > 0) {
                   this.ISEDIT = true;
@@ -267,8 +268,8 @@ export class CaputilsworkerComponent implements OnInit {
             plantround: 0,
             actualround: 0,
           };
+          this.loss = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
         }
-
       });
     this.resetForm();
     $('#basicExampleModal').modal('show');
@@ -420,7 +421,7 @@ export class CaputilsworkerComponent implements OnInit {
 
   ////////////////
   validate(event, index) {
-    let t = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
+    this.loss = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
     let b: any = 0;
     b += Number(this.caputilsservice.caputilsData.reasoncount);
     for (var i = 0; i < this.r.length; i++) {
@@ -428,7 +429,7 @@ export class CaputilsworkerComponent implements OnInit {
         b += Number(this.r[i].reasoncount)
       }
     }
-    if (b > t) {
+    if (b > this.loss) {
       this.toastr.error('Enter Valid Data!!')
       if (event.target.name == "reasoncountt") {
         this.caputilsservice.caputilsData.reasoncount = null;
