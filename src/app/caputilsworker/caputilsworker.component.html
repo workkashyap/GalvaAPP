@@ -58,7 +58,7 @@
         </select>
       </div>
       <button class="btn btn-sm btn-custom text-white blue-bg ml-3">Total
-        Avg Complete: {{caputilsservice.caputils2[0].percaputil}} %
+        Avg Complete: {{totAvgPer | number:"1.2-2"}} %
       </button>
     </div>
   </div>
@@ -178,8 +178,7 @@
                 </div>
                 <div class="col-md-8">
                   <input [readonly]="isReadOnly" class="form-control" type='number' id="actualround" name="actualround"
-                    #actualround="ngModel" (ngModelChange)="perCalc()"
-                    [(ngModel)]="caputilsservice.caputilsData.actualround" />
+                    #actualround="ngModel" min="0" [(ngModel)]="caputilsservice.caputilsData.actualround" (ngModelChange)="perCalc()" />
                 </div>
               </div>
             </div>

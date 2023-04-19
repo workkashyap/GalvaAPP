@@ -287,8 +287,10 @@ export class SalescalendarComponent implements OnInit {
   totalNetsales() {
     this.grand_netsales = 0;
     this.plantservice.splantlist.forEach(element => {
-      this.grand_netsales = this.grand_netsales + element.totalVal;
+      this.grand_netsales = Number(this.grand_netsales) + Number(element.totalVal);
     });
+    console.log(this.grand_netsales);
+    
     return this.grand_netsales;
   }
   summary2() {
@@ -353,14 +355,14 @@ export class SalescalendarComponent implements OnInit {
 
                   });
                   // plant.totalVal = me.netSalesTotal;//(me.netSalesTotal - (Math.abs(me.cancelInvTotal) + Math.abs(me.salesReturnTotal) + Math.abs(me.mouldedTotal)));
-                  me.totalNetsales();
                 }
               });
             }
             me.i = me.i + 1;
           });
-          console.log("me.plantservice.splantlist", me.plantservice.splantlist);
         }
+        console.log("me.plantservice.splantlist", me.plantservice.splantlist);
+        me.totalNetsales();
       });
   }
   summary() {
