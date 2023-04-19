@@ -178,7 +178,7 @@
                 </div>
                 <div class="col-md-8">
                   <input [readonly]="isReadOnly" class="form-control" type='number' id="actualround" name="actualround"
-                    #actualround="ngModel" (change)="perCalc()"
+                    #actualround="ngModel" (ngModelChange)="perCalc()"
                     [(ngModel)]="caputilsservice.caputilsData.actualround" />
                 </div>
               </div>

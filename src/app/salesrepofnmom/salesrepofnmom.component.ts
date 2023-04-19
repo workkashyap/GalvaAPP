@@ -141,6 +141,7 @@ export class SalesrepofnmomComponent implements OnInit {
       } else {
         e.company = 'GALVA';
       }
+      e.plantname = e.plantname.replace('GDPL', 'Galva');
       e.endcustomer = 0;
       e.exportsales = 0;
       e.rejection = 0;
@@ -164,6 +165,7 @@ export class SalesrepofnmomComponent implements OnInit {
       } else {
         e.company = 'GALVA';
       }
+      e.plantname = e.plantname.replace('GDPL', 'Galva');
       e.endcustomer = 0;
       e.exportsales = 0;
       e.rejection = 0;

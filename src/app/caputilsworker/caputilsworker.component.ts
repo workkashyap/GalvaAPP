@@ -205,6 +205,7 @@ export class CaputilsworkerComponent implements OnInit {
   }
 
   perCalc() {
+    this.loss = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
     this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100;
   }
 

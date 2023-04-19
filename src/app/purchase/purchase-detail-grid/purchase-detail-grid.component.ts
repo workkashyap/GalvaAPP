@@ -71,7 +71,7 @@ export class PurchaseDetailGridComponent implements OnInit {
 
   groupDefaultExpanded = 0;
   public defaultColDef: ColDef = {
-    flex: 1,
+    // flex: 1,
     minWidth: 50,
     sortable: false,
     floatingFilter: false,
@@ -79,7 +79,7 @@ export class PurchaseDetailGridComponent implements OnInit {
   };
   public autoGroupColumnDef: ColDef = {
     minWidth: 50,
-    width: 300,
+    width: 270,
     maxWidth: 500,
     resizable: true,
     pinned: 'left',
@@ -88,11 +88,14 @@ export class PurchaseDetailGridComponent implements OnInit {
 
   public columnDefs: ColDef[] = [
     { headerName: 'Category', field: 'category', enableRowGroup: true, rowGroup: true, hide: true, cellStyle: { fontSize: '13px' } },
-    { headerName: 'acDocNo', field: 'acDocumentNo', cellStyle: { fontSize: '12px' } },
-    { headerName: 'acDocDate', field: 'acDocumentDate', cellStyle: { fontSize: '12px' } },
-    { headerName: 'poDocType', field: 'poDocType', cellStyle: { fontSize: '12px' } },
-    { headerName: 'vendorCode.', field: 'vendorCode', cellStyle: { fontSize: '12px' } },
-    { headerName: 'vendorName', field: 'vendorName', cellStyle: { fontSize: '12px' } },
+    { headerName: 'acDocNo', width:122, field: 'acDocumentNo', cellStyle: { fontSize: '12px' } },
+    { headerName: 'acDocDate', width:122, field: 'acDocumentDate', cellStyle: { fontSize: '12px' } },
+    { headerName: 'poDocType',  width:110,field: 'poDocType', cellStyle: { fontSize: '12px' } },
+    { headerName: 'vendorCode.', width:130, field: 'vendorCode', cellStyle: { fontSize: '12px' } },
+    { headerName: 'vendorName', width:170, field: 'vendorName', cellStyle: { fontSize: '12px' } },
+    { headerName: 'vendorInvoiceNo', width:165, field: 'vendorInvoiceNo', cellStyle: { fontSize: '12px' } },
+    { headerName: 'poDocName', width:155, field: 'poDocName', cellStyle: { fontSize: '12px' } },
+    { headerName: 'grnNoMIGO', width:160, field: 'grnNoMIGO', cellStyle: { fontSize: '12px' } },
     { headerName: 'Purchase', pinned:true, field: 'totalPurchase', width: 90, type:'number', cellStyle: { fontSize: '12px' } },
   ];
 

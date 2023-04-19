@@ -179,8 +179,11 @@ export class QualitySummaryComponent implements OnInit {
         }
 
         this.rowData.forEach((e, i) => {
-
-          if (e.inspValue == "Rej Per" || e.inspValue == "OK Per") {
+          let c = 0;
+          if (e.inspValue == "Rej Per") {
+            e.jan != "0.00" ? c++ : null; e.feb != "0.00" ? c++ : null; e.mar != "0.00" ? c++ : null; e.apr != "0.00" ? c++ : null; e.may != "0.00" ? c++ : null; e.jun != "0.00" ? c++ : null; 
+            e.jul != "0.00" ? c++ : null; e.aug != "0.00" ? c++ : null; e.sep != "0.00" ? c++ : null; e.oct != "0.00" ? c++ : null; e.nov != "0.00" ? c++ : null; e.dec != "0.00" ? c++ : null
+            console.log(c);
             e.total = Number((
               Number(e.jan != null ? e.jan.replaceAll(',', '') : e.jan) +
               Number(e.feb != null ? e.feb.replaceAll(',', '') : e.feb) +
@@ -193,7 +196,7 @@ export class QualitySummaryComponent implements OnInit {
               Number(e.sep != null ? e.sep.replaceAll(',', '') : e.sep) +
               Number(e.oct != null ? e.oct.replaceAll(',', '') : e.oct) +
               Number(e.nov != null ? e.nov.replaceAll(',', '') : e.nov) +
-              Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec)) / 12).toFixed(2);
+              Number(e.dec != null ? e.dec.replaceAll(',', '') : e.dec)) / c).toFixed(2);
           } else {
             e.total = Number((
               Number(e.jan != null ? e.jan.replaceAll(',', '') : e.jan) +
@@ -212,6 +215,9 @@ export class QualitySummaryComponent implements OnInit {
           if (e.inspValue == "Rej Per") {
             this.data.push(e.apr, e.may, e.jun, e.jul, e.aug, e.sep, e.oct, e.nov, e.dec, e.jan, e.feb, e.mar);
           }
+          // if (e.inspValue == "OK Per") {
+          //   this.data.push(e.apr, e.may, e.jun, e.jul, e.aug, e.sep, e.oct, e.nov, e.dec, e.jan, e.feb, e.mar);
+          // }
         });
         this.label.push('APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER', 'JANUARY', 'FEBRUARY', 'MARCH');
         this.loadchart();
@@ -303,7 +309,7 @@ export class QualitySummaryComponent implements OnInit {
               var meta = chartInstance.controller.getDatasetMeta(i);
               meta.data.forEach(function (bar, index) {
                 var data = dataset.data[index];
-                ctx.fillText(data, bar._model.x, bar._model.y-8);
+                ctx.fillText(data, bar._model.x, bar._model.y - 8);
               });
             });
 
