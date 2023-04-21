@@ -108,7 +108,7 @@ export class CaputilsviewComponent implements OnInit {
     this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode, this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode, this.typename);
+    // this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode, this.typename);
   }
 
   opendetail(id) {
@@ -123,13 +123,13 @@ export class CaputilsviewComponent implements OnInit {
   selectedGrid(ev) {
     this.selectedcode = ev;
     this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    // this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 
   getselectedyear() {
     this.year = this.yearname;
     this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    // this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 
   getselectedmonth() {
@@ -137,11 +137,11 @@ export class CaputilsviewComponent implements OnInit {
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
     this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    // this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
   getselectedtype() {
     this.type = this.typename;
     this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
+    // this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
   }
 }

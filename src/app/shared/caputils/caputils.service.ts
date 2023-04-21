@@ -91,24 +91,24 @@ export class CaputilsService {
     }
   }
 
-  public getAvgPer_(year, month, plant, type) {
-    if (month.length > 1) {
-      return this.http
-        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant + '/' + type)
-        .toPromise()
-        .then(res => {
-          this.caputils2 = res as Caputils2[];
-          console.log(this.caputils2[0].percaputil);
-        });
-    } else {
-      return this.http
-        .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant + '/' + type)
-        .toPromise()
-        .then(res => {
-          this.caputils2 = res as Caputils2[];
-        });
-    }
-  }
+  // public getAvgPer_(year, month, plant, type) {
+  //   if (month.length > 1) {
+  //     return this.http
+  //       .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-" + month + "-12/" + plant + '/' + type)
+  //       .toPromise()
+  //       .then(res => {
+  //         this.caputils2 = res as Caputils2[];
+  //         console.log(this.caputils2[0].percaputil);
+  //       });
+  //   } else {
+  //     return this.http
+  //       .get(this.rootUrl + "/caputils/GetCapacityUtilPerval/" + year + "-0" + month + "-12/" + plant + '/' + type)
+  //       .toPromise()
+  //       .then(res => {
+  //         this.caputils2 = res as Caputils2[];
+  //       });
+  //   }
+  // }
 
   public caputilsbyid(id): Observable<Caputils[]> {
     return this.http.get<Caputils[]>(this.rootUrl + "/caputils/" + id);

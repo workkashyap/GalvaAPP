@@ -73,6 +73,7 @@ export class CaputilsreportComponent implements OnInit {
   public d: any;
   public totPlanRound: any = 0;
   public totActualRound: any = 0;
+  public totAvgPer : any = 0;
 
   selectedCaputils: CaputilsService;
   cols: any;
@@ -120,7 +121,6 @@ export class CaputilsreportComponent implements OnInit {
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.plantcode , this.typename);
     this.incmarks = 0;
 
     this.caputilsservice.getCaputilsReason();
@@ -291,14 +291,12 @@ export class CaputilsreportComponent implements OnInit {
   async selectedGrid(ev) {
     this.selectedcode = ev;
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
     this.calcTotal();
   }
 
   async getselectedyear() {
     this.year = this.yearname;
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode , this.typename);
-    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode , this.typename);
     this.calcTotal();
   }
 
@@ -307,17 +305,16 @@ export class CaputilsreportComponent implements OnInit {
     this.x = this.monthNames.indexOf(this.Month) + 1;
     this.index = this.x.toString();
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
     this.calcTotal();
   }
  async getselectedtype() {
     this.type = this.typename;
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
-    await this.caputilsservice.getAvgPer_(this.yearname, this.index, this.selectedcode, this.typename);
     this.calcTotal();
   }
 
   calcTotal() {
+    this.totAvgPer = 0;
     this.totActualRound = 0;
     this.totPlanRound = 0;
     this.caputilsservice.caputilsList.forEach(element => {
@@ -325,6 +322,7 @@ export class CaputilsreportComponent implements OnInit {
       this.totActualRound += element.actualround;
     });
     this.temprows = this.caputilsservice.caputilsList;
+    this.totAvgPer = (this.totActualRound / this.totPlanRound) * 100;
   }
 
   // filterReason(reason) {
