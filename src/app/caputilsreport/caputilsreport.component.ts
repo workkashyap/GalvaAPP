@@ -73,11 +73,11 @@ export class CaputilsreportComponent implements OnInit {
   public d: any;
   public totPlanRound: any = 0;
   public totActualRound: any = 0;
-  public totAvgPer : any = 0;
+  public totAvgPer: any = 0;
 
   selectedCaputils: CaputilsService;
   cols: any;
-  temprows:any;
+  temprows: any;
   percaputils: Observable<Caputils2[]>;
 
   constructor(
@@ -90,10 +90,10 @@ export class CaputilsreportComponent implements OnInit {
     public plantservice: PlantService,
     public caputilsservice: CaputilsService,
     private toastr: ToastrService) {
-      const me = this;
-      this.lservice.currentUser.subscribe(x => (this.currentUser = x));
-      this.itmService.getallData();
-     }
+    const me = this;
+    this.lservice.currentUser.subscribe(x => (this.currentUser = x));
+    this.itmService.getallData();
+  }
 
   async ngOnInit() {
     const me = this;
@@ -118,7 +118,7 @@ export class CaputilsreportComponent implements OnInit {
       { field: "actualremark", header: "Actual Remark" },
       { field: "percomplete", header: "Utilization %" },
     ];
-    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode , this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.plantcode, this.typename);
 
     this.date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.incmarks = 0;
@@ -130,43 +130,43 @@ export class CaputilsreportComponent implements OnInit {
     this.isReadOnly = false;
 
     this.plantservice
-        .sgetPlantData(me.currentUser.id)
-        .toPromise()
-        .then(res => {
-          me.plantservice.splantlist = [];
-          const splantlist = res as Plant[];
-          splantlist.forEach(splant => {
-            me.plantservice.splantlist.push(splant);
-          });
-          me.selectedcode = me.plantservice.splantlist[0].plantcode;
-  
-  
-          if (me.caputilsservice.id) {
-            me.caputilsservice.caputilsbyid(me.caputilsservice.id)
-              .toPromise()
-              .then((res: any) => {
-                this.caputilsservice.caputilsData = res; //as Productions[];
-                this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
-                if(this.caputilsservice.caputilsData.actualround > 0) {
-                  this.isReadOnly = true;
-                }else {
-                  this.isReadOnly = false;
-                }
-              });
-          } else {
-            me.caputilsservice.caputilsData = {
-              entrydate: me.date,
-              plantcode: '',
-              linetype: '',
-              plantround: 0,
-              actualround: 0,
-              actualremark: '',
-            };
-          }
-  
+      .sgetPlantData(me.currentUser.id)
+      .toPromise()
+      .then(res => {
+        me.plantservice.splantlist = [];
+        const splantlist = res as Plant[];
+        splantlist.forEach(splant => {
+          me.plantservice.splantlist.push(splant);
         });
-      this.resetForm();
-      this.calcTotal();
+        me.selectedcode = me.plantservice.splantlist[0].plantcode;
+
+
+        if (me.caputilsservice.id) {
+          me.caputilsservice.caputilsbyid(me.caputilsservice.id)
+            .toPromise()
+            .then((res: any) => {
+              this.caputilsservice.caputilsData = res; //as Productions[];
+              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+              if (this.caputilsservice.caputilsData.actualround > 0) {
+                this.isReadOnly = true;
+              } else {
+                this.isReadOnly = false;
+              }
+            });
+        } else {
+          me.caputilsservice.caputilsData = {
+            entrydate: me.date,
+            plantcode: '',
+            linetype: '',
+            plantround: 0,
+            actualround: 0,
+            actualremark: '',
+          };
+        }
+
+      });
+    this.resetForm();
+    this.calcTotal();
   }
 
   resetForm(form?: NgForm) {
@@ -178,47 +178,47 @@ export class CaputilsreportComponent implements OnInit {
   onComplete(form: NgForm) {
     this.validQtyError = false;
 
-      if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 || this.caputilsservice.caputilsData.actualremark.length === 0) {
-        this.toastr.error(
-          "Save Failed.",
-          "Add Required Fields."
-        );
-      }else{
-        if (this.actionvalue === 'Save') {
-  
-          this.loading = true;
-  
-          if (this.caputilsservice.caputilsData.id > 0) {
-            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
-    
-            this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
-              this.resetForm(form);
-              this.toastr.success(
-                "Successfully Updated.",
-                "Production"
-              );
-              this.route.navigate(["./caputilsworker"]);
-            }, err => {
-              console.log(err);
-            });
-          }else{
-            this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-            this.caputilsservice.savecaputils().subscribe(res => {
-              console.log(this.caputilsservice.caputilsData);
-              this.resetForm(form);
-              this.toastr.success(
-                'Successfully Saved.',
-                'Production'
-              );
-              this.route.navigate(['./caputilsworker']);
-            }, err => {
-              console.log(err);
-            });
-          } 
-        }else{
-          this.back();
+    if (this.caputilsservice.caputilsData.linetype.length === 0 || this.caputilsservice.caputilsData.plantcode.length === 0 || this.caputilsservice.caputilsData.actualremark.length === 0) {
+      this.toastr.error(
+        "Save Failed.",
+        "Add Required Fields."
+      );
+    } else {
+      if (this.actionvalue === 'Save') {
+
+        this.loading = true;
+
+        if (this.caputilsservice.caputilsData.id > 0) {
+          this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+
+          this.caputilsservice.updatecaputils(this.caputilsservice.caputilsData.id).subscribe(res => {
+            this.resetForm(form);
+            this.toastr.success(
+              "Successfully Updated.",
+              "Production"
+            );
+            this.route.navigate(["./caputilsworker"]);
+          }, err => {
+            console.log(err);
+          });
+        } else {
+          this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+          this.caputilsservice.savecaputils().subscribe(res => {
+            console.log(this.caputilsservice.caputilsData);
+            this.resetForm(form);
+            this.toastr.success(
+              'Successfully Saved.',
+              'Production'
+            );
+            this.route.navigate(['./caputilsworker']);
+          }, err => {
+            console.log(err);
+          });
         }
+      } else {
+        this.back();
       }
+    }
   }
 
   onSaveClick() {
@@ -232,7 +232,7 @@ export class CaputilsreportComponent implements OnInit {
   }
 
   perCalc() {
-    this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100; 
+    this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100;
   }
 
   opendetail(id) {
@@ -245,42 +245,42 @@ export class CaputilsreportComponent implements OnInit {
     this.isReadOnly = false;
 
     this.plantservice
-        .sgetPlantData(me.currentUser.id)
-        .toPromise()
-        .then(res => {
-          me.plantservice.splantlist = [];
-          const splantlist = res as Plant[];
-          splantlist.forEach(splant => {
-            me.plantservice.splantlist.push(splant);
-          });
-          me.selectedcode = me.plantservice.splantlist[0].plantcode;
-  
-  
-          if (me.caputilsservice.id) {
-            me.caputilsservice.caputilsbyid(me.caputilsservice.id)
-              .toPromise()
-              .then((res: any) => {
-                this.caputilsservice.caputilsData = res; //as Productions[];
-                this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
-                if(this.caputilsservice.caputilsData.actualround > 0) {
-                  this.isReadOnly = true;
-                }else {
-                  this.isReadOnly = false;
-                };
-              });
-          } else {
-            me.caputilsservice.caputilsData = {
-              entrydate: me.date,
-              plantcode: '',
-              linetype: '',
-              plantround: 0,
-              actualround: 0,
-            };
-          }
-  
+      .sgetPlantData(me.currentUser.id)
+      .toPromise()
+      .then(res => {
+        me.plantservice.splantlist = [];
+        const splantlist = res as Plant[];
+        splantlist.forEach(splant => {
+          me.plantservice.splantlist.push(splant);
         });
-      this.resetForm();
-      $('#basicExampleModal').modal('show');
+        me.selectedcode = me.plantservice.splantlist[0].plantcode;
+
+
+        if (me.caputilsservice.id) {
+          me.caputilsservice.caputilsbyid(me.caputilsservice.id)
+            .toPromise()
+            .then((res: any) => {
+              this.caputilsservice.caputilsData = res; //as Productions[];
+              this.caputilsservice.caputilsData.entrydate = this.datePipe.transform(this.caputilsservice.caputilsData.entrydate, "yyyy-MM-dd");
+              if (this.caputilsservice.caputilsData.actualround > 0) {
+                this.isReadOnly = true;
+              } else {
+                this.isReadOnly = false;
+              };
+            });
+        } else {
+          me.caputilsservice.caputilsData = {
+            entrydate: me.date,
+            plantcode: '',
+            linetype: '',
+            plantround: 0,
+            actualround: 0,
+          };
+        }
+
+      });
+    this.resetForm();
+    $('#basicExampleModal').modal('show');
   }
 
   addNewMaterial() {
@@ -296,7 +296,7 @@ export class CaputilsreportComponent implements OnInit {
 
   async getselectedyear() {
     this.year = this.yearname;
-    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode , this.typename);
+    await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
     this.calcTotal();
   }
 
@@ -307,7 +307,7 @@ export class CaputilsreportComponent implements OnInit {
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
     this.calcTotal();
   }
- async getselectedtype() {
+  async getselectedtype() {
     this.type = this.typename;
     await this.caputilsservice.getallDataMonth_(this.yearname, this.index, this.selectedcode, this.typename);
     this.calcTotal();
@@ -318,8 +318,10 @@ export class CaputilsreportComponent implements OnInit {
     this.totActualRound = 0;
     this.totPlanRound = 0;
     this.caputilsservice.caputilsList.forEach(element => {
-      this.totPlanRound += element.plantround;
-      this.totActualRound += element.actualround;
+      if (element.actualround != 0) {
+        this.totPlanRound += element.plantround;
+        this.totActualRound += element.actualround;
+      }
     });
     this.temprows = this.caputilsservice.caputilsList;
     this.totAvgPer = (this.totActualRound / this.totPlanRound) * 100;

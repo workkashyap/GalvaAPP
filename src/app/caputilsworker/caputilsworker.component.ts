@@ -208,7 +208,7 @@ export class CaputilsworkerComponent implements OnInit {
   perCalc() {
     this.caputilsservice.caputilsData.percomplete = (this.caputilsservice.caputilsData.actualround / this.caputilsservice.caputilsData.plantround) * 100;
     this.loss = Number(this.caputilsservice.caputilsData.plantround) - Number(this.caputilsservice.caputilsData.actualround);
-    if (this.loss < 0 ||  Number(this.caputilsservice.caputilsData.actualround) < 0) {
+    if (this.loss < 0 || Number(this.caputilsservice.caputilsData.actualround) < 0) {
       // this.toastr.error("Please Enter Valid Data.",'', {timeOut: 1000});
       this.loss = 0;
       this.caputilsservice.caputilsData.actualround = 0;
@@ -321,11 +321,14 @@ export class CaputilsworkerComponent implements OnInit {
     this.totActualRound = 0;
     this.totPlanRound = 0;
     this.caputilsservice.caputilsList.forEach(element => {
-      this.totPlanRound += element.plantround;
-      this.totActualRound += element.actualround;
+      if (element.actualround != 0) {
+        this.totPlanRound += element.plantround;
+        this.totActualRound += element.actualround;
+      }
     });
     this.totAvgPer = (this.totActualRound / this.totPlanRound) * 100;
   }
+
 
 
   /****/
