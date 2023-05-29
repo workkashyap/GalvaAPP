@@ -28,7 +28,7 @@ export class SalesrepofnmomComponent implements OnInit {
     // flex: 1,
     // minWidth: 100,
     width: 150,
-    cellStyle: {margin:0,padding:0 },
+    cellStyle: { margin: 0, padding: 0 },
     sortable: true,
     floatingFilter: true,
     resizable: true,
@@ -38,7 +38,7 @@ export class SalesrepofnmomComponent implements OnInit {
     minWidth: 120,
     maxWidth: 220,
     pinned: 'left',
-    cellStyle: {margin:0,padding:0 },
+    cellStyle: { margin: 0, padding: 0 },
     resizable: true,
     cellRendererParams: {
       suppressCount: true,
@@ -59,67 +59,67 @@ export class SalesrepofnmomComponent implements OnInit {
       rowGroup: true,
     },
     {
-      headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'End Customers', field: 'endcustomer', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Export Sales', field: 'exportsales', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Export Sales', field: 'exportsales', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Rejection', field: 'rejection', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Rejection', field: 'rejection', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Net Sales', field: 'netsales', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Net Sales', field: 'netsales', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Tool Sales', field: 'toolsale', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Tool Sales', field: 'toolsale', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Other Sales', field: 'othersales', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Other Sales', field: 'othersales', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
     {
-      headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'rightAligned', aggFunc: params => {
+      headerName: 'Mould Purchase', field: 'mouldPurchase', enableValue: true, type: 'leftAligned', aggFunc: params => {
         let sum = 0;
         params.values.forEach(value => sum += value);
         return Math.round(sum * 100) / 100;
       },
       width: 120,
-      cellStyle: { fontSize: '13px' }
+      cellStyle: { fontSize: '13px', marginLeft: '12px' }
     },
   ]
 
@@ -136,18 +136,12 @@ export class SalesrepofnmomComponent implements OnInit {
     this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
-      if (e.plantname == 'FFPL') {
+      if (e.plantname.toUpperCase().includes('FFPL')) {
         e.company = 'FUTURE FINISHER'
       } else {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
-      e.endcustomer = 0;
-      e.exportsales = 0;
-      e.rejection = 0;
-      e.netsales = 0;
-      e.toolsale = 0;
-      e.othersales = 0;
       this.rowData.push(e);
     });
 
@@ -160,18 +154,12 @@ export class SalesrepofnmomComponent implements OnInit {
     this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
-      if (e.plantname == 'FFPL') {
+      if (e.plantname.toUpperCase().includes('FFPL')) {
         e.company = 'FUTURE FINISHER'
       } else {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
-      e.endcustomer = 0;
-      e.exportsales = 0;
-      e.rejection = 0;
-      e.netsales = 0;
-      e.toolsale = 0;
-      e.othersales = 0;
       this.rowData.push(e);
     });
 
