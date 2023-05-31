@@ -142,6 +142,12 @@ export class SalesrepofnmomComponent implements OnInit {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
+      e.endcustomer = 0;
+      e.exportsales = 0;
+      e.rejection = 0;
+      e.netsales = 0;
+      e.toolsale = 0;
+      e.othersales = 0;
       this.rowData.push(e);
     });
 
@@ -160,6 +166,12 @@ export class SalesrepofnmomComponent implements OnInit {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
+      e.endcustomer = 0;
+      e.exportsales = 0;
+      e.rejection = 0;
+      e.netsales = 0;
+      e.toolsale = 0;
+      e.othersales = 0;
       this.rowData.push(e);
     });
 
