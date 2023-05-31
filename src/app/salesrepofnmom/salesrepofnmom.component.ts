@@ -22,7 +22,7 @@ export class SalesrepofnmomComponent implements OnInit {
   public groupDefaultExpanded = 0;
 
   mouldData: any = [];
-  rowData: any = [];
+  // rowData: any = [];
 
   public defaultColDef: ColDef = {
     // flex: 1,
@@ -132,8 +132,8 @@ export class SalesrepofnmomComponent implements OnInit {
     } else {
       this.yearname = this.cyear + '-' + (Number(this.cyear) + 1);;
     }
-    await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
-    this.rowData.map(v => { v.mouldPurchase = 0 });
+    // await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
+    // this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
       if (e.plantname.toUpperCase().includes('FFPL')) {
@@ -142,22 +142,16 @@ export class SalesrepofnmomComponent implements OnInit {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
-      e.endcustomer = 0;
-      e.exportsales = 0;
-      e.rejection = 0;
-      e.netsales = 0;
-      e.toolsale = 0;
-      e.othersales = 0;
-      this.rowData.push(e);
+      // this.rowData.push(e);
     });
 
-    this.rowData = this.sortByFnMonth();
+    this.mouldData = this.sortByFnMonth();
   }
 
   async getselectedyear() {
     this.year = this.yearname;
-    await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
-    this.rowData.map(v => { v.mouldPurchase = 0 });
+    // await this.salesrepo.getAgGridDataForFnYear(this.yearname).toPromise().then(res => { this.rowData = res });
+    // this.rowData.map(v => { v.mouldPurchase = 0 });
     await this.salesrepo.getSalesRepoFinWithMould(this.yearname).toPromise().then(res => { this.mouldData = res });
     this.mouldData.forEach((e) => {
       if (e.plantname.toUpperCase().includes('FFPL')) {
@@ -166,20 +160,14 @@ export class SalesrepofnmomComponent implements OnInit {
         e.company = 'GALVA';
       }
       e.plantname = e.plantname.replace('GDPL', 'Galva');
-      e.endcustomer = 0;
-      e.exportsales = 0;
-      e.rejection = 0;
-      e.netsales = 0;
-      e.toolsale = 0;
-      e.othersales = 0;
-      this.rowData.push(e);
+      // this.rowData.push(e);
     });
 
-    this.rowData = this.sortByFnMonth();
+    this.mouldData = this.sortByFnMonth();
   }
 
   sortByFnMonth() {
-    return _.orderBy(this.rowData, [(datas) => this.yearname, (user) => (this.monthArray.indexOf(user.monthName))], ["asc", "asc"]);
+    return _.orderBy(this.mouldData, [(datas) => this.yearname, (user) => (this.monthArray.indexOf(user.monthName))], ["asc", "asc"]);
   }
 
   onGridReady(params: GridReadyEvent) {
