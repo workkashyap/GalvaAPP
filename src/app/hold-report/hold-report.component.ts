@@ -30,7 +30,8 @@ export class HoldReportComponent implements OnInit {
     this.cols = [
       { field: "plantcode", header: "Plant Code" },
       { field: "slocation", header: "Location" },
-      { field: "matrialname", header: "Material Name" },
+      { field: "matrialname", header: "Material Code" },
+      { field: "matrialcode", header: "Material Name" },
       { field: "groupname", header: "Material Group Name" },
       { field: "qty", header: "Quantity" },
       { field: "totvalue", header: "Total Value" },
